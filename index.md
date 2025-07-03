@@ -4,7 +4,7 @@ layout: page
 
 # About Me
 
-<img src="https:/zc331.com/profile.jpg" class="floatpic">
+<img src="https:/canzheng0331/profile.jpg" class="floatpic">
 
 Here is **Can Zheng (郑灿)**.<br>
 

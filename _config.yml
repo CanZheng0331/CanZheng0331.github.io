@@ -7,7 +7,7 @@ description: Nonergodic.  # Strongly recommended for SEO & social cards
 
 # TIP ── For local development you can comment out `url`
 # and build with relative paths. In production you want this set.
-url: https://zc331.com
+url: https://canzheng0331.github.io/
 # --------------------------------------------------
 #  AUTHOR / PROFILE DATA
 # --------------------------------------------------
@@ -16,7 +16,7 @@ owner:
   avatar: hanlin.jpg
   # bio: Dream big, stay positive, work hard, and enjoy the journey.
   email: zc331_@korea.ac.kr
-  cv: https://zc331.com/file/Can_Zheng_CV.pdf
+  cv: https://canzheng0331/file/Can_Zheng_CV.pdf
 
 
   # Social networking links are used in author-bio sidebar. Update and remove as you like.
