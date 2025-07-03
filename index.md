@@ -4,24 +4,22 @@ layout: page
 
 # About Me
 
-<img src="https://caihanlin.com/caihanlin.jpg" class="floatpic">
+<img src="https:/zc331.com/profile.jpg" class="floatpic">
 
-Here is **Hanlin Cai (Lance, 蔡汉霖)**.<br>
+Here is **Can Zheng (郑灿)**.<br>
 
-I am a graduate student in the [Internet of Everything Group](https://ioe.eng.cam.ac.uk/) at the University of Cambridge, supervised by [Prof. Ozgur Akan](https://ioe.eng.cam.ac.uk/directory/akan), and funded by the Cambridge Trust and CSC Scholarships. I also had the pleasure of participating in a summer research program with [Prof. Pietro Liò](https://www.cl.cam.ac.uk/~pl219/) at the [Artificial Intelligence Group](https://www.cl.cam.ac.uk/research/ai/).
+I am a graduate student at Korea University, supervised by [Prof. Chung G. Kang](https://scholar.google.com/citations?user=sNq_h_8AAAAJ&hl=en). 
 
-Prior to Cambridge, I have worked on wireless networks, cybersecurity, and machine learning under the guidance of [Prof. Zhezhuang Xu](https://scholar.google.com.hk/citations?user=iZ7LQRkAAAAJ&hl=zh-CN) and [Dr. Meng Yuan](https://myuan27.github.io/). Besides, I was honored to be selected as an Undergraduate Scholar at the leading conferences AAAI 2024 and SIGKDD 2024.
 
-If you are interested in any aspect of me, I am always open to discussions and collaborations. Feel free to reach out to me at — **hc663 [at] cam.ac.uk**
+
+If you are interested in any aspect of me, I am always open to discussions and collaborations. Feel free to reach out to me at — **zc331_ [at] korea.ac.kr**.
 
 ---
 
 ## Research Interests
-
-- [Internet of Everything](https://scholar.google.com/citations?view_op=search_authors&hl=zh-CN&mauthors=label:internet_of_everything)
 - Wireless Communication
-- Semantic Communication
-- LLM for Networking
+- LLM for ISAC
+- Orthogonal Time Frequency Space (OTFS)
 
 ---
 
