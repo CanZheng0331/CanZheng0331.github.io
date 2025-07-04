@@ -52,7 +52,8 @@ I am always interested in collaborating with talented researchers. If you have a
 #### Peer Review Activities
 - Reviewer for *IEEE Transactions on Vehicular Technology (TVT)*<br>
 - Reviewer for *IEEE Transactions on Mobile Computing (TMC)*<br>
-- Reviewer for *IEEE Vehicular Technology Conference (VTC)*<br>
+- Reviewer for *IEEE Vehicular Technology Conference (VTC)*
+  
 ---
 
 ## News and Updates
