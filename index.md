@@ -4,7 +4,7 @@ layout: page
 
 ## About Me
 
-<img src="/CanZheng0331.github.io//profile.jpg" class="floatpic">
+<img src="https://CanZheng0331.github.io/profile.jpg" class="floatpic">
 
 Here is **Can Zheng (郑灿)**.<br>
 
@@ -19,28 +19,34 @@ I am currently pursuing a Master's degree in Electrical Engineering at Korea Uni
 
 
 - **Korea University**  
+  
     *M.S. in Electrical Engineering*  
+
     *Mar. 2024 - Present, Seoul, South Korea*
 
 - **Xi'an Jiaotong University**  
+  
     *B.S. in Information Engineering*  
+
     *Aug. 2019 - Jun. 2023, Xi'an, China*
 
 
 #### Work Experience
 - **Intel Lab**
+  
     *Wireless AI Engineering Intern, Network and Edge Group (NEX)*
 
     *Jun. 2025 – Present, Beijing, China*
     
 - **Ericsson**
+  
     *Radio System Engineering Intern, Radio System Department*
 
     *Feb. 2025 – Jun. 2025, Beijing, China*
 
----
 #### Research Experience
 - **Great Bay University**
+  
     *Visiting Student, supervised by Prof. [Jiguang He](https://jiguanghegbu.github.io/)*
 
     *Dec. 2024 – Jan. 2025, Dongguan, China*
