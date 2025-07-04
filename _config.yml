@@ -51,12 +51,12 @@ links:
     url: /
   - title: Publications
     url: /publications/
-  - title: Others
-    url: /others/
   - title: Blogs
     url: /blogs/
   - title: Photos
     url: /photos/
+  - title: Others
+    url: /others/
   #- title: 中文
   #  url: /cn/
 

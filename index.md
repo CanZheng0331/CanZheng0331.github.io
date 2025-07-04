@@ -39,6 +39,21 @@ I am currently pursuing a Master's degree in Electrical Engineering at Korea Uni
 I am always interested in collaborating with talented researchers. If you have any good ideas within my expertise, feel free to drop me an email to initiate a discussion.
 
 ---
+## Other Experiences
+#### Scholarships
+
+- 2025：Foreign Natural Sciences and Engineering Scholarship, Korea University <br>
+- 2024-2025: [Brain Korea 21 Scholarships](https://gsisbk21.korea.ac.kr/bkgsis/intro/benefits.do), Korea University
+
+#### Teaching Assistantship
+
+- Teaching Assistant for "Mobile Communication Engineering," Korea University, 
+
+#### Peer Review Activities
+- Reviewer for *IEEE Transactions on Vehicular Technology (TVT)*<br>
+- Reviewer for *IEEE Transactions on Mobile Computing (TMC)*<br>
+- Reviewer for *IEEE Vehicular Technology Conference (VTC)*<br>
+---
 
 ## News and Updates
 
