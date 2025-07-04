@@ -23,4 +23,5 @@ title: Publications
 
 ##### 2025
 - (Accepted) ADMM-Based Delay-Doppler Domain Channel Estimation for OTFS Systems,<br> **C. Zheng**, X. Wang, P. Hu, and C. G. Kang,<br> in *Proc. IEEE Vehicular Technology Conference (VTC2025-fall)*.<br>
+
 - (Accepted) Joint Clustering and Uplink Power Control for Cell-free Massive MIMO in LEO Satellite Networks,<br>**C. Zheng**, F. D. Tilahun, C. G. Kang,<br>in *Proc. International Conference on Ubiquitous and Future Networks (ICUFN 2025)*.
