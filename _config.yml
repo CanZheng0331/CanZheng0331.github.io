@@ -13,7 +13,7 @@ url: https://canzheng0331.github.io/
 # --------------------------------------------------
 owner:
   name: Can Zheng
-  avatar: hanlin.jpg
+  avatar: profile.jpg
   # bio: Dream big, stay positive, work hard, and enjoy the journey.
   email: zc331_@korea.ac.kr
   cv: https://canzheng0331.github.io/file/Can_Zheng_CV.pdf
@@ -51,8 +51,8 @@ links:
     url: /
   - title: Publications
     url: /publications/
-  - title: Awards
-    url: /awards/
+  - title: Others
+    url: /others/
   - title: Hobbies
     url: /hobbies/
   - title: Blogs

@@ -8,7 +8,7 @@ title: Publications
 
 ### Journal Paper
 ##### Submitted
-- [M<sup>2</sup>BeamLLM: Multimodal Sensing-empowered mmWave Beam Prediction with Large Language Models,](https://arxiv.org/abs/2506.14532)<br>**C. Zheng**, J. He~, CG. Kang, G. Cai, Z. Yu, M. Debbah,<br> submitted to *IEEE J. Sel. Areas Commun. (JSAC)*.<br>
+- [M<sup>2</sup>BeamLLM: Multimodal Sensing-empowered mmWave Beam Prediction with Large Language Models,](https://arxiv.org/abs/2506.14532)<br>**C. Zheng**, J. He~, C. G. Kang, G. Cai, Z. Yu, M. Debbah,<br> submitted to *IEEE J. Sel. Areas Commun. (JSAC)*.<br>
 
 
 ##### 2025
@@ -19,7 +19,7 @@ title: Publications
 ---
 ### Conference Paper
 ##### Submitted
--  BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models,<br> **C. Zheng**, J. He, G. Cai, Z. Yu, C. G. Kang, <br> in *Proc. IEEE Vehicular Technology Conference (VTC2025-fall)*.<br>
+-  [BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models](https://arxiv.org/pdf/2503.10432?),<br> **C. Zheng**, J. He, G. Cai, Z. Yu, C. G. Kang, <br> in *Proc. IEEE Vehicular Technology Conference (VTC2025-fall)*.<br>
 
 ##### 2025
 - (Accepted) ADMM-Based Delay-Doppler Domain Channel Estimation for OTFS Systems,<br> **C. Zheng**, X. Wang, P. Hu, and C. G. Kang,<br> in *Proc. IEEE Vehicular Technology Conference (VTC2025-fall)*.<br>

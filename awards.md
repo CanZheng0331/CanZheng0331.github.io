@@ -1,20 +1,13 @@
 ---
 layout: page
-permalink: /awards/index.html
-title: Awards
+permalink: /others/index.html
+title: Others
 ---
 
 ## Scholarships
 
-- May 2025：**Cambridge CSC Trust Scholarship** (totally £190,000 for tuition waiver and stipend)
-- June 2024：**KDD-24 Undergraduate Scholarship** ($1000)<br>Only 21 undergraduates are selected around the world
-- Dec 2023：**AAAI-24 Undergraduate Scholarship** ($5000)<br>Only 18 undergraduates are selected around the world
-- Aug 2023：Innovation Scholarship ($1400)<br>One of the highest undergraduate awards
-- May 2023：XiamenAir Scholarship ($600)<br>
-- June 2024：Best Final Year Project Award of Maynooth (€500)
-- Oct 2023：Best Academic Performance of Maynooth (€100)
-- Oct 2022：Best Course Project Award of Maynooth (€100)
-- First Prize Scholarship of MIEC ($2100, Five times)<br>Combined degree scholarship between FZU and Maynooth<br>
+- 2025：Foreign Natural Sciences and Engineering Scholarship, Korea University <br>
+- 2024-2025: [Brain Korea 21 Scholarships](https://gsisbk21.korea.ac.kr/bkgsis/intro/benefits.do), Korea University
 
 ## Competitions
 
