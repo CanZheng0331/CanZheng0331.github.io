@@ -6,9 +6,9 @@ layout: page
 
 <img src="/CanZheng0331.github.io/profile.jpg" class="floatpic">
 
-    Here is **Can Zheng (郑灿)**.<br>
+Here is **Can Zheng (郑灿)**.<br>
 
-    I am currently pursuing a Master's degree in Electrical Engineering at Korea University, supervised by [Prof. Chung G. Kang](https://scholar.google.com/citations?user=sNq_h_8AAAAJ&hl=en). Previously, I earned my B.Eng. in Information Engineering from Xi’an Jiaotong University.
+I am currently pursuing a Master's degree in Electrical Engineering at Korea University, supervised by [Prof. Chung G. Kang](https://scholar.google.com/citations?user=sNq_h_8AAAAJ&hl=en). Previously, I earned my B.Eng. in Information Engineering from Xi’an Jiaotong University.
 
 ---
 
@@ -18,34 +18,42 @@ layout: page
 #### Education
 
 
-    - **Korea University**  
+- **Korea University**  
     *M.S. in Electrical Engineering*  
-    *Sep. 2024 - Present*
+    *Mar. 2024 - Present, Seoul, South Korea*
 
-    - **Xi'an Jiaotong University**  
+- **Xi'an Jiaotong University**  
     *B.S. in Information Engineering*  
-    *Aug. 2019 - Jun. 2023*
+    *Aug. 2019 - Jun. 2023, Xi'an, China*
 
 
 #### Work Experience
-    - 2025–Present**: Intern, Ericsson Radio Systems Department
-      - Worked on wireless communication algorithms and systems.
+- **Intel Lab**
+    *Wireless AI Engineering Intern, Network and Edge Group (NEX)*
+    *Jun. 2025 – Present, Beijing, China*
     
-    - 2024: Visiting Researcher, [University Name/Project]
-      - Focused on OTFS and satellite communication research.
+- **Ericsson**
+    *Radio System Engineering Intern, Radio System Department*
+    *Feb. 2025 – Jun. 2025, Beijing, China*
+
+---
+#### Research Experience
+- **Great Bay University**
+    *Visiting Student, supervised by Prof. [Jiguang He](https://jiguanghegbu.github.io/)*
+    *Dec. 2024 – Jan. 2025, Dongguan, China*
 
 ---
 
 ## Main Research Interests
-    - Wireless Communications
-    - Large Language Models (LLMs) for Wireless Communications
-    - Orthogonal Time Frequency Space (OTFS)
-    - Others: Low Earth Orbit (LEO) Satellite Communications, Near-Field (NF) Communications, Affine Frequency Division Multiplexing (AFDM), Positioning ...
+- Wireless Communications
+- Large Language Models (LLMs) for Wireless Communications
+- Orthogonal Time Frequency Space (OTFS)
+- Others: Low Earth Orbit (LEO) Satellite Communications, Near-Field (NF) Communications, Affine Frequency Division Multiplexing (AFDM), Positioning ...
   
-    I am always interested in collaborating with talented researchers. If you have any good ideas within my expertise, feel free to drop me an email to initiate a discussion.
+I am always interested in collaborating with talented researchers. If you have any good ideas within my expertise, feel free to drop me an email to initiate a discussion.
 
 ---
 
 ## News and Updates
 
-    - **July 2025**: Created the homepage, mainly for better self-introduction when applying for Ph.D.
+- **July 2025**: Created the homepage, mainly for better self-introduction when applying for Ph.D.
