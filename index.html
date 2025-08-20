@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home · Can Zheng</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="color-scheme" content="light dark">
+</head>
+<body>
+  <header class="header">
+    <div class="navbar container">
+      <a class="brand" href="index.html">Can Zheng</a>
+      <nav>
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="biography.html" >Biography</a>
+        <a href="publications.html" >Publications</a>
+        <a href="blog.html" >Blog</a>
+        <a href="photos.html" >Photos</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+
+  <section class="hero">
+    <h1>Hi, I’m Can Zheng (郑灿).</h1>
+    <p>
+      <a href="https://scholar.google.com/citations?user=EMGpwm8AAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a> ·
+      <a href="zc331_@korea.ac.kr">Email</a> ·
+      <a href="https://www.linkedin.com/in/can-zheng-4a5839331/" target="_blank" rel="noopener">LinkedIn</a>
+    </p>
+  </section>
+
+  <section class="grid section">
+    <div class="col-6">
+      <div class="card">
+        <h2>About</h2>
+        <p>I’m a master’s student at School of Electrical Engineering, <em>Korea University</em>, graduating Aug 2026 (expected). My current research spans OTFS/AFDM and AI/ML for beam prediction/localization.</p>
+        <p><a href="biography.html">Read my biography →</a></p>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <h2>Highlights</h2>
+        <ul>
+          <li>08/2025: Reconstructed my homepage (Thanks to GPT-5).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card">
+        <h2>Latest Posts</h2>
+        <p>See recent writing on the <a href="blog.html">blog</a>. Markdown + LaTeX supported.</p>
+      </div>
+    </div>
+  </section>
+
+  </main>
+  <footer class="footer">
+    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+    <div><small class="muted">Edit the HTML files to update content. Blog posts are Markdown files in <code>/posts</code>.</small></div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

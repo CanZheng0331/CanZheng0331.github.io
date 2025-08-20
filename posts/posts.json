@@ -1,0 +1,14 @@
+{
+  "posts": [
+    {
+      "slug": "hello-world",
+      "title": "Hello, World: Markdown + LaTeX Demo",
+      "date": "2025-08-19"
+    },
+    {
+      "slug": "otfs-notes",
+      "title": "Notes on OTFS Channel Estimation",
+      "date": "2025-08-18"
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Photos · Can Zheng</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="color-scheme" content="light dark">
+</head>
+<body>
+  <header class="header">
+    <div class="navbar container">
+      <a class="brand" href="index.html">Can Zheng</a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="biography.html">Biography</a>
+        <a href="publications.html">Publications</a>
+        <a href="blog.html">Blog</a>
+        <a href="photos.html" aria-current="page">Photos</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <article class="prose">
+      <h1>Photos</h1>
+      <p>Click on images to view more details and additional photos in a popup.</p>
+    </article>
+    <section class="section">
+      <div class="figure-grid">
+        <figure data-modal-id="beijing">
+          <img src="photos/Beijing_CCTV.jpg" alt="Lab setup">
+          <figcaption>Beijing, China (25.02-25.08)</figcaption>
+        </figure>
+        <figure data-modal-id="dongguan">
+          <img src="photos/Dongguan_Songshan1.jpg" alt="Dongguan">
+          <figcaption>Dongguan, China (24.12-25.01)</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Modal Structure -->
+    <div id="dongguan" class="modal">
+      <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Dongguan, China</h2>
+        <p>Theoretically, Guangdong Province is the hottest place in China, but I was there during winter, so the weather was very comfortable. As a visiting student at the GBU, it only took me about 20 minutes to walk to Songshan Lake Park every day. From there, I could see Huawei Ox Horn Campus.</p>
+        <div class="modal-image-grid">
+          <img src="photos/Dongguan_GBU.jpg" alt="GBU">
+          <img src="photos/Dongguan_Songshan1.jpg" alt="Songshan Lake 1">
+          <img src="photos/Dongguan_Songshan2.jpg" alt="Songshan Lake 2">
+        </div>
+      </div>
+    </div>
+    <div id="beijing" class="modal">
+      <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Beijing, China</h2>
+        <p>I spent almost two-thirds of my 24th year (my zodiac year) interning in Beijing. It is a city with many opportunities, but also a lot of pressure. The climate seems moderate, but the winters are windy, the springs are filled with willow catkins, and the summers are hot and humid. In any case, I will miss this time of hard work very much.</p>
+        <div class="modal-image-grid">
+          <img src="photos/Beijing_CCTV.jpg" alt="CCTV">
+          <img src="photos/Beijing_Ericsson.jpg" alt="Ericsson">
+          <img src="photos/Beijing_intel.jpg" alt="Intel Labs">
+        </div>
+      </div>
+    </div>
+    
+  </main>
+  <footer class="footer">
+    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+    <div><small class="muted">Edit the HTML files to update content. Blog posts are Markdown files in <code>/posts</code>.</small></div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Modal functionality
+    const figures = document.querySelectorAll('.figure-grid figure');
+    const modals = document.querySelectorAll('.modal');
+    const closeButtons = document.querySelectorAll('.modal-close');
+
+    figures.forEach(figure => {
+      figure.addEventListener('click', () => {
+        const modalId = figure.getAttribute('data-modal-id');
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.style.display = 'block';
+        }
+      });
+    });
+
+    closeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const modal = button.closest('.modal');
+        if (modal) {
+          modal.style.display = 'none';
+        }
+      });
+    });
+
+    window.addEventListener('click', (event) => {
+      modals.forEach(modal => {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

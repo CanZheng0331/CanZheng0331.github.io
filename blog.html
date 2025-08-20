@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog · Can Zheng</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="color-scheme" content="light dark">
+</head>
+<body>
+  <header class="header">
+    <div class="navbar container">
+      <a class="brand" href="index.html">Can Zheng</a>
+      <nav>
+        <a href="index.html" >Home</a>
+        <a href="biography.html" >Biography</a>
+        <a href="publications.html" >Publications</a>
+        <a href="blog.html" aria-current="page">Blog</a>
+        <a href="photos.html" >Photos</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+
+  <section class="section">
+    <div class="grid">
+      <div class="col-4">
+        <div class="card">
+          <h2>Posts</h2>
+          <div id="post-list"><small class="muted">Loading…</small></div>
+        </div>
+      </div>
+      <div class="col-8">
+        <article class="card prose" id="post">
+          <h1 id="post-title">Welcome</h1>
+          <p>Select a post on the left, or open 
+          <code>blog.html?p=hello-world</code>.</p>
+          <hr>
+          <div id="post-content"></div>
+        </article>
+      </div>
+    </div>
+  </section>
+  <!-- Marked.js for Markdown, MathJax for LaTeX -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script src="blog.js"></script>
+
+  </main>
+  <footer class="footer">
+    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+    <div><small class="muted">Edit the HTML files to update content. Blog posts are Markdown files in <code>/posts</code>.</small></div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
