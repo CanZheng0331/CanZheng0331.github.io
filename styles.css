@@ -31,6 +31,19 @@ body{
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 .container{max-width:1280px;margin:0 auto;padding:24px}
+.grid {
+  display: flex;
+  gap: 1rem; /* 左右间距 */
+}
+
+.col-4 {
+  flex: 0 0 500px; /* 左边固定宽度，比如 260px，可以自己调 */
+}
+
+.col-8 {
+  flex: 1; /* 右边自适应撑满剩余空间 */
+}
+
 .header{
   position:sticky;top:0;backdrop-filter:saturate(180%) blur(6px);
   border-bottom:1px solid var(--border);
