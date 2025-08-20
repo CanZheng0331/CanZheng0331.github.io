@@ -6,41 +6,80 @@
   <title>Blog · Can Zheng</title>
   <link rel="stylesheet" href="styles.css" />
   <meta name="color-scheme" content="light dark">
+  <style>
+    .post-list { list-style: none; padding: 0; }
+    .post-list li { margin: 0.5rem 0; }
+    .tag { 
+      display: inline-block; 
+      background: #444; 
+      color: #fff; 
+      padding: 2px 6px; 
+      margin: 0 4px; 
+      border-radius: 6px; 
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .search-box { margin: 1rem 0; }
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: none; 
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      background: var(--bg, #fff);
+      color: var(--fg, #000);
+      max-width: 800px;
+      width: 90%;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      overflow-y: auto;
+      max-height: 90vh;
+    }
+    .modal-close { float: right; cursor: pointer; }
+  </style>
 </head>
 <body>
   <header class="header">
     <div class="navbar container">
       <a class="brand" href="index.html">Can Zheng</a>
       <nav>
-        <a href="index.html" >Home</a>
-        <a href="biography.html" >Biography</a>
-        <a href="publications.html" >Publications</a>
+        <a href="index.html">Home</a>
+        <a href="biography.html">Biography</a>
+        <a href="publications.html">Publications</a>
         <a href="blog.html" aria-current="page">Blog</a>
-        <a href="photos.html" >Photos</a>
+        <a href="photos.html">Photos</a>
       </nav>
     </div>
   </header>
-  <main class="container">
 
-  <section class="section">
-    <div class="grid">
-      <div class="col-4">
-        <div class="card">
-          <h2>Posts</h2>
-          <div id="post-list"><small class="muted">Loading…</small></div>
-        </div>
-      </div>
-      <div class="col-8">
-        <article class="card prose" id="post">
-          <h1 id="post-title">Welcome</h1>
-          <p>Select a post on the left, or open 
-          <code>blog.html?p=hello-world</code>.</p>
-          <hr>
-          <div id="post-content"></div>
-        </article>
-      </div>
+  <main class="container">
+    <section class="section">
+      <h2>Blog Posts</h2>
+      <input class="search-box" type="text" id="search" placeholder="搜索文章标题或内容…" />
+      <ul id="post-list" class="post-list">
+        <li><small class="muted">Loading…</small></li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content card prose">
+      <span id="modal-close" class="modal-close">✖</span>
+      <h1 id="post-title"></h1>
+      <div id="post-tags"></div>
+      <hr>
+      <div id="post-content"></div>
     </div>
-  </section>
+  </div>
+
+  <footer class="footer">
+    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+  </footer>
+
   <!-- Marked.js for Markdown, MathJax for LaTeX -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
@@ -50,15 +89,65 @@
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-  <script src="blog.js"></script>
 
-  </main>
-  <footer class="footer">
-    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
-    <div><small class="muted">Edit the HTML files to update content. Blog posts are Markdown files in <code>/posts</code>.</small></div>
-  </footer>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 模拟文章数据（实际可以放在 JSON 或扫描 /posts）
+    const posts = [
+      {
+        id: "hello-world",
+        title: "Hello, World: Markdown + LaTeX Demo",
+        tags: ["demo","latex"],
+        file: "posts/hello-world.md"
+      },
+      {
+        id: "otfs-notes",
+        title: "Notes on OTFS Channel Estimation",
+        tags: ["otfs","channel","estimation"],
+        file: "posts/otfs-notes.md"
+      }
+    ];
+
+    const list = document.getElementById("post-list");
+    const modal = document.getElementById("modal");
+    const modalClose = document.getElementById("modal-close");
+    const postTitle = document.getElementById("post-title");
+    const postTags = document.getElementById("post-tags");
+    const postContent = document.getElementById("post-content");
+    const searchBox = document.getElementById("search");
+
+    // 渲染文章列表
+    function renderList(filter="") {
+      list.innerHTML = "";
+      posts.forEach(post => {
+        fetch(post.file).then(r => r.text()).then(text => {
+          if (filter && !post.title.toLowerCase().includes(filter) && !text.toLowerCase().includes(filter)) return;
+          const li = document.createElement("li");
+          li.innerHTML = `<a href="#">${post.title}</a> 
+            ${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
+          li.querySelector("a").onclick = () => openPost(post, text);
+          li.querySelectorAll(".tag").forEach(tagEl => {
+            tagEl.onclick = () => renderList(tagEl.dataset.tag.toLowerCase());
+          });
+          list.appendChild(li);
+        });
+      });
+    }
+
+    function openPost(post, markdown) {
+      postTitle.textContent = post.title;
+      postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
+      postContent.innerHTML = marked.parse(markdown);
+      MathJax.typesetPromise();
+      modal.style.display = "flex";
+    }
+
+    modalClose.onclick = () => modal.style.display = "none";
+    window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; };
+    searchBox.oninput = () => renderList(searchBox.value.toLowerCase());
+
+    renderList();
   </script>
 </body>
 </html>
