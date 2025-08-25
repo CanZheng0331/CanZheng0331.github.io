@@ -1,7 +1,7 @@
 2025/08/22
 
 ## 写在前面
-本人入学至研一这个阶段主要研究的方向就是 OTFS，且是较为认真推导过公式、写过代码的，现在整理一些我比较熟悉的部分作为分享。但是平心而论，我认为 OTFS 不值得作为一个博士研究生的长久研究方向（硕士研究生无所谓，当作科研训练也无妨，但依然不是很建议）。我通过与一些深耕多载波、信号处理等方向的学者们交流，以及我得到的一些信息，列出如下原因：
+本人入学至研一这个阶段主要研究的方向就是 OTFS，且是较为认真推导过公式、写过代码的，现在整理一些我比较熟悉的部分作为分享。但是平心而论，站在学生的角度，我认为 OTFS 不值得作为一个博士研究生的长久研究方向（硕士研究生无所谓，当作科研训练也无妨，但依然不是很建议）。我通过与一些深耕多载波、信号处理等方向的学者们交流，以及我得到的一些信息，列出如下原因：
 
 1. **商业原因**
    通信行业的开源精神远远不如计算机行业，很多技术被大公司掌握，所以 Open-RAN 等想要打破这个规则，想让一些小公司都分蛋糕吃的计划，现在也并非顺利。OTFS 的提出者 [Ronny Hanani](https://scholar.google.com/citations?user=V3CIqjQAAAAJ&hl=en) 在其共同创立的 Cohere Technologies 注册了大量 OTFS 相关的专利，这一点就跟以前的 OFDM 不同（据不可靠消息称，OFDM 是 60 年代提出，专利大概率失效了）[[1]](#ref1)。所以通信公司当然希望尽量绕开这些专利技术，使用一些自己能够掌握的方向。不仅如此，就我所知，IMT-2030 推进组、华为等组织和公司对 OTFS 这项技术并不看好。功利一点讲，这一点足够劝退大部分人了。
@@ -14,7 +14,7 @@
 
 ### 入门篇
 
-我觉得入门 OTFS，最好是能够先观其大略，能够形成一个 big picture。我个人看来，最适合的入门论文是 [[3]](#ref3)。我觉得这篇文章的几张图画得都非常不错，比如 Fig. 1 是表示双选信道的；Fig. 2 是表示 time-delay, time-frequency, delay-Doppler domain 之间的转换关系及其特性，非常直观能看到 DD 域有着很好的稀疏性、紧凑性，这利于我们使用压缩感知技术，以小规模的字典就能恢复信道；Fig. 3 是神中神，应该说是非常直观展示出 OTFS 系统整个端到端的过程。
+我觉得入门任何一个领域，最好是能够先观其大略，能够形成一个 big picture。我个人看来，最适合的入门论文是 [[3]](#ref3)。我觉得这篇文章的几张图画得都非常不错，比如 Fig. 1 是表示双选信道的；Fig. 2 是表示 time-delay, time-frequency, delay-Doppler domain 之间的转换关系及其特性，非常直观能看到 DD 域信道有着很好的稀疏性、紧凑性，这利于我们使用压缩感知技术，以小规模的字典就能恢复信道；Fig. 3 是神中神，应该说是非常直观展示出 OTFS 系统整个端到端的过程。
 
 （可选）上面的论文中一共提到了四个特性，其中可分离性没什么可讲，稀疏性和紧凑性已经说过了，还剩下一个稳定性。关于稳定性的分析，我推荐 [[4]](#ref4) 配合视频 [[5]](#ref5) 理解。同时，Prof. Ronny 在这里分享了非常多具有 insight 的理念，但是恕我数学功底薄弱，真正理解的部分顶多二三成。我还是很推荐大家去看视频的，毕竟是发明人的观点，有着非常多的可取之处，文章可以放后面再看。
 
@@ -28,7 +28,31 @@
 
 ### 专精篇
 #### 信道估计
-信道估计是我比较熟悉的领域，而且我也不太喜欢对自己不太擅长的领域置喙，所以可能会着重讲这里。
+信道估计是我比较熟悉的领域，而且我也不太喜欢对自己不太擅长的领域置喙，所以可能会着重讲这里。大部分工作聚焦在 DD 域信道估计，所以我们下面默认信道估计都是 DD 域的参数估计，即每条径 $i$ 对应的时延 $\tau_i$、多普勒 $\nu_i$、以及信道增益 $h_i$。
+
+信道估计主要分为整数多普勒估计与分数多普勒估计。其区别简单来说是多普勒域分辨率（即带宽的倒数 $\frac{1}{M\Delta f}$，$M$ 为子载波个数，$\Delta f$ 为子载波间隔）是否足够小到将信道的多普勒频移（即 $\nu_i$）表示成整数倍而不会造成太多误差。
+
+##### 整数多普勒下的信道估计
+这种情况比较理想，一般来说假定时延与多普勒域的分辨率都足够细，可以近似认为所有径对应的参数都可以被整数倍分辨率表示，即：
+$$\tau_i=\frac{l_i}{NT},\quad \nu_i = \frac{k_i}{M\Delta f}.$$
+
+这里的 $l_i$ 和 $k_i$ 都是整数。至于在什么情况下满足上述条件，这里暂时不做讲解，如有兴趣可以自行查阅 [[9]](#ref9) 中的“双正交性”部分。
+
+在这种整数多普勒情况下，假设多径数为 $P$，我们只需要求 $P$ 个 $\tau_i$（即 $l_i$）、$P$ 个 $\nu_i$（即 $k_i$）、$P$ 个 $h_i$。比较经典的几个工作有下面几个：
+
+[[10]](#ref10)：基于导频与保护间隔（guard interval）的方法。比如用单导频，周围是一圈置零没有任何符号的保护带，在接收端就能在这块区域内收到 DD 域的信道响应。这种方法比较直观，但由于占用较多通信开销，所以频谱效率会降低（尽管有 reduced guard symbols）。
+
+[[11]](#ref11)：使用压缩感知（Compressed Sensing）做信道估计。压缩感知在无线通信领域，尤其是信道估计（OTFS、近场通信等）中，比较大的作用就是相比正交导频更节省导频开销，由于其本质是解的结构是稀疏的欠定线性方程组。这篇文章可以说是压缩感知用于 OTFS 信道估计的开创性论文。
+
+##### 分数多普勒下的信道估计
+此时，整数多普勒情况下的假设不成立，多普勒域内会出现能量泄露，即多普勒域内信道不再稀疏。此时的时延和多普勒表示为：
+$$\tau_i=\frac{l_i}{NT},\quad \nu_i = \frac{k_i+\kappa_i}{M\Delta f}.$$
+
+这里的 $\kappa_i$ 是分数分量。既然此时稀疏性被破坏，信道估计复杂度和难度都会更高。
+
+比较经典的论文列出如下：[[12]](#ref12)...
+
+(to be continued...)
 
 
 ---
@@ -36,7 +60,7 @@
 
 <span id="ref2">[2]</span>: [[Paper] T. E. Humphreys, P. A. Iannucci, Z. M. Komodromos and A. M. Graff, "Signal Structure of the Starlink Ku-Band Downlink,"](https://ieeexplore.ieee.org/document/10107477) in IEEE Trans. Aerosp. Electron. Syst., vol. 59, no. 5, pp. 6016-6030, Oct. 2023.
 
-<span id="ref3">[3]</span>: [[Paper] Z. Wei et al., "Orthogonal Time-Frequency Space Modulation: A Promising Next-Generation Waveform,"](https://ieeexplore.ieee.org/abstract/document/9508932) in IEEE Wireless Commun., vol. 28, no. 4, pp. 136-144, August 2021.
+<span id="ref3">[3]</span>: [[Paper] Z. Wei et al., "Orthogonal Time-Frequency Space Modulation: A Promising Next-Generation Waveform,"](https://ieeexplore.ieee.org/abstract/document/9508932) in IEEE Wireless Commun., vol. 28, no. 4, pp. 136-144, Aug 2021.
 
 <span id="ref4">[4]</span>: [[Paper] S. K. Mohammed, R. Hadani, A. Chockalingam and R. Calderbank, "OTFS—Predictability in the Delay-Doppler Domain and Its Value to Communication and Radar Sensing,"](https://ieeexplore.ieee.org/document/10265224) in IEEE BITS Inf. Theory Mag., vol. 3, no. 2, pp. 7-31, June 2023.
 
@@ -44,6 +68,14 @@
 
 <span id="ref6">[6]</span>: [[Video] Zijun Gong: OTFS Tutorial.](https://www.bilibili.com/video/BV1wN4y1X7a7/?share_source=copy_web&vd_source=fcb7e402ec2fd101aa71bed20e4b1fb9)
 
-<span id="ref7">[7]</span>: [[Book] Matz G, Hlawatsch F., "Fundamentals of time-varying communication channels," Wireless communications over rapidly time-varying channels. Academic Press, 2011: 1-63.](https://booksite.elsevier.com/samplechapters/9780123744838/9780123744838.pdf)
+<span id="ref7">[7]</span>: [[Book] Matz G, Hlawatsch F., "Fundamentals of time-varying communication channels,"](https://booksite.elsevier.com/samplechapters/9780123744838/9780123744838.pdf) Wireless communications over rapidly time-varying channels. Academic Press, 2011: 1-63.
 
 <span id="ref8">[8]</span>: [[Video] Emanuele Viterbo: OTFS and delay-Doppler communications.](https://www.bilibili.com/video/BV1yi421Z7tc/?share_source=copy_web&vd_source=fcb7e402ec2fd101aa71bed20e4b1fb9)
+
+<span id="ref9">[9]</span>: [[Paper] R. Hadani et al., "Orthogonal Time Frequency Space Modulation,"](https://ieeexplore.ieee.org/document/7925924) in Proc. IEEE Wireless Communications and Networking Conference (WCNC), San Francisco, CA, USA, 2017, pp. 1-6.
+
+<span id="ref10">[10]</span>: [[Paper] P. Raviteja, K. T. Phan and Y. Hong, "Embedded Pilot-Aided Channel Estimation for OTFS in Delay–Doppler Channels,"](https://ieeexplore.ieee.org/abstract/document/8671740) in IEEE Trans. Veh. Technol., vol. 68, no. 5, pp. 4906-4917, May 2019.
+
+<span id="ref11">[11]</span>: [[Paper] W. Shen, L. Dai, J. An, P. Fan and R. W. Heath, "Channel Estimation for Orthogonal Time Frequency Space (OTFS) Massive MIMO,"](https://ieeexplore.ieee.org/abstract/document/8727425) in IEEE Trans. Signal Process., vol. 67, no. 16, pp. 4204-4217, Aug 2019.
+
+<span id="ref12">[12]</span>:[[Paper] Z. Wei, W. Yuan, S. Li, J. Yuan and D. W. K. Ng, "Off-Grid Channel Estimation With Sparse Bayesian Learning for OTFS Systems,"](https://ieeexplore.ieee.org/abstract/document/9738478) in IEEE Trans. Wireless Commun., vol. 21, no. 9, pp. 7407-7426, Sept 2022
