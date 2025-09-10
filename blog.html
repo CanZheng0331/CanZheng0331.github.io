@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
   <meta name="color-scheme" content="light dark">
   <style>
+    /* 调整 CSS 以实现全屏覆盖 */
     .post-list { list-style: none; padding: 0; }
     .post-list li { margin: 0.5rem 0; }
     .tag { 
@@ -21,24 +22,50 @@
     }
     .search-box { margin: 1rem 0; }
     .modal {
+      /* 关键：全屏覆盖并移除背景 */
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
+      background: var(--bg, #fff); /* 使用与页面背景相同的颜色 */
       display: none; 
+      /* 允许内容滚动 */
+      overflow-y: auto;
       align-items: center;
       justify-content: center;
+      z-index: 1000; /* 确保在最上层 */
     }
     .modal-content {
+      /* 关键：内容也全屏 */
       background: var(--bg, #fff);
       color: var(--fg, #000);
-      max-width: 800px;
-      width: 90%;
+      max-width: 100%;
+      width: 100%;
+      height: 100%;
       padding: 1rem 2rem;
-      border-radius: 12px;
+      border-radius: 0;
       overflow-y: auto;
-      max-height: 90vh;
+      max-height: 100vh;
+      box-sizing: border-box; /* 确保 padding 包含在宽度内 */
     }
-    .modal-close { float: right; cursor: pointer; }
+    .modal-close { 
+        position: absolute;
+        top: 1rem;
+        left: 2rem;
+        font-size: 1rem;
+        cursor: pointer;
+        padding: 5px 10px;
+        background: #eee;
+        border-radius: 6px;
+        color: #333;
+        text-decoration: none;
+    }
+    @media (max-width: 768px) {
+        .modal-close {
+            left: 1rem;
+        }
+        .modal-content {
+            padding: 1rem;
+        }
+    }
   </style>
 </head>
 <body>
@@ -65,11 +92,10 @@
     </section>
   </main>
 
-  <!-- Modal -->
   <div id="modal" class="modal">
     <div class="modal-content card prose">
-      <span id="modal-close" class="modal-close">✖</span>
-      <h1 id="post-title"></h1>
+      <a href="#" id="modal-close" class="modal-close">返回</a>
+      <h1 id="post-title" style="padding-top: 2rem;"></h1>
       <div id="post-tags"></div>
       <hr>
       <div id="post-content"></div>
@@ -80,7 +106,6 @@
     <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
   </footer>
 
-  <!-- Marked.js for Markdown, MathJax for LaTeX -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     window.MathJax = {
@@ -93,7 +118,6 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // 模拟文章数据（实际可以放在 JSON 或扫描 /posts）
     const posts = [
       {
         id: "hello-world",
@@ -126,7 +150,10 @@
           const li = document.createElement("li");
           li.innerHTML = `<a href="#">${post.title}</a> 
             ${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
-          li.querySelector("a").onclick = () => openPost(post, text);
+          li.querySelector("a").onclick = (e) => {
+            e.preventDefault(); // 阻止a标签默认跳转
+            openPost(post, text);
+          };
           li.querySelectorAll(".tag").forEach(tagEl => {
             tagEl.onclick = () => renderList(tagEl.dataset.tag.toLowerCase());
           });
@@ -139,12 +166,17 @@
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
       postContent.innerHTML = marked.parse(markdown);
-      MathJax.typesetPromise();
+      MathJax.typesetPromise(); // 确保渲染 LaTeX
       modal.style.display = "flex";
+      document.body.style.overflow = "hidden"; // 隐藏主页面的滚动条
     }
 
-    modalClose.onclick = () => modal.style.display = "none";
-    window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; };
+    modalClose.onclick = (e) => {
+      e.preventDefault(); // 阻止链接默认行为
+      modal.style.display = "none";
+      document.body.style.overflow = "auto"; // 恢复主页面的滚动条
+    };
+
     searchBox.oninput = () => renderList(searchBox.value.toLowerCase());
 
     renderList();
