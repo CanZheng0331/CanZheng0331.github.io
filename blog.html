@@ -1,139 +1,261 @@
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog · Can Zheng</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="color-scheme" content="light dark">
+  <style>
+    .post-list { list-style: none; padding: 0; }
+    .post-list li { margin: 0.5rem 0; }
+    .tag { 
+      display: inline-block; 
+      background: #444; 
+      color: #fff; 
+      padding: 2px 6px; 
+      margin: 0 4px; 
+      border-radius: 6px; 
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .search-box { margin: 1rem 0; }
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--bg, #fff);
+      display: none; 
+      overflow-y: auto;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: var(--bg, #fff);
+      color: var(--fg, #000);
+      max-width: 100%;
+      width: 100%;
+      height: 100%;
+      padding: 1rem 2rem;
+      border-radius: 0;
+      overflow-y: auto;
+      max-height: 100vh;
+      box-sizing: border-box;
+    }
+    .modal-close { 
+      position: absolute;
+      top: 1rem;
+      left: 2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 5px 10px;
+      background: #eee;
+      border-radius: 6px;
+      color: #333;
+      text-decoration: none;
+    }
+    @media (max-width: 768px) {
+      .modal-close { left: 1rem; }
+      .modal-content { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar container">
+      <a class="brand" href="index.html">Can Zheng</a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="biography.html">Biography</a>
+        <a href="publications.html">Publications</a>
+        <a href="blog.html" aria-current="page">Blog</a>
+        <a href="photos.html">Photos</a>
+      </nav>
+    </div>
+  </header>
 
-  const posts = [
-    {
-      id: "hello-world",
-      title: "Summarize for 'Wireless Communications' by Andrea Goldsmith",
-      tags: ["wireless communications", "summarize", "book"],
-      file: "posts/Wireless-communications.md"
-    },
-    {
-      id: "otfs-notes",
-      title: "Notes on OTFS",
-      tags: ["OTFS", "Signal Processing"],
-      file: "posts/otfs-notes.md"
-    }
-  ];
+  <main class="container">
+    <section class="section">
+      <h2>Blog Posts</h2>
+      <input class="search-box" type="text" id="search" placeholder="搜索文章标题或内容…" />
+      <ul id="post-list" class="post-list">
+        <li><small class="muted">Loading…</small></li>
+      </ul>
+    </section>
+  </main>
 
-  // 配置 Marked.js，添加对行内和块级 LaTeX 的支持
-  marked.use({
-    extensions: [{
-      name: 'mathjax',
-      level: 'block',
-      start(src) { return src.indexOf('$$'); },
-      tokenizer(src, tokens) {
-        const rule = /^\s*\$\$([\s\S]+?)\$\$\s*/;
-        const match = rule.exec(src);
-        if (match) {
-          return {
-            type: 'mathjax',
-            raw: match[0],
-            text: match[1].trim()
-          };
+  <div id="modal" class="modal">
+    <div class="modal-content card prose">
+      <a href="#" id="modal-close" class="modal-close">返回</a>
+      <h1 id="post-title" style="padding-top: 2rem;"></h1>
+      <div id="post-tags"></div>
+      <hr>
+      <div id="post-content"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        ignoreHtmlClass: '.*',
+        processHtmlClass: 'prose'
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const posts = [
+      {
+        id: "hello-world",
+        title: "Summarize for 'Wireless Communications' by Andrea Goldsmith",
+        tags: ["wireless communications", "summarize", "book"],
+        file: "posts/Wireless-communications.md"
+      },
+      {
+        id: "otfs-notes",
+        title: "Notes on OTFS",
+        tags: ["OTFS", "Signal Processing"],
+        file: "posts/otfs-notes.md"
+      }
+    ];
+
+    // 配置 Marked.js，添加对行内和块级 LaTeX 的支持
+    // 新增了 `walkTokens`，它会在解析后但在渲染前，处理你的自定义标记
+    marked.use({
+      extensions: [{
+        name: 'mathjax',
+        level: 'block',
+        start(src) { return src.indexOf('$$'); },
+        tokenizer(src, tokens) {
+          const rule = /^\s*\$\$([\s\S]+?)\$\$\s*/;
+          const match = rule.exec(src);
+          if (match) {
+            return {
+              type: 'mathjax',
+              raw: match[0],
+              text: match[1].trim()
+            };
+          }
+        },
+        renderer(token) {
+          return `$$${token.text}$$`;
+        }
+      },
+      {
+        name: 'mathjax-inline',
+        level: 'inline',
+        start(src) { return src.indexOf('$'); },
+        tokenizer(src, tokens) {
+          const rule = /^\$([^$\n]+?)\$/;
+          const match = rule.exec(src);
+          if (match && match[0].slice(0, 2) !== '$$') {
+            return {
+              type: 'mathjax-inline',
+              raw: match[0],
+              text: match[1].trim()
+            };
+          }
+          return false;
+        },
+        renderer(token) {
+          return `$${token.text}$`;
+        }
+      }],
+      // 核心修复: 告诉 Marked.js 忽略我们的自定义 token，不要转义其中的特殊字符
+      walkTokens(token) {
+        if (token.type === 'mathjax' || token.type === 'mathjax-inline') {
+          token.tokens = []; // 清空子 token 列表
         }
-      },
-      renderer(token) {
-        // 返回原始的 LaTeX 代码，MathJax 将处理它
-        return `$$${token.text}$$`;
       }
-    },
-    {
-      name: 'mathjax-inline',
-      level: 'inline',
-      start(src) { return src.indexOf('$'); },
-      tokenizer(src, tokens) {
-        // 更精确的行内匹配规则，排除 $$...$$
-        const rule = /^\$([^$\n]+?)\$/;
-        const match = rule.exec(src);
-        if (match && match[0].slice(0, 2) !== '$$') {
-          return {
-            type: 'mathjax-inline',
-            raw: match[0],
-            text: match[1].trim()
-          };
-        }
-        return false;
-      },
-      renderer(token) {
-        // 返回原始的 LaTeX 代码
-        return `$${token.text}$`;
-      }
-    }]
-  });
+    });
 
-  const list = document.getElementById("post-list");
-  const modal = document.getElementById("modal");
-  const modalClose = document.getElementById("modal-close");
-  const postTitle = document.getElementById("post-title");
-  const postTags = document.getElementById("post-tags");
-  const postContent = document.getElementById("post-content");
-  const searchBox = document.getElementById("search");
+    const list = document.getElementById("post-list");
+    const modal = document.getElementById("modal");
+    const modalClose = document.getElementById("modal-close");
+    const postTitle = document.getElementById("post-title");
+    const postTags = document.getElementById("post-tags");
+    const postContent = document.getElementById("post-content");
+    const searchBox = document.getElementById("search");
 
-  // 渲染文章列表
-  function renderList(textFilter = "", tagFilter = "") {
-    list.innerHTML = "";
-    let hasResults = false;
-    posts.forEach(post => {
-      fetch(post.file)
-        .then(r => r.text())
-        .then(text => {
-          const titleMatch = post.title.toLowerCase().includes(textFilter.toLowerCase());
-          const contentMatch = text.toLowerCase().includes(textFilter.toLowerCase());
-          const tagMatch = tagFilter === "" || post.tags.includes(tagFilter);
+    // 渲染文章列表
+    function renderList(textFilter = "", tagFilter = "") {
+      list.innerHTML = "";
+      let hasResults = false;
+      posts.forEach(post => {
+        fetch(post.file)
+          .then(r => r.text())
+          .then(text => {
+            const titleMatch = post.title.toLowerCase().includes(textFilter.toLowerCase());
+            const contentMatch = text.toLowerCase().includes(textFilter.toLowerCase());
+            const tagMatch = tagFilter === "" || post.tags.includes(tagFilter);
 
-          if ((textFilter && (titleMatch || contentMatch) && tagMatch) || (!textFilter && tagMatch)) {
-            hasResults = true;
-            const li = document.createElement("li");
-            li.innerHTML = `<a href="#">${post.title}</a> 
-              ${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
-            li.querySelector("a").onclick = (e) => {
-              e.preventDefault();
-              openPost(post, text);
-            };
-            li.querySelectorAll(".tag").forEach(tagEl => {
-              tagEl.onclick = () => {
-                searchBox.value = "";
-                renderList("", tagEl.dataset.tag);
-              };
-            });
-            list.appendChild(li);
-          }
-        });
-    });
-    setTimeout(() => {
-      if (!hasResults && list.childElementCount === 0) {
-        list.innerHTML = "<li><small class='muted'>没有找到相关文章。</small></li>";
-      }
-    }, 500);
-  }
+            if ((textFilter && (titleMatch || contentMatch) && tagMatch) || (!textFilter && tagMatch)) {
+              hasResults = true;
+              const li = document.createElement("li");
+              li.innerHTML = `<a href="#">${post.title}</a> 
+                ${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
+              li.querySelector("a").onclick = (e) => {
+                e.preventDefault();
+                openPost(post, text);
+              };
+              li.querySelectorAll(".tag").forEach(tagEl => {
+                tagEl.onclick = () => {
+                  searchBox.value = "";
+                  renderList("", tagEl.dataset.tag);
+                };
+              });
+              list.appendChild(li);
+            }
+          });
+      });
+      setTimeout(() => {
+        if (!hasResults && list.childElementCount === 0) {
+          list.innerHTML = "<li><small class='muted'>没有找到相关文章。</small></li>";
+        }
+      }, 500);
+    }
 
-  // 打开文章
-  function openPost(post, markdown) {
-    postTitle.textContent = post.title;
-    postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
-    postContent.innerHTML = marked.parse(markdown);
-    
-    // 渲染 Markdown 内容中的所有 LaTeX
-    if (window.MathJax) {
-      MathJax.typesetPromise();
-    }
-    
-    modal.style.display = "flex";
-    document.body.style.overflow = "hidden";
-    window.scrollTo(0, 0); 
-  }
+    // 打开文章
+    function openPost(post, markdown) {
+      postTitle.textContent = post.title;
+      postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
+      postContent.innerHTML = marked.parse(markdown);
+      
+      // 渲染 Markdown 内容中的所有 LaTeX
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+      
+      modal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+      window.scrollTo(0, 0); 
+    }
 
-  // 关闭模态框
-  modalClose.onclick = (e) => {
-    e.preventDefault();
-    modal.style.display = "none";
-    document.body.style.overflow = "auto";
-  };
+    // 关闭模态框
+    modalClose.onclick = (e) => {
+      e.preventDefault();
+      modal.style.display = "none";
+      document.body.style.overflow = "auto";
+    };
 
-  // 搜索框输入时，执行模糊搜索
-  searchBox.oninput = () => renderList(searchBox.value.toLowerCase());
+    // 搜索框输入时，执行模糊搜索
+    searchBox.oninput = () => renderList(searchBox.value.toLowerCase());
 
-  // 初始渲染
-  renderList();
-</script>
+    // 初始渲染
+    renderList();
+  </script>
+</body>
+</html>
