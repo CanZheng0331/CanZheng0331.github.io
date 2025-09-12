@@ -195,7 +195,7 @@
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
       postContent.innerHTML = marked.parse(markdown, { async: false });
 
-      // 确保 MathJax 渲染
+      // 确保 MathJax 渲染公式
       MathJax.typesetPromise([postContent]).then(() => {
         console.log("MathJax rendering completed for", post.title);
       }).catch(err => console.error("MathJax rendering failed:", err));
