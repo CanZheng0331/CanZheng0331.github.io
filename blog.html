@@ -165,10 +165,10 @@
 
     const posts = [
       {
-        id: "hello-world",
-        title: "Hello, World: Markdown + LaTeX Demo",
-        tags: ["demo", "latex"],
-        file: "posts/hello-world.md"
+        id: "wireless communciations",
+        title: "Notes on <Wireless Communications>",
+        tags: ["Wireless Communications", "Textbook"],
+        file: "posts/wireless-communications.md"
       },
       {
         id: "otfs-notes",
@@ -226,8 +226,8 @@
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
       postContent.innerHTML = marked.parse(markdown);
       
-      // 渲染完毕后，刷新 MathJax
-      MathJax.typesetPromise();
+      // 强制刷新 MathJax 渲染公式
+      MathJax.typeset();  // 用此函数来重新渲染整个页面中的 LaTeX 公式
 
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
