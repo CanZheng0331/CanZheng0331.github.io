@@ -126,13 +126,6 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // 关键更改：配置 Marked.js
-    marked.use({
-        gfm: true, // 启用 GitHub Flavored Markdown
-        mangle: false, // 禁用可能会破坏公式的混淆处理
-        headerIds: false // 禁用自动生成标题ID，与你的代码无关但一般推荐
-    });
-
     const posts = [
       {
         id: "hello-world",
@@ -194,10 +187,21 @@
     function openPost(post, markdown) {
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
+
+      // 1. 将Markdown中的 $ 符号替换为特殊字符串
+      let processedMarkdown = markdown.replace(/\$\$/g, 'LATEXBLOCK');
+      processedMarkdown = processedMarkdown.replace(/\$/g, 'LATEXINLINE');
       
-      const html = marked.parse(markdown);
+      // 2. 使用Marked.js处理Markdown
+      let html = marked.parse(processedMarkdown);
+
+      // 3. 将特殊字符串还原为 $ 符号
+      html = html.replace(/LATEXBLOCK/g, '$$');
+      html = html.replace(/LATEXINLINE/g, '$');
+      
       postContent.innerHTML = html;
       
+      // 4. 告诉MathJax重新渲染公式
       MathJax.typesetPromise();
 
       modal.style.display = "flex";
