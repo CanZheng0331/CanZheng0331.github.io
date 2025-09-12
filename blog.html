@@ -54,15 +54,15 @@
   
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
+    // 关键更改：移除 problematic options.ignoreHtmlClass
     window.MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [['$$', '$$'], ['\\[', '\\]']],
         processEscapes: true
       },
-      // 关键更改：移除 options.ignoreHtmlClass，让 MathJax 默认处理所有内容
       options: {
-        ignoreHtmlClass: '.*'
+        // 移除这行，让 MathJax 正常处理所有内容
       }
     };
   </script>
@@ -86,7 +86,6 @@
 
     function renderList(textFilter = "", tagFilter = "") {
       list.innerHTML = "";
-      let hasResults = false;
       
       const filteredPosts = posts.filter(post => {
         const titleMatch = post.title.toLowerCase().includes(textFilter.toLowerCase());
@@ -100,29 +99,26 @@
       }
       
       filteredPosts.forEach(post => {
-        fetch(post.file)
-          .then(r => r.text())
-          .then(text => {
-            const li = document.createElement("li");
-            li.innerHTML = `<a href="#">${post.title}</a>${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
-            
-            li.querySelector("a").onclick = (e) => { 
-              e.preventDefault(); 
-              openPost(post, text); 
-            };
-            
-            li.querySelectorAll(".tag").forEach(tagEl => { 
-              tagEl.onclick = () => { 
-                searchBox.value = ""; 
-                renderList("", tagEl.dataset.tag); 
-              }; 
-            });
-            
-            list.appendChild(li);
-          })
-          .catch(error => {
-            console.error("Error fetching post file:", error);
-          });
+        // We only fetch the content when a post is clicked, to improve performance.
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="#">${post.title}</a>${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
+        
+        li.querySelector("a").onclick = (e) => { 
+          e.preventDefault(); 
+          fetch(post.file)
+            .then(r => r.text())
+            .then(markdown => openPost(post, markdown))
+            .catch(error => console.error("Error fetching post file:", error));
+        };
+        
+        li.querySelectorAll(".tag").forEach(tagEl => { 
+          tagEl.onclick = () => { 
+            searchBox.value = ""; 
+            renderList("", tagEl.dataset.tag); 
+          }; 
+        });
+        
+        list.appendChild(li);
       });
     }
 
@@ -133,8 +129,8 @@
       const html = marked.parse(markdown);
       postContent.innerHTML = html;
       
-      // 关键更改：只对 postContent 元素进行类型排版
-      MathJax.typesetPromise([postContent]);
+      // 关键更改：手动触发 MathJax 重新排版
+      MathJax.typesetPromise();
 
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
@@ -145,6 +141,9 @@
       e.preventDefault(); 
       modal.style.display = "none"; 
       document.body.style.overflow = "auto"; 
+      // 关键更改：隐藏模态框时，清除内容，避免下次打开时闪烁
+      postContent.innerHTML = ""; 
+      postTitle.textContent = "";
     };
     
     searchBox.oninput = () => renderList(searchBox.value.toLowerCase());
