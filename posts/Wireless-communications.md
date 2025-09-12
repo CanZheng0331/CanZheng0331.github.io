@@ -346,3 +346,5 @@ $$C = Q(a)+\text{exp}\left(\frac{2-2ab}{b^2}\right)Q\left(\frac{2-ab}{b}\right).
 
 考虑一个特殊情况，即：当 $P_\text{min}$ 恰好等于小区边界处的平均接收功率 $P 
 _R$ 时，参数 $a=0$。这使得公式简化为：$C = \frac{1}{2}+\text{exp}\left(\frac{2}{b^2}\right)Q\left(\frac{2}{b}\right)$. 这个简化公式表明，在这种特定条件下，覆盖区域百分比 $C$ 只取决于两个参数的比值：路径损耗指数 $\gamma$ 和阴影衰落标准差 $\sigma_{\psi_\text{dB}}$。
+
+****
