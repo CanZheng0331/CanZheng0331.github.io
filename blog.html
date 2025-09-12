@@ -226,8 +226,10 @@
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
       postContent.innerHTML = marked.parse(markdown);
       
-      // 强制刷新 MathJax 渲染公式
-      MathJax.typeset();  // 用此函数来重新渲染整个页面中的 LaTeX 公式
+      // 延迟调用 MathJax 渲染
+      setTimeout(() => {
+        MathJax.typeset(); // 确保公式渲染
+      }, 100); // 延迟100毫秒，确保内容已完全渲染
 
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
