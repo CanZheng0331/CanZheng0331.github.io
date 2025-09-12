@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
   <meta name="color-scheme" content="light dark">
   <style>
-    /* 基础样式，与原代码保持一致 */
+    /* 基础样式，与你原代码保持一致 */
     .post-list {
       list-style: none;
       padding: 0;
@@ -93,7 +93,7 @@
   </main>
 
   <div id="modal" class="modal">
-    <div class="modal-content prose">
+    <div class="modal-content card prose">
       <a href="#" id="modal-close" class="modal-close">返回</a>
       <h1 id="post-title" style="padding-top: 2rem;"></h1>
       <div id="post-tags"></div>
@@ -112,25 +112,56 @@
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [['$$', '$$'], ['\\[', '\\]']],
-        processEscapes: true,
-        processEnvironments: true
+        processEscapes: true
       },
       options: {
-        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-        ignoreHtmlClass: 'no-mathjax', // 排除不需要渲染的类
-        processHtmlClass: 'prose' // 只处理 prose 类
+        ignoreHtmlClass: '.*',
+        processHtmlClass: 'prose'
       }
     };
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/lib/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <script>
-    // 设置 marked.js 配置，确保 LaTeX 公式不被转义
-    marked.setOptions({
-      gfm: true,
-      breaks: true
-    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Marked.js 自定义扩展，专门用于保护 LaTeX 公式
+    const blockMath = {
+      name: 'blockMath',
+      level: 'block',
+      start(src) { return src.indexOf('$$'); },
+      tokenizer(src, tokens) {
+        const rule = /^\$\$([^$]+?)\$\$/;
+        const match = rule.exec(src);
+        if (match) {
+          return { type: 'blockMath', raw: match[0], text: match[1].trim() };
+        }
+      },
+      renderer(token) {
+        return `$$${token.text}$$`;
+      }
+    };
+
+    const inlineMath = {
+      name: 'inlineMath',
+      level: 'inline',
+      start(src) { return src.indexOf('$'); },
+      tokenizer(src, tokens) {
+        const rule = /^\$([^$\n]+?)\$/;
+        const match = rule.exec(src);
+        if (match) {
+          return { type: 'inlineMath', raw: match[0], text: match[1].trim() };
+        }
+        return false;
+      },
+      renderer(token) {
+        return `$${token.text}$`;
+      }
+    };
+
+    // 注册自定义扩展
+    marked.use({ extensions: [blockMath, inlineMath] });
 
     const posts = [
       {
@@ -181,7 +212,7 @@
             });
             list.appendChild(li);
           }
-        }).catch(err => console.error(`Failed to fetch ${post.file}:`, err));
+        });
       });
       setTimeout(() => {
         if (!hasResults && list.childElementCount === 0) {
@@ -193,12 +224,10 @@
     function openPost(post, markdown) {
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
-      postContent.innerHTML = marked.parse(markdown, { async: false });
-
-      // 确保 MathJax 渲染公式
-      MathJax.typesetPromise([postContent]).then(() => {
-        console.log("MathJax rendering completed for", post.title);
-      }).catch(err => console.error("MathJax rendering failed:", err));
+      postContent.innerHTML = marked.parse(markdown);
+      
+      // 渲染完毕后，刷新 MathJax
+      MathJax.typesetPromise();
 
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
@@ -213,7 +242,6 @@
 
     searchBox.oninput = () => renderList(searchBox.value.toLowerCase());
 
-    // 初始化渲染
     renderList();
   </script>
 </body>
