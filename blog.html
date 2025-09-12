@@ -33,7 +33,7 @@
   <main class="container">
     <section class="section">
       <h2>Blog Posts</h2>
-      <input class="search-box" type="text" id="search" placeholder="搜索文章标题或内容…" />
+      <input class="search-box" type="text" id="search" placeholder="Search..." />
       <ul id="post-list" class="post-list">
         <li><small class="muted">Loading…</small></li>
       </ul>
@@ -41,7 +41,7 @@
   </main>
   <div id="modal" class="modal">
     <div class="modal-content card prose">
-      <a href="#" id="modal-close" class="modal-close">返回</a>
+      <a href="#" id="modal-close" class="modal-close">Back</a>
       <h1 id="post-title" style="padding-top: 2rem;"></h1>
       <div id="post-tags"></div>
       <hr>
@@ -72,7 +72,7 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     const posts = [
-      { id: "wireless-communications", title: "Notes on Wireless Communications by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications.md" },
+      { id: "Wireless-communications", title: "Notes on Wireless Communications by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications.md" },
       { id: "otfs-notes", title: "Notes on OTFS", tags: ["OTFS", "Signal Processing"], file: "posts/otfs-notes.md" }
     ];
 
@@ -94,7 +94,7 @@
       });
 
       if (filteredPosts.length === 0) {
-        list.innerHTML = "<li><small class='muted'>没有找到相关文章。</small></li>";
+        list.innerHTML = "<li><small class='muted'>Not Found.</small></li>";
         return;
       }
       
