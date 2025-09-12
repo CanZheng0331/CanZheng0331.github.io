@@ -126,22 +126,8 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // 移除自定义的 Marked.js 扩展，并使用 walkTokens 来保护 LaTeX
-    marked.use({
-      walkTokens(token) {
-        if (token.type === 'paragraph' || token.type === 'text') {
-          // 保护内联公式
-          token.text = token.text.replace(/\$([^$]+?)\$/g, (match) => {
-            // 简单地将下划线进行转义，以防 Markdown 误判
-            return match.replace(/_/g, '\\_');
-          });
-          // 保护块级公式
-          token.text = token.text.replace(/\$\$([^\$]+?)\$\$/g, (match) => {
-            return match.replace(/_/g, '\\_');
-          });
-        }
-      }
-    });
+    // 只需要 MathJax 的默认配置和 Marked.js 即可
+    // 不用添加任何 marked.use() 扩展，这是最可靠的方案。
 
     const posts = [
       {
@@ -210,6 +196,7 @@
       postContent.innerHTML = html;
       
       // 在 DOM 渲染完毕后，告诉 MathJax 重新扫描并渲染公式
+      // 这条调用必须在内容加载之后，以确保时机正确
       MathJax.typesetPromise();
 
       modal.style.display = "flex";
