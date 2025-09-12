@@ -8,24 +8,31 @@
   <meta name="color-scheme" content="light dark">
   <style>
     /* 基础样式，与你原代码保持一致 */
-    .post-list { list-style: none; padding: 0; }
-    .post-list li { margin: 0.5rem 0; }
-    .tag { 
-      display: inline-block; 
-      background: #444; 
-      color: #fff; 
-      padding: 2px 6px; 
-      margin: 0 4px; 
-      border-radius: 6px; 
+    .post-list {
+      list-style: none;
+      padding: 0;
+    }
+    .post-list li {
+      margin: 0.5rem 0;
+    }
+    .tag {
+      display: inline-block;
+      background: #444;
+      color: #fff;
+      padding: 2px 6px;
+      margin: 0 4px;
+      border-radius: 6px;
       font-size: 0.8rem;
       cursor: pointer;
     }
-    .search-box { margin: 1rem 0; }
+    .search-box {
+      margin: 1rem 0;
+    }
     .modal {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: var(--bg, #fff);
-      display: none; 
+      display: none;
       overflow-y: auto;
       align-items: center;
       justify-content: center;
@@ -43,7 +50,7 @@
       max-height: 100vh;
       box-sizing: border-box;
     }
-    .modal-close { 
+    .modal-close {
       position: absolute;
       top: 1rem;
       left: 2rem;
@@ -128,11 +135,7 @@
         const rule = /^\$\$([^$]+?)\$\$/;
         const match = rule.exec(src);
         if (match) {
-          return {
-            type: 'blockMath',
-            raw: match[0],
-            text: match[1].trim()
-          };
+          return { type: 'blockMath', raw: match[0], text: match[1].trim() };
         }
       },
       renderer(token) {
@@ -148,11 +151,7 @@
         const rule = /^\$([^$\n]+?)\$/;
         const match = rule.exec(src);
         if (match) {
-          return {
-            type: 'inlineMath',
-            raw: match[0],
-            text: match[1].trim()
-          };
+          return { type: 'inlineMath', raw: match[0], text: match[1].trim() };
         }
         return false;
       },
@@ -160,7 +159,7 @@
         return `$${token.text}$`;
       }
     };
-    
+
     // 注册自定义扩展
     marked.use({ extensions: [blockMath, inlineMath] });
 
@@ -199,8 +198,8 @@
           if ((textFilter && (titleMatch || contentMatch) && tagMatch) || (!textFilter && tagMatch)) {
             hasResults = true;
             const li = document.createElement("li");
-            li.innerHTML = `<a href="#">${post.title}</a> 
-              ${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
+            li.innerHTML = `<a href="#">${post.title}</a>
+                            ${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
             li.querySelector("a").onclick = (e) => {
               e.preventDefault();
               openPost(post, text);
@@ -227,12 +226,12 @@
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
       postContent.innerHTML = marked.parse(markdown);
       
-      // 核心步骤：内容更新后重新渲染 MathJax
+      // 渲染完毕后，刷新 MathJax
       MathJax.typesetPromise();
-      
+
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
-      window.scrollTo(0, 0); 
+      window.scrollTo(0, 0);
     }
 
     modalClose.onclick = (e) => {
