@@ -60,7 +60,7 @@
         displayMath: [['$$', '$$'], ['\\[', '\\]']],
         processEscapes: true
       },
-      // 关键更改：移除 processHtmlClass
+      // 关键更改：移除 options.ignoreHtmlClass，让 MathJax 默认处理所有内容
       options: {
         ignoreHtmlClass: '.*'
       }
@@ -87,22 +87,43 @@
     function renderList(textFilter = "", tagFilter = "") {
       list.innerHTML = "";
       let hasResults = false;
-      posts.forEach(post => {
-        fetch(post.file).then(r => r.text()).then(text => {
-          const titleMatch = post.title.toLowerCase().includes(textFilter.toLowerCase());
-          const contentMatch = text.toLowerCase().includes(textFilter.toLowerCase());
-          const tagMatch = tagFilter === "" || post.tags.includes(tagFilter);
-          if ((textFilter && (titleMatch || contentMatch) && tagMatch) || (!textFilter && tagMatch)) {
-            hasResults = true;
+      
+      const filteredPosts = posts.filter(post => {
+        const titleMatch = post.title.toLowerCase().includes(textFilter.toLowerCase());
+        const tagMatch = tagFilter === "" || post.tags.includes(tagFilter);
+        return (textFilter && titleMatch && tagMatch) || (!textFilter && tagMatch);
+      });
+
+      if (filteredPosts.length === 0) {
+        list.innerHTML = "<li><small class='muted'>没有找到相关文章。</small></li>";
+        return;
+      }
+      
+      filteredPosts.forEach(post => {
+        fetch(post.file)
+          .then(r => r.text())
+          .then(text => {
             const li = document.createElement("li");
             li.innerHTML = `<a href="#">${post.title}</a>${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
-            li.querySelector("a").onclick = (e) => { e.preventDefault(); openPost(post, text); };
-            li.querySelectorAll(".tag").forEach(tagEl => { tagEl.onclick = () => { searchBox.value = ""; renderList("", tagEl.dataset.tag); }; });
+            
+            li.querySelector("a").onclick = (e) => { 
+              e.preventDefault(); 
+              openPost(post, text); 
+            };
+            
+            li.querySelectorAll(".tag").forEach(tagEl => { 
+              tagEl.onclick = () => { 
+                searchBox.value = ""; 
+                renderList("", tagEl.dataset.tag); 
+              }; 
+            });
+            
             list.appendChild(li);
-          }
-        });
+          })
+          .catch(error => {
+            console.error("Error fetching post file:", error);
+          });
       });
-      setTimeout(() => { if (!hasResults && list.childElementCount === 0) { list.innerHTML = "<li><small class='muted'>没有找到相关文章。</small></li>"; } }, 500);
     }
 
     function openPost(post, markdown) {
@@ -120,8 +141,15 @@
       window.scrollTo(0, 0);
     }
 
-    modalClose.onclick = (e) => { e.preventDefault(); modal.style.display = "none"; document.body.style.overflow = "auto"; };
+    modalClose.onclick = (e) => { 
+      e.preventDefault(); 
+      modal.style.display = "none"; 
+      document.body.style.overflow = "auto"; 
+    };
+    
     searchBox.oninput = () => renderList(searchBox.value.toLowerCase());
+    
+    // 初始化列表
     renderList();
   </script>
 </body>
