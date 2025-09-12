@@ -126,51 +126,12 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Marked.js 扩展，用于保护 LaTeX 公式不被破坏
-    // 这是一个更强大的方法，它在解析Markdown时，会把$$...$$和$...$视为一个特殊类型的token
-    // 从而保证内部的字符（如下划线）不会被当作Markdown语法解析。
-    const blockMath = {
-      name: 'blockMath',
-      level: 'block',
-      start(src) { return src.indexOf('$$'); },
-      tokenizer(src, tokens) {
-        const rule = /^\$\$([^$]+?)\$\$/;
-        const match = rule.exec(src);
-        if (match) {
-          return {
-            type: 'html', // 将其标记为HTML，Marked.js会直接通过
-            raw: match[0],
-            text: match[0]
-          };
-        }
-      },
-      renderer(token) {
-        return token.text;
-      }
-    };
-
-    const inlineMath = {
-      name: 'inlineMath',
-      level: 'inline',
-      start(src) { return src.indexOf('$'); },
-      tokenizer(src, tokens) {
-        const rule = /^\$([^$\n]+?)\$/;
-        const match = rule.exec(src);
-        if (match) {
-          return {
-            type: 'text', // 将其标记为纯文本，Marked.js会直接通过
-            raw: match[0],
-            text: match[0]
-          };
-        }
-        return false;
-      },
-      renderer(token) {
-        return token.text;
-      }
-    };
-
-    marked.use({ extensions: [blockMath, inlineMath] });
+    // 关键更改：配置 Marked.js
+    marked.use({
+        gfm: true, // 启用 GitHub Flavored Markdown
+        mangle: false, // 禁用可能会破坏公式的混淆处理
+        headerIds: false // 禁用自动生成标题ID，与你的代码无关但一般推荐
+    });
 
     const posts = [
       {
@@ -237,7 +198,6 @@
       const html = marked.parse(markdown);
       postContent.innerHTML = html;
       
-      // 必须在内容注入DOM之后调用，以确保MathJax能找到公式
       MathJax.typesetPromise();
 
       modal.style.display = "flex";
