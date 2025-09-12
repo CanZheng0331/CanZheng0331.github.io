@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
   <meta name="color-scheme" content="light dark">
   <style>
-    /* 基础样式，与你原代码保持一致 */
+    /* 基础样式，与原代码保持一致 */
     .post-list {
       list-style: none;
       padding: 0;
@@ -115,7 +115,7 @@
         processEscapes: true
       },
       options: {
-        ignoreHtmlClass: '.*',
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
         processHtmlClass: 'prose'
       }
     };
@@ -124,7 +124,12 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // 设置 marked.js 配置，禁用 HTML 转义以保护 LaTeX 公式
+    marked.setOptions({
+      gfm: true,
+      breaks: true,
+      sanitizer: false // 禁用 sanitizer，确保公式不被转义
+    });
 
     const posts = [
       {
@@ -187,12 +192,18 @@
     function openPost(post, markdown) {
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
-      postContent.innerHTML = marked(markdown);
-      
-      // 确保渲染公式
-      setTimeout(() => {
-        MathJax.typeset(); // 重新渲染所有公式
-      }, 100);
+      postContent.classList.add("prose"); // 确保 post-content 有 prose 类
+      postContent.innerHTML = marked.parse(markdown);
+
+      // 使用 MutationObserver 确保 DOM 更新后再渲染 MathJax
+      const observer = new MutationObserver(() => {
+        MathJax.typesetPromise().then(() => {
+          console.log("MathJax rendering completed");
+          observer.disconnect(); // 渲染完成后停止观察
+        }).catch(err => console.error("MathJax error:", err));
+      });
+
+      observer.observe(postContent, { childList: true, subtree: true });
 
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
