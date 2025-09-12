@@ -7,65 +7,14 @@
   <link rel="stylesheet" href="styles.css" />
   <meta name="color-scheme" content="light dark">
   <style>
-    /* 基础样式，与你原代码保持一致 */
-    .post-list {
-      list-style: none;
-      padding: 0;
-    }
-    .post-list li {
-      margin: 0.5rem 0;
-    }
-    .tag {
-      display: inline-block;
-      background: #444;
-      color: #fff;
-      padding: 2px 6px;
-      margin: 0 4px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
-    .search-box {
-      margin: 1rem 0;
-    }
-    .modal {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--bg, #fff);
-      display: none;
-      overflow-y: auto;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-    .modal-content {
-      background: var(--bg, #fff);
-      color: var(--fg, #000);
-      max-width: 100%;
-      width: 100%;
-      height: 100%;
-      padding: 1rem 2rem;
-      border-radius: 0;
-      overflow-y: auto;
-      max-height: 100vh;
-      box-sizing: border-box;
-    }
-    .modal-close {
-      position: absolute;
-      top: 1rem;
-      left: 2rem;
-      font-size: 1rem;
-      cursor: pointer;
-      padding: 5px 10px;
-      background: #eee;
-      border-radius: 6px;
-      color: #333;
-      text-decoration: none;
-    }
-    @media (max-width: 768px) {
-      .modal-close { left: 1rem; }
-      .modal-content { padding: 1rem; }
-    }
+    .post-list { list-style: none; padding: 0; }
+    .post-list li { margin: 0.5rem 0; }
+    .tag { display: inline-block; background: #444; color: #fff; padding: 2px 6px; margin: 0 4px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
+    .search-box { margin: 1rem 0; }
+    .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg, #fff); display: none; overflow-y: auto; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-content { background: var(--bg, #fff); color: var(--fg, #000); max-width: 100%; width: 100%; height: 100%; padding: 1rem 2rem; border-radius: 0; overflow-y: auto; max-height: 100vh; box-sizing: border-box; }
+    .modal-close { position: absolute; top: 1rem; left: 2rem; font-size: 1rem; cursor: pointer; padding: 5px 10px; background: #eee; border-radius: 6px; color: #333; text-decoration: none; }
+    @media (max-width: 768px) { .modal-close { left: 1rem; } .modal-content { padding: 1rem; } }
   </style>
 </head>
 <body>
@@ -81,7 +30,6 @@
       </nav>
     </div>
   </header>
-
   <main class="container">
     <section class="section">
       <h2>Blog Posts</h2>
@@ -91,7 +39,6 @@
       </ul>
     </section>
   </main>
-
   <div id="modal" class="modal">
     <div class="modal-content card prose">
       <a href="#" id="modal-close" class="modal-close">返回</a>
@@ -101,13 +48,13 @@
       <div id="post-content"></div>
     </div>
   </div>
-
   <footer class="footer">
     <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
   </footer>
-
+  
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    // MathJax 配置
+    // 关键更改：将 MathJax 配置和加载放在 Marked.js 之后
     window.MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -121,26 +68,13 @@
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-  
+
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // 移除 marked.js 的引用和所有相关代码
-    // const marked = ...; // 移除这行
-
     const posts = [
-      {
-        id: "hello-world",
-        title: "Hello, World: Markdown + LaTeX Demo",
-        tags: ["demo", "latex"],
-        file: "posts/hello-world.md"
-      },
-      {
-        id: "otfs-notes",
-        title: "Notes on OTFS",
-        tags: ["OTFS", "Signal Processing"],
-        file: "posts/otfs-notes.md"
-      }
+      { id: "hello-world", title: "Hello, World: Markdown + LaTeX Demo", tags: ["demo", "latex"], file: "posts/hello-world.md" },
+      { id: "otfs-notes", title: "Notes on OTFS", tags: ["OTFS", "Signal Processing"], file: "posts/otfs-notes.md" }
     ];
 
     const list = document.getElementById("post-list");
@@ -159,41 +93,28 @@
           const titleMatch = post.title.toLowerCase().includes(textFilter.toLowerCase());
           const contentMatch = text.toLowerCase().includes(textFilter.toLowerCase());
           const tagMatch = tagFilter === "" || post.tags.includes(tagFilter);
-
           if ((textFilter && (titleMatch || contentMatch) && tagMatch) || (!textFilter && tagMatch)) {
             hasResults = true;
             const li = document.createElement("li");
-            li.innerHTML = `<a href="#">${post.title}</a>
-                            ${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
-            li.querySelector("a").onclick = (e) => {
-              e.preventDefault();
-              openPost(post, text);
-            };
-            li.querySelectorAll(".tag").forEach(tagEl => {
-              tagEl.onclick = () => {
-                searchBox.value = "";
-                renderList("", tagEl.dataset.tag);
-              };
-            });
+            li.innerHTML = `<a href="#">${post.title}</a>${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
+            li.querySelector("a").onclick = (e) => { e.preventDefault(); openPost(post, text); };
+            li.querySelectorAll(".tag").forEach(tagEl => { tagEl.onclick = () => { searchBox.value = ""; renderList("", tagEl.dataset.tag); }; });
             list.appendChild(li);
           }
         });
       });
-      setTimeout(() => {
-        if (!hasResults && list.childElementCount === 0) {
-          list.innerHTML = "<li><small class='muted'>没有找到相关文章。</small></li>";
-        }
-      }, 500);
+      setTimeout(() => { if (!hasResults && list.childElementCount === 0) { list.innerHTML = "<li><small class='muted'>没有找到相关文章。</small></li>"; } }, 500);
     }
 
     function openPost(post, markdown) {
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
       
-      // 关键更改：直接将Markdown内容作为纯文本注入
-      postContent.textContent = markdown;
+      // 1. 使用 Marked.js 将 Markdown 转换为 HTML
+      const html = marked.parse(markdown);
+      postContent.innerHTML = html;
       
-      // 告诉 MathJax 重新扫描并渲染公式
+      // 2. 告诉 MathJax 重新扫描并渲染公式
       MathJax.typesetPromise();
 
       modal.style.display = "flex";
@@ -201,14 +122,8 @@
       window.scrollTo(0, 0);
     }
 
-    modalClose.onclick = (e) => {
-      e.preventDefault();
-      modal.style.display = "none";
-      document.body.style.overflow = "auto";
-    };
-
+    modalClose.onclick = (e) => { e.preventDefault(); modal.style.display = "none"; document.body.style.overflow = "auto"; };
     searchBox.oninput = () => renderList(searchBox.value.toLowerCase());
-
     renderList();
   </script>
 </body>
