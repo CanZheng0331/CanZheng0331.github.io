@@ -145,11 +145,11 @@
 
 尽管实际的信号是实数（由振荡器产生），但为了简化分析，通常使用复基带信号（complex baseband signal）来表示。发射信号 $s(t)$ 被建模为
 
-$$ s(t) = \text{Re}\{u(t)e^{j2\pi f\_c t}\},$$
+$$ s(t) = \text{Re}\lbrace u(t)e^{j2\pi f_c t}\rbrace,$$
 
 其中 $u(t) = x(t)+jy(t)$ 是复基带信号（复包络）包含同相分量 $x(t)$ 和正交分量 $y(t)$。这种表示方式使得信号处理独立于高频载波 $f_c$，极大地简化了分析。信号 $s(t)$ 的功率 $P_t$ 等于复基带信号 $u(t)$ 功率 $P_u$ 的一半，即 $P_t=\frac{P_u}{2}$。
 
-接收信号 $r(t)$ 的形式与发射信号相似，为 $$r(t)=\text{Re}\{v(t)e^{j2πf_c t}\},$$
+接收信号 $r(t)$ 的形式与发射信号相似，为 $$r(t)=\text{Re}\lbrace v(t)e^{j2πf_c t}\rbrace,$$
 
 接收到的复基带信号 $v(t)$ 取决于信号通过的信道。对于时不变信道，接收信号的复基带信号 $v(t)$ 是发射信号的复基带信号 $u(t)$ 与信道的等效低通脉冲响应 $c(t)$ 的卷积。这意味着信道对信号的影响可以通过一个固定的函数来描述。
 
@@ -179,7 +179,7 @@ $$f_D = \frac{v \cos\theta}{\lambda},$$
 
 考虑视距（Line-of-Sight, LOS）信道，即信号在发射机和接收机之间沿直线传播，没有障碍物。在自由空间信道中，接收信号 $r(t)$ 与发射信号 $s(t)$ 的复基带信号 $u(t)$ 之间的关系为：
 
-$$r(t) = \text{Re}\left\{\frac{\lambda \sqrt{G_l}e^{-\frac{j2\pi d}{\lambda}}}{4\pi d}u(t)e^{j2\pi f_c t}\right\},$$
+$$r(t) = \text{Re}\left\lbrace \frac{\lambda \sqrt{G_l}e^{-\frac{j2\pi d}{\lambda}}}{4\pi d}u(t)e^{j2\pi f_c t}\right\rbrace,$$
 
 其中 $G_l$ 是发射和接收天线在视距方向上的场辐射模式乘积；$e^{-\frac{j2\pi d}{\lambda}}$ 是由于信号传播距离 $d$ 引起的相位偏移。
 
