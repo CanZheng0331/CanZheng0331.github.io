@@ -100,9 +100,8 @@ PS2：本文势必有许多 typo，因为本地编译的 $\LaTeX$ 代码与网�
 
 **信号模型：**
 
-- $\text{GU}\_g$ 的接收信号：$$ y\_g = \sum\_{s \in V\_g} \alpha\_{sg} \mathbf{h}\_{sg}^H \mathbf{w}\_{sg} x\_g + \sum\_{g' \neq g} \sum\_{s \in V\_g} \alpha\_{sg'} \mathbf{h}\_{sg}^H \mathbf{w}\_{sg'} x\_{g'} + n\_g, $$
-
-其中 $ \alpha\_{sg} \in \{0,1\} $ 表示链接（1 为连接），$ \mathbf{w}\_{sg} \in \mathbb{C}^{N \times 1} $ 是波束成形矢量，$ x\_g $ 是 $\text{GU}\_g$ 数据（$ E[|x\_g|^2] = 1 $），$ n\_g \sim \mathcal{CN}(0, \sigma\_s^2) $ 是噪声。
+- $\text{GU}\_g$ 的接收信号：$$ y\_g = \sum\_{s \in V\_g} \alpha\_{sg} \mathbf{h}\_{sg}^H \mathbf{w}\_{sg} x\_g + \sum\_{g' \neq g} \sum\_{s \in \mathcal{V}\_g} \alpha\_{sg'} \mathbf{h}\_{sg}^H \mathbf{w}\_{sg'} x\_{g'} + n\_g, $$
+其中 $ \alpha\_{sg} \in \lbrace 0,1\rbrace  $ 表示链接（1 为连接），$ \mathbf{w}\_{sg} \in \mathbb{C}^{N \times 1} $ 是波束成形矢量，$ x\_g $ 是 $\text{GU}\_g$ 数据（$ E[|x\_g|^2] = 1 $），$ n\_g \sim \mathcal{CN}(0, \sigma\_s^2) $ 是噪声。
 - SINR：$$ \gamma\_g = \frac{|\sum\_{s \in V\_g} \alpha\_{sg} \mathbf{h}\_{sg}^H \mathbf{w}\_{sg}|^2}{\sum\_{g' \neq g} |\sum\_{s \in V\_g} \alpha\_{sg'} \mathbf{h}\_{sg}^H \mathbf{w}\_{sg'}|^2 + \sigma\_s^2}. $$
 - GU SE：$$ R\_g = \log\_2(1 + \gamma\_g). $$
 - 总SE：$$ R = \sum\_{g=1}^{N\_u} R\_g. $$
@@ -110,13 +109,13 @@ PS2：本文势必有许多 typo，因为本地编译的 $\LaTeX$ 代码与网�
 
 **优化问题（OP）：**
 
-目标：$ \max\_{\{\mathbf{w}\_{sg}, \alpha\_{sg}\}} \sum\_{g=1}^{N\_u} \log\_2(1 + \gamma\_g) $。
+目标：$ \max\_{\lbrace \mathbf{w}\_{sg}, \alpha\_{sg}\rbrace } \sum\_{g=1}^{N\_u} \log\_2(1 + \gamma\_g) $。
 约束：
 
 - C1: $ \sum\_g \alpha\_{sg} \|\mathbf{w}\_{sg}\|^2 \leq P\_T $，每个卫星功率上限 $ P\_T $。
 - C2: $ \sum\_g \alpha\_{sg} \leq N\_b $，每个卫星服务 GUs 不超过 $ N\_b $。
 - C3: $ \sum\_{s \in V\_g} \alpha\_{sg} \geq 1 $，每个 GU 至少连接一个卫星。
-- C4: $ \alpha\_{sg} \in \{0,1\} $。
+- C4: $ \alpha\_{sg} \in \lbrace 0,1\rbrace  $。
 
 
 注意：OP不总是可行（C2 和 C3 可能冲突），优先 C2，尽量连接更多 GUs。目标函数非凸，变量耦合，无法直接求解。
@@ -208,7 +207,7 @@ FFR下干扰显著，GU天线对齐第一个服务卫星，干扰受偏轴角影
 - 输入：信道 $\mathbf{H}\_s$，波束成形 $\mathbf{F}\_s$，可见集 $V\_g$;
 - 输出：单连接链接 $\mathbf{L}$，集 $S$。
 - 步骤：
-  1. 初始化： $S=\{1, \cdots, N\_s\}$，$G\_n=\{1 \cdots,N\_u\}$，$\mathbf{L}=\mathbf{0}$；
+  1. 初始化： $S=\lbrace 1, \cdots, N\_s\rbrace $，$G\_n=\lbrace 1 \cdots,N\_u\rbrace $，$\mathbf{L}=\mathbf{0}$；
   2. 处理 $|V\_g|=1$ 的 GU，建立链接，移除 $g$；
   3. 循环计算所有可能 $\Delta R\_{sg}$，选 $[ŝ,ĝ] = \arg \max\_{(s,g)}\Delta R\_{sg}$；
   4. 若卫星 $ŝ$ 有资源，建立 $\mathbf{L}(ŝ,ĝ)=1$，移除 $ĝ$；否则移除 $ŝ$；
@@ -334,8 +333,8 @@ FFR下干扰显著，GU天线对齐第一个服务卫星，干扰受偏轴角影
 
 ### 2 低轨卫星巨型星座系统
 #### 2.1 系统模型
-- 系统构成：考虑一个LEO卫星巨型星座系统，包含 $ L $ 颗 LEO 卫星，每颗卫星配备 $ N = N\_h \times N\_v $ 个均匀平面阵列（UPA）天线，共同服务 $ K $ 个单天线 UE。卫星集为 $ \mathcal{L} = \{1, 2, \ldots, L\} $，UE 集为 $ \mathcal{K} = \{1, 2, \ldots, K\} $。
-- 卫星与 UE 关联：第 $ k $ 个 UE 的服务卫星集为 $ L\_k \subseteq \mathcal{L} $，第 $ l $ 个卫星关联的 UE 集为 $ K\_l = \{k \in K | l \in L\_k\} \subseteq \mathcal{K} $。
+- 系统构成：考虑一个LEO卫星巨型星座系统，包含 $ L $ 颗 LEO 卫星，每颗卫星配备 $ N = N\_h \times N\_v $ 个均匀平面阵列（UPA）天线，共同服务 $ K $ 个单天线 UE。卫星集为 $ \mathcal{L} = \lbrace 1, 2, \ldots, L\rbrace  $，UE 集为 $ \mathcal{K} = \lbrace 1, 2, \ldots, K\rbrace  $。
+- 卫星与 UE 关联：第 $ k $ 个 UE 的服务卫星集为 $ L\_k \subseteq \mathcal{L} $，第 $ l $ 个卫星关联的 UE 集为 $ K\_l = \lbrace k \in K | l \in L\_k\rbrace  \subseteq \mathcal{K} $。
 - 回程连接：LEO 卫星通过光学回程与中央节点（例如 MEO 或 GEO 卫星）连接，共享位置、统计 CSI、功率权重、传输数据和同步控制信号。
 - 位置信息：第 $ l $ 个卫星和第 $ k $ 个 UE 的三维位置分别为 $ \mathbf{p}^\text{sat}\_l = [p^\text{sat}\_{l,x}, p^\text{sat}\_{l,y}, p^\text{sat}\_{l,z}]^T $ 和 $ \mathbf{p}^\text{sat}\_k = [p^\text{sat}\_{k,x}, p^\text{sat}\_{k,y}, p^\text{sat}\_{k,z}]^T $。卫星位置通过星历数据获取，UE 位置通过全球导航卫星系统（GNSS）及高级定位技术（如 TDOA、Doppler 移位、AOD）确定。
 - 分组优化：为简化，邻近 UE 可分组，因其统计 CSI 相似（例如，$ N = 8 \times 8 $天线阵列的角分辨率约 7.2°），采用混合架构复用时频资源。
@@ -399,7 +398,7 @@ $$h\_{l,k} = \sqrt{v\_{l,k}} \left( \sqrt{\kappa\_{l,k}} e^{j \phi\_{l,k}} + \al
 
 #### 3.1 基于定位的统计 CSI 获取
 
-LEO 卫星和 UE 通过 GNSS 及高级定位技术（如 TDOA、Doppler、AOD）获取位置 $\{p^\text{sat}\_l\}\_{l \in L}$ 和 $\{p^\text{ue}\_k\}\_{k \in K} $，包括：仰角和方位角 AOD（$ \theta\_{l,k}, \phi\_{l,k} $）、大尺度衰落系数 $\beta\_{l,k}$、Rician K 因子 $\kappa\_{l,k}$等。
+LEO 卫星和 UE 通过 GNSS 及高级定位技术（如 TDOA、Doppler、AOD）获取位置 $\lbrace p^\text{sat}\_l\rbrace \_{l \in L}$ 和 $\lbrace p^\text{ue}\_k\rbrace \_{k \in K} $，包括：仰角和方位角 AOD（$ \theta\_{l,k}, \phi\_{l,k} $）、大尺度衰落系数 $\beta\_{l,k}$、Rician K 因子 $\kappa\_{l,k}$等。
 
 
 
@@ -411,7 +410,7 @@ LEO 卫星和 UE 通过 GNSS 及高级定位技术（如 TDOA、Doppler、AOD）
 
 #### 3.2 下行链路统计预编码
 
-- 目标：在 CF-mNTN 中，LEO 卫星基于统计 CSI（$ \{\theta\_{l,k}, \phi\_{l,k}, \beta\_{l,k}, \kappa\_{l,k}, \nu\_{l,k}, \tau\_{l,k}\}\_{l \in L, k \in K} $）本地确定下行预编码向量 $\{w\_{l,k}\}\_{l \in L, k \in K}$，以优化联合传输。
+- 目标：在 CF-mNTN 中，LEO 卫星基于统计 CSI（$ \lbrace \theta\_{l,k}, \phi\_{l,k}, \beta\_{l,k}, \kappa\_{l,k}, \nu\_{l,k}, \tau\_{l,k}\rbrace \_{l \in L, k \in K} $）本地确定下行预编码向量 $\lbrace w\_{l,k}\rbrace \_{l \in L, k \in K}$，以优化联合传输。
 - 挑战：传统 CF-mMIMO 使用最大比率传输（MRT）和迫零（ZF）预编码依赖瞬时 CSI，而 LEO 卫星仅拥有统计 CSI，因此需开发新方法。
 - 方法：利用信道向量 $\mathbf{h}\_{l,k}$ 与 LOS 阵列导向向量 $\mathbf{a}\_{l,k}$ 的平行性，提出统计 MRT（sMRT）和统计 ZF（sZF）预编码：
 
@@ -488,7 +487,7 @@ $$\gamma\_{k,j}^\text{ui} \triangleq \sqrt{\rho\_t} \sum\_{l \in L\_j} p\_{l,j} 
 近似：将$ \gamma\_k^\text{bu}$、$\gamma\_{k,j}^\text{ui}$ 和 $\mathsf{n}\_k$ 视为有效噪声，使用速率近似：
 $$R\_k^\text{CF-mNTN} = \log\_2 \left( 1 + \frac{|\gamma\_k^\text{ds}|^2}{\mathbb{E}[|\gamma\_k^\text{bu}|^2] + \sum\_{j \neq k} \mathbb{E}[|\gamma\_{k,j}^\text{ui}|^2] + \sigma\_n^2} \right)$$
 
-定理1：提供闭合形式表达式（见原文(22)，需参考附录A），函数依赖于卫星集群 $ \{\mathcal{L}\_k\}\_{k \in K} $、功率权重$ \{p\_{l,k}\}\_{l \in L, k \in K} $ 和统计 CSI。
+定理1：提供闭合形式表达式（见原文(22)，需参考附录A），函数依赖于卫星集群 $ \lbrace \mathcal{L}\_k\rbrace \_{k \in K} $、功率权重$ \lbrace p\_{l,k}\rbrace \_{l \in L, k \in K} $ 和统计 CSI。
 
 **关键点：**
 
@@ -497,7 +496,7 @@ $$R\_k^\text{CF-mNTN} = \log\_2 \left( 1 + \frac{|\gamma\_k^\text{ds}|^2}{\mathb
 
 ### 4 以用户为中心的低轨卫星集群和协同功率分配
 
-- 目标：提出一种联合用户中心 LEO 卫星聚类和合作功率分配技术，确定最优卫星集群 $\{L\_k\}\_{k \in K}$ 和功率权重 $\{p\_{l,k}\}\_{l \in L, k \in K}$，最大化 UE 的最小可达速率 $R\_k^\text{CF-mNTN}$。
+- 目标：提出一种联合用户中心 LEO 卫星聚类和合作功率分配技术，确定最优卫星集群 $\lbrace L\_k\rbrace \_{k \in K}$ 和功率权重 $\lbrace p\_{l,k}\rbrace \_{l \in L, k \in K}$，最大化 UE 的最小可达速率 $R\_k^\text{CF-mNTN}$。
 - 问题描述：优化问题形式化为最大最小（max-min）问题 P1，确保所有 UE 的 QoS 均匀。考虑实际场景中 UE 数量动态变化，通过调整活跃 UE 集 $K\_c \subseteq K$ 和将非活跃 UE 的 CSI/功率设为零，适应不同 UE 数。
 - 挑战：$\mathcal{P}1$ 是非凸组合优化问题，由于卫星数量大（如 $L=10$、$K=5$、$K\_\text{max}=5$ 时可能卫星关联数达 $10^{12}$），穷举搜索不可行。
 - 方法：将聚类问题重构为稀疏恢复问题，使用再加权 2 范数逼近处理稀疏约束，连续凸逼近（SCA）处理 SINR 约束，最终转化为凸二次锥规划（SOCP）求解。
@@ -506,13 +505,13 @@ $$R\_k^\text{CF-mNTN} = \log\_2 \left( 1 + \frac{|\gamma\_k^\text{ds}|^2}{\mathb
 
 **优化问题 $\mathcal{P}1$（Max-Min问题）**
 - 目标函数：最大化最小 UE 速率：
-$$\max\_{\{\mathcal{L}\_k, p\_{l,k}\}\_{l \in \mathcal{L}, k \in \mathcal{K}}} \min\_{k \in \mathcal{K}} R\_k^\text{CF-mNTN}$$
+$$\max\_{\lbrace \mathcal{L}\_k, p\_{l,k}\rbrace \_{l \in \mathcal{L}, k \in \mathcal{K}}} \min\_{k \in \mathcal{K}} R\_k^\text{CF-mNTN}$$
 其中 $R\_k^\text{CF-mNTN}$ 来自第三章的闭合形式（定理 1），依赖统计 CSI、聚类和功率。
 
 - 约束：
   1. 每个卫星关联 UE 数不超过 $K\_\text{max}$（受限于 RF 链路数）：
 $$|\mathcal{K}\_l| \leq K\_{\max} \quad \forall l \in \mathcal{L}$$
-其中 $\mathcal{K}\_l = \{k \in \mathcal{K} \mid l \in \mathcal{L}\_k\} $。
+其中 $\mathcal{K}\_l = \lbrace k \in \mathcal{K} \mid l \in \mathcal{L}\_k\rbrace  $。
   2. 每个卫星功率约束（归一化）：
 $$\sum\_{k \in K\_l} p\_{l,k}^2 \leq 1 \quad \forall l \in \mathcal{L}$$
 
@@ -532,7 +531,7 @@ p\_{l,k} & \text{if } l \in \mathcal{L}\_k \\
 \end{cases}$$
 
 - 聚类映射：$ \mathcal{L}\_k$ 为 $\tilde{p}\_k$ 的非零元素索引：
-$$\mathcal{L}\_k = \{ l \in \mathcal{L} \mid {1}\_{\mathbb{R}^+}(\tilde{p}\_{l,k}) = 1 \}$$
+$$\mathcal{L}\_k = \lbrace  l \in \mathcal{L} \mid {1}\_{\mathbb{R}^+}(\tilde{p}\_{l,k}) = 1 \rbrace $$
 其中$ 1\_{\mathbb{R}^+}(x) = 1 $ 若$ x > 0 $，否则为0。
 - 稀疏约束：聚类大小约束转化为稀疏度约束：
 $$|\mathcal{K}\_l| \leq K\_{\max} \iff \sum\_{k=1}^K 1\_{\mathbb{R}^+}(\tilde{p}\_{l,k}) \leq K\_{\max}$$
@@ -543,11 +542,11 @@ $$R\_k^\text{CF-mNTN} = \log\_2 \left( 1 + \frac{(\mathbf{b}\_k^T \tilde{\mathbf
 
   - $ \mathbf{b}\_k = [b\_{1,k}, \dots, b\_{L,k}]^T \in \mathbb{R}^L $，$ b\_{l,k} = \sqrt{\rho\_t N \kappa\_{l,k} v\_{l,k}} $（sMRT）或$ \sqrt{\rho\_t \kappa\_{l,k} v\_{l,k}} \|\mathbf{A}\_l (\mathbf{A}\_l^H \mathbf{A}\_l)^{-1} \mathbf{e}\_k\|\_2^{-1} $（sZF）；
   - $ \mathbf{C}\_{k,j} = \text{diag}(c\_{1,k}, \dots, c\_{L,k}) \in \mathbb{R}^{L \times L} $，$ c\_{l,k} = \sqrt{\frac{\rho\_t}{N} v\_{l,k}} |a\_{l,k}^H a\_{l,j}| $（sMRT）或类似；
-  - $ \mathbf{D}\_{k,j} = \begin{bmatrix} \Re\{d\_{1,k,j}\} & \cdots & \Re\{d\_{L,k,j}\} \\ \Im\{d\_{1,k,j}\} & \cdots & \Im\{d\_{L,k,j}\} \end{bmatrix} \in \mathbb{R}^{2 \times L} $，$ d\_{l,k,j} = \sqrt{\frac{\rho\_t}{N} \kappa\_{l,k} v\_{l,k}} e^{j(\phi\_{l,j} - \phi\_{l,k})} a\_{l,k}^H a\_{l,j} $（sMRT）或 0（sZF）。
+  - $ \mathbf{D}\_{k,j} = \begin{bmatrix} \Re\lbrace d\_{1,k,j}\rbrace  & \cdots & \Re\lbrace d\_{L,k,j}\rbrace  \\ \Im\lbrace d\_{1,k,j}\rbrace  & \cdots & \Im\lbrace d\_{L,k,j}\rbrace  \end{bmatrix} \in \mathbb{R}^{2 \times L} $，$ d\_{l,k,j} = \sqrt{\frac{\rho\_t}{N} \kappa\_{l,k} v\_{l,k}} e^{j(\phi\_{l,j} - \phi\_{l,k})} a\_{l,k}^H a\_{l,j} $（sMRT）或 0（sZF）。
 
 
 **重构问题 $\mathcal{P}2$：** 引入辅助变量 $t = \min\_{k\in \mathcal{K}} \text{SINR}\_k$，等价于最大化 t：
-$$\max\_{t, \{\tilde{p}\_k\}\_{k \in K}} t$$
+$$\max\_{t, \lbrace \tilde{p}\_k\rbrace \_{k \in K}} t$$
 - 约束：
 
   1. SINR 约束；
@@ -568,8 +567,8 @@ $$\omega\_{l,k} = \frac{1}{(\tilde{p}\_{l,k}^\text{prev})^2 + \epsilon^{-1}}$$
 - 稀疏逼近：
 $$\sum\_{k=1}^K 1\_{\mathbb{R}^+}(\tilde{p}\_{l,k}) \approx \sum\_{k=1}^K \omega\_{l,k} \tilde{p}\_{l,k}^2$$
 
-- 交替求解：固定 $\{\tilde{p}\_k\}$ 更新 $\{\omega\_{l,k}\}$，然后固定 $\{\omega\_{l,k}\}$ 求解简化问题 $\mathcal{P}3$：
-$$\max\_{t, \{\tilde{p}\_k\}\_{k \in K}} t$$
+- 交替求解：固定 $\lbrace \tilde{p}\_k\rbrace $ 更新 $\lbrace \omega\_{l,k}\rbrace $，然后固定 $\lbrace \omega\_{l,k}\rbrace $ 求解简化问题 $\mathcal{P}3$：
+$$\max\_{t, \lbrace \tilde{p}\_k\rbrace \_{k \in K}} t$$
 约束类似 $\mathcal{P}2$，但稀疏约束为 $\sum\_{k=1}^K \omega\_{l,k} \tilde{p}\_{l,k}^2 \leq K\_{\max}$。
 
 - 优势：将非凸稀疏约束转化为凸二次约束，但 $\mathcal{P}3$ 仍因 SINR 分数约束非凸。
@@ -587,22 +586,22 @@ $$F(\tilde{\mathbf{p}}\_k, t \mid \tilde{p}\_k^\text{prev}, t^\text{prev}) = f(\
 $$F = \frac{(\tilde{p}\_k^\text{prev})^T \mathbf{b}\_k \mathbf{b}\_k^T (2 t^\text{prev} \tilde{p}\_k - t \tilde{p}\_k^\text{prev})}{(t^\text{prev})^2}$$
 由于 f 凸，满足 F 的解也满足原约束。
 问题 $\mathcal{P}4$：用 F 替换 f，得到凸 SOCP 问题：
-$$\max\_{t, \{\tilde{\mathcal{p}}\_k\}\_{k \in \mathcal{K}}} t$$
+$$\max\_{t, \lbrace \tilde{\mathcal{p}}\_k\rbrace \_{k \in \mathcal{K}}} t$$
 SINR 约束为逼近 SINR，其他约束同 $\mathcal{P}3$。
-SOCP 重构：约束可转化为二次锥形式 $\|\mathbf{A} \mathbf{x} + \mathbf{b}\|\_2 \leq \mathbf{c}^T \mathbf{x} + d $，目标线性，使用求解器（如 SDPT3）求解最优 $(t^\text{opt}, \{\tilde{p}\_k^\text{opt}\}\_{k \in K}) $。
+SOCP 重构：约束可转化为二次锥形式 $\|\mathbf{A} \mathbf{x} + \mathbf{b}\|\_2 \leq \mathbf{c}^T \mathbf{x} + d $，目标线性，使用求解器（如 SDPT3）求解最优 $(t^\text{opt}, \lbrace \tilde{p}\_k^\text{opt}\rbrace \_{k \in K}) $。
 迭代：更新 $\tilde{p}\_k^\text{prev}= \tilde{p}\_k^\text{opt}$、$t^\text{prev} = t^\text{opt}$，重复直到收敛。
 
 
 #### 4.4 算法1：以用户为中心的 LEO 卫星分簇及协同功率分配算法
 
 - 输入：统计 CSI、$ \rho\_t $、$K\_\text{max}$、$ \epsilon $。
-- 初始化：计算系数 $\{\mathbf{b}\_k, \mathbf{C}\_{k,j}, \mathbf{D}\_{k,j}\} $，$ \omega\_{l,k} = 1 $。
+- 初始化：计算系数 $\lbrace \mathbf{b}\_k, \mathbf{C}\_{k,j}, \mathbf{D}\_{k,j}\rbrace  $，$ \omega\_{l,k} = 1 $。
 - 外迭代（再加权）：直到稀疏约束满足。
 
 - 内迭代（SCA）：初始化 $\tilde{\mathbf{p}}\_k^\text{prev} = \mathbf{0}\_L $、$ t^\text{prev} = 0 $，求解P4直到收敛。
 更新$ \tilde{\mathbf{p}}\_k^\text{prev}$、$\omega\_{l,k}$。
 
-- 输出：$ \mathcal{L}\_k = \{l \in L \mid 1\_{\mathbb{R}^+}(\tilde{p}\_{l,k}) = 1\} $，$p\_{l,k} = \tilde{p}\_{l,k} $（$l \in \mathcal{L}\_k$）。
+- 输出：$ \mathcal{L}\_k = \lbrace l \in L \mid 1\_{\mathbb{R}^+}(\tilde{p}\_{l,k}) = 1\rbrace  $，$p\_{l,k} = \tilde{p}\_{l,k} $（$l \in \mathcal{L}\_k$）。
 
 #### 4.5 计算复杂度分析
 
@@ -634,7 +633,7 @@ $$\tilde{\mathsf{y}}\_{l,k} \triangleq \frac{1}{\sqrt{\eta\_t}} \mathsf{Y}\_l \p
 **MMSE 信道估计**
 
 - 估计：MMSE估计 $\hat{\mathbf{h}}\_{l,k}$：
-$$\hat{\mathbf{h}}\_{l,k} = \mathbb{E}\{\mathbf{h}\_{l,k}\} + \text{Cov}(\mathbf{h}\_{l,k}, \tilde{\mathbf{y}}\_{l,k}) \mathbf{V}(\tilde{\mathbf{y}}\_{l,k})^{-1} \left( \tilde{\mathbf{y}}\_{l,k} - \mathbb{E}\{\tilde{\mathbf{y}}\_{l,k}\} \right)$$
+$$\hat{\mathbf{h}}\_{l,k} = \mathbb{E}\lbrace \mathbf{h}\_{l,k}\rbrace  + \text{Cov}(\mathbf{h}\_{l,k}, \tilde{\mathbf{y}}\_{l,k}) \mathbf{V}(\tilde{\mathbf{y}}\_{l,k})^{-1} \left( \tilde{\mathbf{y}}\_{l,k} - \mathbb{E}\lbrace \tilde{\mathbf{y}}\_{l,k}\rbrace  \right)$$
 - 展开：
 $$\hat{\mathbf{h}}\_{l,k} = e^{j \phi\_{l,k}} \sqrt{\kappa\_{l,k} v\_{l,k}} \mathbf{a}\_{l,k} + v\_{l,k} \mathbf{a}\_{l,k}^H \mathbf{V}\_{l,k}^{-1} \left( \tilde{\mathbf{y}}\_{l,k} - \sum\_{j=1}^K \psi\_j^H \psi\_k e^{j \phi\_{l,j}} \sqrt{\kappa\_{l,j} v\_{l,j}} \mathbf{a}\_{l,j} \right) \mathbf{a}\_{l,k}$$
 - 其中协方差矩阵：
@@ -644,13 +643,13 @@ $$\mathbf{V}\_{l,k} \triangleq \mathbf{V}(\tilde{\mathbf{y}}\_{l,k}) = \sum\_{j=
 **瞬时 MRT（iMRT）预编码**
 
 - 预编码向量：
-$$\mathbf{w}\_{l,k}^{iMRT} \triangleq \frac{\hat{\mathbf{h}}\_{l,k}}{\sqrt{\mathbb{E}\{\|\hat{\mathbf{h}}\_{l,k}\|\_2^2\}}} = \frac{\hat{\mathbf{h}}\_{l,k}}{\sqrt{N (\kappa\_{l,k} + x\_{l,k,k}) v\_{l,k}}}$$
+$$\mathbf{w}\_{l,k}^{iMRT} \triangleq \frac{\hat{\mathbf{h}}\_{l,k}}{\sqrt{\mathbb{E}\lbrace \|\hat{\mathbf{h}}\_{l,k}\|\_2^2\rbrace }} = \frac{\hat{\mathbf{h}}\_{l,k}}{\sqrt{N (\kappa\_{l,k} + x\_{l,k,k}) v\_{l,k}}}$$
 其中x\_{l,k,k} = v\_{l,k} \mathbf{a}{l,k}^H \mathbf{V}{l,k}^{-1} \mathbf{a}\_{l,k}（MMSE属性）。
 
 - 可达速率
 
 - 接收信号与解码：类似第三章，使用统计 CSI 解码：
-$$R\_k^\text{CF-mMIMO} = \log\_2 \left( 1 + \frac{|\gamma\_k^\text{ds}|^2}{\mathbb{E}\{|\gamma\_k^\text{bu}|^2\} + \sum\_{j \neq k} \mathbb{E}\{|\gamma\_k^\text{ui}|^2\} + \sigma\_n^2} \right),$$
+$$R\_k^\text{CF-mMIMO} = \log\_2 \left( 1 + \frac{|\gamma\_k^\text{ds}|^2}{\mathbb{E}\lbrace |\gamma\_k^\text{bu}|^2\rbrace  + \sum\_{j \neq k} \mathbb{E}\lbrace |\gamma\_k^\text{ui}|^2\rbrace  + \sigma\_n^2} \right),$$
 其中 $\gamma\_k^\text{ds}$、$\gamma\_k^\text{bu}$、$\gamma\_k^\text{ui}$ 与前文类似，但使用 $w\_{l,k}^\text{iMRT}$。
 - 定理 2：iMRT 下的闭合形式，包含 ${x\_{l,j,k}}$ 项（导频非正交度）：
 $$x\_{l,j,k} = v\_{l,k} \psi\_k^H \psi\_j \mathbf{a}\_{l,j}^H \mathbf{V}\_{l,j}^{-1} \mathbf{a}\_{l,k}$$
