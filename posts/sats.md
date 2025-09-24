@@ -44,7 +44,7 @@ PS2：本文势必有许多 typo，因为本地编译的 $\LaTeX$ 代码与网�
 
 **关键设置和假设：**
 - 有 $ N\_u $ 个 GUs 请求服务，以及 $ N\_s $ 颗对至少一个 GU 可见的 LEO 卫星；
-- 卫星在 Ka 频段运行，采用FFR，即整个网络复用相同频率，这提高了SE但引入了同信道干扰；
+- 卫星在 Ka 频段运行，采用FFR，即整个网络复用相同频率，这提高了 SE 但引入了同信道干扰；
 - 每个 GU 可以由多个卫星服务（多连接），每个卫星可以服务多个 GUs（上限有限）。
 可见性集合：$ \mathcal{V}\_g $ 是 $\text{GU}\_g$ 的可见卫星集合，$ \mathcal{V}\_s $ 是卫星 $ s $ 服务的 GUs 集合；
 - 卫星具有再生负载（允许板上信号处理），使用光学 ISLs 进行数据交换和分布式计算。地面站通过视距（LoS）链路定期发送星座拓扑，卫星间通过 ISLs 共享；
@@ -70,7 +70,7 @@ PS2：本文势必有许多 typo，因为本地编译的 $\LaTeX$ 代码与网�
 - 卫星 $ s $ 和 $\text{GU}\_g$ 间的多输入单输出（MISO）信道：$ \mathbf{h}\_{sg} = \xi\_{sg} \cdot \mathbf{h}\_{sg}^s $，其中 $ \xi\_{sg} $ 是无线传播损耗，$ \mathbf{h}\_{sg}^s \in \mathbb{C}^{N \times 1} $ 是遵循 Loo 分布的小尺度衰落信道；
 - 传播损耗：$ \xi\_{sg} = \sqrt{G\_S G\_{\text{GU},sg} \cdot 10^{-\text{PL}[\text{dB}]/10}} $，其中 $ G\_S $ 是卫星 UPA 增益，$ G\_{\text{GU},sg} $ 是 GU 侧天线增益；
 
-- GU侧增益近似：$ G\_{GU,sg} \approx G\_{\max} \left( \frac{J\_1(u\_{sg})}{2u\_{sg}} + 36 \frac{J\_3(u\_{sg})}{u\_{sg}^3} \right)^2 $，其中 $ u\_{sg} = 2.07123 \sin \gamma\_{sg} / \sin \gamma\_{3\text{dB}} $，$ \gamma\_{sg} $ 是偏轴角，$ \gamma\_{3\text{dB}} $ 是GU天线 3-dB 角（见论文Fig. 3）。当 $ \gamma\_{sg} \to 0 $ 时接近 $ G\_{\max} $，多连接时只有主卫星获得最大增益；
+- GU侧增益近似：$ G\_{GU,sg} \approx G\_{\max} \left( \frac{J\_1(u\_{sg})}{2u\_{sg}} + 36 \frac{J\_3(u\_{sg})}{u\_{sg}^3} \right)^2 $，其中 $ u\_{sg} = 2.07123 \sin \gamma\_{sg} / \sin \gamma\_{3\text{dB}} $，$ \gamma\_{sg} $ 是偏轴角，$ \gamma\_{3\text{dB}} $ 是 GU 天线 3-dB 角（见论文Fig. 3）。当 $ \gamma\_{sg} \to 0 $ 时接近 $ G\_{\max} $，多连接时只有主卫星获得最大增益；
 
 
 - 大尺度路径损耗（PL）：$ \text{PL}[\text{dB}] = \text{PL}\_b + \text{PL}\_g + \text{PL}\_s$ ；
