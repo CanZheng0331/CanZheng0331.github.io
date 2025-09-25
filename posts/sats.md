@@ -426,7 +426,7 @@ $$\mathbf{h}\_{l,k}^H \mathbf{w}\_{l,k}^\text{sMRT} = \mathbf{h}\_{l,k}^H \cdot 
 $$\mathbf{h}\_{l,k}^H \mathbf{w}\_{l,k}^\text{sMRT} = \frac{\mathbf{h}\_{l,k}^H \mathbf{h}\_{l,k}}{\|\mathbf{h}\_{l,k}\|\_2} \cdot \frac{1}{\sqrt{N}} e^{j \phi\_{l,k}} \approx \frac{\|\mathbf{h}\_{l,k}\|^2}{\sqrt{N}},$$
 最大化信道增益为$ \|\mathbf{h}\_{l,k}\|^2$。
 
-   2. 统计 ZF（sZF）预编码
+   1. 统计 ZF（sZF）预编码
 
      - 目标：抑制用户间干扰（IUI），即 $\mathbf{h}\_{l,j}^H \mathbf{w}\_{l,k} = 0 $（$ j \neq k $）。
      - 设计：sZF 预编码向量为：
@@ -799,3 +799,54 @@ CF-mMIMO（iMRT，τ\_p=4导频）。
 3. 可扩展性：随 L、N 增加性能提升，密集环境最优，支持 xG 应用（如UAM）。
 4. 算法有效性：聚类和功率分配优化边缘 UE，20% 最小速率增益。
 5. 局限：sZF 在高 K 下受信道相关性影响，$\kappa$ 低时表现受限；假设理想回程。
+
+
+## 两篇工作的对比
+
+## 聚类/波束形成/功率分配差异
+
+- 多卫星协作：beam-centric 模型
+  - Beamforming：采用 hybrid beamforming：$\mathbf{F}\_s^\text{HY}$；
+  - 聚类视角：基于 beam-centric —— 用户先按波束/角度被分簇，每个波束可以调度若干用户。用二元变量 $\alpha\_{sg}$ 表示用户 $g$ 是否由卫星 $s$ 服务；
+  - 功率分配：在发射功率约束下优化分配。
+  - 波束为核心；调度通过 $\alpha\_{sg}$ 选择用户，波束形成通过 $\mathbf{F}\_s^\text{HY}$ 来定向；功率分配在波束层面。
+
+- 无蜂窝 NTN：user-centric CF-mNTN 模型
+
+  - 聚类视角：user-centric。每个 UE 可由多个卫星（或其波束）联合服务，形成一个簇 $\mathcal{L}\_k$，不需要 beam-centric cluster，而是直接通过功率稀疏化来决定哪些卫星参与；
+  - 稀疏功率表示：定义功率变量 $\tilde{\mathbf{p}}\_k$，若 $\tilde{p}\_{l,k}=0$， 则卫星 l 不为用户 k 服务；若 $>0$，则说明关联成立；
+  - 关键特征：以用户为中心，聚类不是事先定义的，而是由稀疏功率优化自动“浮现”；beamforming 被弱化（仅 steering vectors 方向固定），核心在功率稀疏化。
+
+## 多星 NTN vs 地面 cell-free massive MIMO 异同
+
+### 相似点
+
+- 用户中心服务理念：两者都能让多个“接入点”（卫星或基站）联合为用户服务；不再是传统的单小区。
+- 协作 MIMO 数学形式：无论 NTN 还是 TN，最终的信道都是$$y\_k=\sum_{l}h\_{l,k}x\_l+n\_k$$ 的线性叠加形式；优化目标都是 SINR 或 sum-rate。
+
+### 不同点
+
+- 信道特性：
+
+  1. TN：富散射，瑞利衰落，相关性较低；
+  2. NTN：LOS 主导，Rician K 因子高，角度扩展小，信道强相关。
+
+- CSI 可得性：
+
+  1. TN：相干时间长（ms–数十 ms），瞬时 CSI 可通过导频获取；
+  2. LEO：高速移动 → 相干时间短于传播时延，瞬时 CSI 不可用，只能用统计 CSI。
+
+- 资源约束：
+
+  1. TN：功率/带宽相对丰富，每个 BS 可支持几十个用户；
+  2. NTN：RF 链和功率强约束（每颗卫星能同时激活的波束有限）。
+
+- 可行簇大小：
+
+  1. TN：用户可同时与几十个 AP 建立弱连接；
+  2. NTN：受限于 RF 链、链路预算，簇大小通常很小（1–3 个卫星）。
+
+- 延时与调度：
+
+  1. TN：低延迟（数百 μs）；
+  2. NTN：传播延迟（ms–百 ms）显著，调度必须考虑。
