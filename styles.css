@@ -198,3 +198,36 @@ kbd{border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;pad
     padding: 15px;
   }
 }
+
+/* styles.css */
+
+/* 亮模式 (Light Mode) - 默认样式 */
+.modal-content {
+  background-color: #fefefe; /* 亮色背景 */
+  color: #333; /* 深色文字 */
+}
+
+.modal-close:hover,
+.modal-close:focus {
+  color: #000;
+}
+
+/* ------------------ 暗模式 (Dark Mode) ------------------ */
+@media (prefers-color-scheme: dark) {
+    /* 网站背景在暗模式下可能是深色，这里我们确保模态框内容仍然清晰 */
+    
+    .modal-content {
+      background-color: #2c2c2c; /* 深色背景，与网站的深色背景稍有不同 */
+      color: #f0f0f0; /* 亮色文字 */
+      border: 1px solid #555;
+    }
+
+    .modal-close {
+      color: #ccc;
+    }
+
+    .modal-close:hover,
+    .modal-close:focus {
+      color: #fff;
+    }
+}
