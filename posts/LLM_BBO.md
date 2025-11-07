@@ -2,6 +2,12 @@
 
 2025/11/17-
 
+---
+由于文章太长，所有文献放在最前面：
+
+<span id="ref1">[1]</span> [H. Lee, W. Zhou, M. Debbah and I. Lee, "On the Convergence of Large Language Model Optimizer for Black-Box Network Management," in IEEE Transactions on Communications, early access.](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11095730)
+
+<span id="ref2">[2]</span> [Z. Xu, T. Zheng and L. Dai, "LLM-Empowered Near-Field Communications for Low-Altitude Economy," in IEEE Transactions on Communications, early access.](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11095730)
 
 
 ## 黑盒网络管理中大型语言模型优化器的收敛性研究 [[1]](#ref1)
@@ -174,7 +180,7 @@ $$p_{\mathcal{L}}(z^{\mathsf{out}}_k | z^{\mathsf{out}}_{[1:k-1]}, \mathbf{z}^{\
 
 
 
-## LLM 赋能低空经济近场通信
+## LLM 赋能低空经济近场通信 [[1]](#ref1)
 
 ### 写在前面
 
