@@ -52,17 +52,6 @@
       .modal-content { padding: 1rem; }
       .modal .modal-content > .modal-close { top: 0.6rem; left: 0.6rem; height: 28px; padding: 0 8px; font-size: 0.9rem; }
     }
-
-    /* 关键修复：强制块/行内显示（用更强选择器绑定 #post-content），压过外部样式 */
-    #post-content mjx-container[display="true"]  {
-      display: block !important;
-      margin: .8em 0 !important;
-      text-align: center;                 /* 可选：公式居中 */
-    }
-    #post-content mjx-container[display="false"] {
-      display: inline-block !important;
-      margin: 0 .1em !important;
-    }
   </style>
 </head>
 <body>
@@ -215,6 +204,21 @@
       });
     }
 
+    // 统一强制“块/行内”显示（用内联样式兜底覆盖外部CSS）
+    function normalizeMathDisplay() {
+      // 展示型
+      document.querySelectorAll('#post-content mjx-container[display="true"]').forEach(el => {
+        el.style.display = 'block';
+        el.style.margin = '.8em 0';
+        el.style.textAlign = 'center';
+      });
+      // 行内
+      document.querySelectorAll('#post-content mjx-container[display="false"]').forEach(el => {
+        el.style.display = 'inline-block';
+        el.style.margin = '0 .1em';
+      });
+    }
+
     async function typesetPostContent() {
       if (!window.MathJax) return;
       try {
@@ -222,12 +226,15 @@
         if (MathJax.texReset) MathJax.texReset();
         if (MathJax.typesetClear) MathJax.typesetClear([postContent]);
         await MathJax.typesetPromise([postContent]);
+        // 兜底：强制按 display 属性设置为块/行内
+        normalizeMathDisplay();
       } catch (err) {
         await new Promise(requestAnimationFrame);
         try {
           if (MathJax.texReset) MathJax.texReset();
           if (MathJax.typesetClear) MathJax.typesetClear([postContent]);
           await MathJax.typesetPromise([postContent]);
+          normalizeMathDisplay();
         } catch (e2) { console.warn("MathJax typeset failed:", e2); }
       }
     }
@@ -250,7 +257,7 @@
       // 等一帧确保布局
       await new Promise(requestAnimationFrame);
 
-      // MathJax 渲染
+      // MathJax 渲染 + 兜底强制 display
       await typesetPostContent();
     }
 
