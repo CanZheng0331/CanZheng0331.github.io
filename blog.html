@@ -54,7 +54,7 @@
   
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    // 关键更改：移除 problematic options.ignoreHtmlClass
+    // MathJax 配置（保持你的原样）
     window.MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -101,7 +101,6 @@
       }
       
       filteredPosts.forEach(post => {
-        // We only fetch the content when a post is clicked, to improve performance.
         const li = document.createElement("li");
         li.innerHTML = `<a href="#">${post.title}</a>${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
         
@@ -124,7 +123,7 @@
       });
     }
 
-    // 关键修复：先显示 modal，再等一帧再 typeset，并且只对 postContent 进行 typeset
+    // 关键修复：确保 MathJax 已完成启动；modal 显示后、等一帧再只对 postContent typeset
     async function openPost(post, markdown) {
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
@@ -132,17 +131,27 @@
       const html = marked.parse(markdown);
       postContent.innerHTML = html;
 
-      // 先显示 modal，避免在 display:none 时 MathJax 测量失败
+      // 先显示 modal，避免 display:none 时测量为 0
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
       window.scrollTo(0, 0);
 
-      // 等待浏览器完成一次布局，再 typeset
+      // 等一帧，确保已完成布局
       await new Promise(requestAnimationFrame);
 
-      // 仅 typeset 当前内容区域
-      if (window.MathJax && MathJax.typesetPromise) {
-        await MathJax.typesetPromise([postContent]);
+      // 等待 MathJax 完全就绪（关键：避免脚本尚未加载完成时跳过排版）
+      if (window.MathJax) {
+        try {
+          if (MathJax.startup && MathJax.startup.promise) {
+            await MathJax.startup.promise;
+          }
+          await MathJax.typesetPromise([postContent]);
+        } catch (err) {
+          console.warn("MathJax first typeset failed, retry once:", err);
+          // 部分环境首次仍可能 0 尺寸，再等一帧重试一次
+          await new Promise(requestAnimationFrame);
+          try { await MathJax.typesetPromise([postContent]); } catch (e2) { console.warn("MathJax retry failed:", e2); }
+        }
       }
     }
 
