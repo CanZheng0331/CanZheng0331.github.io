@@ -76,10 +76,10 @@ LLMO 由以下组件构成:
 
 - 随机生成种群大小 $P$ 的初始动作矩阵 $\mathbf{X}^{(0)} = [\mathbf{x}^{(0)}\_1, \cdots, \mathbf{x}^{(0)}\_P]^\mathsf{T} \in \mathbb{R}^{P \times D}$。
 - 计算奖励向量 $\mathbf{r}^{(0)} = [r(\mathbf{x}^{(0)}\_1), \cdots, r(\mathbf{x}^{(0)}\_P)]^T$。
-- 初始化内存 $M^{(0)} = [\mathbf{X}^{(0)}, \mathbf{r}^{(0)}]$，最佳动作 $\mathbf{x}^{(0)}\_{\mathsf{best}} = \arg\max_p r(\mathbf{x}^{(0)}\_p)$，$r^{(0)}\_{\mathsf{best}} = r(\mathbf{x}^{(0)}\_{\mathsf{best}})$。
+- 初始化内存 $\mathbb{M}^{(0)} = [\mathbf{X}^{(0)}, \mathbf{r}^{(0)}]$，最佳动作 $\mathbf{x}^{(0)}\_{\mathsf{best}} = \arg\max_p r(\mathbf{x}^{(0)}\_p)$，$r^{(0)}\_{\mathsf{best}} = r(\mathbf{x}^{(0)}\_{\mathsf{best}})$。
 2. 迭代过程（$t = 1$ 到 $T$）：
 - 采样上下文示例：
-    $$[\mathbf{X}^{(t-1)}\_{\mathsf{ex}}, \mathbf{r}^{(t-1)}\_{\mathsf{ex}}] = S(M^{(t-1)}).$$
+    $$[\mathbf{X}^{(t-1)}\_{\mathsf{ex}}, \mathbf{r}^{(t-1)}\_{\mathsf{ex}}] = \mathcal{S}(\mathbb{M}^{(t-1)}).$$
     - 精英采样（elitist sampler）：选内存中奖励最高的 $P$ 个动作-奖励对（推荐，用于收敛）。
 
     - LIFO采样：选最近的 $P$ 个（简单，但探索性强）。
@@ -89,7 +89,7 @@ LLMO 由以下组件构成:
     [\mathbf{X}^{(t-1)}, \mathbf{r}^{(t-1)}], & \mathsf{LIFO}.
     \end{cases}$$
 - 生成提示：
-    $$\mathsf{pmpt}^{(t-1)} = P(\mathbf{X}^{(t-1)}\_{\mathsf{ex}}, \mathbf{r}^{(t-1)}\_{\mathsf{ex}}).$$
+    $$\mathsf{pmpt}^{(t-1)} = \mathcal{P}(\mathbf{X}^{(t-1)}\_{\mathsf{ex}}, \mathbf{r}^{(t-1)}\_{\mathsf{ex}}).$$
     提示结构（如 Fig. 2）：
     - 任务描述：说明优化目标（最大化奖励，动作维度 $D$，界限）。
     - 数据格式：解释 CSV 格式（前 $D$ 列动作，最后列奖励）。
@@ -98,7 +98,7 @@ LLMO 由以下组件构成:
 
 
 - LLM生成新动作：
-    $$\mathbf{X}^{(t)} = L(\mathsf{pmpt}^{(t-1)}) = [\mathbf{x}^{(t)}\_1, \cdots, \mathbf{x}^{(t)}\_P]^\mathsf{T}.$$
+    $$\mathbf{X}^{(t)} = \mathcal{L}(\mathsf{pmpt}^{(t-1)}) = [\mathbf{x}^{(t)}\_1, \cdots, \mathbf{x}^{(t)}\_P]^\mathsf{T}.$$
     计算 $\mathbf{r}^{(t)}$，更新最佳：若 $\max_p r(\mathbf{x}^{(t)}\_p) > r^{(t-1)}_{\mathsf{best}}$，则更新 $\mathbf{x}^{(t)}\_{\mathsf{best}}$ 和 $r^{(t)}\_{\mathsf{best}}$。
     - 更新内存：
     $$\mathbb{M}^{(t)} = \begin{bmatrix} \mathbf{X}^{(t)} & \mathbf{X}^{(t-1)}\_{\mathsf{ex}} \\ \mathbf{r}^{(t)} & \mathbf{r}^{(t-1)}\_{\mathsf{ex}} \end{bmatrix}.$$
@@ -136,7 +136,9 @@ LLMO 由以下组件构成:
 - 幻觉问题：LLM可能生成低质量动作（hallucination），但迭代反馈缓解；
 - 优势：无需人工思维步，自主生成“思想”。
 
-### LLMO 的理论分析
+### 3 LLMO 的理论分析
+
+
 ...
 ---
 <span id="ref1">[1]</span> [H. Lee, W. Zhou, M. Debbah and I. Lee, "On the Convergence of Large Language Model Optimizer for Black-Box Network Management," in IEEE Transactions on Communications, early access.](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11095730)
