@@ -282,8 +282,42 @@ $$|G(\beta)| = \left| \frac{\int_0^\beta e^{-j \frac{1}{2} \pi t^2} dt}{\beta} \
 
 根据接收信号表达式 (1)，用户 $ k $ 的 信干噪比（SINR）可表示为：
 
-$$
-\text{SINR}_k = \frac{P_k |\mathbf{h}_k^H \mathbf{w}_k|^2}{\sum_{j \neq k} P_j |\mathbf{h}_k^H \mathbf{w}_j|^2 + \sigma^2}\tag{10}.$$
+$$\text{SINR}_k = \frac{P_k |\mathbf{h}_k^H \mathbf{w}_k|^2}{\sum_{j\neq k} P_j |\mathbf{h}_k^H \mathbf{w}_j|^2 + \sigma^2}\tag{10}.$$
+
+
+进而，其可达速率为：
+
+$$R_k = \log_2 (1 + \text{SINR}_k).\tag{11}$$
+
+因此，近场多用户通信的频谱效率最大化问题可建模为：
+
+$$\boxed{
+\begin{aligned}
+\max_{\{\mathbf{W}, \mathbf{P}\}} \quad 
+& \sum_{k=1}^K R_k = \sum_{k=1}^K \log_2 (1 + \text{SINR}_k) \\
+\text{s.t.} \quad 
+& \text{C1}: \sum_{k=1}^K P_k \leq P, \\
+& \text{C2}: P_k \geq 0, \quad \forall k, \\
+& \text{C3}: \alpha_N \leq \alpha_c, \\
+& \text{C4}: R_k \geq R_{\min}, \quad \forall k, \\
+& \text{C5}: \|\mathbf{w}_k\|^2 = 1, \quad \forall k.
+\end{aligned}
+}\tag{10}$$
+
+其中：
+- $\alpha_c \in [0,1]$ 为预设近场功率分配上限；
+- $\alpha_N$ 定义为近场用户总功率占比，即：
+  $$
+  P_N = \alpha_N P \leq \alpha_c P
+  $$
+  其中 $ P_N $ 为所有近场用户分配的总功率。
+
+#### 4.2 远场与近场用户区分
+
+
+
+
+
 
 ...
 

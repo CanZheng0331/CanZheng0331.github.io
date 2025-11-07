@@ -16,14 +16,14 @@
     .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg, #fff); display: none; overflow: hidden; align-items: center; justify-content: center; z-index: 1000; }
     .modal-content { background: var(--bg, #fff); color: var(--fg, #000); max-width: 100%; width: 100%; height: 100%; padding: 1rem 2rem; border-radius: 0; overflow-y: auto; max-height: 100vh; box-sizing: border-box; }
 
-    /* 返回按钮：小按钮，左上角固定；强制覆盖任何全局 a{display:block;width:100%} */
+    /* 返回按钮：小按钮，左上角固定；覆盖任何全局 a{display:block;width:100%} */
     .modal .modal-content > .modal-close {
       position: fixed;
       top: 0.75rem;
       left: 0.75rem;
 
-      display: inline-flex !important;  /* 关键：不是 block */
-      width: auto !important;           /* 关键：不要 100% */
+      display: inline-flex !important;
+      width: auto !important;
       max-width: none !important;
 
       align-items: center;
@@ -52,6 +52,10 @@
       .modal-content { padding: 1rem; }
       .modal .modal-content > .modal-close { top: 0.6rem; left: 0.6rem; height: 28px; padding: 0 8px; font-size: 0.9rem; }
     }
+
+    /* 关键修复：确保展示型公式是块级、行内公式是内联 */
+    mjx-container[display="true"]  { display:block !important; margin: .8em 0 !important; }
+    mjx-container[display="false"] { display:inline-block !important; margin: 0 .1em; }
   </style>
 </head>
 <body>
@@ -91,7 +95,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    // MathJax：保留你的 inline/display 设置，并加载 textmacros 以支持 \textsf 等
+    // MathJax：保留 inline/display 设置，并加载 textmacros 以支持 \textsf 等
     window.MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
