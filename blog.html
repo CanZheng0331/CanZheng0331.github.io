@@ -16,7 +16,7 @@
     .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg, #fff); display: none; overflow: hidden; align-items: center; justify-content: center; z-index: 1000; }
     .modal-content { background: var(--bg, #fff); color: var(--fg, #000); max-width: 100%; width: 100%; height: 100%; padding: 1rem 2rem; border-radius: 0; overflow-y: auto; max-height: 100vh; box-sizing: border-box; }
 
-    /* 返回按钮：小按钮固定左上角；用更强选择器 + !important 避免被全局 a 规则影响 */
+    /* 返回按钮：小按钮固定左上角；用更强选择器 + !important 防止被全局 a 规则影响 */
     .modal .modal-content > .modal-close {
       position: fixed !important;
       top: 0.75rem !important;
@@ -53,9 +53,17 @@
       .modal .modal-content > .modal-close { top: 0.6rem !important; left: 0.6rem !important; height: 28px; padding: 0 8px; font-size: 0.9rem; }
     }
 
-    /* 这里仍保留一层 CSS 兜底（多数情况下已足够）；真正的“必杀”在 JS 里用内联 !important 再压一次 */
-    #post-content mjx-container[display="true"]  { display:block !important; margin:.8em 0 !important; text-align:center; }
-    #post-content mjx-container[display="false"] { display:inline-block !important; margin:0 .1em !important; }
+    /* 关键：把 $$ 的公式包在 .math-display 中，强制其内部 mjx-container 为块级 */
+    #post-content .math-display mjx-container { 
+      display: block !important; 
+      margin: .8em 0 !important; 
+      text-align: center; 
+    }
+    /* 行内公式保持紧凑（对 $...$ 和 \(...\) 不包容器） */
+    #post-content mjx-container[display="false"] { 
+      display: inline-block !important; 
+      margin: 0 .1em !important; 
+    }
   </style>
 </head>
 <body>
@@ -104,7 +112,7 @@
         packages: {'[+]': ['textmacros']}
       },
       loader: { load: ['[tex]/textmacros'] },
-      options: { /* 默认跳过 <code>/<pre> */ }
+      options: { /* 默认：跳过 <code>/<pre> */ }
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
@@ -165,9 +173,18 @@
       }
       return { masked: out, chunks };
     }
+
+    // —— 还原数学：把 $$ 与 \[...\] 包进 .math-display，行内不包 —— //
     function restoreMath(html, chunks) {
       let out = html;
-      chunks.forEach((raw, idx) => { out = out.replaceAll(`@@MATH_${idx}@@`, raw); });
+      chunks.forEach((raw, idx) => {
+        const key = `@@MATH_${idx}@@`;
+        const isDisplay = (/^\$\$[\s\S]*\$\$$/.test(raw) || /^\\\[[\s\S]*\\\]$/.test(raw));
+        const replacement = isDisplay 
+          ? `<div class="math-display">${raw}</div>`   // 块级容器兜底
+          : raw;                                       // 行内原样
+        out = out.replaceAll(key, replacement);
+      });
       return out;
     }
 
@@ -215,56 +232,21 @@
         if (MathJax.texReset) MathJax.texReset();
         if (MathJax.typesetClear) MathJax.typesetClear([postContent]);
         await MathJax.typesetPromise([postContent]);
-
-        // 排版完成后，强制纠偏显示形态
-        enforceMathDisplay();
       } catch (err) {
         await new Promise(requestAnimationFrame);
         try {
           if (MathJax.texReset) MathJax.texReset();
           if (MathJax.typesetClear) MathJax.typesetClear([postContent]);
           await MathJax.typesetPromise([postContent]);
-          enforceMathDisplay();
         } catch (e2) { console.warn("MathJax typeset failed:", e2); }
       }
-    }
-
-    // —— 关键：用“内联 !important” + 结构调整，保证 $$ 为块级、$ 为行内 —— //
-    function enforceMathDisplay() {
-      // 展示型：display=true / block / mjx-display
-      const blockNodes = postContent.querySelectorAll('mjx-container[display="true"], mjx-container[display="block"], mjx-container.mjx-display');
-      blockNodes.forEach(mjx => {
-        // 1) 若被 <p> 包裹，把它抬出段落（避免 p 的行内布局影响）
-        const p = (mjx.parentElement && mjx.parentElement.tagName === 'P') ? mjx.parentElement : null;
-        if (p) {
-          // 在 p 前插入 mjx，再移除 p（保留 p 里其它文本的话则只把 mjx移出）
-          if (p.childNodes.length === 1) {
-            p.parentElement.insertBefore(mjx, p);
-            p.remove();
-          } else {
-            p.parentElement.insertBefore(mjx, p);
-          }
-        }
-        // 2) 用内联 !important 强制块级显示
-        mjx.style.setProperty('display', 'block', 'important');
-        mjx.style.setProperty('margin', '.8em 0', 'important');
-        mjx.style.setProperty('text-align', 'center');
-      });
-
-      // 行内：display=false（或没有 display 且不是上面那种）
-      const inlineNodes = postContent.querySelectorAll('mjx-container[display="false"], mjx-container.MathJax');
-      inlineNodes.forEach(mjx => {
-        if (mjx.getAttribute('display') === 'true' || mjx.classList.contains('mjx-display')) return; // 已处理为块
-        mjx.style.setProperty('display', 'inline-block', 'important');
-        mjx.style.setProperty('margin', '0 .1em', 'important');
-      });
     }
 
     async function openPost(post, markdown) {
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
 
-      // 保护数学 → Markdown → 还原
+      // 保护数学 → Markdown → 还原（把 $$ 包在 .math-display）
       const { masked, chunks } = extractMath(markdown);
       const htmlMasked = marked.parse(masked);
       const html = restoreMath(htmlMasked, chunks);
@@ -278,7 +260,7 @@
       // 等一帧确保布局
       await new Promise(requestAnimationFrame);
 
-      // MathJax 渲染 + 强制纠偏
+      // MathJax 渲染
       await typesetPostContent();
     }
 
