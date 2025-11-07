@@ -11,18 +11,24 @@
     .post-list li { margin: 0.5rem 0; }
     .tag { display: inline-block; background: #444; color: #fff; padding: 2px 6px; margin: 0 4px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
     .search-box { margin: 1rem 0; }
-    /* modal：外层不滚动，内容层滚动，避免双滚动条 */
+    /* 外层不滚动，内容区滚动，避免双滚动条 */
     .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg, #fff); display: none; overflow: hidden; align-items: center; justify-content: center; z-index: 1000; }
     .modal-content { background: var(--bg, #fff); color: var(--fg, #000); max-width: 100%; width: 100%; height: 100%; padding: 1rem 2rem; border-radius: 0; overflow-y: auto; max-height: 100vh; box-sizing: border-box; }
-    /* 返回键：左上角按钮，默认 50% 透明，hover/focus 变实，不占整行 */
+    /* 返回键：左上角小按钮，默认 50% 透明，hover/focus 变实；强制为小尺寸（覆盖任何外部全宽样式） */
     .modal-close {
       position: fixed;
       top: 1rem;
       left: 1rem;
-      display: inline-block;
-      font-size: 1rem;
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      width: auto !important;
+      max-width: none !important;
+      min-width: 0 !important;
+      font-size: 0.95rem;
+      line-height: 1;
       cursor: pointer;
-      padding: 5px 10px;
+      padding: 6px 10px;
       background: #eee;
       border-radius: 6px;
       color: #333;
@@ -30,11 +36,31 @@
       z-index: 1001;
       opacity: 0.5;
       transition: opacity 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,.08);
+      white-space: nowrap;
     }
     .modal-close:hover,
     .modal-close:focus { opacity: 1; }
     @media (max-width: 768px) { .modal-content { padding: 1rem; } }
   </style>
+
+  <!-- MathJax：放在前面定义配置 -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        packages: {'[+]': ['ams']} // \mathsf 等常用命令可用（基础已支持，附加 AMS 以防万一）
+      },
+      svg: {
+        fontCache: 'global'
+      }
+      // 不设置 ignoreHtmlClass，MathJax 仍会自动跳过 <code>/<pre>
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
   <header class="header">
@@ -70,22 +96,6 @@
   <footer class="footer">
     <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
   </footer>
-  
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    // MathJax 配置
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']],
-        processEscapes: true
-      },
-      options: {
-        // 保持为空：让 MathJax 正常处理所有内容（仍会跳过 <code>/<pre>）
-      }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
@@ -105,9 +115,63 @@
     const postContent = document.getElementById("post-content");
     const searchBox = document.getElementById("search");
 
+    // —— 保护数学内容，避免 Markdown 提前“误处理”下划线/反斜杠 —— //
+    // 步骤：
+    // 1) 先用占位符保护代码块和行内代码
+    // 2) 再用占位符保护 $$...$$、\[...\]、\(...\)、$...$
+    // 3) marked 渲染
+    // 4) 恢复占位符为原始 TeX 文本（保证在 DOM 中是原始分隔符，交给 MathJax）
+    function protectSegments(text, regex, store) {
+      return text.replace(regex, (m) => {
+        const key = `@@SEG${store.length}@@`;
+        store.push(m);
+        return key;
+      });
+    }
+
+    function renderMarkdownWithProtectedMath(md) {
+      const codeStore = [];
+      // 代码块 ```...``` 和 ~~~...~~~ （尽量贪婪包住）
+      md = protectSegments(md, /```[\s\S]*?```/g, codeStore);
+      md = protectSegments(md, /~~~[\s\S]*?~~~/g, codeStore);
+      // 行内代码 `...`
+      md = protectSegments(md, /`[^`\n]*`/g, codeStore);
+
+      const mathStore = [];
+      // 先保护 $$...$$（多行）
+      md = protectSegments(md, /\$\$[\s\S]*?\$\$/g, mathStore);
+      // \[ ... \]（多行）
+      md = protectSegments(md, /\\\[[\s\S]*?\\\]/g, mathStore);
+      // \( ... \)（单行/行内）
+      md = protectSegments(md, /\\\([^]*?\\\)/g, mathStore);
+      // 再保护行内 $...$（避免和 $$ 冲突），要求两侧不是 $，并允许跨行（若你的文章行内不会跨行，可换成 [^\n]*?）
+      md = md.replace(/(^|[^$])\$(?!\$)([\s\S]*?)\$(?!\$)/g, (m, p1, p2) => {
+        const key = `@@MATH${mathStore.length}@@`;
+        mathStore.push(`$${p2}$`);
+        return `${p1}${key}`;
+      });
+
+      // 现在交给 marked 渲染（此时数学与代码都已被替换为 @@KEY@@）
+      const html = marked.parse(md);
+
+      // 恢复数学占位符（把占位符换回原始 TeX 文本）
+      let restored = html;
+      mathStore.forEach((orig, idx) => {
+        const key = new RegExp(`@@MATH${idx}@@`, 'g');
+        restored = restored.replace(key, orig);
+      });
+
+      // 恢复代码占位符
+      codeStore.forEach((orig, idx) => {
+        const key = new RegExp(`@@SEG${idx}@@`, 'g');
+        restored = restored.replace(key, orig);
+      });
+
+      return restored;
+    }
+
     function renderList(textFilter = "", tagFilter = "") {
       list.innerHTML = "";
-      
       const filteredPosts = posts.filter(post => {
         const titleMatch = post.title.toLowerCase().includes(textFilter.toLowerCase());
         const tagMatch = tagFilter === "" || post.tags.includes(tagFilter);
@@ -118,26 +182,26 @@
         list.innerHTML = "<li><small class='muted'>Not Found.</small></li>";
         return;
       }
-      
+
       filteredPosts.forEach(post => {
         const li = document.createElement("li");
         li.innerHTML = `<a href="#">${post.title}</a>${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
-        
-        li.querySelector("a").onclick = (e) => { 
-          e.preventDefault(); 
+
+        li.querySelector("a").onclick = (e) => {
+          e.preventDefault();
           fetch(post.file)
             .then(r => r.text())
             .then(markdown => openPost(post, markdown))
             .catch(error => console.error("Error fetching post file:", error));
         };
-        
-        li.querySelectorAll(".tag").forEach(tagEl => { 
-          tagEl.onclick = () => { 
-            searchBox.value = ""; 
-            renderList("", tagEl.dataset.tag); 
-          }; 
+
+        li.querySelectorAll(".tag").forEach(tagEl => {
+          tagEl.onclick = () => {
+            searchBox.value = "";
+            renderList("", tagEl.dataset.tag);
+          };
         });
-        
+
         list.appendChild(li);
       });
     }
@@ -145,30 +209,32 @@
     async function typesetPostContent() {
       if (!window.MathJax) return;
       try {
-        if (MathJax.startup && MathJax.startup.promise) {
-          await MathJax.startup.promise;
-        }
-        if (MathJax.texReset) MathJax.texReset();
-        if (MathJax.typesetClear) MathJax.typesetClear([postContent]);
+        if (MathJax.startup?.promise) await MathJax.startup.promise;
+        MathJax.texReset?.();
+        MathJax.typesetClear?.([postContent]);
         await MathJax.typesetPromise([postContent]);
       } catch (err) {
+        // 少见情况下第一次测量仍为 0，再等一帧重试
         await new Promise(requestAnimationFrame);
         try {
-          if (MathJax.texReset) MathJax.texReset();
-          if (MathJax.typesetClear) MathJax.typesetClear([postContent]);
+          MathJax.texReset?.();
+          MathJax.typesetClear?.([postContent]);
           await MathJax.typesetPromise([postContent]);
-        } catch (e2) { console.warn("MathJax typeset failed:", e2); }
+        } catch (e2) {
+          console.warn("MathJax typeset failed:", e2);
+        }
       }
     }
 
     async function openPost(post, markdown) {
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
-      
-      const html = marked.parse(markdown);
+
+      // 使用“保护数学”的渲染流程，避免 _、\ 被 markdown 吃掉
+      const html = renderMarkdownWithProtectedMath(markdown);
       postContent.innerHTML = html;
 
-      // 显示 modal
+      // 显示 modal（避免 display:none 导致测量 0）
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
       window.scrollTo(0, 0);
@@ -180,15 +246,17 @@
       await typesetPostContent();
     }
 
-    modalClose.onclick = (e) => { 
-      e.preventDefault(); 
-      modal.style.display = "none"; 
-      document.body.style.overflow = "auto"; 
-      postContent.innerHTML = ""; 
+    modalClose.onclick = (e) => {
+      e.preventDefault();
+      modal.style.display = "none";
+      document.body.style.overflow = "auto";
+      postContent.innerHTML = "";
       postTitle.textContent = "";
     };
-    
+
     searchBox.oninput = () => renderList(searchBox.value.toLowerCase());
+
+    // 初始化列表
     renderList();
   </script>
 </body>
