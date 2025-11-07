@@ -180,7 +180,7 @@ $$p_{\mathcal{L}}(z^{\mathsf{out}}_k | z^{\mathsf{out}}_{[1:k-1]}, \mathbf{z}^{\
 
 
 
-## LLM 赋能低空经济近场通信 [[1]](#ref1)
+## LLM 赋能低空经济近场通信 [[2]](#ref2)
 
 ### 写在前面
 
@@ -190,10 +190,19 @@ $$p_{\mathcal{L}}(z^{\mathsf{out}}_k | z^{\mathsf{out}}_{[1:k-1]}, \mathbf{z}^{\
 
 这是我的第一印象。带着这些问题，我开始读论文。
 
+### 0 摘要
+低空经济（LAE） 与 XL-MIMO 近场通信的自然结合：LAE 可利用近场波束聚焦（beamfocusing）特性精确聚焦能量到 UAV 位置，并通过额外距离维度提升频谱效率 （SE）。现有研究仅限于理想水平面场景，而LAE场景面临复杂挑战（如预编码和功率分配联合优化）。论文首次应用 LLM（如微调 GPT-2）解决 LAE 近场通信的频谱效率最大化问题，通过设计适配器（adapters）实现远近场用户区分和联合优化。模拟结果验证了方案的有效性和优越性。
 
+### 1 引言
 
+- 背景：LAE近年来备受关注，利用 UAV 等飞行设备支持城市交通、物流等应用。无线通信视角下，LAE 网络依赖 UAV 的无缝连接和轨迹规划。XL-MIMO 作为潜在关键技术，通过极大规模天线阵列（ELAA）提供更高空间分辨率和复用增益。在 XL-MIMO 中，随着天线数增加，近场区域扩大（例如，256 天线@30GHz 的近场区域约 326.5米），需采用球面波模型而非平面波。球面波模型引入距离维度，支持波束聚焦，如手电筒般精确集中能量。
+  
+- LAE 与近场通信的结合：UAV 比地面用户更接近 BS 天线，更易受益于近场通信。可利用波束聚焦缓解干扰，并通过位置分多址（LDMA）服务同角度不同距离的 UAV，提升频谱效率。
+- 挑战：现有近场通信研究限于理想水平面，忽略 BS 高度和倾斜角，导致 LAE 场景模型复杂。需联合优化预编码和功率分配，区分远近场用户（UAV 和地面用户），并处理非凸优化问题。
+- 贡献：
 
+    - 新应用场景：首次探讨 LAE 与近场通信的协同，利用波束聚焦和距离域资源提升UAV性能。
+    - 新系统模型：考虑 BS 高度和倾斜角，导致水平面近场区域变化，提出“有效近场区域”（Effective Near-Field Region, ENFR）概念。
+    - 新技术：应用 LLM（微调 GPT-2）解决频谱效率最大化问题，实现远近场区分和预编码/功率分配联合优化。
 ...
----
-<span id="ref1">[1]</span> [H. Lee, W. Zhou, M. Debbah and I. Lee, "On the Convergence of Large Language Model Optimizer for Black-Box Network Management," in IEEE Transactions on Communications, early access.](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11095730)
 

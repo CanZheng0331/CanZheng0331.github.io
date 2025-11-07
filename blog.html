@@ -11,9 +11,11 @@
     .post-list li { margin: 0.5rem 0; }
     .tag { display: inline-block; background: #444; color: #fff; padding: 2px 6px; margin: 0 4px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
     .search-box { margin: 1rem 0; }
-    .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg, #fff); display: none; overflow-y: auto; align-items: center; justify-content: center; z-index: 1000; }
+    /* 关键修复1：modal 不滚动，由内容区滚动，避免双滚动条 */
+    .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg, #fff); display: none; overflow: hidden; align-items: center; justify-content: center; z-index: 1000; }
     .modal-content { background: var(--bg, #fff); color: var(--fg, #000); max-width: 100%; width: 100%; height: 100%; padding: 1rem 2rem; border-radius: 0; overflow-y: auto; max-height: 100vh; box-sizing: border-box; }
-    .modal-close { position: absolute; top: 1rem; left: 2rem; font-size: 1rem; cursor: pointer; padding: 5px 10px; background: #eee; border-radius: 6px; color: #333; text-decoration: none; }
+    /* 关键修复2：返回键改为固定定位，始终可点到 */
+    .modal-close { position: fixed; top: 1rem; left: 2rem; font-size: 1rem; cursor: pointer; padding: 5px 10px; background: #eee; border-radius: 6px; color: #333; text-decoration: none; z-index: 1001; }
     @media (max-width: 768px) { .modal-close { left: 1rem; } .modal-content { padding: 1rem; } }
   </style>
 </head>
@@ -54,7 +56,7 @@
   
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    // MathJax 配置（保持你的原样）
+    // 保持你的 MathJax 配置
     window.MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -62,7 +64,7 @@
         processEscapes: true
       },
       options: {
-        // 保持为空：让 MathJax 正常处理所有内容
+        // 空：让 MathJax 正常处理所有内容（仍会跳过 <code>/<pre>）
       }
     };
   </script>
@@ -123,7 +125,32 @@
       });
     }
 
-    // 关键修复：确保 MathJax 已完成启动；modal 显示后、等一帧再只对 postContent typeset
+    // —— MathJax 可靠排版流程 —— //
+    async function typesetPostContent() {
+      if (!window.MathJax) return;
+      try {
+        // 确保 MathJax 完成启动
+        if (MathJax.startup && MathJax.startup.promise) {
+          await MathJax.startup.promise;
+        }
+        // 清理并重排本次内容，避免重复渲染
+        if (MathJax.texReset) MathJax.texReset();
+        if (MathJax.typesetClear) MathJax.typesetClear([postContent]);
+        await MathJax.typesetPromise([postContent]);
+      } catch (err) {
+        // 少数情况下第一次测量仍为 0：再等一帧重试一次
+        await new Promise(requestAnimationFrame);
+        try {
+          if (MathJax.texReset) MathJax.texReset();
+          if (MathJax.typesetClear) MathJax.typesetClear([postContent]);
+          await MathJax.typesetPromise([postContent]);
+        } catch (e2) {
+          console.warn("MathJax typeset failed:", e2);
+        }
+      }
+    }
+
+    // 关键：modal 显示/布局完成 → MathJax 排版
     async function openPost(post, markdown) {
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
@@ -131,35 +158,23 @@
       const html = marked.parse(markdown);
       postContent.innerHTML = html;
 
-      // 先显示 modal，避免 display:none 时测量为 0
+      // 先显示 modal（避免 display:none 导致字体测量为 0）
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
       window.scrollTo(0, 0);
 
-      // 等一帧，确保已完成布局
+      // 等一次浏览器布局完成
       await new Promise(requestAnimationFrame);
 
-      // 等待 MathJax 完全就绪（关键：避免脚本尚未加载完成时跳过排版）
-      if (window.MathJax) {
-        try {
-          if (MathJax.startup && MathJax.startup.promise) {
-            await MathJax.startup.promise;
-          }
-          await MathJax.typesetPromise([postContent]);
-        } catch (err) {
-          console.warn("MathJax first typeset failed, retry once:", err);
-          // 部分环境首次仍可能 0 尺寸，再等一帧重试一次
-          await new Promise(requestAnimationFrame);
-          try { await MathJax.typesetPromise([postContent]); } catch (e2) { console.warn("MathJax retry failed:", e2); }
-        }
-      }
+      // 对当前内容进行排版
+      await typesetPostContent();
     }
 
     modalClose.onclick = (e) => { 
       e.preventDefault(); 
       modal.style.display = "none"; 
       document.body.style.overflow = "auto"; 
-      // 隐藏模态框时清除内容，避免下次打开时闪烁
+      // 清除内容，避免下一次打开闪烁/残留
       postContent.innerHTML = ""; 
       postTitle.textContent = "";
     };
