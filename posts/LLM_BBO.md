@@ -53,7 +53,7 @@ LLM 优化器（LLMO）框架（利用预训练的 LLM 作为优化智能体）�
 ### 2 LLM 优化器框架
 
 考虑一个使奖励函数 $r(\cdot)$ 最大化的优化问题。我们的目标是确定一个表示网络策略的动作向量 $\mathbf{x}\in \mathbb{R}^D$。相应的问题可以表示为 
-$$\max_{\mathbf{x}\_\mathsf{min} \preceq \mathbf{x} \preceq \mathbf{x}\_\mathsf{max}} r(\mathbf{x}),$$
+$$\max\_{\mathbf{x}\_\mathsf{min} \preceq \mathbf{x} \preceq \mathbf{x}\_\mathsf{max}} r(\mathbf{x}),$$
 其中，$\mathbf{x}\_\mathsf{min}$ 和 $\mathbf{x}\_\mathsf{max}$ 分别是 $\mathbf{x}$ 的下界和上界。由于无线网络的复杂性，通常没有描述网络性能指标 $r(\cdot)$ 的数学模型。相反，奖励值可以通过数值模拟或现实世界的测量来评估。
 
 LLM 作为 BBO 求解器，在不使用 $r(\cdot)$ 的任何数学模型的情况下，通过观察候选行为及其相应的奖励值来生成改进的行为。与传统的BBO技术不同，LLMO 框架不需要人为干预，例如超参数的额外微调和神经网络的再训练。这导致了高水平的泛化，使 LLM 能够普遍地解决各种网络问题。
@@ -74,7 +74,7 @@ LLMO 由以下组件构成:
 ---
 1. 初始化（$t=0$）：
 
-- 随机生成种群大小 $P$ 的初始动作矩阵 $\mathbf{X}^{(0)} = [\mathbf{x}^{(0)}\_1, \cdots, \mathbf{x}^{(0)}\_P]^T \in \mathbb{R}^{P \times D}$。
+- 随机生成种群大小 $P$ 的初始动作矩阵 $\mathbf{X}^{(0)} = [\mathbf{x}^{(0)}\_1, \cdots, \mathbf{x}^{(0)}\_P]^\mathsf{T} \in \mathbb{R}^{P \times D}$。
 - 计算奖励向量 $\mathbf{r}^{(0)} = [r(\mathbf{x}^{(0)}\_1), \cdots, r(\mathbf{x}^{(0)}\_P)]^T$。
 - 初始化内存 $M^{(0)} = [\mathbf{X}^{(0)}, \mathbf{r}^{(0)}]$，最佳动作 $\mathbf{x}^{(0)}\_{\mathsf{best}} = \arg\max_p r(\mathbf{x}^{(0)}\_p)$，$r^{(0)}\_{\mathsf{best}} = r(\mathbf{x}^{(0)}\_{\mathsf{best}})$。
 2. 迭代过程（$t = 1$ 到 $T$）：
