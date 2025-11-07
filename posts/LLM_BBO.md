@@ -257,18 +257,33 @@ $$r_n \approx r - n d \sin \theta + \frac{n^2 d^2 \cos^2 \theta}{2r},\tag{6}$$
 $$1 - |\mathbf{b}(\theta, r)^H \mathbf{a}(\theta)| \geq \Delta,$$
 其中 $  \mathbf{a}(\theta) = \frac{1}{\sqrt{N}} [1, e^{j\pi\theta}, \dots, e^{j(N-1)\pi\theta}]^\mathsf{T}  $ 表示适用于 ULA 的远场波束形成向量。因此，ENFR 可通过以下引理进行定义。
 
-- **Lemma 1：** 对于我们在第 II 节中讨论的实际 XL-MIMO 系统模型，ENFR 可以表示为
+> **Lemma 1：** 对于我们在第 II 节中讨论的实际 XL-MIMO 系统模型，ENFR 可以表示为
 $$I_{\text{ENFR}} = \left[ \frac{h_B}{\tan \theta_k^-}, \frac{h_B}{\tan \theta_k^+} \right],\tag{7}$$
 其中 $\theta_k^-$ 和 $\theta_k^+$ 是方程
 $$\sin \theta_k \cos^2(\theta_k - \theta_{\text{tit}}) = \frac{2 h_B \beta_\Delta^2 \lambda}{N^2 d^2}$$
 的两个解，而 $\beta_\Delta$ 是满足 $|G(\beta_\Delta)| = 1 - \Delta$ 的解，其中
 $$|G(\beta)| = \left| \frac{\int_0^\beta e^{-j \frac{1}{2} \pi t^2} dt}{\beta} \right|.$$
-(证明略)
+ *几何解释*：
+    - 水平距离 $x_k \in [x_{\min}, x_{\max}]$，对应 $\theta_k \in [\theta_k^+, \theta_k^-]$（注意角度递减）
+    - 边界 $x = \frac{h_B}{\tan \theta}$，即从 BS 中心出发的两条切线与地面的交点
 
-根据引理 1，我们可以发现，与现有文献中根据有效瑞利距离（Effective Rayleigh Distance, ERD）区分远场和近场区域的做法不同，在我们所采用的实际模型中，ENFR 将整个空间划分为了\textbf{三个区域} [25]。具体而言，ERD 与 ENFR 的对比关系如图 2 所示。图中显示，随着与基站的水平距离增加，水平面被依次划分为\textbf{远场 → 近场 → 远场}。当地面用户位于 ENFR 内时，它们可被视为近场用户，从而能够受益于近场波束聚焦。
-由于我们考虑了基站天线的高度和倾斜角，以及水平面上的 ENFR，XL-MIMO 系统中的多用户频谱效率最大化问题将变得更加复杂。将基站高度和倾斜角纳入模型，引入了理想水平面模型中不存在的挑战，例如近场边界随 $\theta_{\text{tit}}$ 和 $h_B$ 变化的复杂性，这要求针对 LAE 的用户分布进行自适应的分类和预编码。因此，如何应用 LLM 赋能 XL-MIMO 系统中的近场多用户通信，成为一个关键问题，这将在下一节中进行分析。
+根据 **引理 1** ，我们可以发现，与现有文献中根据有效瑞利距离（Effective Rayleigh Distance, ERD）区分远场和近场区域的做法不同，在本文所采用的实际模型中，ENFR 将整个空间划分为了三个区域。随着与基站的水平距离增加，水平面被依次划分为:远场 → 近场 → 远场。当地面用户位于 ENFR 内时，它们可被视为近场用户，从而能够受益于近场波束聚焦。
 
+由于本文考虑了基站天线的高度和倾斜角，以及水平面上的 ENFR，XL-MIMO 系统中的多用户 SE 最大化问题将变得更加复杂。将基站高度和倾斜角纳入模型，引入了理想水平面模型中不存在的挑战，例如近场边界随 $\theta_{\text{tit}}$ 和 $h_B$ 变化的复杂性，这要求针对 LAE 的用户分布进行自适应的分类和预编码。因此，如何应用 LLM 赋能 XL-MIMO 系统中的近场多用户通信，成为一个关键问题，这将在下一节中进行分析。
 
+### 4 LLM 赋能的近场多用户通信
+
+在本节中：
+- 形式化定义近场多用户通信的频谱效率最大化问题；
+- 详细阐述所提出的模型框架。具体而言，该模型能够联合实现远场与近场用户的区分，并设计多用户预编码矩阵，其核心优势将在后续章节中逐一展开；
+- 总结了所提 LLM 方案相对于传统求解器的显著优势。
+
+#### 4.1 问题形式化
+
+根据接收信号表达式 (1)，用户 $ k $ 的 信干噪比（SINR）可表示为：
+
+$$
+\text{SINR}_k = \frac{P_k |\mathbf{h}_k^H \mathbf{w}_k|^2}{\sum_{j \neq k} P_j |\mathbf{h}_k^H \mathbf{w}_j|^2 + \sigma^2}\tag{10}.$$
 
 ...
 
