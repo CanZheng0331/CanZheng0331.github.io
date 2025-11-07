@@ -5,58 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Blog · Can Zheng</title>
   <link rel="stylesheet" href="styles.css" />
-  <meta name="color-scheme" content="light dark" />
+  <meta name="color-scheme" content="light dark">
   <style>
-    :root { --bg: #fff; --fg: #111; }
-    @media (prefers-color-scheme: dark) {
-      :root { --bg: #0b0b0b; --fg: #eaeaea; }
-    }
-    body { background: var(--bg); color: var(--fg); margin: 0; }
-    .container { max-width: 900px; margin: 0 auto; padding: 0 1rem; }
-    .navbar { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; }
-    .navbar nav a { margin-left: 1rem; text-decoration: none; color: inherit; opacity: .9; }
-    .navbar nav a[aria-current="page"] { font-weight: 600; }
-    .brand { font-weight: 700; text-decoration: none; color: inherit; }
-    .section { padding: 1.5rem 0 2.5rem; }
     .post-list { list-style: none; padding: 0; }
-    .post-list li { margin: 0.6rem 0; line-height: 1.6; }
-    .post-list a { text-decoration: none; color: inherit; }
-    .muted { opacity: .7; }
-    .tag { display: inline-block; background: #444; color: #fff; padding: 2px 6px; margin: 0 4px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; user-select: none; }
-    .search-box { margin: 1rem 0; width: 100%; padding: .6rem .8rem; border-radius: 8px; border: 1px solid #ddd; background: transparent; color: inherit; }
-    .footer { border-top: 1px solid #2222; padding: 1.2rem 0; text-align: center; }
-    /* Modal */
-    .modal { position: fixed; inset: 0; background: color-mix(in oklab, var(--bg) 85%, black 15%); display: none; overflow-y: auto; align-items: center; justify-content: center; z-index: 1000; }
-    .modal-content { background: var(--bg); color: var(--fg); width: 100%; height: 100%; max-width: 100%; padding: 1rem 2rem; border-radius: 0; overflow-y: auto; max-height: 100vh; box-sizing: border-box; }
-    .modal-close { position: sticky; top: 0; display: inline-block; margin-top: .5rem; font-size: 0.95rem; cursor: pointer; padding: 6px 10px; background: #eee; border-radius: 8px; color: #333; text-decoration: none; }
-    @media (max-width: 768px) { .modal-content { padding: 1rem; } .modal-close { left: 0; } }
-    /* 简易排版 */
-    .prose { line-height: 1.75; }
-    .prose h1, .prose h2, .prose h3 { line-height: 1.25; }
-    .card { box-shadow: 0 10px 30px #0002; }
+    .post-list li { margin: 0.5rem 0; }
+    .tag { display: inline-block; background: #444; color: #fff; padding: 2px 6px; margin: 0 4px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
+    .search-box { margin: 1rem 0; }
+    .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg, #fff); display: none; overflow-y: auto; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-content { background: var(--bg, #fff); color: var(--fg, #000); max-width: 100%; width: 100%; height: 100%; padding: 1rem 2rem; border-radius: 0; overflow-y: auto; max-height: 100vh; box-sizing: border-box; }
+    .modal-close { position: absolute; top: 1rem; left: 2rem; font-size: 1rem; cursor: pointer; padding: 5px 10px; background: #eee; border-radius: 6px; color: #333; text-decoration: none; }
+    @media (max-width: 768px) { .modal-close { left: 1rem; } .modal-content { padding: 1rem; } }
   </style>
-
-  <!-- MathJax 配置需在脚本加载前定义 -->
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']],
-        processEscapes: true
-      }
-      // 不设置 options.ignoreHtmlClass，保持默认；MathJax 会跳过 <code>/<pre>
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" defer></script>
-
-  <!-- marked：用于将 Markdown 渲染为 HTML -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
 </head>
 <body>
   <header class="header">
     <div class="navbar container">
       <a class="brand" href="index.html">Can Zheng</a>
-      <nav aria-label="Primary">
+      <nav>
         <a href="index.html">Home</a>
         <a href="biography.html">Biography</a>
         <a href="publications.html">Publications</a>
@@ -65,38 +30,47 @@
       </nav>
     </div>
   </header>
-
   <main class="container">
     <section class="section">
       <h2>Blog Posts</h2>
-      <label for="search" class="muted" style="display:block;">搜索文章标题</label>
-      <input class="search-box" type="text" id="search" placeholder="Search..." inputmode="search" />
-      <ul id="post-list" class="post-list" aria-live="polite">
+      <input class="search-box" type="text" id="search" placeholder="Search..." />
+      <ul id="post-list" class="post-list">
         <li><small class="muted">Loading…</small></li>
       </ul>
     </section>
   </main>
-
-  <!-- Modal -->
-  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="post-title">
+  <div id="modal" class="modal">
     <div class="modal-content card prose">
-      <a href="#" id="modal-close" class="modal-close" aria-label="Back to list">Back</a>
-      <h1 id="post-title" style="padding-top: 0.5rem;"></h1>
-      <div id="post-tags" style="margin-bottom:.5rem;"></div>
-      <hr />
+      <a href="#" id="modal-close" class="modal-close">Back</a>
+      <h1 id="post-title" style="padding-top: 2rem;"></h1>
+      <div id="post-tags"></div>
+      <hr>
       <div id="post-content"></div>
     </div>
   </div>
-
   <footer class="footer">
     <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
   </footer>
+  
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    // 关键更改：移除 problematic options.ignoreHtmlClass
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        // 保持为空：让 MathJax 正常处理所有内容
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
   <script>
-    // 年份
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // 文章索引（按需修改文件路径/标题/标签）
     const posts = [
       { id: "Wireless-communications", title: "[Chinese] Notes on Wireless Communications by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications.md" },
       { id: "otfs-notes", title: "[Chinese] Notes on OTFS", tags: ["OTFS", "Signal Processing"], file: "posts/otfs-notes.md" },
@@ -112,22 +86,9 @@
     const postContent = document.getElementById("post-content");
     const searchBox = document.getElementById("search");
 
-    // marked 的温和设置，避免奇怪的自动替换；保留 GFM
-    document.addEventListener('DOMContentLoaded', () => {
-      if (window.marked) {
-        marked.setOptions({
-          gfm: true,
-          breaks: false,
-          smartypants: false,
-          mangle: false
-        });
-      }
-      renderList();
-    });
-
     function renderList(textFilter = "", tagFilter = "") {
       list.innerHTML = "";
-
+      
       const filteredPosts = posts.filter(post => {
         const titleMatch = post.title.toLowerCase().includes(textFilter.toLowerCase());
         const tagMatch = tagFilter === "" || post.tags.includes(tagFilter);
@@ -138,78 +99,66 @@
         list.innerHTML = "<li><small class='muted'>Not Found.</small></li>";
         return;
       }
-
+      
       filteredPosts.forEach(post => {
+        // We only fetch the content when a post is clicked, to improve performance.
         const li = document.createElement("li");
-        li.innerHTML = `<a href="#" data-id="${post.id}" aria-label="Open post: ${post.title}">${post.title}</a> ${post.tags.map(t => `<span class="tag" data-tag="${t}" title="Filter by ${t}">${t}</span>`).join(" ")}`;
-
-        li.querySelector("a").onclick = (e) => {
-          e.preventDefault();
+        li.innerHTML = `<a href="#">${post.title}</a>${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
+        
+        li.querySelector("a").onclick = (e) => { 
+          e.preventDefault(); 
           fetch(post.file)
             .then(r => r.text())
             .then(markdown => openPost(post, markdown))
-            .catch(error => {
-              console.error("Error fetching post file:", error);
-              openPost(post, `# 加载失败\n\n无法加载：\`${post.file}\`\n\n> ${String(error)}`);
-            });
+            .catch(error => console.error("Error fetching post file:", error));
         };
-
-        li.querySelectorAll(".tag").forEach(tagEl => {
-          tagEl.onclick = () => {
-            searchBox.value = "";
-            renderList("", tagEl.dataset.tag);
-          };
+        
+        li.querySelectorAll(".tag").forEach(tagEl => { 
+          tagEl.onclick = () => { 
+            searchBox.value = ""; 
+            renderList("", tagEl.dataset.tag); 
+          }; 
         });
-
+        
         list.appendChild(li);
       });
     }
 
-    // 关键修复：modal 显示后再 typeset（并仅对 postContent）
+    // 关键修复：先显示 modal，再等一帧再 typeset，并且只对 postContent 进行 typeset
     async function openPost(post, markdown) {
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
-
-      const html = (window.marked ? marked.parse(markdown) : markdown);
+      
+      const html = marked.parse(markdown);
       postContent.innerHTML = html;
 
-      // 显示 modal
+      // 先显示 modal，避免在 display:none 时 MathJax 测量失败
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
       window.scrollTo(0, 0);
 
-      // 等待浏览器完成一次布局（避免 display:none 时测量为 0）
+      // 等待浏览器完成一次布局，再 typeset
       await new Promise(requestAnimationFrame);
 
-      // 仅对当前文章内容 typeset，提高性能并避免重复处理
+      // 仅 typeset 当前内容区域
       if (window.MathJax && MathJax.typesetPromise) {
-        try {
-          await MathJax.typesetPromise([postContent]);
-        } catch (err) {
-          console.warn("MathJax typeset failed:", err);
-        }
+        await MathJax.typesetPromise([postContent]);
       }
     }
 
-    modalClose.onclick = (e) => {
-      e.preventDefault();
-      modal.style.display = "none";
-      document.body.style.overflow = "auto";
-      // 隐藏时清空内容，避免下次闪烁与重复 typeset
-      postContent.innerHTML = "";
+    modalClose.onclick = (e) => { 
+      e.preventDefault(); 
+      modal.style.display = "none"; 
+      document.body.style.overflow = "auto"; 
+      // 隐藏模态框时清除内容，避免下次打开时闪烁
+      postContent.innerHTML = ""; 
       postTitle.textContent = "";
-      postTags.innerHTML = "";
-      searchBox.focus();
     };
-
+    
     searchBox.oninput = () => renderList(searchBox.value.toLowerCase());
-
-    // 键盘可达性：Esc 关闭
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.style.display !== "none") {
-        modalClose.click();
-      }
-    });
+    
+    // 初始化列表
+    renderList();
   </script>
 </body>
 </html>
