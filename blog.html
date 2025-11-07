@@ -53,9 +53,16 @@
       .modal .modal-content > .modal-close { top: 0.6rem; left: 0.6rem; height: 28px; padding: 0 8px; font-size: 0.9rem; }
     }
 
-    /* 关键修复：确保展示型公式是块级、行内公式是内联 */
-    mjx-container[display="true"]  { display:block !important; margin: .8em 0 !important; }
-    mjx-container[display="false"] { display:inline-block !important; margin: 0 .1em; }
+    /* 关键修复：强制块/行内显示（用更强选择器绑定 #post-content），压过外部样式 */
+    #post-content mjx-container[display="true"]  {
+      display: block !important;
+      margin: .8em 0 !important;
+      text-align: center;                 /* 可选：公式居中 */
+    }
+    #post-content mjx-container[display="false"] {
+      display: inline-block !important;
+      margin: 0 .1em !important;
+    }
   </style>
 </head>
 <body>
