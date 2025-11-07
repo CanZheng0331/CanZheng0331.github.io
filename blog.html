@@ -16,36 +16,41 @@
     .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg, #fff); display: none; overflow: hidden; align-items: center; justify-content: center; z-index: 1000; }
     .modal-content { background: var(--bg, #fff); color: var(--fg, #000); max-width: 100%; width: 100%; height: 100%; padding: 1rem 2rem; border-radius: 0; overflow-y: auto; max-height: 100vh; box-sizing: border-box; }
 
-    /* 返回按钮：小按钮，左上角固定，默认 50% 透明，hover/focus 变实 */
-    .modal-close {
+    /* 返回按钮：小按钮，左上角固定；强制覆盖任何全局 a{display:block;width:100%} */
+    .modal .modal-content > .modal-close {
       position: fixed;
-      top: 1rem;
-      left: 1rem;
-      display: inline-flex;
+      top: 0.75rem;
+      left: 0.75rem;
+
+      display: inline-flex !important;  /* 关键：不是 block */
+      width: auto !important;           /* 关键：不要 100% */
+      max-width: none !important;
+
       align-items: center;
       justify-content: center;
-      height: 32px;
+      height: 30px;
       padding: 0 10px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       line-height: 1;
-      cursor: pointer;
+
       background: #eee;
-      border-radius: 6px;
       color: #333;
-      text-decoration: none;
-      z-index: 1001;
-      opacity: 0.5;
-      transition: opacity 0.2s ease;
       border: 1px solid #ddd;
-      width: auto; /* 防止占整行 */
-      white-space: nowrap;
+      border-radius: 6px;
+      text-decoration: none;
+      box-sizing: border-box;
+
+      opacity: 0.5;
+      transition: opacity .2s ease;
+      z-index: 1001;
+      pointer-events: auto;
     }
-    .modal-close:hover,
-    .modal-close:focus { opacity: 1; }
+    .modal .modal-content > .modal-close:hover,
+    .modal .modal-content > .modal-close:focus { opacity: 1; }
 
     @media (max-width: 768px) {
       .modal-content { padding: 1rem; }
-      .modal-close { top: 0.75rem; left: 0.75rem; height: 30px; padding: 0 8px; }
+      .modal .modal-content > .modal-close { top: 0.6rem; left: 0.6rem; height: 28px; padding: 0 8px; font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -86,18 +91,16 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    // MathJax：增加 textmacros 支持 \textsf 等；保留你的 inline/display 配置
+    // MathJax：保留你的 inline/display 设置，并加载 textmacros 以支持 \textsf 等
     window.MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [['$$', '$$'], ['\\[', '\\]']],
         processEscapes: true,
-        packages: {'[+]': ['textmacros']} // 让 \textsf、\texttt 等文本命令可用
+        packages: {'[+]': ['textmacros']}
       },
-      options: {
-        // 保持为空：MathJax 正常处理（仍会跳过 <code>/<pre>）
-      },
-      loader: { load: ['[tex]/textmacros'] }
+      loader: { load: ['[tex]/textmacros'] },
+      options: { /* 默认：跳过 <code>/<pre>，其余正常处理 */ }
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
@@ -120,7 +123,7 @@
     const postContent = document.getElementById("post-content");
     const searchBox = document.getElementById("search");
 
-    // --- 保护数学：避免 Markdown 误处理 '_' 等符号 --- //
+    // —— 数学内容保护：避免 Markdown 误处理 '_' '*' 等 —— //
     function extractMath(md) {
       const chunks = [];
       let out = '';
@@ -133,63 +136,34 @@
       };
 
       while (i < md.length) {
-        // $$...$$（多行）
-        if (md.startsWith('$$', i)) {
+        if (md.startsWith('$$', i)) { // $$...$$
           const j = md.indexOf('$$', i + 2);
-          if (j !== -1) {
-            const token = md.slice(i, j + 2);
-            out += pushToken(token);
-            i = j + 2;
-            continue;
-          }
+          if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; }
         }
-        // \[...\]
-        if (md.startsWith('\\[', i)) {
+        if (md.startsWith('\\[', i)) { // \[...\]
           const j = md.indexOf('\\]', i + 2);
-          if (j !== -1) {
-            const token = md.slice(i, j + 2);
-            out += pushToken(token);
-            i = j + 2;
-            continue;
-          }
+          if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; }
         }
-        // \(...\)
-        if (md.startsWith('\\(', i)) {
+        if (md.startsWith('\\(', i)) { // \(...\)
           const j = md.indexOf('\\)', i + 2);
-          if (j !== -1) {
-            const token = md.slice(i, j + 2);
-            out += pushToken(token);
-            i = j + 2;
-            continue;
-          }
+          if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; }
         }
-        // $...$（避免匹配 $$）
-        if (md[i] === '$' && md[i+1] !== '$') {
+        if (md[i] === '$' && md[i+1] !== '$') { // $...$
           let j = i + 1;
           while (j < md.length) {
-            if (md[j] === '\\') { j += 2; continue; } // 跳过转义符
+            if (md[j] === '\\') { j += 2; continue; }
             if (md[j] === '$') break;
             j++;
           }
-          if (j < md.length && md[j] === '$') {
-            const token = md.slice(i, j + 1);
-            out += pushToken(token);
-            i = j + 1;
-            continue;
-          }
+          if (j < md.length && md[j] === '$') { out += pushToken(md.slice(i, j + 1)); i = j + 1; continue; }
         }
         out += md[i++];
       }
       return { masked: out, chunks };
     }
-
     function restoreMath(html, chunks) {
       let out = html;
-      chunks.forEach((raw, idx) => {
-        const key = `@@MATH_${idx}@@`;
-        // 使用一个占位 span，避免浏览器把美元等字符当作 HTML 特殊字符再次处理
-        out = out.replaceAll(key, raw);
-      });
+      chunks.forEach((raw, idx) => { out = out.replaceAll(`@@MATH_${idx}@@`, raw); });
       return out;
     }
 
@@ -233,9 +207,7 @@
     async function typesetPostContent() {
       if (!window.MathJax) return;
       try {
-        if (MathJax.startup && MathJax.startup.promise) {
-          await MathJax.startup.promise;
-        }
+        if (MathJax.startup && MathJax.startup.promise) await MathJax.startup.promise;
         if (MathJax.texReset) MathJax.texReset();
         if (MathJax.typesetClear) MathJax.typesetClear([postContent]);
         await MathJax.typesetPromise([postContent]);
@@ -253,23 +225,18 @@
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
 
-      // 1) 先“保护数学”，防止 marked 误处理 _ * 等
+      // 保护数学 → Markdown → 还原
       const { masked, chunks } = extractMath(markdown);
-
-      // 2) 只对非数学部分进行 Markdown 渲染
       const htmlMasked = marked.parse(masked);
-
-      // 3) 还原数学内容
       const html = restoreMath(htmlMasked, chunks);
-
       postContent.innerHTML = html;
 
-      // 显示 modal（先显示，避免 display:none 导致字体测量为 0）
+      // 显示 modal（避免 display:none 时测量失败）
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
       window.scrollTo(0, 0);
 
-      // 等一帧确保布局完成
+      // 等一帧确保布局
       await new Promise(requestAnimationFrame);
 
       // MathJax 渲染
