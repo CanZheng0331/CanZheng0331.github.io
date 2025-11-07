@@ -220,6 +220,55 @@ $$y_k = \mathbf{h}_k^H \mathbf{W} \mathbf{P} \mathbf{s} + n,\tag{1}$$
 
 其中，$ \mathbf{W} = [\mathbf{w}_1, \mathbf{w}_2, \dots, \mathbf{w}_K] \in \mathbb{C}^{N \times K} $ 表示发射预编码矩阵，$ \mathbf{P} = \text{diag}\{\sqrt{P_1}, \sqrt{P_2}, \dots, \sqrt{P_K}\} \in \mathbb{C}^{K \times K} $ 表示功率分配矩阵，并满足总功率约束 $ \sum_{k=1}^K P_k \leq P $，$ P $ 为最大发射功率。$ \mathbf{s} $ 表示归一化功率的发射信号，满足 $ \mathbb{E}[\mathbf{s}\mathbf{s}^H] = \mathbf{I} $，$ n $ 表示接收端噪声，服从复高斯分布 $ \mathcal{CN}(0, \sigma^2) $，其中 $ \sigma^2 $ 为噪声方差。
 
-*注：为简化起见，本文采用准静态环境假设，即在信道相干时间内，无人机和地面用户的位置保持固定，这也是近场通信中进行预编码和功率分配的典型场景。*
+*(注：为简化起见，本文采用准静态环境假设，即在信道相干时间内，无人机和地面用户的位置保持固定，这也是近场通信中进行预编码和功率分配的典型场景。)*
+
+一般来说，信道模型可以根据电磁波传播特性分为远场模型和近场模型。瑞利距离（Rayleigh distance） 通常被视为远近场的边界，其定义为：$R = \frac{2D^2}{\lambda},$
+其中 $ D $ 表示阵列孔径，$ \lambda $ 表示载波波长。在经典 MIMO 系统中，天线阵列的元素数量较少，瑞利距离相对较小，因此可以采用平面波传播模型来建模远场信道。Saleh-Valenzuela 模型（S-V）被广泛采用，远场信道 $ \mathbf{h}_k^{\text{far}} $ 可以表示为：
+$$\mathbf{h}_k^{\text{far}} = \sqrt{N} \alpha_0 \mathbf{a}(\theta_0) + \sum_{l=1}^L \sqrt{\frac{N}{L}} \alpha_l \mathbf{a}(\theta_l),\tag{2}$$
+其中，$ \alpha_0, \theta_0 $ 分别为直射路径（LoS）的复增益和出发角（AoD），$ \alpha_l, \theta_l $ 分别为第 $ l $ 条非直射路径（NLoS）的复增益和出发角，$ L $ 为 NLoS 路径总数。对于 ULA，波束导向向量 $ \mathbf{a}(\theta) $ 可以表示为：
+$$\mathbf{a}(\theta) = \frac{1}{\sqrt{N}}
+\begin{bmatrix}
+1 \\
+e^{j \pi \sin \theta} \\
+\vdots \\
+e^{j (N-1) \pi \sin \theta}
+\end{bmatrix},\tag{3}$$
+其中 $ \theta \in [-\pi/2, \pi/2] $ 表示物理方向。
+
+在 XL-MIMO 系统中，随着基站天线数量的增加，近场区域显著扩大，因此必须采用球面波传播模型来精确表征近场信道 $ \mathbf{h}_k^{\text{near}} $：
+$$
+\mathbf{h}_k^{\text{near}} = \sqrt{N} \alpha_0 \mathbf{b}(\theta_0, r_0) + \sum_{l=1}^L \sqrt{\frac{N}{L}} \alpha_l \mathbf{b}(\theta_l, r_l),\tag{4}$$
+此外，$ \mathbf{b}(\theta, r) $ 表示近场波束聚焦向量，其中 $ \theta = \theta_k - \theta_{\text{tit}} $ 是本文模型中的实际使用角度。与远场波束导向向量仅能将能量聚焦于特定方向不同，近场波束聚焦向量能够将能量精确聚焦于空间中的特定位置，这种特性也被称为近场波束聚焦。对于 ULA，近场波束聚焦向量 $ \mathbf{b}(\theta, r) $ 可以表示为：
+$$\mathbf{b}(\theta, r) = \frac{1}{\sqrt{N}}
+\begin{bmatrix}
+e^{-j \frac{2\pi}{\lambda} (r_0 - r)} \\
+\vdots \\
+e^{-j \frac{2\pi}{\lambda} (r_{N-1} - r)}
+\end{bmatrix},\tag{5}$$
+其中，$ r_n $ 和 $ r $ 分别表示用户与第 $ n $ 个天线以及阵列中心之间的距离。$ r_n $ 可以表示为：
+$$r_n = \sqrt{r^2 - 2 n d r \sin \theta + n^2 d^2}.$$
+通过菲涅耳近似（Fresnel approximation），我们可以进一步得到：
+$$r_n \approx r - n d \sin \theta + \frac{n^2 d^2 \cos^2 \theta}{2r},\tag{6}$$
+其中近似 (a) 是通过泰勒展开 $ \sqrt{1 + x} \approx 1 + \frac{x}{2} - \frac{x^2}{8} + O(x^3) $ 得到的。从公式 (4) 和 (5) 可以看出，近场信道不仅与角度相关，还与距离密切相关。与简单的 XL-MIMO 系统建模不同，本文所采用的实际模型中，水平面上的近场区域发生了了显著变化，这一点将在下一节中进行详细分析。
+
+### 3 有效近场区域
+
+本文提出了一种称为**有效近场区域**（Effective Near-Field Region, ENFR）的概念，用以在所采用的实际 XL-MIMO 系统模型中定义水平面上的近场区域。具体而言，本文通过波束形成增益损失（beamforming gain loss）来定义 ENFR。在 ENFR 内，若采用远场波束形成向量，则波束形成增益损失低于预设阈值 $  \Delta  $，即
+$$1 - |\mathbf{b}(\theta, r)^H \mathbf{a}(\theta)| \geq \Delta,$$
+其中 $  \mathbf{a}(\theta) = \frac{1}{\sqrt{N}} [1, e^{j\pi\theta}, \dots, e^{j(N-1)\pi\theta}]^\mathsf{T}  $ 表示适用于 ULA 的远场波束形成向量。因此，ENFR 可通过以下引理进行定义。
+
+- **Lemma 1：** 对于我们在第 II 节中讨论的实际 XL-MIMO 系统模型，ENFR 可以表示为
+$$I_{\text{ENFR}} = \left[ \frac{h_B}{\tan \theta_k^-}, \frac{h_B}{\tan \theta_k^+} \right],\tag{7}$$
+其中 $\theta_k^-$ 和 $\theta_k^+$ 是方程
+$$\sin \theta_k \cos^2(\theta_k - \theta_{\text{tit}}) = \frac{2 h_B \beta_\Delta^2 \lambda}{N^2 d^2}$$
+的两个解，而 $\beta_\Delta$ 是满足 $|G(\beta_\Delta)| = 1 - \Delta$ 的解，其中
+$$|G(\beta)| = \left| \frac{\int_0^\beta e^{-j \frac{1}{2} \pi t^2} dt}{\beta} \right|.$$
+(证明略)
+
+根据引理 1，我们可以发现，与现有文献中根据有效瑞利距离（Effective Rayleigh Distance, ERD）区分远场和近场区域的做法不同，在我们所采用的实际模型中，ENFR 将整个空间划分为了\textbf{三个区域} [25]。具体而言，ERD 与 ENFR 的对比关系如图 2 所示。图中显示，随着与基站的水平距离增加，水平面被依次划分为\textbf{远场 → 近场 → 远场}。当地面用户位于 ENFR 内时，它们可被视为近场用户，从而能够受益于近场波束聚焦。
+由于我们考虑了基站天线的高度和倾斜角，以及水平面上的 ENFR，XL-MIMO 系统中的多用户频谱效率最大化问题将变得更加复杂。将基站高度和倾斜角纳入模型，引入了理想水平面模型中不存在的挑战，例如近场边界随 $\theta_{\text{tit}}$ 和 $h_B$ 变化的复杂性，这要求针对 LAE 的用户分布进行自适应的分类和预编码。因此，如何应用 LLM 赋能 XL-MIMO 系统中的近场多用户通信，成为一个关键问题，这将在下一节中进行分析。
+
+
+
 ...
 
