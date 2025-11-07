@@ -53,7 +53,7 @@ LLM 优化器（LLMO）框架（利用预训练的 LLM 作为优化智能体）�
 ### 2 LLM 优化器框架
 
 考虑一个使奖励函数 $r(\cdot)$ 最大化的优化问题。我们的目标是确定一个表示网络策略的动作向量 $\mathbf{x}\in \mathbb{R}^D$。相应的问题可以表示为 
-$$\max\_{\mathbf{x}\_\mathsf{min} \preceq \mathbf{x} \preceq \mathbf{x}\_\mathsf{max}} r(\mathbf{x}),$$
+$$\max\_{\mathbf{x}\_\mathsf{min} \preceq \mathbf{x} \preceq \mathbf{x}\_\mathsf{max}} r(\mathbf{x}),\tag{1}$$
 其中，$\mathbf{x}\_\mathsf{min}$ 和 $\mathbf{x}\_\mathsf{max}$ 分别是 $\mathbf{x}$ 的下界和上界。由于无线网络的复杂性，通常没有描述网络性能指标 $r(\cdot)$ 的数学模型。相反，奖励值可以通过数值模拟或现实世界的测量来评估。
 
 LLM 作为 BBO 求解器，在不使用 $r(\cdot)$ 的任何数学模型的情况下，通过观察候选行为及其相应的奖励值来生成改进的行为。与传统的BBO技术不同，LLMO 框架不需要人为干预，例如超参数的额外微调和神经网络的再训练。这导致了高水平的泛化，使 LLM 能够普遍地解决各种网络问题。
@@ -74,22 +74,22 @@ LLMO 由以下组件构成:
 ---
 1. 初始化（$t=0$）：
 
-- 随机生成种群大小 $P$ 的初始动作矩阵 $\mathbf{X}^{(0)} = [\mathbf{x}^{(0)}\_1, \cdots, \mathbf{x}^{(0)}\_P]^\mathsf{T} \in \mathbb{R}^{P \times D}$。
-- 计算奖励向量 $\mathbf{r}^{(0)} = [r(\mathbf{x}^{(0)}\_1), \cdots, r(\mathbf{x}^{(0)}\_P)]^T$。
-- 初始化内存 $\mathbb{M}^{(0)} = [\mathbf{X}^{(0)}, \mathbf{r}^{(0)}]$，最佳动作 $\mathbf{x}^{(0)}\_{\mathsf{best}} = \arg\max_p r(\mathbf{x}^{(0)}\_p)$，$r^{(0)}\_{\mathsf{best}} = r(\mathbf{x}^{(0)}\_{\mathsf{best}})$。
+- 随机生成种群大小 $P$ 的初始动作矩阵 $\mathbf{X}^{(0)} = [\mathbf{x}^{(0)}_1, \cdots, \mathbf{x}^{(0)}\_P]^\mathsf{T} \in \mathbb{R}^{P \times D}$。
+- 计算奖励向量 $\mathbf{r}^{(0)} = [r(\mathbf{x}^{(0)}_1), \cdots, r(\mathbf{x}^{(0)}_P)]^\mathsf{T}$。
+- 初始化内存 $\mathbb{M}^{(0)} = [\mathbf{X}^{(0)}, \mathbf{r}^{(0)}]$，最佳动作 $\mathbf{x}^{(0)}_{\mathsf{best}} = \arg\max_p r(\mathbf{x}^{(0)}_p)$，$r^{(0)}_{\mathsf{best}} = r(\mathbf{x}^{(0)}_{\mathsf{best}})$。
 2. 迭代过程（$t = 1$ 到 $T$）：
 - 采样上下文示例：
     $$[\mathbf{X}^{(t-1)}\_{\mathsf{ex}}, \mathbf{r}^{(t-1)}\_{\mathsf{ex}}] = \mathcal{S}(\mathbb{M}^{(t-1)}).$$
     - 精英采样（elitist sampler）：选内存中奖励最高的 $P$ 个动作-奖励对（推荐，用于收敛）。
 
     - LIFO采样：选最近的 $P$ 个（简单，但探索性强）。
-    $$[\mathbf{X}^{(t-1)}\_{\mathsf{ex}}, \mathbf{r}^{(t-1)}\_{\mathsf{ex}}] = 
+    $$[\mathbf{X}^{(t-1)}_{\mathsf{ex}}, \mathbf{r}^{(t-1)}_{\mathsf{ex}}] = 
     \begin{cases}
-    [\mathbf{X}^{(t-1)}\_{\mathsf{best}}, \mathbf{r}^{(t-1)}\_{\mathsf{best}}], & \mathsf{elitist}, \\
+    [\mathbf{X}^{(t-1)}_{\mathsf{best}}, \mathbf{r}^{(t-1)}_{\mathsf{best}}], & \mathsf{elitist}, \\
     [\mathbf{X}^{(t-1)}, \mathbf{r}^{(t-1)}], & \mathsf{LIFO}.
-    \end{cases}$$
+    \end{cases}\tag{2}$$
 - 生成提示：
-    $$\mathsf{pmpt}^{(t-1)} = \mathcal{P}(\mathbf{X}^{(t-1)}\_{\mathsf{ex}}, \mathbf{r}^{(t-1)}\_{\mathsf{ex}}).$$
+    $$\mathsf{pmpt}^{(t-1)} = \mathcal{P}(\mathbf{X}^{(t-1)}\_{\mathsf{ex}}, \mathbf{r}^{(t-1)}\_{\mathsf{ex}}).\tag{3}$$
     提示结构（如 Fig. 2）：
     - 任务描述：说明优化目标（最大化奖励，动作维度 $D$，界限）。
     - 数据格式：解释 CSV 格式（前 $D$ 列动作，最后列奖励）。
@@ -98,12 +98,12 @@ LLMO 由以下组件构成:
 
 
 - LLM生成新动作：
-    $$\mathbf{X}^{(t)} = \mathcal{L}(\mathsf{pmpt}^{(t-1)}) = [\mathbf{x}^{(t)}\_1, \cdots, \mathbf{x}^{(t)}\_P]^\mathsf{T}.$$
+    $$\mathbf{X}^{(t)} = \mathcal{L}(\mathsf{pmpt}^{(t-1)}) = [\mathbf{x}^{(t)}_1, \cdots, \mathbf{x}^{(t)}_P]^\mathsf{T}.\tag{4}$$
     计算 $\mathbf{r}^{(t)}$，更新最佳：若 $\max_p r(\mathbf{x}^{(t)}\_p) > r^{(t-1)}_{\mathsf{best}}$，则更新 $\mathbf{x}^{(t)}\_{\mathsf{best}}$ 和 $r^{(t)}\_{\mathsf{best}}$。
     - 更新内存：
-    $$\mathbb{M}^{(t)} = \begin{bmatrix} \mathbf{X}^{(t)} & \mathbf{X}^{(t-1)}\_{\mathsf{ex}} \\ \mathbf{r}^{(t)} & \mathbf{r}^{(t-1)}\_{\mathsf{ex}} \end{bmatrix}.$$
+    $$\mathbb{M}^{(t)} = \begin{bmatrix} \mathbf{X}^{(t)} & \mathbf{r}^{(t)} \\ \mathbf{X}^{(t-1)}_{\mathsf{ex}} & \mathbf{r}^{(t-1)}_{\mathsf{ex}} \end{bmatrix}.\tag{5}$$
     只保留新动作和上下文示例，避免内存爆炸。
-3. 输出 $\mathbf{x}^{(T)}\_{\text{best}}$。
+3. 输出 $\mathbf{x}^{(T)}_{\mathsf{best}}$。
 ---
 
 数学表述：
@@ -138,6 +138,33 @@ LLMO 由以下组件构成:
 
 ### 3 LLMO 的理论分析
 
+#### 3.1 LLM 推理机制
+
+LLM 推理包括编码、嵌入、Transformer 层和解码步骤。
+
+在编码步骤中，自然语言输入通过分词器 $ \mathcal{T}(\cdot) $ 进行预处理，该分词器将 $\mathsf{pmpt}$ 划分为较小的 token。输入提示 $\mathsf{pmpt}$ 的 token 向量表示为
+$$\mathbf{z}^{\mathsf{in}} = [z^{\mathsf{in}}_1, \cdots, z^{\mathsf{in}}_{N_{\mathsf{in}}}] = \mathcal{T}(\mathsf{pmpt}),
+\tag{6}$$
+其中 $ z^{\mathsf{in}}_i \in \mathbb{Z} $ 是输入提示的第 $ i $ 个 token，$ N_{\mathsf{in}} $ 表示 token 数量。
+
+接下来，嵌入层 $ \mathcal{E}(\cdot) $ 将每个 token $ z^{\mathsf{in}}_i $ 转换为嵌入向量 $ \mathbf{e}^{\mathsf{in}}_i $： $ \mathbf{e}^{\mathsf{in}}_i = \mathcal{E}(z^{\mathsf{in}}_i) $。
+
+嵌入集合 $ \mathbf{e}^{\mathsf{in}} \triangleq [\mathbf{e}^{\mathsf{in}}_1, \cdots, \mathbf{e}^{\mathsf{in}}_{N_{\mathsf{in}}}] $ 随后由 Transformer 层 $ \mathcal{A}(\cdot) $ 处理，该层包含多头掩码自注意力、前馈网络和层归一化。
+
+当前 LLM 依赖自回归架构，依次确定输出 token。设 $z^{\mathsf{out}}_k $ 为第 $ k $ 个输出 token。给定之前的输出 token $ z^{\mathsf{out}}_{[1:k-1]} \triangleq [z^{\mathsf{out}}_1, \cdots, z^{\mathsf{out}}_{k-1}] $，我们使用 Transformer 层 $ \mathcal{A}(\cdot) $ 获得第 $ k $ 个输出 token $ z^{\mathsf{out}}_k $ 的 logit 向量 $ \mathbf{b}_k $，表示为
+
+$$\mathbf{b}_k = \mathcal{A}([\mathbf{e}^{\mathsf{in}}, \mathbf{e}^{\mathsf{out}}_1, \cdots, \mathbf{e}^{\mathsf{out}}_{k-1}]),
+\tag{7}$$
+
+其中 $ \mathbf{e}^{\mathsf{out}}_k \triangleq \mathcal{E}(z^{\mathsf{out}}_k) $ 表示第 $ k $ 个输出token $ z^{\mathsf{out}}_k $ 的嵌入向量。设 $ p_{\mathcal{L}}(\cdot|\cdot) $ 为 LLM 学习的条件分布。生成第 $ k $ 个token $ z^{\mathsf{out}}_k $ 的概率为
+$$p_{\mathcal{L}}(z^{\mathsf{out}}_k | z^{\mathsf{out}}_{[1:k-1]}, \mathbf{z}^{\mathsf{in}}) = \mathsf{softmax}(\mathbf{b}_k / \alpha)_{z^{\mathsf{out}}_k},
+\tag{8}$$
+其中 $ \alpha > 0 $ 表示控制输出随机性的温度参数。整个输出序列 $ \mathbf{z}^{\mathsf{out}} = [z^{\mathsf{out}}_1, \cdots, z^{\mathsf{out}}_{N_{\mathsf{out}}}] $ 自回归生成，直至采样到序列结束（EOS）token。
+
+在 LLMO 框架中，输出动作种群 $ \mathbf{X}^{(t)} $ 以逗号分隔值（CSV）格式生成。这意味着 $ \mathbf{X}^{(t)} $ 是一个由数字字符、逗号和换行符组成的字符串。由于浮点数的有限精度和分词器 $ \mathcal{T}(\cdot) $ 的离散性质，所有可能的动作种群 $ \mathbf{X} $ 构成有限集合。这一观察在以下引理中被形式化。
+
+
+// 到这勉强是 LLM 的基础，前段时间写学位论文的时候还稍微学了点，能看懂，后面貌似上强度了......
 
 ...
 ---
