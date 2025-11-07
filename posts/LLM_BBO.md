@@ -53,8 +53,8 @@ LLM 优化器（LLMO）框架（利用预训练的 LLM 作为优化智能体）�
 ### 2 LLM 优化器框架
 
 考虑一个使奖励函数 $r(\cdot)$ 最大化的优化问题。我们的目标是确定一个表示网络策略的动作向量 $\mathbf{x}\in \mathbb{R}^D$。相应的问题可以表示为 
-$$\max_{\mathbf{x}_\mathsf{min} \preceq \mathbf{x} \preceq \mathbf{x}_\mathsf{max}} r(\mathbf{x}),$$
-其中，$\mathbf{x}_\mathsf{min}$ 和 $\mathbf{x}_\mathsf{max}$ 分别是 $\mathbf{x}$ 的下界和上界。由于无线网络的复杂性，通常没有描述网络性能指标 $r(\cdot)$ 的数学模型。相反，奖励值可以通过数值模拟或现实世界的测量来评估。
+$$\max_{\mathbf{x}\_\mathsf{min} \preceq \mathbf{x} \preceq \mathbf{x}\_\mathsf{max}} r(\mathbf{x}),$$
+其中，$\mathbf{x}\_\mathsf{min}$ 和 $\mathbf{x}\_\mathsf{max}$ 分别是 $\mathbf{x}$ 的下界和上界。由于无线网络的复杂性，通常没有描述网络性能指标 $r(\cdot)$ 的数学模型。相反，奖励值可以通过数值模拟或现实世界的测量来评估。
 
 LLM 作为 BBO 求解器，在不使用 $r(\cdot)$ 的任何数学模型的情况下，通过观察候选行为及其相应的奖励值来生成改进的行为。与传统的BBO技术不同，LLMO 框架不需要人为干预，例如超参数的额外微调和神经网络的再训练。这导致了高水平的泛化，使 LLM 能够普遍地解决各种网络问题。
 
@@ -74,22 +74,22 @@ LLMO 由以下组件构成:
 ---
 1. 初始化（$t=0$）：
 
-- 随机生成种群大小 $P$ 的初始动作矩阵 $\mathbf{X}^{(0)} = [\mathbf{x}^{(0)}_1, \cdots, \mathbf{x}^{(0)}_P]^T \in \mathbb{R}^{P \times D}$。
-- 计算奖励向量 $\mathbf{r}^{(0)} = [r(\mathbf{x}^{(0)}_1), \cdots, r(\mathbf{x}^{(0)}_P)]^T$。
-- 初始化内存 $M^{(0)} = [\mathbf{X}^{(0)}, \mathbf{r}^{(0)}]$，最佳动作 $\mathbf{x}^{(0)}_{\mathsf{best}} = \arg\max_p r(\mathbf{x}^{(0)}_p)$，$r^{(0)}_{\mathsf{best}} = r(\mathbf{x}^{(0)}_{\mathsf{best}})$。
+- 随机生成种群大小 $P$ 的初始动作矩阵 $\mathbf{X}^{(0)} = [\mathbf{x}^{(0)}\_1, \cdots, \mathbf{x}^{(0)}\_P]^T \in \mathbb{R}^{P \times D}$。
+- 计算奖励向量 $\mathbf{r}^{(0)} = [r(\mathbf{x}^{(0)}\_1), \cdots, r(\mathbf{x}^{(0)}\_P)]^T$。
+- 初始化内存 $M^{(0)} = [\mathbf{X}^{(0)}, \mathbf{r}^{(0)}]$，最佳动作 $\mathbf{x}^{(0)}\_{\mathsf{best}} = \arg\max_p r(\mathbf{x}^{(0)}\_p)$，$r^{(0)}\_{\mathsf{best}} = r(\mathbf{x}^{(0)}\_{\mathsf{best}})$。
 2. 迭代过程（$t = 1$ 到 $T$）：
 - 采样上下文示例：
-    $$[\mathbf{X}^{(t-1)}_{\mathsf{ex}}, \mathbf{r}^{(t-1)}_{\mathsf{ex}}] = S(M^{(t-1)}).$$
+    $$[\mathbf{X}^{(t-1)}\_{\mathsf{ex}}, \mathbf{r}^{(t-1)}\_{\mathsf{ex}}] = S(M^{(t-1)}).$$
     - 精英采样（elitist sampler）：选内存中奖励最高的 $P$ 个动作-奖励对（推荐，用于收敛）。
 
     - LIFO采样：选最近的 $P$ 个（简单，但探索性强）。
-    $$[\mathbf{X}^{(t-1)}_{\mathsf{ex}}, \mathbf{r}^{(t-1)}_{\mathsf{ex}}] = 
+    $$[\mathbf{X}^{(t-1)}\_{\mathsf{ex}}, \mathbf{r}^{(t-1)}\_{\mathsf{ex}}] = 
     \begin{cases}
-    [\mathbf{X}^{(t-1)}_{\mathsf{best}}, \mathbf{r}^{(t-1)}_{\mathsf{best}}], & \mathsf{elitist}, \\
+    [\mathbf{X}^{(t-1)}\_{\mathsf{best}}, \mathbf{r}^{(t-1)}\_{\mathsf{best}}], & \mathsf{elitist}, \\
     [\mathbf{X}^{(t-1)}, \mathbf{r}^{(t-1)}], & \mathsf{LIFO}.
     \end{cases}$$
 - 生成提示：
-    $$\mathsf{pmpt}^{(t-1)} = P(\mathbf{X}^{(t-1)}_{\mathsf{ex}}, \mathbf{r}^{(t-1)}_{\mathsf{ex}}).$$
+    $$\mathsf{pmpt}^{(t-1)} = P(\mathbf{X}^{(t-1)}\_{\mathsf{ex}}, \mathbf{r}^{(t-1)}\_{\mathsf{ex}}).$$
     提示结构（如 Fig. 2）：
     - 任务描述：说明优化目标（最大化奖励，动作维度 $D$，界限）。
     - 数据格式：解释 CSV 格式（前 $D$ 列动作，最后列奖励）。
@@ -98,12 +98,12 @@ LLMO 由以下组件构成:
 
 
 - LLM生成新动作：
-    $$\mathbf{X}^{(t)} = L(\mathsf{pmpt}^{(t-1)}) = [\mathbf{x}^{(t)}_1, \cdots, \mathbf{x}^{(t)}_P]^\mathsf{T}.$$
-    计算 $\mathbf{r}^{(t)}$，更新最佳：若 $\max_p r(\mathbf{x}^{(t)}_p) > r^{(t-1)}_{\mathsf{best}}$，则更新 $\mathbf{x}^{(t)}_{\mathsf{best}}$ 和 $r^{(t)}_{\mathsf{best}}$。
+    $$\mathbf{X}^{(t)} = L(\mathsf{pmpt}^{(t-1)}) = [\mathbf{x}^{(t)}\_1, \cdots, \mathbf{x}^{(t)}\_P]^\mathsf{T}.$$
+    计算 $\mathbf{r}^{(t)}$，更新最佳：若 $\max_p r(\mathbf{x}^{(t)}\_p) > r^{(t-1)}_{\mathsf{best}}$，则更新 $\mathbf{x}^{(t)}\_{\mathsf{best}}$ 和 $r^{(t)}\_{\mathsf{best}}$。
     - 更新内存：
-    $$\mathbb{M}^{(t)} = \begin{bmatrix} \mathbf{X}^{(t)} & \mathbf{X}^{(t-1)}_{\mathsf{ex}} \\ \mathbf{r}^{(t)} & \mathbf{r}^{(t-1)}_{\mathsf{ex}} \end{bmatrix}.$$
+    $$\mathbb{M}^{(t)} = \begin{bmatrix} \mathbf{X}^{(t)} & \mathbf{X}^{(t-1)}\_{\mathsf{ex}} \\ \mathbf{r}^{(t)} & \mathbf{r}^{(t-1)}\_{\mathsf{ex}} \end{bmatrix}.$$
     只保留新动作和上下文示例，避免内存爆炸。
-3. 输出 $\mathbf{x}^{(T)}_{\text{best}}$。
+3. 输出 $\mathbf{x}^{(T)}\_{\text{best}}$。
 ---
 
 数学表述：
