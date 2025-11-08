@@ -1,5 +1,3 @@
-# LLM for Optimization in Wireless Communications
-
 2025/11/17-
 
 ---
