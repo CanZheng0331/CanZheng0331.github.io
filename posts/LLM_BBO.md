@@ -87,10 +87,10 @@ LLMO 由以下组件构成:
 - 初始化内存 $\mathbb{M}^{(0)} = [\mathbf{X}^{(0)}, \mathbf{r}^{(0)}]$，最佳动作 $\mathbf{x}^{(0)}_{\mathsf{best}} = \arg\max_p r(\mathbf{x}^{(0)}_p)$，$r^{(0)}_{\mathsf{best}} = r(\mathbf{x}^{(0)}_{\mathsf{best}})$。
 2. 迭代过程（$t = 1$ 到 $T$）：
 - 采样上下文示例：
-    $$[\mathbf{X}^{(t-1)}\_{\mathsf{ex}}, \mathbf{r}^{(t-1)}\_{\mathsf{ex}}] = \mathcal{S}(\mathbb{M}^{(t-1)}).$$
+    $$[\mathbf{X}^{(t-1)}_{\mathsf{ex}}, \mathbf{r}^{(t-1)}_{\mathsf{ex}}] = \mathcal{S}(\mathbb{M}^{(t-1)}).$$
     - 精英采样（elitist sampler）：选内存中奖励最高的 $P$ 个动作-奖励对（推荐，用于收敛）。
 
-    - LIFO采样：选最近的 $P$ 个（简单，但探索性强）。
+    - LIFO 采样：选最近的 $P$ 个（简单，但探索性强）。
     $$[\mathbf{X}^{(t-1)}_{\mathsf{ex}}, \mathbf{r}^{(t-1)}_{\mathsf{ex}}] = 
     \begin{cases}
     [\mathbf{X}^{(t-1)}_{\mathsf{best}}, \mathbf{r}^{(t-1)}_{\mathsf{best}}], & \mathsf{elitist}, \\
@@ -306,18 +306,279 @@ $$\boxed{
 
 其中：
 - $\alpha_c \in [0,1]$ 为预设近场功率分配上限；
-- $\alpha_N$ 定义为近场用户总功率占比，即：
-  $$
-  P_N = \alpha_N P \leq \alpha_c P
-  $$
-  其中 $ P_N $ 为所有近场用户分配的总功率。
+- $\alpha_N$ 定义为近场用户总功率占比，即：$P_N = \alpha_N P \leq \alpha_c P, $ 其中 $ P_N $ 为所有近场用户分配的总功率。
+
+
 
 #### 4.2 远场与近场用户区分
 
+1. 区分的必要性：准确区分远场与近场用户是系统性能的关键基石。错误分类将导致严重后果：
 
+| 误分类策略 | 后果 |
+|-----------|------|
+| 全部视为远场用户 | 近场用户采用平面波模型 $\mathbf{a}(\theta)$ → 波束无法聚焦，能量发散，SINR 急剧下降 |
+| 全部视为近场用户 | 远场用户采用球面波模型 $\mathbf{b}(\theta, r)$ → 计算复杂度 $ \mathcal{O}(N^2) $ 爆炸，存储开销巨大，且无性能增益 |
 
+更严重的是：实际系统中难以精确获取用户距离 $ r $，无法通过“$ r \stackrel{?}{<} \text{ERD} $”进行阈值判断。
 
+2. 分类对预编码策略的直接影响：用户分类结果直接决定预编码向量选择：
 
+| 用户类型 | 预编码向量 | 优化目标 |
+|---------|-----------|---------|
+| 近场用户 | $\mathbf{b}(\theta_k, r_k)$ | 能量空间聚焦，实现“手电筒”效应 |
+| 远场用户 | $\mathbf{a}(\theta_k)$ | 方向性波束，抑制角度域干扰 |
 
+结合 C3 约束，近场用户可获得更高功率权重，实现：
+   - 资源高效利用
+   - 干扰精准抑制
+   - 频谱效率最大化
+
+3. 所提出的分类流程
+
+> **步骤 1：信道输入预处理**
+>- 将 $ K $ 个用户的复数信道向量拼接为矩阵：$\mathbf{H} = [\mathbf{h}_1, \mathbf{h}_2, \dots, \mathbf{h}_K] \in \mathbb{C}^{N \times K}$
+>- 重排为实数张量：$\mathbf{X}_{\text{in}} \in \mathbb{R}^{K \times 2N}$
+>- 进行批归一化（Batch Normalization）：$\mathbf{X}_{\text{norm}} = \frac{\mathbf{X}_{\text{in}} - \mu}{\sigma}$
+>- 作用：加速梯度收敛，缓解深层网络训练不稳定
+
+>**步骤 2：注意力编码器（Attention-based Encoder）**
+>- 采用 $ L = 3 $ 层 可训练 Transformer 解码器块，输出：$\mathbf{X}_{\text{en}} = \text{Encoder}(\mathbf{X}_{\text{norm}}).$
 ...
 
+>**步骤 3：嵌入投影（Embedding Projection）**
+线性变换至 LLM 隐藏维度 $ d $（GPT-2 最小版 $ d=768 $）：$\mathbf{X}_{\text{emb}} \in \mathbb{R}^{K \times d}.$
+
+>**步骤 4：LLM 骨干推理**
+>- 输入 预训练 GPT-2 模型：$\mathbf{X}_{\text{LLM}} = \text{LLM}(\mathbf{X}_{\text{emb}})$
+>- 微调策略：
+>  1. 冻结：自注意力层 + MLP 主干
+>  2. 微调：仅 Add 层 + LayerNorm 层
+>  3. 优势：保留通用语言推理能力，适配无线优化任务
+>  4. 可替换性：GPT-2 可换为 Llama、Qwen 等更大模型
+
+>**步骤 5：输出投影与分类头**
+>通过全连接 + Sigmoid 激活：
+>$\mathbf{X}_{\text{out}} = \text{Sigmoid}(\text{Linear}(\mathbf{X}_{\text{LLM}}))$
+>取第一维作为分类概率：$\hat{\mathbf{X}}_{\text{cl}} = \mathbf{X}_{\text{out}}[:, 0] \in [0,1]^K$
+>使用 均方误差（MSE） 监督训练：$\text{Loss}_{\text{cl}} = \|\mathbf{X}_{\text{cl}} - \hat{\mathbf{X}}_{\text{cl}}\|_2^2$
+
+#### 4.3 LLM 赋能的多用户预编码
+
+1. 理论最优预编码结构启发
+根据经典 ZF/MRT 混合预编码 理论，最优预编码向量满足：
+$$\mathbf{w}_k^* = \frac{
+\left( \mathbf{I}_N + \sum_{j=1}^K \frac{\lambda_j}{\sigma^2} \mathbf{h}_j \mathbf{h}_j^H \right)^{-1} \mathbf{h}_k
+}{
+\left\| \cdot \right\|
+}$$
+
+启发：若能学习拉格朗日乘子 $\lambda_k$ 与功率 $ p_k $，即可恢复最优解。
+
+
+2. LLM 输出头设计
+LLM 输出 $ K \times 3 $ 维张量 $\mathbf{X}_{\text{out}}$：
+
+   - $\mathbf{X}_{\text{out}}[:, 0]$ → 分类概率
+   - $\mathbf{X}_{\text{out}}[:, 1]$ → 拉格朗日乘子 $\boldsymbol{\lambda} \in \mathbb{R}^K$
+   - $\mathbf{X}_{\text{out}}[:, 2]$ → 原始功率向量 $\mathbf{p} \in \mathbb{R}^K$
+
+功率缩放模块：为满足 C1 约束：$\mathbf{p} \leftarrow \mathbf{p} \cdot \min\left(1, \frac{P}{\sum_k p_k}\right)$
+恢复模块（Recovery Module）：根据 $\boldsymbol{\lambda}, \mathbf{p}$ 与分类结果，构造：$\mathbf{W} = [\mathbf{w}_1, \dots, \mathbf{w}_K], \quad
+\mathbf{P} = \text{diag}\{\sqrt{p_1}, \dots, \sqrt{p_K}\}$
+
+
+3. 预编码优化损失函数：$\text{Loss}_{\text{pre}} = -\sum_{k=1}^K R_k + \gamma_1 \cdot \text{penal}$，其中惩罚项：$\text{penal} = \sum_{k=1}^K \max\{R_{\min} - R_k, 0\}\quad \text{(L1 惩罚)}$
+
+4. 总损失函数: $\text{Loss} = \gamma_2 \cdot \text{Loss}_{\text{cl}} + \text{Loss}_{\text{pre}}$，平衡分类准确性与速率性能。
+
+
+### 5 仿真结果
+
+在本节中，我们通过全面的数值仿真验证所提出LLM 赋能近场多用户通信方案的有效性和优越性。我们从以下 **7 个关键维度** 进行评估：
+
+| 评估维度 | 对应图表 |
+|--------|--------|
+| 1. ENFR 验证 | 图 4 |
+| 2. 训练收敛性 | 图 5 |
+| 3. 分类准确率 | 表 I |
+| 4. 频谱效率 vs 用户数 $ K $ | 图 6 |
+| 5. 频谱效率 vs 近场功率因子 $ \alpha_N $ | 图 7 |
+| 6. 频谱效率 vs 最低速率 $ R_{\min} $ | 图 8 |
+| 7. 频谱效率 vs 发射功率 $ P $ | 图 9 |
+| 8. 计算复杂度对比 | 表 II |
+| 9. 超参数敏感性分析 | 表 III |
+
+---
+#### 5.1 ENFR 验证：
+验证 Section III 中推导的 ENFR 边界 是否准确。
+    - 仿真方法：
+      - 固定 BS 位置，倾斜角 5°
+      - 用户沿水平线 $ x \in [0, 200] $ 移动，高度 $ h_k = 0 $
+      - 计算归一化增益损失：$\Delta(x) = 1 - |\mathbf{b}(\theta(x), r(x))^H \mathbf{a}(\theta(x))|$
+      - 设定阈值 $ \Delta = 0.1 $
+
+   - 结果：
+     - 增益损失随 $ x $ 呈 “下降 → 上升” 趋势
+     - 最低点出现在 $ x \approx 60 $ m，符合理论预测
+     - 两个交点 $ x_1 \approx 30 $ m, $ x_2 \approx 120 $ m
+     - 理论 ENFR 区间：$ [h_B / \tan \theta_k^+, h_B / \tan \theta_k^-] \approx [32, 118] $ m
+     - 仿真与理论误差 < 5%**，**验证 Lemma 1 正确性
+
+   - 结论：ENFR 准确划分了“远-近-远”三段结构，为后续分类提供可靠依据。
+
+
+#### 5.2 训练收敛性
+
+- 目标：验证 LLM 模型是否稳定收敛。
+
+- 训练细节：
+  - 总损失：$ \text{Loss} = \gamma_2 \text{Loss}_{\text{cl}} + \text{Loss}_{\text{pre}} $
+  - 初始学习率 1e-4，余弦退火
+  - 每 10 epoch 记录验证损失
+
+- 结果：
+  - 训练损失：从 12.5 快速下降至 2.8（第 50 epoch）
+  - 验证损失：第 304 epoch 达到最低点 2.31
+  - 之后轻微震荡，无过拟合
+  - 分类损失 $ \text{Loss}_{\text{cl}} $ 收敛至 < 0.01
+
+- 结论：LLM 框架在 300 epoch 内高效收敛，训练稳定。
+
+---
+
+#### 5.3 分类准确率
+
+- 目标：评估远/近场用户分类性能。
+
+- 基准方法：
+  - CNN：3层卷积 + 全连接
+  - Transformer：6层编码器
+  - 所提 LLM
+
+- 结果（表 I）：
+  - LLM 在 SNR>10 dB时，准确率 > 99%
+  - 得益于 注意力机制捕捉用户间信道相关性
+  - 传统方法受噪声干扰大，LLM 鲁棒性极强
+
+---
+
+#### 5.4 频谱效率 vs 用户数 $ K $
+
+- 目标：验证多用户复用增益。
+
+- 基准方案
+  - Capacity：理论上界（穷尽搜索）
+  - Near-field NOMA
+  - LDMA
+  - Far-field SDMA
+  - CNN / Transformer
+
+- 结果（图 6）：
+- 所有方案随 $ K $ 增加，频谱效率上升（多用户分集）
+  - LLM 曲线紧贴 Capacity 上界
+  - LLM 提升显著，得益于：精准分类、近场波束聚焦、距离域 LDMA 复用
+
+---
+
+#### 5.5 频谱效率 vs 近场功率因子 $ \alpha_N $
+
+- 目标：验证 C3 约束的灵活性。
+- 设置：$ K=8, P=20 $ W，$ \alpha_N \in [0,1] $
+
+- 结果：
+  - $ \alpha_N = 0 $：全功率给远场 → 效率最低
+  - $ \alpha_N = 1 $：全功率给近场 → 效率最高
+  - LLM 自适应选择最佳 $ \alpha_N \approx 0.6 $
+  - 相比固定 $ \alpha_N=0.5 $，提升 15%
+
+- 结论：LLM 能动态感知近场用户数量与信道质量，智能分配功率。
+
+---
+
+#### 5.6 频谱效率 vs 最低速率 $ R_{\min} $
+- 目标：验证公平性约束 C4。
+
+- 设置：$ K=8, P=20 $ W，$ R_{\min} \in [0, 3] $ bit/s/Hz
+
+- 结果：
+  - $ R_{\min} = 0 $：无公平性 → 效率最高
+  - $ R_{\min} $ 增大 → 效率下降（资源向弱用户倾斜）
+  - LLM 始终最优，在 $ R_{\min}=2 $ 时仍达 27.5 bit/s/Hz
+  - 其他方案在 $ R_{\min}>1.5 $ 时性能崩塌
+
+- 结论：LLM 在高公平性需求下仍保持高效，适合异构 LAE 场景。
+
+---
+
+#### 5.7 频谱效率 vs 发射功率 $ P $（图 9）
+
+- 目标：验证功率可扩展性。
+
+- 设置：$ K=8, R_{\min}=1 $ bit/s/Hz
+
+- 结果：
+  - 所有方案随 $ P $ 增加而提升
+  - LLM 在全功率范围领先
+  
+- 结论：LLM 接近理论最优，在高功率下优势更明显。
+
+---
+
+#### 5.8 计算复杂度对比
+| 方案 | 训练时间 (per epoch) | 推理时间 (per sample) | 参数量 |
+|------|---------------------|-----------------------|-------|
+| CNN | 12.3 s | 8.1 ms | 0.8 M |
+| Transformer | 28.7 s | 21.4 ms | 12.1 M |
+| **LLM (GPT-2)** | **59.9 s** | **52.6 ms** | **129 M** |
+| 传统优化 (CVX) | — | 1.2 s | — |
+
+- 分析：
+  - - LLM 参数多、推理慢，但性能提升远超开销
+  - 可通过 模型蒸馏 / 量化 降低部署成本
+  - 未来 6G 基站支持 AI 加速，可接受
+
+---
+
+#### 5.9. 超参数敏感性分析
+
+- 目标：验证 $ \gamma_2 $（分类权重）的影响。
+
+| $ \gamma_2 $ | 分类准确率 | 频谱效率 (bit/s/Hz) |
+|-------------|-----------|---------------------|
+| 0           | 87.2%     | 29.1                |
+| 1           | 95.1%     | 30.8                |
+| **5**       | **99.7%** | **31.2**            |
+| **10**      | **99.9%** | **31.1**            |
+| 20          | 100.0%    | 30.4                |
+
+- 结论：$ \gamma_2 \in [5, 10] $ 为最优区间，平衡分类与优化。
+
+---
+
+## 仿真结论总结
+
+| 结论 | 支撑证据 |
+|------|---------|
+| 1. ENFR 理论正确 | 图 4 仿真与 Lemma 1 高度吻合 |
+| 2. LLM 训练稳定 | 图 5 快速收敛，无过拟合 |
+| 3. 分类精度极高 | 表 I >99% 准确率 |
+| 4. 频谱效率接近最优 | 图 6–9 紧贴 Capacity |
+| 5. 动态适应性强 | 图 7 智能调节 $ \alpha_N $ |
+| 6. 公平性鲁棒 | 图 8 高 $ R_{\min} $ 下仍高效 |
+| 7. 计算开销可接受 | 表 II 性能提升远超代价 |
+
+### 6 结论 
+
+#### 结论
+所提出的 LLM 赋能近场通信方案在 LAE 复杂场景 下，全面超越传统方法，为 6G 低空网络提供了高效、智能、鲁棒的通信范式。
+
+
+#### 未来工作方向
+
+1. 实时在线优化：结合信道预测，实现动态预编码
+2. 不完美 CSI 场景：引入鲁棒训练
+3. 多 BS 协作：扩展至分布式 LLM
+4. ISAC 集成：近场感知 + 通信联合优化
+5. **硬件实现：AI 加速器部署
+
+---
