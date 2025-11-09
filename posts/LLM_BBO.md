@@ -363,7 +363,7 @@ $$\boxed{
 #### 4.3 LLM 赋能的多用户预编码
 
 1. 理论最优预编码结构启发
-根据经典 ZF/MRT 混合预编码 理论，最优预编码向量满足：
+根据经典 ZF/MRT 混合预编码理论，最优预编码向量满足：
 $$\mathbf{w}_k^* = \frac{
 \left( \mathbf{I}_N + \sum_{j=1}^K \frac{\lambda_j}{\sigma^2} \mathbf{h}_j \mathbf{h}_j^H \right)^{-1} \mathbf{h}_k
 }{
