@@ -7,6 +7,7 @@
   --border: #e5e7eb;
   --code-bg: #0f172a;
   --code-fg: #e2e8f0;
+  --header-bg: color-mix(in srgb, #ffffff 86%, transparent);
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -18,6 +19,7 @@
     --border: #1f2937;
     --code-bg: #0a0f1f;
     --code-fg: #cbd5e1;
+    --header-bg: color-mix(in srgb, #0b0c10 86%, transparent);
   }
 }
 * {
@@ -66,10 +68,11 @@ a:hover {
   width: 100%;
   backdrop-filter: saturate(180%) blur(6px);
   border-bottom: 1px solid var(--border);
-  background: color-mix(in oklab, var(--bg) 86%, transparent);
-  z-index: 1000; /* 确保导航栏在最上层 */
-  box-shadow: 0 2px 5px color-mix(in srgb, var(--bg), #000 10%); /* 添加阴影，并使用变量 */
+  background: var(--header-bg); /* ✅ 改用新的变量 */
+  z-index: 1000;
+  box-shadow: 0 2px 5px color-mix(in srgb, var(--bg), #000 10%);
 }
+
 .brand {
   font-weight: 700;
   letter-spacing: .2px;
