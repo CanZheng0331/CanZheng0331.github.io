@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
   <meta name="color-scheme" content="light dark">
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
-</head>
+    </head>
 <body>
   <header class="header">
     <div class="navbar container">
@@ -29,110 +29,145 @@
     <p>
       During my master's studies, I attempted to explore many research directions in wireless communication, covering signal processing, system optimization, and applications of AI/ML.
     </p>
- 
-    <h2>1. AI/ML for Wireless Communications</h2>
-    <p> <strong>Period: 2024.12-Present</strong>
-    <p>
-      These researches aim to leverage deep learning (DL) and large language models (LLMs) to address challenges in millimeter-wave (mmWave) communications, such as beam prediction and localization.
-    </p>
-    <ul>
-      <li>
-        <p>
-          <strong>Beam Prediction</strong> Combining multimodal perception/sensing (such as vision, radar, LiDAR and GPS) with DL models to achieve robust beam selection and reduce training overhead. Specifically, my focus is on sensing-assisted beam prediction, which is to proactively predict the optimal beam direction for future moments using perception information from past moments. I think it can be considered as the spatio-temporal beam prediction (i.e., BM Case 1 + Case 2 in <a href="https://www.3gpp.org/dynareport/38843.htm" target="_blank" rel="noopener">3GPP TR 38.843: Study on Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface</a>, Page 23).
-          <br>
-          Formally, given only historical observations \(\mathbf{X}_{t-T_{\mathrm{History}}:t-1}\), we aim to predict the future beam sequence \(\hat{\mathbf{y}}_{t:t+T_{\mathrm{Prediction}}-1}\): 
-          $$
-          \hat{\mathbf{y}}_{t:t+T_{\mathrm{Prediction}}-1}= f_{\Theta}\!\big(\mathbf{X}_{t-T_{\mathrm{History}}:t-1}\big),
-          $$
-          where \(f_{\Theta}(\cdot)\) denotes the learned predictor.
-          <br>
-          Here're some useful resources:
-        </p>
-        <ul>
-          <li>
-            <strong>Related Publications</strong>
-            <ul>
-              <li><a href="URL_OF_BEAMLLM_PAPER" target="_blank" rel="noopener">Flow Matching for Vision-Aided mmWave Beam Prediction</a> (Submitted to TVT)</li>
-              <li><a href="https://arxiv.org/abs/2506.14532" target="_blank" rel="noopener">M<sup>2</sup>BeamLLM: Multimodal Sensing-empowered mmWave Beam Prediction with Large Language Models</a> (Submitted to TWC)</li>
-              <li><a href="https://arxiv.org/abs/2503.10432" target="_blank" rel="noopener">BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models</a> (Proc. VTC2025-fall)</li>
-            </ul>
-          </li>
-          <li>
-             <strong>GitHub Repository</strong>
-            <ul>
-              <li><a href="https://github.com/CanZheng0331/Sensing_aided_Communications" target="_blank" rel="noopener">Demos of Beam Prediction</a>: Reproduced of Codes for sensing-assisted beam prediction by myself.</li>
-             </ul>
-          </li>
-           <li>
-             <strong>Public Datasets</strong>
+    
+    <div class="research-grid">
+
+      <details class="research-box">
+        <summary>
+          <div class="box-header">
+            <h2>AI/ML for Wireless Communications</h2>
+            <p class="period">Period: 2024.12-Present</p>
+            <div class="image-wrapper">
+              <img src="photos/profile.jpg" alt="AI/ML Research Image">
+            </div>
+            </div>
+        </summary>
+        <div class="box-content">
+          <p>
+            These researches aim to leverage deep learning (DL) and large language models (LLMs) to address challenges in millimeter-wave (mmWave) communications, such as beam prediction and localization.
+          </p>
+          <ul>
+            <li>
+              <p>
+                <strong>Beam Prediction</strong> Combining multimodal perception/sensing (such as vision, radar, LiDAR and GPS) with DL models to achieve robust beam selection and reduce training overhead. Specifically, my focus is on sensing-assisted beam prediction, which is to proactively predict the optimal beam direction for future moments using perception information from past moments. I think it can be considered as the spatio-temporal beam prediction (i.e., BM Case 1 + Case 2 in <a href="https://www.3gpp.org/dynareport/38843.htm" target="_blank" rel="noopener">3GPP TR 38.843: Study on Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface</a>, Page 23).
+                <br>
+                Formally, given only historical observations \(\mathbf{X}_{t-T_{\mathrm{History}}:t-1}\), we aim to predict the future beam sequence \(\hat{\mathbf{y}}_{t:t+T_{\mathrm{Prediction}}-1}\): 
+                $$
+                \hat{\mathbf{y}}_{t:t+T_{\mathrm{Prediction}}-1}= f_{\Theta}\!\big(\mathbf{X}_{t-T_{\mathrm{History}}:t-1}\big),
+                $$
+                where \(f_{\Theta}(\cdot)\) denotes the learned predictor.
+                <br>
+                Here're some useful resources:
+              </p>
               <ul>
-              <li><a href="https://www.deepsense6g.net/" target="_blank" rel="noopener">DeepSense 6G</a>: A Large-Scale Real-World Multi-Modal Sensing and Communication Dataset for 6G Deep Learning Research.</li>
-            </ul>
-          </li>
-        </ul>
-      </li> 
-    </ul>
+                <li>
+                  <strong>Related Publications</strong>
+                  <ul>
+                    <li><a href="URL_OF_BEAMLLM_PAPER" target="_blank" rel="noopener">Flow Matching for Vision-Aided mmWave Beam Prediction</a> (Submitted to TVT)</li>
+                    <li><a href="https://arxiv.org/abs/2506.14532" target="_blank" rel="noopener">M<sup>2</sup>BeamLLM: Multimodal Sensing-empowered mmWave Beam Prediction with Large Language Models</a> (Submitted to TWC)</li>
+                    <li><a href="https://arxiv.org/abs/2503.10432" target="_blank" rel="noopener">BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models</a> (Proc. VTC2025-fall)</li>
+                  </ul>
+                </li>
+                <li>
+                    <strong>GitHub Repository</strong>
+                  <ul>
+                    <li><a href="https://github.com/CanZheng0331/Sensing_aided_Communications" target="_blank" rel="noopener">Demos of Beam Prediction</a>: Reproduced of Codes for sensing-assisted beam prediction by myself.</li>
+                  </ul>
+                </li>
+                  <li>
+                    <strong>Public Datasets</strong>
+                    <ul>
+                    <li><a href="https://www.deepsense6g.net/" target="_blank" rel="noopener">DeepSense 6G</a>: A Large-Scale Real-World Multi-Modal Sensing and Communication Dataset for 6G Deep Learning Research.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li> 
+          </ul>
+        </div>
+      </details>
 
-    <h2>2. Low Earth Orbit (LEO) Satellite Communications</h2>
-    <p> <strong>Period: 2024.7-Present</strong>
-    <p>
-      Why use cell-free (CF) concepts in LEO satellite communications, or rather, why do multi-satellite collaborative transmission? When considering direct-to-cell (D2C) users, i.e., single-antenna users, we found that the existing multi-beam satellite communication link budget is very tight and may not be able to meet quality of service (QoS) requirements, especially with the increasing number of users using satellite communication services. To meet greater capacity requirements and for fairness considerations, we adopted the concept of CF massive MIMO from terrestrial networks.
-    </p>
-    <ul>
-      <li>
-        <p>
-          <strong>Cell-free NTN Uplink Optimization</strong> Until I finished this work, most of the work involved downlink optimization. However, we believe that uplink demand will also increase. In particular, to my knowledge, some telecommunications companies are considering uplink enhancements.
-        </p>
-        <ul>
-          <li>
-            <strong>Related Publications</strong>
-            <ul>
-              <li><a href="https://ieeexplore.ieee.org/document/11169882" target="_blank" rel="noopener">Joint Clustering and Uplink Power Control for Cell-Free Massive MIMO in LEO Satellite Networks</a> (Proc. ICUFN 2025)</li>
-              <li>...</li>
-            </ul>
-          </li>
-          <li>
-             <strong>GitHub Repository</strong>
-            <ul>
-              To appear (after graduation)
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
+      <details class="research-box">
+        <summary>
+          <div class="box-header">
+            <h2>Low Earth Orbit (LEO) Satellite Communications</h2>
+            <p class="period">Period: 2024.7-Present</p>
+            <div class="image-wrapper">
+              <img src="photos/profile.jpg" alt="LEO Satellite Research Image">
+            </div>
+          </div>
+        </summary>
+        <div class="box-content">
+          <p>
+            Why use cell-free (CF) concepts in LEO satellite communications, or rather, why do multi-satellite collaborative transmission? When considering direct-to-cell (D2C) users, i.e., single-antenna users, we found that the existing multi-beam satellite communication link budget is very tight and may not be able to meet quality of service (QoS) requirements, especially with the increasing number of users using satellite communication services. To meet greater capacity requirements and for fairness considerations, we adopted the concept of CF massive MIMO from terrestrial networks.
+          </p>
+          <ul>
+            <li>
+              <p>
+                <strong>Cell-free NTN Uplink Optimization</strong> Until I finished this work, most of the work involved downlink optimization. However, we believe that uplink demand will also increase. In particular, to my knowledge, some telecommunications companies are considering uplink enhancements.
+              </p>
+              <ul>
+                <li>
+                  <strong>Related Publications</strong>
+                  <ul>
+                    <li><a href="https://ieeexplore.ieee.org/document/11169882" target="_blank" rel="noopener">Joint Clustering and Uplink Power Control for Cell-Free Massive MIMO in LEO Satellite Networks</a> (Proc. ICUFN 2025)</li>
+                    <li>...</li>
+                  </ul>
+                </li>
+                <li>
+                    <strong>GitHub Repository</strong>
+                  <ul>
+                    To appear (after graduation)
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </details>
 
-    <h2>3. Next-Generation Waveforms (OTFS/AFDM)</h2>
-    <p> <strong>Period: 2024.3-Present</strong>
-    <p>
-      These researches focuses on receiver design and performance analysis for novel modulation techniques such as orthogonal time-frequency space (OTFS) and affine frequency division multiplexing (AFDM), especially in high-speed mobile scenarios.
-    </p>
-    <ul>
-      <li>
-        <p>
-          <strong>OTFS Channel Estimation Based on Sparse Recovery</strong> To address the sparsity of the OTFS system, we can construct the \(\ell_0\)-norm minimization problem: \(\min_{\mathbf{h}} ||\mathbf{h}||_0,\) where \(\mathbf{h}\) is the sparse channel vector rearranged from 2D delay-Doppler domain. Since this problem is NP-hard, we apply a variety of compresses sensing (CS) techniques to solve it.
-          <br>
-          Here're some useful resources:
-        </p>
-        <ul>
-          <li>
-            <strong>Related Publications</strong>
-            <ul>
-              <li><a href="https://ieeexplore.ieee.org/abstract/document/10938192" target="_blank" rel="noopener">A Sparsity-Agnostic SL0 Channel Estimation Approach for OTFS Systems</a> (COMML)</li>
-              <li>...</li>
-            </ul>
-          </li>
-          <li>
-             <strong>GitHub Repository</strong>
-            <ul>
-              To appear (after graduation)
-            </ul>
-          </li>
-        </ul>
-        <p> I do <strong>not recommend</strong> any new graduate students to make it their main research direction, because OFDM has recently been designated as the 6G air interface waveform: <a href="https://www.linkedin.com/pulse/first-6g-agreement-ofdm-confirmed-what-means-doesnt-iwss25-invite-238rf/?trackingId=IJL%2BBwtDVG%2FPZmlyDSNPNw%3D%3D" target="_blank" rel="noopener">[First 6G Agreement: OFDM confirmed: What it means?]</li>
-      </li>
-    </ul>
+      <details class="research-box">
+        <summary>
+          <div class="box-header">
+            <h2>Next-Generation Waveforms (OTFS/AFDM)</h2>
+            <p class="period">Period: 2024.3-Present</p>
+            <div class="image-wrapper">
+              <img src="photos/profile.jpg" alt="Waveforms Research Image">
+            </div>
+          </div>
+        </summary>
+        <div class="box-content">
+          <p>
+            These researches focuses on receiver design and performance analysis for novel modulation techniques such as orthogonal time-frequency space (OTFS) and affine frequency division multiplexing (AFDM), especially in high-speed mobile scenarios.
+          </p>
+          <ul>
+            <li>
+              <p>
+                <strong>OTFS Channel Estimation Based on Sparse Recovery</strong> To address the sparsity of the OTFS system, we can construct the \(\ell_0\)-norm minimization problem: \(\min_{\mathbf{h}} ||\mathbf{h}||_0,\) where \(\mathbf{h}\) is the sparse channel vector rearranged from 2D delay-Doppler domain. Since this problem is NP-hard, we apply a variety of compresses sensing (CS) techniques to solve it.
+                <br>
+                Here're some useful resources:
+              </p>
+              <ul>
+                <li>
+                  <strong>Related Publications</strong>
+                  <ul>
+                    <li><a href="https://ieeexplore.ieee.org/abstract/document/10938192" target="_blank" rel="noopener">A Sparsity-Agnostic SL0 Channel Estimation Approach for OTFS Systems</a> (COMML)</li>
+                    <li>...</li>
+                  </ul>
+                </li>
+                <li>
+                    <strong>GitHub Repository</strong>
+                  <ul>
+                    To appear (after graduation)
+                  </ul>
+                </li>
+              </ul>
+              <p> I do <strong>not recommend</strong> any new graduate students to make it their main research direction, because OFDM has recently been designated as the 6G air interface waveform: <a href="https://www.linkedin.com/pulse/first-6g-agreement-ofdm-confirmed-what-means-doesnt-iwss25-invite-238rf/?trackingId=IJL%2BBwtDVG%2FPZmlyDSNPNw%3D%3D" target="_blank" rel="noopener">[First 6G Agreement: OFDM confirmed: What it means?]</li>
+            </li>
+          </ul>
+        </div>
+      </details>
 
-    <hr>
+    </div> <hr>
     <p><small class="muted">Recent Update: <span id="update_date">2025/11/15</span></small></p>
   </article>
 

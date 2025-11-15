@@ -231,3 +231,165 @@ kbd{border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;pad
       color: #fff;
     }
 }
+
+/* ------------------------------------------- */
+/* 研究方向盒子布局和样式 V9 强制 9:6 比例和最终修正 */
+/* ------------------------------------------- */
+
+/* 网格容器：实现一行两列的关键 */
+.research-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px; 
+    margin-top: 30px;
+    align-items: start; 
+}
+
+/* 针对小屏幕（可选，用于响应式设计） */
+@media (max-width: 768px) {
+    .research-grid {
+        grid-template-columns: 1fr; 
+    }
+}
+
+/* 盒子样式：保持不变 */
+.research-box {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 0; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    min-height: 400px; 
+}
+
+
+/* summary 标签样式 */
+.research-box summary {
+    cursor: pointer;
+    list-style: none; 
+    padding: 0 15px; 
+    margin-bottom: 0;
+    display: block; 
+    position: relative;
+}
+
+/* 自定义展开/折叠箭头 */
+.research-box summary::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    top: 5px;
+    transition: transform 0.2s ease;
+}
+
+/* 展开时的箭头样式（变为上三角） */
+.research-box[open] summary::after {
+    content: "▲"; 
+}
+
+/* 盒子头部内容：让内容自然堆叠 */
+.box-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: center;
+    height: auto; 
+    padding-bottom: 10px; 
+}
+
+/* 标题样式：修正位置，并确保高度一致 */
+.research-box h2 {
+    /* 修正标题位置 */
+    margin-top: 20px; 
+    margin-bottom: 5px;
+    font-size: 1.5em; 
+    min-height: 2.2em; 
+    max-width: 90%; 
+    line-height: 1.1; 
+    padding: 0 15px;
+}
+
+/* Period 样式：增加与图片的间距 */
+.research-box .period {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 0;
+    margin-bottom: 15px; /* 增加 Period 和图片之间的间距 */
+    padding: 0 15px;
+}
+
+/* 图片容器：确保占据最大宽度 */
+.image-wrapper {
+    margin: 0;
+    padding: 0 10px; 
+    overflow: hidden;
+    border-radius: 4px;
+    width: 100%; 
+}
+
+/* 图片样式：关键修改 - 强制 9:6 比例，并裁剪 */
+.image-wrapper img {
+    display: block;
+    width: 100%; 
+    
+    /* 关键修改：强制图片以 9:6 比例显示 */
+    aspect-ratio: 9 / 6; 
+    
+    /* 关键修改：图片覆盖整个 9:6 区域，可能会裁剪边缘 */
+    object-fit: cover; 
+}
+
+/* 展开的内容区域，确保与 prose 样式兼容 */
+.box-content {
+    padding-top: 10px;
+    /* 增加左右 padding */
+    padding: 10px 15px 0 15px; 
+    border-top: 1px dashed #ddd; 
+}
+
+/* 确保内部列表和链接的样式正常继承 */
+.box-content ul, .box-content p {
+    text-align: left; 
+}
+/* ------------------------------------------- */
+/* 解决图片覆盖导航栏的问题 */
+/* ------------------------------------------- */
+
+/* ------------------------------------------- */
+/* 导航栏样式：实现固定顶部，并确保不被覆盖 */
+/* ------------------------------------------- */
+
+.header {
+    /* 关键 1: 设置为固定定位，使其在滚动时固定在视口顶部 */
+    position: fixed;
+    top: 0; /* 贴在顶部 */
+    left: 0;
+    width: 100%; /* 宽度撑满整个视口 */
+    background-color: white; /* 导航栏需要一个背景色，否则下面的内容会透上来 */
+    /* 关键 2: 设置一个高 z-index，防止被图片或其他内容覆盖 */
+    z-index: 1000; 
+    /* 可选: 添加阴影，增强浮动效果 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+/* ------------------------------------------- */
+/* 容器修正：防止固定导航栏遮挡主内容 */
+/* ------------------------------------------- */
+
+/* 关键 3: 由于 header 现在脱离了文档流，它不再占用空间。
+   我们需要在主内容上添加一个上边距，以防止内容被 header 遮挡。*/
+.container {
+    /* 假设 header 的高度约为 60px，我们设置一个更大的边距 */
+    padding-top: 70px; 
+}
+
+/* 调整 header/navbar 内部的样式，确保内容居中等 */
+.header .navbar {
+    /* 重新定义 container 样式，确保内容在固定导航栏内水平居中 */
+    max-width: 1200px; /* 假设您的最大内容宽度 */
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
