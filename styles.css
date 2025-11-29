@@ -421,7 +421,7 @@ kbd {
     width: 100%; 
     
     /* 关键修改：强制图片以 9:6 比例显示 */
-    aspect-ratio: 9 / 6; 
+    /* aspect-ratio: 9 / 6; 
     
     /* 关键修改：图片覆盖整个 9:6 区域，可能会裁剪边缘 */
     object-fit: cover; 
