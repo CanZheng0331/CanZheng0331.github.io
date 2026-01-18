@@ -8,38 +8,36 @@
   <meta name="color-scheme" content="light dark">
   <style>
     .post-list { list-style: none; padding: 0; }
-    .post-list li { margin: 0.5rem 0; }
-    .tag { display: inline-block; background: #444; color: #fff; padding: 2px 6px; margin: 0 4px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
+    .post-list li { margin: 0.5rem 0; display: flex; align-items: center; flex-wrap: wrap; }
+    .post-list li a { margin-right: 8px; }
+    .post-date { font-size: 0.85rem; color: #888; margin-right: 12px; }
+    .tag { display: inline-block; background: #444; color: #fff; padding: 2px 6px; margin: 2px 4px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
     .search-box { margin: 1rem 0; }
 
     /* 避免双滚动条：外层不滚动，内容层滚动 */
     .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg, #fff); display: none; overflow: hidden; align-items: center; justify-content: center; z-index: 1000; }
     .modal-content { background: var(--bg, #fff); color: var(--fg, #000); max-width: 100%; width: 100%; height: 100%; padding: 1rem 2rem; border-radius: 0; overflow-y: auto; max-height: 100vh; box-sizing: border-box; }
 
-    /* 返回按钮：小按钮固定左上角；用更强选择器 + !important 防止被全局 a 规则影响 */
+    /* 返回按钮 */
     .modal .modal-content > .modal-close {
       position: fixed !important;
       top: 0.75rem !important;
       left: 0.75rem !important;
-
       display: inline-flex !important;
       width: auto !important;
       max-width: none !important;
-
       align-items: center;
       justify-content: center;
       height: 30px;
       padding: 0 10px;
       font-size: 0.9rem;
       line-height: 1;
-
       background: #eee;
       color: #333;
       border: 1px solid #ddd;
       border-radius: 6px;
       text-decoration: none;
       box-sizing: border-box;
-
       opacity: 0.5;
       transition: opacity .2s ease;
       z-index: 1001;
@@ -53,13 +51,12 @@
       .modal .modal-content > .modal-close { top: 0.6rem !important; left: 0.6rem !important; height: 28px; padding: 0 8px; font-size: 0.9rem; }
     }
 
-    /* 关键：把 $$ 的公式包在 .math-display 中，强制其内部 mjx-container 为块级 */
+    /* 数学公式样式 */
     #post-content .math-display mjx-container { 
       display: block !important; 
       margin: .8em 0 !important; 
       text-align: center; 
     }
-    /* 行内公式保持紧凑（对 $...$ 和 \(...\) 不包容器） */
     #post-content mjx-container[display="false"] { 
       display: inline-block !important; 
       margin: 0 .1em !important; 
@@ -71,12 +68,12 @@
     <div class="navbar container">
       <a class="brand" href="index.html">Can Zheng</a>
       <nav>
-        <a href="index.html" aria-current="page">Home</a>
-        <a href="biography.html" >Biography</a>
-        <a href="researches.html" >Researches</a>
-        <a href="publications.html" >Publications</a>
-        <a href="blog.html" >Blog</a>
-        <a href="photos.html" >Photos</a>
+        <a href="index.html">Home</a>
+        <a href="biography.html">Biography</a>
+        <a href="researches.html">Researches</a>
+        <a href="publications.html">Publications</a>
+        <a href="blog.html">Blog</a>
+        <a href="photos.html">Photos</a>
       </nav>
     </div>
   </header>
@@ -104,7 +101,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    // MathJax：支持 \textsf 等（textmacros），并设置行内/展示分隔。
     window.MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -113,13 +109,17 @@
         packages: {'[+]': ['textmacros']}
       },
       loader: { load: ['[tex]/textmacros'] },
-      options: { /* 默认：跳过 <code>/<pre> */ }
+      options: {}
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 配置你的 GitHub 信息
+    const GITHUB_USER = "YourGitHubName"; // 替换为你的 GitHub 用户名
+    const GITHUB_REPO = "YourRepoName"; // 替换为你的仓库名
 
     const posts = [
       { id: "Wireless-communications", title: "[Chinese] Notes on Wireless Communications by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications.md" },
@@ -136,32 +136,29 @@
     const postContent = document.getElementById("post-content");
     const searchBox = document.getElementById("search");
 
-    // —— 数学内容保护：避免 Markdown 误处理 '_' '*' 等 —— //
     function extractMath(md) {
       const chunks = [];
       let out = '';
       let i = 0;
-
       const pushToken = (text) => {
         const key = `@@MATH_${chunks.length}@@`;
         chunks.push(text);
         return key;
       };
-
       while (i < md.length) {
-        if (md.startsWith('$$', i)) { // $$...$$
+        if (md.startsWith('$$', i)) {
           const j = md.indexOf('$$', i + 2);
           if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; }
         }
-        if (md.startsWith('\\[', i)) { // \[...\]
+        if (md.startsWith('\\[', i)) {
           const j = md.indexOf('\\]', i + 2);
           if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; }
         }
-        if (md.startsWith('\\(', i)) { // \(...\)
+        if (md.startsWith('\\(', i)) {
           const j = md.indexOf('\\)', i + 2);
           if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; }
         }
-        if (md[i] === '$' && md[i+1] !== '$') { // $...$
+        if (md[i] === '$' && md[i+1] !== '$') {
           let j = i + 1;
           while (j < md.length) {
             if (md[j] === '\\') { j += 2; continue; }
@@ -175,20 +172,18 @@
       return { masked: out, chunks };
     }
 
-    // —— 还原数学：把 $$ 与 \[...\] 包进 .math-display，行内不包 —— //
     function restoreMath(html, chunks) {
       let out = html;
       chunks.forEach((raw, idx) => {
         const key = `@@MATH_${idx}@@`;
         const isDisplay = (/^\$\$[\s\S]*\$\$$/.test(raw) || /^\\\[[\s\S]*\\\]$/.test(raw));
-        const replacement = isDisplay 
-          ? `<div class="math-display">${raw}</div>`   // 块级容器兜底
-          : raw;                                       // 行内原样
+        const replacement = isDisplay ? `<div class="math-display">${raw}</div>` : raw;
         out = out.replaceAll(key, replacement);
       });
       return out;
     }
 
+    // 渲染列表函数，集成了日期获取
     function renderList(textFilter = "", tagFilter = "") {
       list.innerHTML = "";
 
@@ -205,7 +200,27 @@
 
       filteredPosts.forEach(post => {
         const li = document.createElement("li");
-        li.innerHTML = `<a href="#">${post.title}</a>${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}`;
+        // 初始化 HTML，日期位置先占位
+        li.innerHTML = `
+          <a href="#">${post.title}</a>
+          <span class="post-date">...</span>
+          ${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}
+        `;
+
+        // 异步请求 GitHub API 获取该文件的最后提交日期
+        fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits?path=${post.file}&page=1&per_page=1`)
+          .then(response => response.json())
+          .then(data => {
+            if (data && data.length > 0) {
+              const date = new Date(data[0].commit.committer.date).toISOString().split('T')[0];
+              li.querySelector(".post-date").textContent = date;
+            } else {
+              li.querySelector(".post-date").style.display = "none";
+            }
+          })
+          .catch(() => {
+            li.querySelector(".post-date").style.display = "none";
+          });
 
         li.querySelector("a").onclick = (e) => {
           e.preventDefault();
@@ -247,21 +262,16 @@
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
 
-      // 保护数学 → Markdown → 还原（把 $$ 包在 .math-display）
       const { masked, chunks } = extractMath(markdown);
       const htmlMasked = marked.parse(masked);
       const html = restoreMath(htmlMasked, chunks);
       postContent.innerHTML = html;
 
-      // 显示 modal（避免 display:none 时测量失败）
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
       window.scrollTo(0, 0);
 
-      // 等一帧确保布局
       await new Promise(requestAnimationFrame);
-
-      // MathJax 渲染
       await typesetPostContent();
     }
 
@@ -275,7 +285,6 @@
 
     searchBox.oninput = () => renderList(searchBox.value.toLowerCase());
 
-    // 初始化
     renderList();
   </script>
 </body>
