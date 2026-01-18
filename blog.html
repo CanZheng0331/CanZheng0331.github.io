@@ -8,11 +8,11 @@
   <meta name="color-scheme" content="light dark">
   <style>
     .post-list { list-style: none; padding: 0; }
-    .post-list li { margin: 0.5rem 0; display: flex; align-items: center; flex-wrap: wrap; }
-    .post-list li a { margin-right: 8px; }
-    .post-date { font-size: 0.85rem; color: #888; margin-right: 12px; }
-    .tag { display: inline-block; background: #444; color: #fff; padding: 2px 6px; margin: 2px 4px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
-    .search-box { margin: 1rem 0; }
+    .post-list li { margin: 0.8rem 0; line-height: 1.6; }
+    /* 强迫日期和标签在小屏幕也能优雅显示 */
+    .post-date { font-size: 0.85rem; color: #888; margin: 0 10px; }
+    .tag { display: inline-block; background: #444; color: #fff; padding: 2px 6px; margin: 0 4px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
+    .search-box { margin: 1rem 0; width: 100%; box-sizing: border-box; padding: 8px; }
 
     /* 避免双滚动条：外层不滚动，内容层滚动 */
     .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg, #fff); display: none; overflow: hidden; align-items: center; justify-content: center; z-index: 1000; }
@@ -51,7 +51,7 @@
       .modal .modal-content > .modal-close { top: 0.6rem !important; left: 0.6rem !important; height: 28px; padding: 0 8px; font-size: 0.9rem; }
     }
 
-    /* 数学公式样式 */
+    /* 关键：把 $$ 的公式包在 .math-display 中 */
     #post-content .math-display mjx-container { 
       display: block !important; 
       margin: .8em 0 !important; 
@@ -72,7 +72,7 @@
         <a href="biography.html">Biography</a>
         <a href="researches.html">Researches</a>
         <a href="publications.html">Publications</a>
-        <a href="blog.html">Blog</a>
+        <a href="blog.html" aria-current="page">Blog</a>
         <a href="photos.html">Photos</a>
       </nav>
     </div>
@@ -109,7 +109,7 @@
         packages: {'[+]': ['textmacros']}
       },
       loader: { load: ['[tex]/textmacros'] },
-      options: {}
+      options: { }
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
@@ -117,9 +117,9 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // 配置你的 GitHub 信息
-    const GITHUB_USER = "YourGitHubName"; // 替换为你的 GitHub 用户名
-    const GITHUB_REPO = "YourRepoName"; // 替换为你的仓库名
+    // 根据你的 URL 自动配置
+    const GITHUB_USER = "canzheng0331";
+    const GITHUB_REPO = "canzheng0331.github.io";
 
     const posts = [
       { id: "Wireless-communications", title: "[Chinese] Notes on Wireless Communications by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications.md" },
@@ -183,7 +183,6 @@
       return out;
     }
 
-    // 渲染列表函数，集成了日期获取
     function renderList(textFilter = "", tagFilter = "") {
       list.innerHTML = "";
 
@@ -200,27 +199,24 @@
 
       filteredPosts.forEach(post => {
         const li = document.createElement("li");
-        // 初始化 HTML，日期位置先占位
+        // 这里给日期一个初始状态
         li.innerHTML = `
           <a href="#">${post.title}</a>
-          <span class="post-date">...</span>
+          <span class="post-date" id="date-${post.id}"></span>
           ${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}
         `;
 
-        // 异步请求 GitHub API 获取该文件的最后提交日期
-        fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits?path=${post.file}&page=1&per_page=1`)
-          .then(response => response.json())
-          .then(data => {
-            if (data && data.length > 0) {
-              const date = new Date(data[0].commit.committer.date).toISOString().split('T')[0];
-              li.querySelector(".post-date").textContent = date;
-            } else {
-              li.querySelector(".post-date").style.display = "none";
+        // 异步获取日期
+        const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits?path=${post.file}&page=1&per_page=1`;
+        fetch(apiUrl)
+          .then(res => res.json())
+          .then(commits => {
+            if (commits && commits.length > 0) {
+              const dateStr = commits[0].commit.committer.date.split('T')[0];
+              document.getElementById(`date-${post.id}`).textContent = dateStr;
             }
           })
-          .catch(() => {
-            li.querySelector(".post-date").style.display = "none";
-          });
+          .catch(err => console.error("GitHub API Error:", err));
 
         li.querySelector("a").onclick = (e) => {
           e.preventDefault();
