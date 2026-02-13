@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Games · Can Zheng</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="color-scheme" content="light dark">
+  <style>
+    /* 继承并微调 grid 风格，参考 researches.html */
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .game-card {
+      background: var(--card-bg, rgba(0,0,0,0.03));
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .game-card:hover {
+      transform: translateY(-5px);
+      border-color: #007aff; /* 蓝色悬停边框 */
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .game-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .game-info h2 {
+      margin: 0.5rem 0;
+      font-size: 1.25rem;
+    }
+
+    .game-info p {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-bottom: 0;
+    }
+
+    /* 兼容暗色模式 */
+    @media (prefers-color-scheme: dark) {
+      .game-card {
+        background: rgba(255,255,255,0.05);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar container">
+      <a class="brand" href="index.html">Can Zheng</a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="biography.html">Biography</a>
+        <a href="researches.html">Researches</a>
+        <a href="publications.html">Publications</a>
+        <a href="blog.html">Blog</a>
+        <a href="photos.html">Photos</a>
+        <a href="game.html" aria-current="page">Games</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="prose">
+      <h1>My Playground</h1>
+      <p>This is a collection of some small HTML/JavaScript games that I co-wrote with GenAI.</p>
+    </article>
+
+    <section class="section">
+      <div class="game-grid">
+        <a href="games/Flappy_bird.html" class="game-card">
+          <span class="game-icon">🐦</span>
+          <div class="game-info">
+            <h2>Flappy Bird</h2>
+            <p>Use the left mouse button to control the bird and avoid obstacles.</p>
+          </div>
+        </a>
+
+        <a href="games/2048.html" class="game-card">
+          <span class="game-icon">⚫</span>
+          <div class="game-info">
+            <h2>Gomoku</h2>
+            <p>A classic two-player strategy board game</p>
+          </div>
+        </a>
+
+
+        <div class="game-card" style="opacity: 0.5; cursor: default;">
+          <span class="game-icon">🧪</span>
+          <div class="game-info">
+            <h2>More to come</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+    <hr>
+
+  </main>
+
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
