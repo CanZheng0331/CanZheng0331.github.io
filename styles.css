@@ -32,7 +32,8 @@ html, body {
 body {
   background: var(--bg);
   color: var(--fg);
-  font: 16px/1.65 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  /* 将 'Inter' 移动到最前面，并保留备用字体和 Emoji 支持 */
+  font: 16px/1.65 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 }
 a {
   color: var(--accent);
