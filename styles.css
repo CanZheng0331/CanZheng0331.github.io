@@ -440,3 +440,30 @@ kbd {
 .box-content ul, .box-content p {
     text-align: left; 
 }
+
+/* 调整 Hero 部分链接的间距 */
+.social-links {
+  display: flex;
+  flex-wrap: wrap; /* 确保在手机端能自动换行 */
+  gap: 24px;       /* 使用 gap 是最现代的方法，直接控制元素间的间距 */
+  margin-top: 16px;
+}
+
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0; /* 既然用了 gap，就不再需要 margin-right */
+  font-weight: 500;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* 鼠标悬停时的小动画，增加互动感 */
+.social-links a:hover {
+  transform: translateY(-2px);
+  color: var(--accent);
+}
+
+/* 图标与文字之间的微调 */
+.social-links a i {
+  margin-right: 8px; 
+}
