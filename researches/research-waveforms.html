@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Next-Gen Waveforms · Can Zheng</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <meta name="color-scheme" content="light dark">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+  <script>
+    (function() {
+      let theme = localStorage.getItem('theme');
+      if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar container">
+      <a class="brand" href="../index.html"><img src="../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
+      <nav>
+        <div class="dropdown">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="dropdown">
+          <a href="../biography.html" class="nav-link">Biography</a>
+        </div>
+        <div class="dropdown">
+          <a href="../researches.html" class="nav-link" aria-current="page">Researches</a>
+          <div class="dropdown-content">
+            <a href="../researches.html?filter=past">Past</a>
+            <a href="../researches.html?filter=ongoing">Ongoing</a>
+            <a href="../researches.html?filter=future">Future</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="../publications.html" class="nav-link">Publications</a>
+        </div>
+        <a href="../blog.html" class="nav-link">Blog</a>
+        <a href="../photos.html" class="nav-link">Photos</a>
+        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+
+  <article class="prose">
+    <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> Back to all researches</a>
+    <h1 style="margin-top: 16px;">Next-Generation Waveforms (OTFS/AFDM)</h1>
+    <p style="color: var(--accent); font-weight: 600;">Status: Past (2024.03 - 2026.02)</p>
+
+    <div style="text-align: center; margin: 32px 0;">
+        <img src="../photos/proj_figure/OTFS.png" alt="Waveforms Architecture" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-sm);">
+    </div>
+
+    <p>
+      These researches focuses on receiver design and performance analysis for novel modulation techniques such as orthogonal time-frequency space (OTFS) and affine frequency division multiplexing (AFDM), especially in high-speed mobile scenarios.
+    </p>
+
+    <h2>OTFS Channel Estimation Based on Sparse Recovery</h2>
+    <p>
+      To address the sparsity of the OTFS system, we can construct the \(\ell_0\)-norm minimization problem: \(\min_{\mathbf{h}} ||\mathbf{h}||_0,\) where \(\mathbf{h}\) is the sparse channel vector rearranged from 2D delay-Doppler domain. Since this problem is NP-hard, we apply a variety of compresses sensing (CS) techniques to solve it.
+    </p>
+
+    <h2>Useful Resources</h2>
+    <ul>
+      <li>
+        <strong>Related Publications</strong>
+        <ul>
+          <li><a href="https://ieeexplore.ieee.org/abstract/document/10938192" target="_blank" rel="noopener">A Sparsity-Agnostic SL0 Channel Estimation Approach for OTFS Systems</a> (COMML)</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Codes</strong>
+        <ul>
+          <li><a href="https://github.com/CanZheng0331/EP_Channel_Estimation_OTFS" target="_blank" rel="noopener">[Embedded pilot-aided]</a></li>
+          <li><a href="https://github.com/CanZheng0331/Compressed_Sensing_OTFS_Channel_Estimation" target="_blank" rel="noopener">[CS-based]</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <blockquote>
+      <strong>Note:</strong> I do not recommend any new graduate students to make it their main research direction, because OFDM has recently been designated as the 6G air interface waveform: <a href="https://www.linkedin.com/pulse/first-6g-agreement-ofdm-confirmed-what-means-doesnt-iwss25-invite-238rf" target="_blank" rel="noopener">[First 6G Agreement: OFDM confirmed: What it means?]</a>
+    </blockquote>
+  </article>
+
+  </main>
+  <footer class="footer">
+    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = themeBtn.querySelector('i');
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function applyThemeMode(themeStr) {
+      document.documentElement.setAttribute('data-theme', themeStr);
+      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+    applyThemeMode(currentTheme);
+    themeBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', currentTheme);
+      applyThemeMode(currentTheme);
+    });
+  </script>
+</body>
+</html>

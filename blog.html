@@ -1,291 +1,287 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Home · Can Zheng</title>
+  <title>Blog · Can Zheng</title>
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    (function() {
+      let theme = localStorage.getItem('theme');
+      if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <style>
     .post-list { list-style: none; padding: 0; }
-    .post-list li { margin: 0.8rem 0; line-height: 1.6; }
-    /* 强迫日期和标签在小屏幕也能优雅显示 */
-    .post-date { font-size: 0.85rem; color: #888; margin: 0 10px; }
-    .tag { display: inline-block; background: #444; color: #fff; padding: 2px 6px; margin: 0 4px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
-    .search-box { margin: 1rem 0; width: 100%; box-sizing: border-box; padding: 8px; }
-
-    /* 避免双滚动条：外层不滚动，内容层滚动 */
-    .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg, #fff); display: none; overflow: hidden; align-items: center; justify-content: center; z-index: 1000; }
-    .modal-content { background: var(--bg, #fff); color: var(--fg, #000); max-width: 100%; width: 100%; height: 100%; padding: 1rem 2rem; border-radius: 0; overflow-y: auto; max-height: 100vh; box-sizing: border-box; }
-
-    /* 返回按钮 */
-    .modal .modal-content > .modal-close {
-      position: fixed !important;
-      top: 0.75rem !important;
-      left: 0.75rem !important;
-      display: inline-flex !important;
-      width: auto !important;
-      max-width: none !important;
-      align-items: center;
-      justify-content: center;
-      height: 30px;
-      padding: 0 10px;
-      font-size: 0.9rem;
-      line-height: 1;
-      background: #eee;
-      color: #333;
-      border: 1px solid #ddd;
+    .post-list li { margin: 1rem 0; line-height: 1.6; padding-bottom: 0.5rem; border-bottom: 1px dashed var(--border); }
+    .post-date { font-size: 0.85rem; color: var(--muted); margin: 0 10px; }
+    .tag { display: inline-block; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); padding: 4px 8px; margin: 0 4px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: background 0.2s;}
+    .tag:hover { background: var(--accent); color: #fff; }
+    
+    /* 悬浮筛选栏核心 CSS */
+    #filter-header-container { 
+      position: sticky; 
+      top: 65px; 
+      z-index: 990; 
+      margin-bottom: 1rem; 
+    }
+    .filter-header { 
+      display: flex; 
+      align-items: center; 
+      flex-wrap: wrap;
+      gap: 12px; 
+      background: var(--card); 
+      padding: 12px 16px; 
+      border-radius: 8px; 
+      border: 1px solid var(--border); 
+      box-shadow: var(--shadow-md);
+    }
+    .filter-header .back-btn { 
+      background: var(--accent); 
+      color: white; 
+      border: none; 
+      padding: 6px 12px; 
+      border-radius: 6px; 
+      cursor: pointer; 
+      font-size: 0.9rem; 
+      font-weight: 500; 
+      transition: opacity 0.2s;
+      margin-left: auto;
+    }
+    .filter-header .back-btn:hover { opacity: 0.8; }
+    .logic-select {
+      background: var(--bg);
+      color: var(--fg);
+      border: 1px solid var(--border);
       border-radius: 6px;
-      text-decoration: none;
-      box-sizing: border-box;
-      opacity: 0.5;
-      transition: opacity .2s ease;
-      z-index: 1001;
-      pointer-events: auto;
-    }
-    .modal .modal-content > .modal-close:hover,
-    .modal .modal-content > .modal-close:focus { opacity: 1; }
-
-    @media (max-width: 768px) {
-      .modal-content { padding: 1rem; }
-      .modal .modal-content > .modal-close { top: 0.6rem !important; left: 0.6rem !important; height: 28px; padding: 0 8px; font-size: 0.9rem; }
-    }
-
-    /* 关键：把 $$ 的公式包在 .math-display 中 */
-    #post-content .math-display mjx-container { 
-      display: block !important; 
-      margin: .8em 0 !important; 
-      text-align: center; 
-    }
-    #post-content mjx-container[display="false"] { 
-      display: inline-block !important; 
-      margin: 0 .1em !important; 
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <header class="header">
     <div class="navbar container">
-      <a class="brand" href="index.html">Can Zheng</a>
+      <a class="brand" href="index.html"><img src="photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
       <nav>
-        <a href="index.html">Home</a>
-        <a href="biography.html">Biography</a>
-        <a href="researches.html">Researches</a>
-        <a href="publications.html">Publications</a>
-        <a href="blog.html" aria-current="page">Blog</a>
-        <a href="photos.html">Photos</a>
-        <a href="game.html" >Games</a>
+        <div class="dropdown">
+          <a href="index.html" class="nav-link">Home</a>
+          <div class="dropdown-content">
+            <a href="index.html#about">About Me</a>
+            <a href="index.html#news">News</a>
+            <a href="index.html#explore">Explore</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="biography.html" class="nav-link">Biography</a>
+          <div class="dropdown-content">
+            <a href="biography.html#education">Education</a>
+            <a href="biography.html#experience">Work Experience</a>
+            <a href="biography.html#service">Service</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="researches.html" class="nav-link">Researches</a>
+          <div class="dropdown-content">
+            <a href="researches.html?filter=past">Past</a>
+            <a href="researches.html?filter=ongoing">Ongoing</a>
+            <a href="researches.html?filter=future">Future</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="publications.html" class="nav-link">Publications</a>
+          <div class="dropdown-content">
+            <a href="publications.html#journal">Journal Papers</a>
+            <a href="publications.html#conference">Conference Papers</a>
+          </div>
+        </div>
+        <a href="blog.html" class="nav-link" aria-current="page">Blog</a>
+        <a href="photos.html" class="nav-link">Photos</a>
+        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
       </nav>
     </div>
   </header>
   <main class="container">
     <section class="section">
-      <h2>Blog Posts</h2>
-      <input class="search-box" type="text" id="search" placeholder="Search..." />
+      <h1>Blog Posts</h1>
+      <input class="search-box" type="text" id="search" placeholder="Search articles or tags..." />
+      <div id="filter-header-container"></div>
       <ul id="post-list" class="post-list">
-        <li><small class="muted">Loading…</small></li>
+        <li><small class="muted">Loading and sorting by date…</small></li>
       </ul>
     </section>
   </main>
-  <div id="modal" class="modal">
-    <div class="modal-content card prose">
-      <a href="#" id="modal-close" class="modal-close" aria-label="Back">Back</a>
-      <h1 id="post-title" style="padding-top: 2rem;"></h1>
-      <div id="post-tags"></div>
-      <hr>
-      <div id="post-content"></div>
-    </div>
-  </div>
+  
   <footer class="footer">
     <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']],
-        processEscapes: true,
-        packages: {'[+]': ['textmacros']}
-      },
-      loader: { load: ['[tex]/textmacros'] },
-      options: { }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // 根据你的 URL 自动配置
     const GITHUB_USER = "canzheng0331";
     const GITHUB_REPO = "canzheng0331.github.io";
 
-    const posts = [
+    let posts = [
+      { id: "Wireless-communications2nd", title: "[Chinese] Notes on Wireless Communications (2nd Edition) by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications2nd.pdf" },
       { id: "Wireless-communications", title: "[Chinese] Notes on Wireless Communications by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications.md" },
       { id: "otfs-notes", title: "[Chinese] Notes on OTFS", tags: ["OTFS", "Signal Processing"], file: "posts/otfs-notes.md" },
-      { id: "sats", title: "[Chinese] Notes on Multi-Satellite Cooperative Networks (Cell-Free Non-Terrestrial Networks)", tags: ["Satellite Communications", "Paper Summarization"], file: "posts/sats.md" },
+      { id: "sats", title: "[Chinese] Notes on Multi-Satellite Cooperative Networks", tags: ["Satellite Communications", "Paper Summarization"], file: "posts/sats.md" },
       { id: "LLM_BBO", title: "[Chinese] Notes on LLM for Network Optimization", tags: ["Large Language Model", "Optimization", "Paper Summarization"], file: "posts/LLM_BBO.md" }
     ];
 
     const list = document.getElementById("post-list");
-    const modal = document.getElementById("modal");
-    const modalClose = document.getElementById("modal-close");
-    const postTitle = document.getElementById("post-title");
-    const postTags = document.getElementById("post-tags");
-    const postContent = document.getElementById("post-content");
     const searchBox = document.getElementById("search");
+    const filterHeaderContainer = document.getElementById("filter-header-container");
 
-    function extractMath(md) {
-      const chunks = [];
-      let out = '';
-      let i = 0;
-      const pushToken = (text) => {
-        const key = `@@MATH_${chunks.length}@@`;
-        chunks.push(text);
-        return key;
-      };
-      while (i < md.length) {
-        if (md.startsWith('$$', i)) {
-          const j = md.indexOf('$$', i + 2);
-          if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; }
-        }
-        if (md.startsWith('\\[', i)) {
-          const j = md.indexOf('\\]', i + 2);
-          if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; }
-        }
-        if (md.startsWith('\\(', i)) {
-          const j = md.indexOf('\\)', i + 2);
-          if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; }
-        }
-        if (md[i] === '$' && md[i+1] !== '$') {
-          let j = i + 1;
-          while (j < md.length) {
-            if (md[j] === '\\') { j += 2; continue; }
-            if (md[j] === '$') break;
-            j++;
+    let activeTags = new Set();
+    let tagLogic = 'OR'; 
+
+    async function initializeAndSortPosts() {
+      await Promise.all(posts.map(async (post) => {
+        try {
+          const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits?path=${post.file}&page=1&per_page=1`;
+          const res = await fetch(apiUrl);
+          const commits = await res.json();
+          if (commits && commits.length > 0) {
+            post.date = commits[0].commit.committer.date; 
+            post.displayDate = post.date.split('T')[0];
+          } else {
+            post.date = "1970-01-01T00:00:00Z";
+            post.displayDate = "Local / Test File";
           }
-          if (j < md.length && md[j] === '$') { out += pushToken(md.slice(i, j + 1)); i = j + 1; continue; }
+        } catch (err) {
+          post.date = "1970-01-01T00:00:00Z";
+          post.displayDate = "Local / Test File";
         }
-        out += md[i++];
+      }));
+      posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+      renderList();
+    }
+
+    function toggleTag(tag) {
+      if (activeTags.has(tag)) {
+        activeTags.delete(tag);
+      } else {
+        activeTags.add(tag);
       }
-      return { masked: out, chunks };
+      renderList();
     }
 
-    function restoreMath(html, chunks) {
-      let out = html;
-      chunks.forEach((raw, idx) => {
-        const key = `@@MATH_${idx}@@`;
-        const isDisplay = (/^\$\$[\s\S]*\$\$$/.test(raw) || /^\\\[[\s\S]*\\\]$/.test(raw));
-        const replacement = isDisplay ? `<div class="math-display">${raw}</div>` : raw;
-        out = out.replaceAll(key, replacement);
-      });
-      return out;
+    function changeLogic(logic) {
+      tagLogic = logic;
+      renderList();
     }
 
-    function renderList(textFilter = "", tagFilter = "") {
+    function clearFilters() {
+      activeTags.clear();
+      searchBox.value = "";
+      renderList();
+    }
+
+    function renderList() {
       list.innerHTML = "";
+      const textFilter = searchBox.value.toLowerCase();
+
+      if (activeTags.size === 0 && textFilter === "") {
+        filterHeaderContainer.innerHTML = ""; 
+      } else {
+        let html = `<div class="filter-header">`;
+        
+        if (activeTags.size > 0) {
+          html += `<div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">`;
+          html += `<span style="font-weight:600; font-size:0.9rem;">Tags:</span>`;
+          activeTags.forEach(t => {
+            html += `<span class="tag" style="cursor:pointer;" onclick="toggleTag('${t}')" title="Remove">${t} &times;</span>`;
+          });
+          html += `<select class="logic-select" onchange="changeLogic(this.value)">
+                     <option value="OR" ${tagLogic === 'OR' ? 'selected' : ''}>OR (Any)</option>
+                     <option value="AND" ${tagLogic === 'AND' ? 'selected' : ''}>AND (All)</option>
+                   </select>`;
+          html += `</div>`;
+        }
+
+        if (textFilter !== "") {
+          html += `<span style="font-size:0.9rem;">Search: <strong>${searchBox.value}</strong></span>`;
+        }
+
+        html += `<button class="back-btn" onclick="clearFilters()"><i class="fas fa-times"></i> Clear</button>`;
+        html += `</div>`;
+        filterHeaderContainer.innerHTML = html;
+      }
 
       const filteredPosts = posts.filter(post => {
-        const titleMatch = post.title.toLowerCase().includes(textFilter.toLowerCase());
-        const tagMatch = tagFilter === "" || post.tags.includes(tagFilter);
-        return (textFilter && titleMatch && tagMatch) || (!textFilter && tagMatch);
+        const titleMatch = post.title.toLowerCase().includes(textFilter);
+        
+        let tagMatch = true;
+        if (activeTags.size > 0) {
+          if (tagLogic === 'OR') {
+            tagMatch = post.tags.some(t => activeTags.has(t));
+          } else {
+            tagMatch = Array.from(activeTags).every(t => post.tags.includes(t));
+          }
+        }
+        
+        return titleMatch && tagMatch;
       });
 
       if (filteredPosts.length === 0) {
-        list.innerHTML = "<li><small class='muted'>Not Found.</small></li>";
-        return;
+        list.innerHTML = "<li><small class='muted'>No posts found.</small></li>"; return;
       }
 
       filteredPosts.forEach(post => {
         const li = document.createElement("li");
-        // 这里给日期一个初始状态
         li.innerHTML = `
-          <a href="#">${post.title}</a>
-          <span class="post-date" id="date-${post.id}"></span>
-          ${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(" ")}
+          <a href="#" style="font-size: 1.1rem; font-weight: 600; display: block; margin-bottom: 6px;">${post.title}</a>
+          <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <span class="post-date"><i class="far fa-calendar-alt"></i> ${post.displayDate}</span>
+            ${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join("")}
+          </div>
         `;
-
-        // 异步获取日期
-        const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits?path=${post.file}&page=1&per_page=1`;
-        fetch(apiUrl)
-          .then(res => res.json())
-          .then(commits => {
-            if (commits && commits.length > 0) {
-              const dateStr = commits[0].commit.committer.date.split('T')[0];
-              document.getElementById(`date-${post.id}`).textContent = dateStr;
-            }
-          })
-          .catch(err => console.error("GitHub API Error:", err));
 
         li.querySelector("a").onclick = (e) => {
           e.preventDefault();
-          fetch(post.file)
-            .then(r => r.text())
-            .then(markdown => openPost(post, markdown))
-            .catch(error => console.error("Error fetching post file:", error));
+          window.location.href = `post.html?id=${post.id}`;
         };
 
         li.querySelectorAll(".tag").forEach(tagEl => {
-          tagEl.onclick = () => {
-            searchBox.value = "";
-            renderList("", tagEl.dataset.tag);
+          tagEl.onclick = (e) => { 
+            e.stopPropagation(); 
+            toggleTag(tagEl.dataset.tag); 
           };
         });
-
         list.appendChild(li);
       });
     }
 
-    async function typesetPostContent() {
-      if (!window.MathJax) return;
-      try {
-        if (MathJax.startup && MathJax.startup.promise) await MathJax.startup.promise;
-        if (MathJax.texReset) MathJax.texReset();
-        if (MathJax.typesetClear) MathJax.typesetClear([postContent]);
-        await MathJax.typesetPromise([postContent]);
-      } catch (err) {
-        await new Promise(requestAnimationFrame);
-        try {
-          if (MathJax.texReset) MathJax.texReset();
-          if (MathJax.typesetClear) MathJax.typesetClear([postContent]);
-          await MathJax.typesetPromise([postContent]);
-        } catch (e2) { console.warn("MathJax typeset failed:", e2); }
-      }
+    searchBox.oninput = () => renderList();
+    initializeAndSortPosts();
+
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = themeBtn.querySelector('i');
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
-
-    async function openPost(post, markdown) {
-      postTitle.textContent = post.title;
-      postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
-
-      const { masked, chunks } = extractMath(markdown);
-      const htmlMasked = marked.parse(masked);
-      const html = restoreMath(htmlMasked, chunks);
-      postContent.innerHTML = html;
-
-      modal.style.display = "flex";
-      document.body.style.overflow = "hidden";
-      window.scrollTo(0, 0);
-
-      await new Promise(requestAnimationFrame);
-      await typesetPostContent();
+    function applyThemeMode(themeStr) {
+      document.documentElement.setAttribute('data-theme', themeStr);
+      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
     }
-
-    modalClose.onclick = (e) => {
-      e.preventDefault();
-      modal.style.display = "none";
-      document.body.style.overflow = "auto";
-      postContent.innerHTML = "";
-      postTitle.textContent = "";
-    };
-
-    searchBox.oninput = () => renderList(searchBox.value.toLowerCase());
-
-    renderList();
+    applyThemeMode(currentTheme);
+    themeBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', currentTheme);
+      applyThemeMode(currentTheme);
+    });
   </script>
 </body>
 </html>

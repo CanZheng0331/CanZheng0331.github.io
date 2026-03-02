@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI/ML for Wireless · Can Zheng</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <meta name="color-scheme" content="light dark">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+  <script>
+    (function() {
+      let theme = localStorage.getItem('theme');
+      if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar container">
+      <a class="brand" href="../index.html"><img src="../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
+      <nav>
+        <div class="dropdown">
+          <a href="../index.html" class="nav-link">Home</a>
+          <div class="dropdown-content">
+            <a href="../index.html#about">About Me</a>
+            <a href="../index.html#news">News</a>
+            <a href="../index.html#explore">Explore</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="../biography.html" class="nav-link">Biography</a>
+          <div class="dropdown-content">
+            <a href="../biography.html#education">Education</a>
+            <a href="../biography.html#experience">Work Experience</a>
+            <a href="../biography.html#service">Service</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="../researches.html" class="nav-link" aria-current="page">Researches</a>
+          <div class="dropdown-content">
+            <a href="../researches.html?filter=past">Past</a>
+            <a href="../researches.html?filter=ongoing">Ongoing</a>
+            <a href="../researches.html?filter=future">Futures</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="../publications.html" class="nav-link">Publications</a>
+          <div class="dropdown-content">
+            <a href="../publications.html#journal">Journal Papers</a>
+            <a href="../publications.html#conference">Conference Papers</a>
+          </div>
+        </div>
+        <a href="../blog.html" class="nav-link">Blog</a>
+        <a href="../photos.html" class="nav-link">Photos</a>
+        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+
+  <article class="prose">
+    <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> Back to all researches</a>
+    <h1 style="margin-top: 16px;">AI/ML for Wireless Communications</h1>
+    <p style="color: var(--accent); font-weight: 600;">Status: Ongoing (2024.12 - Present)</p>
+
+    <div style="text-align: center; margin: 32px 0;">
+        <img src="../photos/proj_figure/AIML.png" alt="AI/ML Architecture" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-sm);">
+    </div>
+
+    <p>
+      These researches aim to leverage deep learning (DL) and large language models (LLMs) to address challenges in millimeter-wave (mmWave) communications, such as beam prediction and localization.
+    </p>
+    <h2>Beam Prediction</h2>
+    <p>
+      Combining multimodal perception/sensing (such as vision, radar, LiDAR and GPS) with DL models to achieve robust beam selection and reduce training overhead. Specifically, my focus is on sensing-assisted beam prediction, which is to proactively predict the optimal beam direction for future moments using perception information from past moments.
+    </p>
+    <p>
+      Formally, given only historical observations \(\mathbf{X}_{t-T_{\mathrm{History}}:t-1}\), we aim to predict the future beam sequence \(\hat{\mathbf{y}}_{t:t+T_{\mathrm{Prediction}}-1}\): 
+      $$
+      \hat{\mathbf{y}}_{t:t+T_{\mathrm{Prediction}}-1}= f_{\Theta}\!\big(\mathbf{X}_{t-T_{\mathrm{History}}:t-1}\big),
+      $$
+      where \(f_{\Theta}(\cdot)\) denotes the learned predictor.
+    </p>
+
+    <h2>Useful Resources</h2>
+    <ul>
+      <li>
+        <strong>Related Publications</strong>
+        <ul>
+          <li><a href="https://arxiv.org/abs/2511.20265" target="_blank" rel="noopener">Rectified Flow for Vision-Aided mmWave V2I Beam Prediction</a></li>
+          <li><a href="https://arxiv.org/abs/2506.14532" target="_blank" rel="noopener">M<sup>2</sup>BeamLLM: Multimodal Sensing-empowered mmWave Beam Prediction with Large Language Models</a></li>
+          <li><a href="https://arxiv.org/abs/2503.10432" target="_blank" rel="noopener">BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models</a></li>
+        </ul>
+      </li>
+      <li>
+          <strong>GitHub Repository</strong>
+        <ul>
+          <li><a href="https://github.com/CanZheng0331/Sensing_aided_Communications" target="_blank" rel="noopener">Demos of Beam Prediction</a></li>
+        </ul>
+      </li>
+    </ul>
+
+  </article>
+
+  </main>
+  <footer class="footer">
+    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = themeBtn.querySelector('i');
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function applyThemeMode(themeStr) {
+      document.documentElement.setAttribute('data-theme', themeStr);
+      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+    applyThemeMode(currentTheme);
+    themeBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', currentTheme);
+      applyThemeMode(currentTheme);
+    });
+  </script>
+</body>
+</html>

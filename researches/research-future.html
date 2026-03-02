@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Future Directions · Can Zheng</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <meta name="color-scheme" content="light dark">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <script>
+    (function() {
+      let theme = localStorage.getItem('theme');
+      if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar container">
+      <a class="brand" href="../index.html"><img src="../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
+      <nav>
+        <div class="dropdown">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="dropdown">
+          <a href="../biography.html" class="nav-link">Biography</a>
+        </div>
+        <div class="dropdown">
+          <a href="../researches.html" class="nav-link" aria-current="page">Researches</a>
+          <div class="dropdown-content">
+            <a href="../researches.html?filter=past">Past</a>
+            <a href="../researches.html?filter=ongoing">Ongoing</a>
+            <a href="../researches.html?filter=future">Future</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="../publications.html" class="nav-link">Publications</a>
+        </div>
+        <a href="../blog.html" class="nav-link">Blog</a>
+        <a href="../photos.html" class="nav-link">Photos</a>
+        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+
+  <article class="prose">
+    <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> Back to all researches</a>
+    <h1 style="margin-top: 16px;">AI/ML for Positioning & Pre-6G</h1>
+    <p style="color: var(--accent); font-weight: 600;">Status: Future Concept</p>
+
+    <div style="height:220px; background:var(--card); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size: 4rem; border: 1px solid var(--border); border-radius: 12px; margin: 32px 0;">
+        <i class="fas fa-rocket"></i>
+    </div>
+
+    <p>
+      Currently, I am expanding my knowledge base and conceptualizing new ideas.
+    </p>
+    <p>
+      This space will be updated as new concrete projects and publications emerge in the future.
+    </p>
+  </article>
+
+  </main>
+  <footer class="footer">
+    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = themeBtn.querySelector('i');
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function applyThemeMode(themeStr) {
+      document.documentElement.setAttribute('data-theme', themeStr);
+      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+    applyThemeMode(currentTheme);
+    themeBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', currentTheme);
+      applyThemeMode(currentTheme);
+    });
+  </script>
+</body>
+</html>

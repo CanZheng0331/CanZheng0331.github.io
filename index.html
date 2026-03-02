@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Home · Can Zheng</title>
   <link rel="stylesheet" href="styles.css" />
+  
+  <script>
+    (function() {
+      let theme = localStorage.getItem('theme');
+      // 强制拦截并清理掉旧版本残留的 'auto' 或 null
+      if (theme !== 'light' && theme !== 'dark') {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        localStorage.setItem('theme', theme); // 直接把正确的初次判断写回缓存
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -12,15 +25,42 @@
 <body>
   <header class="header">
     <div class="navbar container">
-      <a class="brand" href="index.html">Can Zheng</a>
+      <a class="brand" href="index.html"><img src="photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
       <nav>
-        <a href="index.html" aria-current="page">Home</a>
-        <a href="biography.html" >Biography</a>
-        <a href="researches.html" >Researches</a>
-        <a href="publications.html" >Publications</a>
-        <a href="blog.html" >Blog</a>
-        <a href="photos.html" >Photos</a>
-        <a href="game.html" > Games</a>
+        <div class="dropdown">
+          <a href="index.html" class="nav-link" aria-current="page">Home</a>
+          <div class="dropdown-content">
+            <a href="index.html#about">About Me</a>
+            <a href="index.html#news">News</a>
+            <a href="index.html#explore">Explore</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="biography.html" class="nav-link">Biography</a>
+          <div class="dropdown-content">
+            <a href="biography.html#education">Education</a>
+            <a href="biography.html#experience">Work Experience</a>
+            <a href="biography.html#service">Service</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="researches.html" class="nav-link">Researches</a>
+          <div class="dropdown-content">
+            <a href="researches.html?filter=past">Past</a>
+            <a href="researches.html?filter=ongoing">Ongoing</a>
+            <a href="researches.html?filter=future">Future</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="publications.html" class="nav-link">Publications</a>
+          <div class="dropdown-content">
+            <a href="publications.html#journal">Journal Papers</a>
+            <a href="publications.html#conference">Conference Papers</a>
+          </div>
+        </div>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="photos.html" class="nav-link">Photos</a>
+        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
       </nav>
     </div>
   </header>
@@ -29,56 +69,78 @@
   <section class="hero">
     <h1>Hi, I’m Can Zheng (郑灿).</h1>
       <p style="font-size: 1.2rem; margin-bottom: 24px; color: var(--fg);">
-        Master’s Candidate @ <strong>Korea University</strong> | Wireless AI
+        MS in Electrical Engineering @ <strong>Korea University</strong> | Wireless AI
       </p>
       <p class="social-links">
         <a href="https://scholar.google.com/citations?user=EMGpwm8AAAAJ" target="_blank"><i class="fas fa-graduation-cap"></i> Google Scholar</a>
         <a href="https://www.linkedin.com/in/can-zheng-4a5839331/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="https://github.com/CanZheng0331" target="_blank"><i class="fab fa-github"></i> GitHub</a>
         <a href="mailto:zc331_@korea.ac.kr"><i class="fas fa-envelope"></i> Email</a>
       </p>
   </section>
 
   <section class="grid section">
     <div class="col-6">
-      <div class="card">
+      <div class="card" id="about">
         <h2><i class="fas fa-user-circle"></i> About Me</h2>
-        <p>I’m a master’s student at School of Electrical Engineering, <em>Korea University</em>, graduating Feb. 2026 (expected). My current research spans OTFS/AFDM and AI/ML for beam prediction/localization.</p>
-        <p><a href="biography.html">Read my biography →</a></p>
+        <p>I received my M.Eng. in Electrical Engineering from <em>Korea University</em> in Feb. 2026. My research spans OTFS/AFDM and AI/ML for beam prediction/localization.</p>
+        <p><a href="biography.html">Read my biography</a></p>
       </div>
     </div>
-
     <div class="col-6">
-      <div class="card">
+      <div class="card" id="news">
         <h2><i class="fas fa-bullhorn"></i> News</h2>
         <ul>
-          <li>08/2025: Reconstructed my homepage (Thanks to GPT-5).</li>
+          <li>02/2026: Graduated with my MS from Korea University.</li>
+          <li>08/2025: Built my homepage (Thanks to GenAI).</li>
         </ul>
       </div>
     </div>
-
     <div class="col-12">
-      <div class="card">
+      <div class="card" id="explore">
         <h2><i class="fas fa-lightbulb"></i> Explore</h2>
-        <p>See recent writing on the <a href="blog.html">blog</a>. Markdown + LaTeX supported.</p>
+        <ul>
+          <li> See my research directions on the <a href="researches.html">researches</a>.</li>
+          <li> See my publications and under review manuscripts on the <a href="publications.html">publications</a>.</li>
+          <li> See recent writing on the <a href="blog.html">blog</a>.</li>
+        </ul>
+        <p>
+       
       </div>
     </div>
   </section>
-
   <hr>
-
   </main>
+
   <footer class="footer">
     <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
-    <div><small class="muted">Edit the HTML files to update content. Blog posts are Markdown files in <code>/posts</code>.</small></div>
-    <!-- 访客地图统计 -->
-    <div style="max-width:250px; margin:auto;">
-      <script type="text/javascript" id="clustrmaps"
-              src="//clustrmaps.com/map_v2.js?d=GtDZVi4tsLCxCMPsshi4UGUmYEeEN1BC-yvrYvb1Rt4&cl=ffffff&w=250&h=150">
-      </script>
+    <div style="max-width:250px; margin:auto; margin-top:20px;">
+      <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=GtDZVi4tsLCxCMPsshi4UGUmYEeEN1BC-yvrYvb1Rt4&cl=ffffff&w=250&h=150"></script>
     </div>
   </footer>
+  
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+    
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = themeBtn.querySelector('i');
+    
+    // 从缓存读取（由于头部的拦截，这里一定是 light 或 dark）
+    let currentTheme = localStorage.getItem('theme') || 'light';
+    
+    function applyThemeMode(themeStr) {
+      document.documentElement.setAttribute('data-theme', themeStr);
+      // 如果当前是亮色，显示月亮（代表点击将切黑）；当前是暗色，显示太阳（代表点击将切亮）
+      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+    
+    applyThemeMode(currentTheme);
+    
+    themeBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', currentTheme);
+      applyThemeMode(currentTheme);
+    });
   </script>
 </body>
 </html>

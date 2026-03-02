@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LEO Satellite Communications · Can Zheng</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <meta name="color-scheme" content="light dark">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+  <script>
+    (function() {
+      let theme = localStorage.getItem('theme');
+      if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar container">
+      <a class="brand" href="../index.html"><img src="../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
+      <nav>
+        <div class="dropdown">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="dropdown">
+          <a href="../biography.html" class="nav-link">Biography</a>
+        </div>
+        <div class="dropdown">
+          <a href="../researches.html" class="nav-link" aria-current="page">Researches</a>
+          <div class="dropdown-content">
+            <a href="../researches.html?filter=past">Past Projects</a>
+            <a href="../researches.html?filter=ongoing">Ongoing Research</a>
+            <a href="../researches.html?filter=future">Future Directions</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="../publications.html" class="nav-link">Publications</a>
+        </div>
+        <a href="../blog.html" class="nav-link">Blog</a>
+        <a href="../photos.html" class="nav-link">Photos</a>
+        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+
+  <article class="prose">
+    <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> Back to all researches</a>
+    <h1 style="margin-top: 16px;">Low Earth Orbit (LEO) Satellite Communications</h1>
+    <p style="color: var(--accent); font-weight: 600;">Status: Past (2024.07 - 2025.07)</p>
+
+    <div style="text-align: center; margin: 32px 0;">
+        <img src="../photos/proj_figure/LEO.png" alt="LEO Architecture" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-sm);">
+    </div>
+
+    <p>
+      Why use cell-free (CF) concepts in LEO satellite communications, or rather, why do multi-satellite collaborative transmission? When considering direct-to-cell (D2C) users, i.e., single-antenna users, we found that the existing multi-beam satellite communication link budget is very tight and may not be able to meet quality of service (QoS) requirements, especially with the increasing number of users using satellite communication services. To meet greater capacity requirements and for fairness considerations, we adopted the concept of CF massive MIMO from terrestrial networks.
+    </p>
+
+    <h2>Cell-free NTN Uplink Optimization</h2>
+    <p>
+      Until I finished this work, most of the work involved downlink optimization. However, we believe that uplink demand will also increase. In particular, to my knowledge, some telecommunications companies are considering uplink enhancements.
+    </p>
+
+    <h2>Useful Resources</h2>
+    <ul>
+      <li>
+        <strong>Related Publications</strong>
+        <ul>
+          <li><a href="https://ieeexplore.ieee.org/document/11169882" target="_blank" rel="noopener">Joint Clustering and Uplink Power Control for Cell-Free Massive MIMO in LEO Satellite Networks</a> (Proc. ICUFN 2025)</li>
+        </ul>
+      </li>
+      <li>
+        <strong>GitHub Repository</strong>
+        <ul>
+          <li>To appear (after graduation)</li>
+        </ul>
+      </li>
+    </ul>
+  </article>
+
+  </main>
+  <footer class="footer">
+    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = themeBtn.querySelector('i');
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function applyThemeMode(themeStr) {
+      document.documentElement.setAttribute('data-theme', themeStr);
+      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+    applyThemeMode(currentTheme);
+    themeBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', currentTheme);
+      applyThemeMode(currentTheme);
+    });
+  </script>
+</body>
+</html>
