@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Performance Visualizer · Can Zheng</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  
+  <link rel="stylesheet" href="../styles.css" />
+  
+  <script>
+    // 主题初始化逻辑
+    (function() {
+      let theme = localStorage.getItem('theme');
+      if (theme !== 'light' && theme !== 'dark') {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        localStorage.setItem('theme', theme); 
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-bs-theme', theme); // 同步 Bootstrap 主题
+    })();
+  </script>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <meta name="color-scheme" content="light dark">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    /* 针对可视化工具的微调样式，对齐主页风格 */
+    .tool-header-actions .btn {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      border-radius: 6px;
+    }
+    
+    .chart-container {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-color, #e2e8f0);
+      transition: all 0.3s ease;
+    }
+
+    html[data-theme="dark"] .chart-container {
+      border-color: #333;
+    }
+
+    .form-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      opacity: 0.8;
+      margin-bottom: 0.25rem;
+    }
+
+    .table-container {
+      border-radius: 8px;
+      border: 1px solid var(--border-color, #e2e8f0);
+      overflow: hidden;
+    }
+    
+    html[data-theme="dark"] .table-container {
+      border-color: #444;
+    }
+
+    .table {
+      margin-bottom: 0;
+      font-size: 0.9rem;
+    }
+
+    .table-input {
+      width: 100%;
+      border: 1px solid transparent;
+      padding: 4px;
+      border-radius: 4px;
+      background-color: transparent;
+      transition: all 0.2s;
+      text-align: center;
+      color: inherit;
+    }
+
+    .table-input:focus {
+      border: 1px solid #3498db;
+      background-color: rgba(52, 152, 219, 0.1);
+      outline: 0;
+    }
+
+    .accordion-button {
+      font-weight: 600;
+      box-shadow: none !important;
+    }
+
+    /* 优化卡片内部间距 */
+    .card-tool {
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+      background-color: var(--card-bg, #fff);
+    }
+    html[data-theme="dark"] .card-tool {
+      background-color: var(--card-bg, #1e1e1e);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar container">
+      <a class="brand" href="../index.html"><img src="../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
+      <nav>
+        <div class="dropdown">
+          <a href="../index.html" class="nav-link">Home</a>
+          <div class="dropdown-content">
+            <a href="../index.html#about">About Me</a>
+            <a href="../index.html#news">News</a>
+            <a href="../index.html#explore">Explore</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="../biography.html" class="nav-link">Biography</a>
+          <div class="dropdown-content">
+            <a href="../biography.html#education">Education</a>
+            <a href="../biography.html#experience">Work Experience</a>
+            <a href="../biography.html#service">Service</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="../researches.html" class="nav-link">Researches</a>
+          <div class="dropdown-content">
+            <a href="../researches.html?filter=past">Past</a>
+            <a href="../researches.html?filter=ongoing">Ongoing</a>
+            <a href="../researches.html?filter=future">Future</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="../publications.html" class="nav-link">Publications</a>
+          <div class="dropdown-content">
+            <a href="../publications.html#journal">Journal Papers</a>
+            <a href="../publications.html#conference">Conference Papers</a>
+          </div>
+        </div>
+        <a href="../blog.html" class="nav-link">Blog</a>
+        <a href="../photos.html" class="nav-link">Photos</a>
+        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="margin-top: 2rem; margin-bottom: 4rem;">
+    
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+      <h2 style="margin: 0; font-weight: 700; display: flex; align-items: center; gap: 10px;">
+        <i class="bi bi-graph-up-arrow text-primary"></i>
+        <span data-i18n="navTitle">Comm Sys Performance Visualizer</span>
+      </h2>
+      <div class="d-flex align-items-center gap-2 tool-header-actions mt-3 mt-md-0">
+        <button class="btn btn-warning btn-sm shadow-sm" onclick="exportSVG()">
+          <i class="bi bi-filetype-svg me-1"></i><span data-i18n="btnSvg">Export SVG</span>
+        </button>
+        <button class="btn btn-info btn-sm text-white shadow-sm" onclick="exportMATLAB()">
+          <i class="bi bi-file-earmark-code me-1"></i><span data-i18n="btnMatlab">Export MATLAB</span>
+        </button>
+        <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 ms-2" onclick="toggleLang()" id="btnLang">中文</button>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-5 col-xl-4 d-flex flex-column gap-3">
+        
+        <div class="card card-tool mb-0">
+          <h5 class="mb-3" style="font-weight: 600;"><i class="bi bi-gear-fill text-primary me-2"></i><span data-i18n="basicSet">Basic Settings</span></h5>
+          <div class="row g-3">
+            <div class="col-6">
+              <label class="form-label" data-i18n="chartType">Chart Type</label>
+              <select id="chartType" class="form-select form-select-sm shadow-none" onchange="updateChart(); renderTable();">
+                <option value="NMSE" selected data-i18n="typeNmse">SNR vs NMSE</option>
+                <option value="BER" data-i18n="typeBer">SNR vs BER</option>
+                <option value="ACC" data-i18n="typeAcc">K vs Top-K Accuracy</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label class="form-label" data-i18n="fontGlobal">Global Font</label>
+              <select id="fontFamily" class="form-select form-select-sm shadow-none" onchange="updateChart()">
+                <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                <option value="Arial, Helvetica, sans-serif">Arial</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion shadow-sm" id="advancedSettingsAcc" style="border-radius: 12px; overflow: hidden;">
+          <div class="accordion-item border-0">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdv" style="background-color: var(--card-bg);">
+                <i class="bi bi-sliders me-2"></i> 
+                <span data-i18n="advancedSet">Advanced Formatting</span>
+              </button>
+            </h2>
+            <div id="collapseAdv" class="accordion-collapse collapse" data-bs-parent="#advancedSettingsAcc">
+              <div class="accordion-body pt-2 pb-3 px-3" style="background-color: var(--card-bg);">
+                <div class="row g-2">
+                  <div class="col-4">
+                    <label class="form-label" data-i18n="titleSize">Title Size</label>
+                    <input type="number" id="titleFontSize" class="form-control form-control-sm" value="16" onchange="updateChart()">
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" data-i18n="tickSize">Tick Size</label>
+                    <input type="number" id="tickFontSize" class="form-control form-control-sm" value="14" onchange="updateChart()">
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" data-i18n="legendSize">Legend Size</label>
+                    <input type="number" id="legendFontSize" class="form-control form-control-sm" value="12" onchange="updateChart()">
+                  </div>
+                  <div class="col-6 mt-2">
+                    <label class="form-label" data-i18n="lineWidth">Axis Line Width</label>
+                    <input type="number" step="0.1" id="axisLineWidth" class="form-control form-control-sm" value="1.2" onchange="updateChart()">
+                  </div>
+                  <div class="col-6 mt-2">
+                    <label class="form-label" data-i18n="boxWidth">Legend Box Width</label>
+                    <input type="number" step="0.1" id="legendBorderWidth" class="form-control form-control-sm" value="1.0" onchange="updateChart()">
+                  </div>
+                  <div class="col-12 mt-3 mb-1"><hr class="m-0" style="opacity: 0.15;"></div>
+                  <div class="col-4">
+                    <label class="form-label" data-i18n="snrMin">X Min</label>
+                    <input type="number" id="xMin" class="form-control form-control-sm" value="0" onchange="updateChart()">
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" data-i18n="snrMax">X Max</label>
+                    <input type="number" id="xMax" class="form-control form-control-sm" value="30" onchange="updateChart()">
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" data-i18n="snrStep">X Step</label>
+                    <input type="number" id="xDt" class="form-control form-control-sm" value="5" onchange="updateChart()">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-tool d-flex flex-column flex-grow-1 mb-0" style="min-height: 300px;">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0" style="font-weight: 600;">
+              <i class="bi bi-table text-success me-2"></i><span data-i18n="dataInput">Data Entry</span>
+            </h5>
+            <div class="d-flex gap-2 tool-header-actions">
+              <button class="btn btn-outline-primary btn-sm d-flex align-items-center py-1" onclick="addAlgorithm()" id="btnAddAlgo">
+                <i class="bi bi-plus-lg me-1"></i> Add Alg
+              </button>
+              <button class="btn btn-outline-secondary btn-sm d-flex align-items-center py-1" onclick="addSNRPoint()" id="btnAddSnr">
+                <i class="bi bi-plus-lg me-1"></i> Add X
+              </button>
+            </div>
+          </div>
+          
+          <div class="table-container flex-grow-1 overflow-auto">
+            <table class="table table-hover align-middle text-center" id="dataTable">
+              <thead id="tableHead"></thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-lg-7 col-xl-8">
+        <div class="card card-tool h-100 d-flex align-items-center justify-content-center p-3 p-md-4">
+          <div id="chartDiv" class="chart-container"></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  <hr style="margin: 0; border-top: 1px solid var(--border-color, #eaeaea);">
+
+  <footer class="footer">
+    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+    <div style="max-width:250px; margin:auto; margin-top:20px;">
+      <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=GtDZVi4tsLCxCMPsshi4UGUmYEeEN1BC-yvrYvb1Rt4&cl=ffffff&w=250&h=150"></script>
+    </div>
+  </footer>
+  
+  <script>
+    // ==========================================
+    // 1. 数据状态与多语言配置（必须最先声明，防止报错）
+    // ==========================================
+    const dict = {
+        en: {
+            navTitle: "Performance Visualizer",
+            btnSvg: "Export SVG",
+            btnMatlab: "Export MATLAB",
+            langBtn: "中文",
+            basicSet: "Basic Settings",
+            advancedSet: "Advanced Formatting",
+            chartType: "Chart Type",
+            typeNmse: "SNR vs NMSE",
+            typeBer: "SNR vs BER",
+            typeAcc: "K vs Top-K Accuracy",
+            fontGlobal: "Global Font",
+            titleSize: "Title Size",
+            tickSize: "Tick Size",
+            legendSize: "Legend Size",
+            lineWidth: "Axis Line Width",
+            boxWidth: "Legend Border",
+            snrMin: "X Min",
+            snrMax: "X Max",
+            snrStep: "Step",
+            dataInput: "Data Entry",
+            btnAddAlgo: "Add Alg",
+            btnAddSnr: "Add X",
+            thSnr: "SNR (dB)",
+            thK: "K Value",
+            thOp: "Del",
+            emptyAlgo: "Click 'Add Alg' to start",
+            defaultAlgoName: "Algorithm"
+        },
+        zh: {
+            navTitle: "通信系统性能可视化工具",
+            btnSvg: "导出 SVG 矢量图",
+            btnMatlab: "导出 MATLAB 脚本",
+            langBtn: "English",
+            basicSet: "基础设置",
+            advancedSet: "高级格式参数",
+            chartType: "图表类型",
+            typeNmse: "SNR vs NMSE (误差)",
+            typeBer: "SNR vs BER (误码率)",
+            typeAcc: "K vs Top-K Accuracy (准确率)",
+            fontGlobal: "全局英文字体",
+            titleSize: "标题字号",
+            tickSize: "刻度字号",
+            legendSize: "图例字号",
+            lineWidth: "坐标轴线粗细",
+            boxWidth: "图例框粗细",
+            snrMin: "横轴下限",
+            snrMax: "横轴上限",
+            snrStep: "步长",
+            dataInput: "性能数据矩阵",
+            btnAddAlgo: "添加算法",
+            btnAddSnr: "添加横轴点",
+            thSnr: "SNR (dB)",
+            thK: "K 值",
+            thOp: "删除",
+            emptyAlgo: "点击 '添加算法' 开始",
+            defaultAlgoName: "对比算法"
+        }
+    };
+
+    let currentLang = 'en';
+
+    let dataState = {
+        snrPoints: [0, 5, 10, 15, 20, 25, 30],
+        algorithms: []
+    };
+
+    const matlabColorsRGB = [
+        [0, 0.45, 0.74],
+        [0.85, 0.33, 0.1],
+        [0.93, 0.69, 0.13],
+        [0.49, 0.18, 0.56],
+        [0.47, 0.67, 0.19],
+        [0.30, 0.75, 0.93] 
+    ];
+    
+    const matlabColors = matlabColorsRGB.map(c => `rgb(${c[0]*255}, ${c[1]*255}, ${c[2]*255})`);
+    const matlabMarkers = ['diamond', 'triangle-right', 'triangle-up', 'square', 'circle', 'cross'];
+    const matlabMarkersCode = ['-d', '->', '-^', '-s', '-o', '-x'];
+
+
+    // ==========================================
+    // 2. 核心功能函数声明
+    // ==========================================
+    function toggleLang() {
+        currentLang = currentLang === 'en' ? 'zh' : 'en';
+        document.getElementById('btnLang').innerText = dict[currentLang].langBtn;
+        
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (dict[currentLang][key]) {
+                el.innerText = dict[currentLang][key];
+            }
+        });
+        
+        document.getElementById('btnAddAlgo').innerHTML = `<i class="bi bi-plus-lg me-1"></i> ${dict[currentLang].btnAddAlgo}`;
+        document.getElementById('btnAddSnr').innerHTML = `<i class="bi bi-plus-lg me-1"></i> ${dict[currentLang].btnAddSnr}`;
+        
+        renderTable();
+    }
+
+    function renderTable() {
+        const chartType = document.getElementById('chartType').value;
+        const thead = document.getElementById('tableHead');
+        const tbody = document.getElementById('tableBody');
+        
+        const xHeaderName = chartType === 'ACC' ? dict[currentLang].thK : dict[currentLang].thSnr;
+
+        let headHTML = `<tr><th style="width: 80px;">${xHeaderName}</th>`;
+        if (dataState.algorithms.length === 0) {
+            headHTML += `<th class="text-muted text-center fw-normal opacity-75">${dict[currentLang].emptyAlgo}</th>`;
+        }
+        dataState.algorithms.forEach((algo, index) => {
+            headHTML += `
+                <th>
+                    <div class="d-flex justify-content-center position-relative align-items-center">
+                        <input type="text" class="table-input fw-bold" value="${algo.name}" 
+                               onchange="updateAlgoName(${index}, this.value)"
+                               style="color: ${matlabColors[index % matlabColors.length]}; width: 85%;">
+                        <button type="button" class="btn-close btn-close-sm position-absolute end-0" aria-label="Close" onclick="removeAlgorithm(${index})"></button>
+                    </div>
+                </th>`;
+        });
+        headHTML += `<th style="width: 45px;">${dict[currentLang].thOp}</th></tr>`;
+        thead.innerHTML = headHTML;
+
+        let bodyHTML = '';
+        dataState.snrPoints.forEach((snr, rowIndex) => {
+            bodyHTML += `<tr>`;
+            bodyHTML += `<td><input type="number" class="table-input fw-medium" value="${snr}" onchange="updateSNR(${rowIndex}, this.value)"></td>`;
+            if (dataState.algorithms.length === 0) {
+                bodyHTML += `<td></td>`;
+            }
+            dataState.algorithms.forEach((algo, algoIndex) => {
+                let val = algo.data[rowIndex] !== undefined ? algo.data[rowIndex] : '';
+                bodyHTML += `<td><input type="number" step="any" class="table-input font-monospace" value="${val}" onchange="updateAlgoData(${algoIndex}, ${rowIndex}, this.value)"></td>`;
+            });
+            bodyHTML += `<td>
+                ${dataState.snrPoints.length > 1 ? 
+                  `<button class="btn btn-sm text-danger border-0 p-0" onclick="removeSNRPoint(${rowIndex})"><i class="bi bi-trash3"></i></button>` : ''}
+            </td>`;
+            bodyHTML += `</tr>`;
+        });
+        tbody.innerHTML = bodyHTML;
+    }
+
+    function updateSNR(rowIndex, value) {
+        dataState.snrPoints[rowIndex] = parseFloat(value) || 0;
+        updateChart();
+    }
+
+    function updateAlgoName(algoIndex, value) {
+        dataState.algorithms[algoIndex].name = value || dict[currentLang].defaultAlgoName;
+        updateChart();
+    }
+
+    function updateAlgoData(algoIndex, rowIndex, value) {
+        dataState.algorithms[algoIndex].data[rowIndex] = parseFloat(value) || 0;
+        updateChart();
+    }
+
+    function addAlgorithm() {
+        const newAlgo = {
+            id: 'algo_' + Date.now(),
+            name: dict[currentLang].defaultAlgoName + ' ' + (dataState.algorithms.length + 1),
+            data: new Array(dataState.snrPoints.length).fill('') 
+        };
+        dataState.algorithms.push(newAlgo);
+        renderTable();
+        updateChart();
+    }
+
+    function removeAlgorithm(index) {
+        dataState.algorithms.splice(index, 1);
+        renderTable();
+        updateChart();
+    }
+
+    function addSNRPoint() {
+        let lastSNR = dataState.snrPoints[dataState.snrPoints.length - 1] || 0;
+        let step = parseFloat(document.getElementById('xDt').value) || 5;
+        dataState.snrPoints.push(lastSNR + step);
+        
+        dataState.algorithms.forEach(algo => {
+            algo.data.push('');
+        });
+        renderTable();
+        updateChart();
+    }
+
+    function removeSNRPoint(rowIndex) {
+        dataState.snrPoints.splice(rowIndex, 1);
+        dataState.algorithms.forEach(algo => {
+            algo.data.splice(rowIndex, 1);
+        });
+        renderTable();
+        updateChart();
+    }
+
+    function updateChart() {
+        const chartType = document.getElementById('chartType').value;
+        const isBar = chartType === 'ACC'; 
+        
+        const fontFamily = document.getElementById('fontFamily').value;
+        const titleFontSize = parseInt(document.getElementById('titleFontSize').value) || 16;
+        const tickFontSize = parseInt(document.getElementById('tickFontSize').value) || 14;
+        const legendFontSize = parseInt(document.getElementById('legendFontSize').value) || 12;
+        const axisLineWidth = parseFloat(document.getElementById('axisLineWidth').value) || 1.2;
+        const legendBorderWidth = parseFloat(document.getElementById('legendBorderWidth').value) || 1.0;
+
+        const xMin = parseFloat(document.getElementById('xMin').value);
+        const xMax = parseFloat(document.getElementById('xMax').value);
+        const xDt = parseFloat(document.getElementById('xDt').value);
+
+        // 主题动态颜色适配
+        const isDarkTheme = document.documentElement.getAttribute('data-theme') === 'dark';
+        const plotBgColor = isDarkTheme ? 'transparent' : 'white';
+        const paperBgColor = isDarkTheme ? 'transparent' : 'white';
+        const gridColor = isDarkTheme ? '#404040' : '#e5e5e5';
+        const textColor = isDarkTheme ? '#e2e8f0' : '#000000';
+        const axisColor = isDarkTheme ? '#888888' : 'black';
+        const legendBg = isDarkTheme ? 'rgba(30, 30, 30, 0.8)' : 'rgba(255, 255, 255, 1)';
+        const legendBorder = isDarkTheme ? '#555555' : '#000000';
+
+        let traces = [];
+        let globalMinY = Infinity;
+        let globalMaxY = -Infinity;
+
+        dataState.algorithms.forEach((algo, index) => {
+            let validY = [];
+            let validX = [];
+            
+            algo.data.forEach((v, i) => {
+                if (v !== '' && !isNaN(v)) {
+                    validY.push(v);
+                    validX.push(isBar ? String(dataState.snrPoints[i]) : dataState.snrPoints[i]);
+                    if (v > 0 && v < globalMinY) globalMinY = v;
+                    if (v > 0 && v > globalMaxY) globalMaxY = v;
+                }
+            });
+
+            if(validX.length > 0) {
+                let trace = {
+                    x: validX,
+                    y: validY,
+                    name: algo.name,
+                    type: isBar ? 'bar' : 'scatter',
+                    cliponaxis: false
+                };
+
+                if (isBar) {
+                    trace.marker = { color: matlabColors[index % matlabColors.length] };
+                } else {
+                    trace.mode = 'lines+markers';
+                    trace.marker = {
+                        symbol: matlabMarkers[index % matlabMarkers.length],
+                        size: 8,
+                        color: matlabColors[index % matlabColors.length]
+                    };
+                    trace.line = {
+                        width: 2,
+                        color: matlabColors[index % matlabColors.length]
+                    };
+                }
+                traces.push(trace);
+            }
+        });
+
+        let xAxisTitleText = isBar ? '<i>K</i>' : 'SNR (dB)';
+        let yAxisTitleText = isBar ? 'Average Top-<i>K</i> Accuracy' : (chartType === 'BER' ? 'BER' : 'NMSE');
+        
+        let yLogMin = -6; 
+        let yLogMax = 1;
+        let customYTickVals = [];
+        let customYTickText = [];
+
+        if (!isBar) {
+            if (globalMinY !== Infinity && globalMaxY !== -Infinity) {
+                yLogMin = Math.floor(Math.log10(globalMinY));
+                yLogMax = Math.ceil(Math.log10(globalMaxY));
+                yLogMin -= 1;
+                yLogMax += 1;
+            }
+            for (let i = yLogMin; i <= yLogMax; i++) {
+                customYTickVals.push(Math.pow(10, i));
+                customYTickText.push(`10<sup>${i}</sup>`); 
+            }
+        }
+
+        let layout = {
+            barmode: isBar ? 'group' : '',
+            xaxis: {
+                title: { text: xAxisTitleText, font: { family: fontFamily, size: titleFontSize }, standoff: 15 },
+                type: isBar ? 'category' : '-', 
+                side: 'bottom',
+                range: isBar ? undefined : [xMin, xMax], 
+                dtick: isBar ? undefined : xDt,
+                tickmode: isBar ? 'array' : 'auto',
+                tickvals: isBar ? undefined : dataState.snrPoints,
+                showgrid: true,
+                gridcolor: gridColor,
+                zeroline: false,
+                showline: true,
+                linewidth: axisLineWidth, 
+                linecolor: axisColor,
+                mirror: 'ticks',
+                ticks: 'inside',
+                tickcolor: axisColor,
+                tickfont: { family: fontFamily, size: tickFontSize },
+                automargin: true
+            },
+            yaxis: {
+                title: { text: yAxisTitleText, font: { family: fontFamily, size: titleFontSize }, standoff: 15 },
+                type: isBar ? 'linear' : 'log',
+                range: isBar ? [0, 1] : [yLogMin, yLogMax],
+                autorange: false, 
+                tickmode: isBar ? 'auto' : 'array',
+                tickvals: isBar ? undefined : customYTickVals,
+                ticktext: isBar ? undefined : customYTickText,
+                showgrid: true,
+                gridcolor: gridColor,
+                minor: isBar ? undefined : {
+                    showgrid: true,
+                    gridcolor: isDarkTheme ? '#333333' : '#f4f4f4',
+                    ticks: 'inside',
+                    tickcolor: axisColor
+                },
+                showline: true,
+                linewidth: axisLineWidth, 
+                linecolor: axisColor,
+                mirror: 'ticks',
+                ticks: 'inside',
+                tickcolor: axisColor,
+                tickfont: { family: fontFamily, size: tickFontSize },
+                automargin: true
+            },
+            font: {
+                family: fontFamily,
+                color: textColor
+            },
+            legend: {
+                x: 0.02,
+                y: isBar ? 0.98 : 0.04, 
+                xanchor: 'left',
+                yanchor: isBar ? 'top' : 'bottom',
+                bgcolor: legendBg,
+                bordercolor: legendBorder,
+                borderwidth: legendBorderWidth, 
+                font: { family: fontFamily, size: legendFontSize }
+            },
+            plot_bgcolor: plotBgColor,
+            paper_bgcolor: paperBgColor,
+            margin: { l: 20, r: 20, t: 20, b: 20 }, 
+        };
+
+        Plotly.react('chartDiv', traces, layout, {responsive: true, displayModeBar: false});
+    }
+
+    function exportSVG() {
+        const chartDiv = document.getElementById('chartDiv');
+        Plotly.downloadImage(chartDiv, {
+            format: 'svg',
+            width: 560,
+            height: 420,
+            filename: 'Simulation_Results'
+        });
+    }
+
+    function exportMATLAB() {
+        if (dataState.algorithms.length === 0) {
+            alert(currentLang === 'zh' ? "请先添加算法和数据。" : "Please add algorithms and data first.");
+            return;
+        }
+
+        const chartType = document.getElementById('chartType').value;
+        const isBar = chartType === 'ACC';
+        
+        const fontName = document.getElementById('fontFamily').value.includes('Times') ? 'Times New Roman' : 'Arial';
+        const titleFontSize = document.getElementById('titleFontSize').value;
+        const tickFontSize = document.getElementById('tickFontSize').value;
+        const legendFontSize = document.getElementById('legendFontSize').value;
+        const axisLineWidth = document.getElementById('axisLineWidth').value;
+        const legendBorderWidth = document.getElementById('legendBorderWidth').value;
+
+        const xMin = document.getElementById('xMin').value;
+        const xMax = document.getElementById('xMax').value;
+        const xDt = document.getElementById('xDt').value;
+
+        let globalMinY = Infinity;
+        let globalMaxY = -Infinity;
+        dataState.algorithms.forEach(algo => {
+            algo.data.forEach(v => {
+                let num = parseFloat(v);
+                if (!isNaN(num) && num > 0) {
+                    if (num < globalMinY) globalMinY = num;
+                    if (num > globalMaxY) globalMaxY = num;
+                }
+            });
+        });
+        
+        let yLogMin = -6, yLogMax = 1;
+        if (!isBar && globalMinY !== Infinity) {
+            yLogMin = Math.floor(Math.log10(globalMinY)) - 1;
+            yLogMax = Math.ceil(Math.log10(globalMaxY)) + 1;
+        }
+
+        let mCode = `%% MATLAB Plot Script generated by Comm Sys Performance Visualizer\n`;
+        mCode += `% Automatically reproduces the exact styling and data from the web tool.\n\n`;
+
+        mCode += `% 1. Data Definitions\n`;
+        const xVarName = isBar ? 'K_vals' : 'snr_db';
+        mCode += `${xVarName} = [${dataState.snrPoints.join(', ')}];\n\n`;
+
+        let algoNamesForLegend = [];
+        dataState.algorithms.forEach((algo, index) => {
+            let safeName = algo.name.replace(/[^a-zA-Z0-9_]/g, '_');
+            let dataStr = algo.data.map(v => (v === '' || isNaN(v)) ? 'NaN' : v).join(', ');
+            mCode += `data_${safeName} = [${dataStr}];\n`;
+            algoNamesForLegend.push(`'$\\mathrm{${algo.name}}$'`);
+        });
+
+        mCode += `\n% 3. Figure Setup (Always white bg for IEEE papers)\n`;
+        mCode += `fig = figure('Color', 'w');\n`;
+        mCode += `set(fig, 'Position', [200, 200, 560, 420]);\n\n`;
+        mCode += `ax = gca;\n`;
+        mCode += `hold on;\n\n`;
+
+        if (isBar) {
+            mCode += `% 4. Plotting Grouped Bar Chart\n`;
+            let dataVars = dataState.algorithms.map(algo => `data_${algo.name.replace(/[^a-zA-Z0-9_]/g, '_')}'`);
+            mCode += `data_matrix = [${dataVars.join(', ')}];\n`;
+            mCode += `b = bar(data_matrix, 'grouped');\n\n`; 
+            
+            mCode += `% Coloring Bars\n`;
+            dataState.algorithms.forEach((_, index) => {
+                let color = matlabColorsRGB[index % matlabColorsRGB.length];
+                mCode += `b(${index+1}).FaceColor = [${color.join(', ')}];\n`;
+            });
+        } else {
+            mCode += `% 4. Plotting Lines\n`;
+            mCode += `lw = 2; % LineWidth\n`;
+            mCode += `ms = 8; % MarkerSize\n\n`;
+            dataState.algorithms.forEach((algo, index) => {
+                let safeName = algo.name.replace(/[^a-zA-Z0-9_]/g, '_');
+                let color = matlabColorsRGB[index % matlabColorsRGB.length];
+                let marker = matlabMarkersCode[index % matlabMarkersCode.length];
+                mCode += `semilogy(${xVarName}, data_${safeName}, '${marker}', 'Color', [${color.join(', ')}], 'LineWidth', lw, 'MarkerSize', ms);\n`;
+            });
+        }
+
+        mCode += `\n% 5. Axes and Grid Tuning\n`;
+        mCode += `grid on; \n`;
+        if (!isBar) mCode += `grid minor;\n`;
+        mCode += `set(ax, 'TickLabelInterpreter', 'latex', 'FontSize', ${tickFontSize}, 'LineWidth', ${axisLineWidth}, 'FontName', '${fontName}');\n`;
+        
+        if (isBar) {
+            mCode += `xlabel('$K$', 'Interpreter', 'latex', 'FontSize', ${titleFontSize});\n`;
+            mCode += `ylabel('Average Top-$K$ Accuracy', 'Interpreter', 'latex', 'FontSize', ${titleFontSize});\n`;
+        } else {
+            mCode += `xlabel('$\\mathrm{SNR}$ (dB)', 'Interpreter', 'latex', 'FontSize', ${titleFontSize});\n`;
+            mCode += `ylabel('$\\mathrm{${chartType}}$', 'Interpreter', 'latex', 'FontSize', ${titleFontSize});\n`;
+        }
+
+        mCode += `\n% 6. Limits and Ticks\n`;
+        if (isBar) {
+            mCode += `ylim([0, 1]);\n`;
+            mCode += `set(ax, 'XTick', 1:length(${xVarName}), 'XTickLabel', ${xVarName});\n`;
+        } else {
+            mCode += `xlim([${xMin}, ${xMax}]);\n`;
+            mCode += `ylim([10^(${yLogMin}), 10^(${yLogMax})]);\n`;
+            mCode += `set(ax, 'XTick', ${xMin}:${xDt}:${xMax});\n`;
+        }
+
+        mCode += `\n% 7. Legend\n`;
+        let legendLoc = isBar ? 'northwest' : 'southwest';
+        mCode += `lgd = legend(${algoNamesForLegend.join(', ')}, 'Location', '${legendLoc}', 'Interpreter', 'latex', 'FontSize', ${legendFontSize});\n`;
+        mCode += `set(lgd, 'LineWidth', ${legendBorderWidth});\n`;
+        mCode += `hold off;\n\n`;
+
+        mCode += `% 8. Export High-Quality PDF\n`;
+        mCode += `exportgraphics(fig, 'Simulation_Results.pdf', 'ContentType', 'vector');\n`;
+        mCode += `disp('Plot saved successfully as Simulation_Results.pdf');\n`;
+
+        const blob = new Blob([mCode], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = isBar ? 'plot_accuracy.m' : 'plot_performance.m';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+
+    // ==========================================
+    // 3. 页面与主题初始化逻辑
+    // ==========================================
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = themeBtn.querySelector('i');
+    
+    let currentTheme = localStorage.getItem('theme') || 'light';
+    
+    function applyThemeMode(themeStr) {
+      document.documentElement.setAttribute('data-theme', themeStr);
+      document.documentElement.setAttribute('data-bs-theme', themeStr); 
+      if (themeIcon) {
+          themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+      }
+      
+      // 当主题切换时，实时重绘 Plotly 图表以自适应黑夜/白天模式
+      // （现在放在最后执行，数据都已经完全加载，绝不会再报错了）
+      if (typeof updateChart === 'function' && document.getElementById('chartDiv')) {
+        updateChart();
+      }
+    }
+    
+    themeBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', currentTheme);
+      applyThemeMode(currentTheme);
+    });
+
+    window.onload = function() {
+        // 应用本地主题记录
+        applyThemeMode(currentTheme);
+
+        // 应用多语言
+        document.getElementById('btnLang').innerText = dict[currentLang].langBtn;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (dict[currentLang][key]) {
+                el.innerText = dict[currentLang][key];
+            }
+        });
+        
+        // 渲染基础数据与图表
+        renderTable();
+        updateChart();
+    };
+  </script>
+</body>
+</html>
