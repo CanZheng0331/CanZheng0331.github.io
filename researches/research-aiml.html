@@ -63,50 +63,139 @@
   </header>
   <main class="container">
 
-  <article class="prose">
-    <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> Back to all researches</a>
-    <h1 style="margin-top: 16px;">AI/ML for Wireless Communications</h1>
-    <p style="color: var(--accent); font-weight: 600;">Status: Ongoing (2024.12 - Present)</p>
+<article class="prose">
+  <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> Back to all researches</a>
+  <h1 style="margin-top: 16px;">Multimodal AI for Wireless Communications</h1>
+  <p style="color: var(--accent); font-weight: 600;">Status: Ongoing (2024.12 - Present)</p>
 
-    <div style="text-align: center; margin: 32px 0;">
-        <img src="../photos/proj_figure/AIML.png" alt="AI/ML Architecture" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-sm);">
-    </div>
+  <div style="text-align: center; margin: 32px 0;">
+    <img src="../photos/proj_figure/AIML.png" alt="AI/ML for Wireless Communications" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-sm);">
+  </div>
 
-    <p>
-      These researches aim to leverage deep learning (DL) and large language models (LLMs) to address challenges in millimeter-wave (mmWave) communications, such as beam prediction and localization.
-    </p>
-    <h2>Beam Prediction</h2>
-    <p>
-      Combining multimodal perception/sensing (such as vision, radar, LiDAR and GPS) with DL models to achieve robust beam selection and reduce training overhead. Specifically, my focus is on sensing-assisted beam prediction, which is to proactively predict the optimal beam direction for future moments using perception information from past moments.
-    </p>
-    <p>
-      Formally, given only historical observations \(\mathbf{X}_{t-T_{\mathrm{History}}:t-1}\), we aim to predict the future beam sequence \(\hat{\mathbf{y}}_{t:t+T_{\mathrm{Prediction}}-1}\): 
-      $$
-      \hat{\mathbf{y}}_{t:t+T_{\mathrm{Prediction}}-1}= f_{\Theta}\!\big(\mathbf{X}_{t-T_{\mathrm{History}}:t-1}\big),
-      $$
-      where \(f_{\Theta}(\cdot)\) denotes the learned predictor.
-    </p>
+  <p>
+    This research direction explores how artificial intelligence and machine learning can fundamentally reshape future wireless communication systems, with a particular focus on <strong>millimeter-wave (mmWave)</strong>, <strong>Terahertz (THz)</strong>, and <strong>vehicle-to-infrastructure (V2I)</strong> scenarios. My recent work investigates how deep learning, multimodal sensing, and foundation models can be used to improve <strong>beam prediction</strong>, <strong>user localization</strong>, and <strong>radio decision-making</strong> in highly dynamic environments.
+  </p>
 
-    <h2>Useful Resources</h2>
-    <ul>
-      <li>
-        <strong>Related Publications</strong>
-        <ul>
-          <li><a href="https://arxiv.org/abs/2511.20265" target="_blank" rel="noopener">Rectified Flow for Vision-Aided mmWave V2I Beam Prediction</a></li>
-          <li><a href="https://arxiv.org/abs/2506.14532" target="_blank" rel="noopener">M<sup>2</sup>BeamLLM: Multimodal Sensing-empowered mmWave Beam Prediction with Large Language Models</a></li>
-          <li><a href="https://arxiv.org/abs/2503.10432" target="_blank" rel="noopener">BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models</a></li>
-        </ul>
-      </li>
-      <li>
-          <strong>GitHub Repository</strong>
-        <ul>
-          <li><a href="https://github.com/CanZheng0331/Sensing_aided_Communications" target="_blank" rel="noopener">Demos of Beam Prediction</a></li>
-        </ul>
-      </li>
-    </ul>
+  <p>
+    Unlike conventional model-driven pipelines that rely heavily on exhaustive beam sweeping or iterative optimization, these studies aim to build <strong>data-driven wireless intelligence</strong>: systems that can proactively infer future radio states from perception and historical observations, thereby reducing signaling overhead, improving robustness under mobility and blockage, and enabling more efficient real-time adaptation.
+  </p>
 
-  </article>
+  <h2>Research Motivation</h2>
+  <p>
+    High-frequency wireless systems offer enormous bandwidth, but they are also highly sensitive to blockage, rapid channel variations, and alignment errors. In practical urban V2I environments, reliable communication depends on how quickly and accurately the system can understand the physical scene and react to user movement. This motivates a new paradigm: instead of relying solely on RF measurements, the network should exploit <strong>multimodal side information</strong>—such as RGB images, LiDAR, radar, GPS, and historical beam observations—to infer future communication states.
+  </p>
 
+  <p>
+    My work therefore focuses on building wireless systems that are not merely reactive, but <strong>predictive</strong>, <strong>scene-aware</strong>, and <strong>cross-modal</strong>.
+  </p>
+
+  <h2>Beam Prediction</h2>
+  <p>
+    A major research focus is <strong>sensing-assisted beam prediction</strong>, where multimodal perception is used to proactively estimate the optimal beam direction or beam sequence for future transmission slots. Compared with exhaustive beam search, this paradigm can significantly reduce training overhead and latency, especially in fast-changing vehicular environments.
+  </p>
+
+  <p>
+    My recent studies investigate how to combine <strong>vision</strong>, <strong>radar</strong>, <strong>LiDAR</strong>, <strong>GPS</strong>, and <strong>historical beam feedback</strong> with deep sequence models, transformers, and large language models. The central objective is to learn a robust mapping from past multimodal observations to future beam decisions.
+  </p>
+
+  <p>
+    Formally, given only historical observations \(\mathbf{X}_{t-T_{\mathrm{History}}:t-1}\), the goal is to predict the future beam sequence \(\hat{\mathbf{y}}_{t:t+T_{\mathrm{Prediction}}-1}\):
+    $$
+    \hat{\mathbf{y}}_{t:t+T_{\mathrm{Prediction}}-1}
+    = f_{\Theta}\!\big(\mathbf{X}_{t-T_{\mathrm{History}}:t-1}\big),
+    $$
+    where \(f_{\Theta}(\cdot)\) denotes the learned predictor and \(\Theta\) represents the trainable model parameters.
+  </p>
+
+  <p>
+    Beyond standard supervised prediction, I am also interested in <strong>generative and flow-based approaches</strong> for sequential beam forecasting, which model future beam evolution in a more flexible and continuous manner than conventional discrete predictors.
+  </p>
+
+  <h2>Wireless Localization</h2>
+  <p>
+    Another important direction is <strong>multimodal localization for wireless systems</strong>, especially in V2I scenarios with multiple active users. The goal is to estimate user positions by jointly exploiting communication signals and visual context, rather than treating localization as a purely geometric or purely signal-based task.
+  </p>
+
+  <p>
+    In recent work, I study <strong>vision + CSI fusion</strong> for multi-user localization, where camera observations provide semantic and spatial cues while CSI captures wireless propagation characteristics. A key challenge here is how to align heterogeneous modalities and correctly associate wireless users with visual targets in cluttered urban scenes.
+  </p>
+
+  <p>
+    This line of research aims not only to improve localization accuracy, but also to provide a stronger physical basis for downstream wireless tasks such as beam management, tracking, and predictive communication.
+  </p>
+
+  <p>
+    Representative topics include:
+  </p>
+  <ul>
+    <li><strong>LLM-based beam prediction</strong> with multimodal sensing inputs;</li>
+    <li><strong>cross-modal transformers</strong> for wireless localization and environment-aware inference;</li>
+    <li><strong>flow matching / rectified flow models</strong> for future beam sequence generation;</li>
+    <li><strong>foundation-model-inspired architectures</strong> for robust decision-making under incomplete or noisy observations.</li>
+  </ul>
+
+  <p>
+    More broadly, I view this research direction as part of an emerging effort to bridge <strong>AI foundation models</strong> and <strong>next-generation wireless communications</strong>, especially for complex dynamic systems where environment understanding is as important as channel estimation itself.
+  </p>
+
+  <h2>Current Research Themes</h2>
+  <ul>
+    <li>
+      <strong>Multimodal Beam Prediction:</strong>
+      Using RGB images, radar, LiDAR, GPS, and historical beam feedback to predict future beam indices in dynamic V2I scenarios.
+    </li>
+    <li>
+      <strong>Vision-Aided / CSI-Aided Localization:</strong>
+      Fusing visual semantics and wireless measurements for accurate multi-user positioning and user association.
+    </li>
+    <li>
+      <strong>Cross-Modal Representation Learning:</strong>
+      Designing attention-based architectures that align perception and communication modalities in a unified latent space.
+    </li>
+    <li>
+      <strong>Generative Wireless Prediction:</strong>
+      Exploring rectified flow and other generative paradigms for sequential beam forecasting.
+    </li>
+    <li>
+      <strong>LLMs for Wireless Intelligence:</strong>
+      Adapting transformer-based large models to PHY-layer prediction and decision tasks with domain-specific lightweight modules.
+    </li>
+  </ul>
+
+  <h2>Selected Progress</h2>
+  <p>
+    So far, this research line has led to several representative works on <strong>vision-empowered beam prediction</strong>, <strong>multimodal LLM-based beam forecasting</strong>, and <strong>flow-based future beam sequence modeling</strong>. More recently, the scope has been extended from beam prediction alone to a broader cross-modal wireless intelligence framework that also includes <strong>multi-user localization</strong> and <strong>environment-aware fusion</strong>.
+  </p>
+
+  <p>
+    In particular, my current efforts focus on developing unified models that can simultaneously reason over scene context, user motion, and wireless observations, with the long-term goal of enabling more general-purpose AI agents for next-generation communication systems.
+  </p>
+
+  <h2>Useful Resources</h2>
+  <ul>
+    <li>
+      <strong>Related Publications</strong>
+      <ul>
+        <li><a href="https://arxiv.org/abs/2511.20265" target="_blank" rel="noopener">Rectified Flow for Vision-Aided mmWave V2I Beam Prediction</a></li>
+        <li><a href="https://arxiv.org/abs/2508.17640" target="_blank" rel="noopener">Multimodal Radio and Vision Fusion for Robust Localization in Urban V2I Communications</a></li>
+        <li><a href="https://arxiv.org/abs/2506.14532" target="_blank" rel="noopener">M<sup>2</sup>BeamLLM: Multimodal Sensing-Empowered mmWave Beam Prediction with Large Language Models</a></li>
+        <li><a href="https://ieeexplore.ieee.org/abstract/document/11309918/" target="_blank" rel="noopener">BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models</a></li>
+      </ul>
+    </li>
+    <li>
+      <strong>GitHub Repository</strong>
+      <ul>
+        <li><a href="https://github.com/CanZheng0331/Sensing_aided_Communications" target="_blank" rel="noopener">Demos of Beam Prediction</a></li>
+        <li><a href="https://github.com/CanZheng0331/BeamLLM-Vision-Empowered-mmWave-Beam-Prediction-with-Large-Language-Models" target="_blank" rel="noopener">Official Implementation of BeamLLM</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2>Outlook</h2>
+  <p>
+    Looking ahead, I plan to further explore <strong>foundation-model-driven wireless systems</strong> that can jointly perform perception, prediction, localization, and decision-making. I believe future communication networks will increasingly evolve from isolated signal processing pipelines into <strong>intelligent multimodal systems</strong> capable of understanding both the radio environment and the physical world.
+  </p>
+</article>
   </main>
   <footer class="footer">
     <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
