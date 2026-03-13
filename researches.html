@@ -3,17 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Researches · Can Zheng</title>
+  <title>研究 | Can Zheng</title>
   <link rel="stylesheet" href="styles.css" />
-  <script>
-    (function() {
-      let theme = localStorage.getItem('theme');
-      if (!theme) {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -24,147 +15,145 @@
       <a class="brand" href="index.html"><img src="photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
       <nav>
         <div class="dropdown">
-          <a href="index.html" class="nav-link">Home</a>
+          <a href="index.html" class="nav-link"><span data-lang="zh">首页</span><span data-lang="en">Home</span></a>
           <div class="dropdown-content">
-            <a href="index.html#about">About Me</a>
-            <a href="index.html#news">News</a>
-            <a href="index.html#explore">Explore</a>
+            <a href="index.html#about"><span data-lang="zh">关于我</span><span data-lang="en">About Me</span></a>
+            <a href="index.html#news"><span data-lang="zh">动态</span><span data-lang="en">News</span></a>
+            <a href="index.html#explore"><span data-lang="zh">探索</span><span data-lang="en">Explore</span></a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="biography.html" class="nav-link">Biography</a>
+          <a href="biography.html" class="nav-link"><span data-lang="zh">履历</span><span data-lang="en">Biography</span></a>
           <div class="dropdown-content">
-            <a href="biography.html#education">Education</a>
-            <a href="biography.html#experience">Work Experience</a>
-            <a href="biography.html#service">Service</a>
+            <a href="biography.html#education"><span data-lang="zh">教育经历</span><span data-lang="en">Education</span></a>
+            <a href="biography.html#experience"><span data-lang="zh">工作经历</span><span data-lang="en">Experience</span></a>
+            <a href="biography.html#service"><span data-lang="zh">服务与荣誉</span><span data-lang="en">Service</span></a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="researches.html" class="nav-link" aria-current="page">Researches</a>
+          <a href="researches.html" class="nav-link" aria-current="page"><span data-lang="zh">研究</span><span data-lang="en">Researches</span></a>
           <div class="dropdown-content">
-            <a href="researches.html?filter=past">Past</a>
-            <a href="researches.html?filter=ongoing">Ongoing</a>
-            <a href="researches.html?filter=future">Future</a>
+            <a href="?filter=past"><span data-lang="zh">过往</span><span data-lang="en">Past</span></a>
+            <a href="?filter=ongoing"><span data-lang="zh">进行中</span><span data-lang="en">Ongoing</span></a>
+            <a href="?filter=future"><span data-lang="zh">未来方向</span><span data-lang="en">Future</span></a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="publications.html" class="nav-link">Publications</a>
+          <a href="publications.html" class="nav-link"><span data-lang="zh">论文</span><span data-lang="en">Publications</span></a>
           <div class="dropdown-content">
-            <a href="publications.html#journal">Journal Papers</a>
-            <a href="publications.html#conference">Conference Papers</a>
+            <a href="publications.html#journal"><span data-lang="zh">期刊论文</span><span data-lang="en">Journal Papers</span></a>
+            <a href="publications.html#conference"><span data-lang="zh">会议论文</span><span data-lang="en">Conference Papers</span></a>
           </div>
         </div>
-        <a href="blog.html" class="nav-link">Blog</a>
-        <a href="photos.html" class="nav-link">Photos</a>
-        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+        <a href="blog.html" class="nav-link"><span data-lang="zh">博客</span><span data-lang="en">Blog</span></a>
+        <a href="photos.html" class="nav-link"><span data-lang="zh">照片</span><span data-lang="en">Photos</span></a>
+        <button id="lang-btn" class="lang-toggle-btn" data-lang-toggle></button>
+        <button id="theme-btn" class="theme-toggle-btn" data-title-zh="切换主题" data-title-en="Toggle theme"><i class="fas fa-moon"></i></button>
       </nav>
     </div>
   </header>
   <main class="container">
+    <article class="prose">
+      <h1 data-lang="zh">研究方向</h1>
+      <h1 data-lang="en">My Research Domains</h1>
+      <p data-lang="zh">选择一个类别查看我不同阶段的研究主题，点击卡片可进入详细介绍页面。</p>
+      <p data-lang="en">Select a category to explore my research directions. Click a card to view details, motivations, and related resources.</p>
 
-  <article class="prose">
-    <h1>My Research Domains</h1>
-    <p>Select a category to explore my various research directions. Click on a card to view detailed contents, derivations, and resources.</p>
-    
-    <div class="research-filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="past">Past</button>
-      <button class="filter-btn" data-filter="ongoing">Ongoing</button>
-      <button class="filter-btn" data-filter="future">Future</button>
-    </div>
+      <div class="research-filters">
+        <button class="filter-btn active" data-filter="all"><span data-lang="zh">全部</span><span data-lang="en">All</span></button>
+        <button class="filter-btn" data-filter="past"><span data-lang="zh">过往</span><span data-lang="en">Past</span></button>
+        <button class="filter-btn" data-filter="ongoing"><span data-lang="zh">进行中</span><span data-lang="en">Ongoing</span></button>
+        <button class="filter-btn" data-filter="future"><span data-lang="zh">未来</span><span data-lang="en">Future</span></button>
+      </div>
 
-    <div class="research-grid" id="res-grid">
-      
-      <a href="researches/research-aiml.html" class="res-card" data-cat="ongoing">
-        <img src="photos/proj_figure/AIML.png" alt="AI/ML">
-        <div class="res-card-content">
-          <span class="res-tag">Ongoing</span>
-          <h3 class="res-card-title">AI/ML for Wireless Communications</h3>
-          <p class="res-card-desc">Using sensing/perception data and AI/ML-assisted communication physical layer tasks.</p>
-        </div>
-      </a>
+      <div class="research-grid" id="res-grid">
+        <a href="researches/research-aiml.html" class="res-card" data-cat="ongoing">
+          <img src="photos/proj_figure/AIML.png" alt="AI/ML">
+          <div class="res-card-content">
+            <span class="res-tag"><span data-lang="zh">进行中</span><span data-lang="en">Ongoing</span></span>
+            <h3 class="res-card-title" data-lang="zh">面向无线通信的 AI/ML</h3>
+            <h3 class="res-card-title" data-lang="en">AI/ML for Wireless Communications</h3>
+            <p class="res-card-desc" data-lang="zh">利用感知信息与 AI/ML 方法增强物理层任务，例如波束预测、定位与环境感知决策。</p>
+            <p class="res-card-desc" data-lang="en">Using sensing data and AI/ML to improve physical-layer tasks such as beam prediction, localization, and environment-aware decisions.</p>
+          </div>
+        </a>
 
-      <a href="researches/research-leo.html" class="res-card" data-cat="past">
-        <img src="photos/proj_figure/LEO.png" alt="LEO">
-        <div class="res-card-content">
-          <span class="res-tag">Past</span>
-          <h3 class="res-card-title">LEO Satellite Communications</h3>
-          <p class="res-card-desc">Applying cell-free (CF) massive MIMO concepts to low Earth orbit (LEO) satellites for capacity scaling and uplink optimization.</p>
-        </div>
-      </a>
+        <a href="researches/research-leo.html" class="res-card" data-cat="past">
+          <img src="photos/proj_figure/LEO.png" alt="LEO">
+          <div class="res-card-content">
+            <span class="res-tag"><span data-lang="zh">过往</span><span data-lang="en">Past</span></span>
+            <h3 class="res-card-title" data-lang="zh">低轨卫星通信</h3>
+            <h3 class="res-card-title" data-lang="en">LEO Satellite Communications</h3>
+            <p class="res-card-desc" data-lang="zh">将无蜂窝大规模 MIMO 的思路引入低轨卫星系统，研究容量扩展与上行优化问题。</p>
+            <p class="res-card-desc" data-lang="en">Applying cell-free massive MIMO concepts to LEO satellite systems for capacity scaling and uplink optimization.</p>
+          </div>
+        </a>
 
-      <a href="researches/research-waveforms.html" class="res-card" data-cat="past">
-        <img src="photos/proj_figure/OTFS.png" alt="Waveforms">
-        <div class="res-card-content">
-          <span class="res-tag">Past</span>
-          <h3 class="res-card-title">Next-Generation Waveforms (OTFS/AFDM)</h3>
-          <p class="res-card-desc">Channel estimation and detection algorithm design and performance analysis for OTFS and AFDM in high-mobility scenarios.</p>
-        </div>
-      </a>
+        <a href="researches/research-waveforms.html" class="res-card" data-cat="past">
+          <img src="photos/proj_figure/OTFS.png" alt="Waveforms">
+          <div class="res-card-content">
+            <span class="res-tag"><span data-lang="zh">过往</span><span data-lang="en">Past</span></span>
+            <h3 class="res-card-title" data-lang="zh">新型波形：OTFS / AFDM</h3>
+            <h3 class="res-card-title" data-lang="en">Next-Generation Waveforms (OTFS/AFDM)</h3>
+            <p class="res-card-desc" data-lang="zh">面向高移动性场景的 OTFS 与 AFDM 信道估计、检测算法与性能分析。</p>
+            <p class="res-card-desc" data-lang="en">Channel estimation, detection algorithms, and performance analysis for OTFS and AFDM in high-mobility scenarios.</p>
+          </div>
+        </a>
 
-      <a href="researches/research-future.html" class="res-card" data-cat="future">
-        <div style="height:220px; background:var(--border); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size: 3rem;">
-          <i class="fas fa-rocket"></i>
-        </div>
-        <div class="res-card-content">
-          <span class="res-tag">Future Concept</span>
-          <h3 class="res-card-title">AI/ML for Positioning & Pre-6G</h3>
-          <p class="res-card-desc">Conceptualizing new ideas for robust localization, load balancing, and next-generation architecture from industry experiences.</p>
-        </div>
-      </a>
-
-    </div>
-  </article>
-
+        <a href="researches/research-future.html" class="res-card" data-cat="future">
+          <div style="height:220px; background:var(--border); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size: 3rem;">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <div class="res-card-content">
+            <span class="res-tag"><span data-lang="zh">未来方向</span><span data-lang="en">Future Concept</span></span>
+            <h3 class="res-card-title" data-lang="zh">定位、网络优化与 Pre-6G AI</h3>
+            <h3 class="res-card-title" data-lang="en">AI/ML for Positioning & Pre-6G</h3>
+            <p class="res-card-desc" data-lang="zh">结合产业经历，进一步构思鲁棒定位、负载均衡和下一代系统架构的新问题。</p>
+            <p class="res-card-desc" data-lang="en">Conceptualizing new ideas for robust localization, load balancing, and next-generation architectures inspired by industry experience.</p>
+          </div>
+        </a>
+      </div>
+    </article>
   </main>
   <footer class="footer">
-    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+    <div data-lang="zh">© <span id="year"></span> Can Zheng | 基于 GitHub Pages 构建</div>
+    <div data-lang="en">© <span id="year"></span> Can Zheng | Built for GitHub Pages</div>
   </footer>
+  <script src="site.js"></script>
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const resCards = document.querySelectorAll('.res-card');
-    
+    document.querySelectorAll("#year").forEach((element) => {
+      element.textContent = new Date().getFullYear();
+    });
+
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    const resCards = document.querySelectorAll(".res-card");
+
     function applyFilter(filterValue) {
-      filterBtns.forEach(b => b.classList.remove('active'));
+      filterBtns.forEach((button) => button.classList.remove("active"));
       const activeBtn = document.querySelector(`.filter-btn[data-filter="${filterValue}"]`);
-      if (activeBtn) activeBtn.classList.add('active');
-      
-      resCards.forEach(card => {
-        if (filterValue === 'all' || card.getAttribute('data-cat') === filterValue) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
+      if (activeBtn) {
+        activeBtn.classList.add("active");
+      }
+
+      resCards.forEach((card) => {
+        card.style.display = filterValue === "all" || card.getAttribute("data-cat") === filterValue ? "flex" : "none";
       });
     }
 
     const urlParams = new URLSearchParams(window.location.search);
-    const initialFilter = urlParams.get('filter') || 'all';
-    applyFilter(initialFilter);
+    applyFilter(urlParams.get("filter") || "all");
 
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        applyFilter(btn.getAttribute('data-filter'));
+    filterBtns.forEach((button) => {
+      button.addEventListener("click", () => {
+        applyFilter(button.getAttribute("data-filter"));
       });
     });
 
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = themeBtn.querySelector('i');
-    let currentTheme = localStorage.getItem('theme');
-    if (!currentTheme) {
-      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    function applyThemeMode(themeStr) {
-      document.documentElement.setAttribute('data-theme', themeStr);
-      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    }
-    applyThemeMode(currentTheme);
-    themeBtn.addEventListener('click', () => {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', currentTheme);
-      applyThemeMode(currentTheme);
+    Site.init({
+      titles: {
+        zh: "研究",
+        en: "Researches"
+      }
     });
   </script>
 </body>

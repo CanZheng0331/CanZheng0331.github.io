@@ -3,17 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Blog · Can Zheng</title>
+  <title>博客 | Can Zheng</title>
   <link rel="stylesheet" href="styles.css" />
-  <script>
-    (function() {
-      let theme = localStorage.getItem('theme');
-      if (!theme) {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -21,51 +12,13 @@
     .post-list { list-style: none; padding: 0; }
     .post-list li { margin: 1rem 0; line-height: 1.6; padding-bottom: 0.5rem; border-bottom: 1px dashed var(--border); }
     .post-date { font-size: 0.85rem; color: var(--muted); margin: 0 10px; }
-    .tag { display: inline-block; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); padding: 4px 8px; margin: 0 4px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: background 0.2s;}
+    .tag { display: inline-block; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); padding: 4px 8px; margin: 0 4px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
     .tag:hover { background: var(--accent); color: #fff; }
-    
-    /* 悬浮筛选栏核心 CSS */
-    #filter-header-container { 
-      position: sticky; 
-      top: 65px; 
-      z-index: 990; 
-      margin-bottom: 1rem; 
-    }
-    .filter-header { 
-      display: flex; 
-      align-items: center; 
-      flex-wrap: wrap;
-      gap: 12px; 
-      background: var(--card); 
-      padding: 12px 16px; 
-      border-radius: 8px; 
-      border: 1px solid var(--border); 
-      box-shadow: var(--shadow-md);
-    }
-    .filter-header .back-btn { 
-      background: var(--accent); 
-      color: white; 
-      border: none; 
-      padding: 6px 12px; 
-      border-radius: 6px; 
-      cursor: pointer; 
-      font-size: 0.9rem; 
-      font-weight: 500; 
-      transition: opacity 0.2s;
-      margin-left: auto;
-    }
+    #filter-header-container { position: sticky; top: 65px; z-index: 990; margin-bottom: 1rem; }
+    .filter-header { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; background: var(--card); padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); box-shadow: var(--shadow-md); }
+    .filter-header .back-btn { background: var(--accent); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 500; transition: opacity 0.2s; margin-left: auto; }
     .filter-header .back-btn:hover { opacity: 0.8; }
-    .logic-select {
-      background: var(--bg);
-      color: var(--fg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      outline: none;
-      cursor: pointer;
-    }
+    .logic-select { background: var(--bg); color: var(--fg); border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; font-size: 0.8rem; font-weight: 600; outline: none; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -74,92 +27,99 @@
       <a class="brand" href="index.html"><img src="photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
       <nav>
         <div class="dropdown">
-          <a href="index.html" class="nav-link">Home</a>
+          <a href="index.html" class="nav-link"><span data-lang="zh">首页</span><span data-lang="en">Home</span></a>
           <div class="dropdown-content">
-            <a href="index.html#about">About Me</a>
-            <a href="index.html#news">News</a>
-            <a href="index.html#explore">Explore</a>
+            <a href="index.html#about"><span data-lang="zh">关于我</span><span data-lang="en">About Me</span></a>
+            <a href="index.html#news"><span data-lang="zh">动态</span><span data-lang="en">News</span></a>
+            <a href="index.html#explore"><span data-lang="zh">探索</span><span data-lang="en">Explore</span></a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="biography.html" class="nav-link">Biography</a>
+          <a href="biography.html" class="nav-link"><span data-lang="zh">履历</span><span data-lang="en">Biography</span></a>
           <div class="dropdown-content">
-            <a href="biography.html#education">Education</a>
-            <a href="biography.html#experience">Work Experience</a>
-            <a href="biography.html#service">Service</a>
+            <a href="biography.html#education"><span data-lang="zh">教育经历</span><span data-lang="en">Education</span></a>
+            <a href="biography.html#experience"><span data-lang="zh">工作经历</span><span data-lang="en">Experience</span></a>
+            <a href="biography.html#service"><span data-lang="zh">服务与荣誉</span><span data-lang="en">Service</span></a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="researches.html" class="nav-link">Researches</a>
+          <a href="researches.html" class="nav-link"><span data-lang="zh">研究</span><span data-lang="en">Researches</span></a>
           <div class="dropdown-content">
-            <a href="researches.html?filter=past">Past</a>
-            <a href="researches.html?filter=ongoing">Ongoing</a>
-            <a href="researches.html?filter=future">Future</a>
+            <a href="researches.html?filter=past"><span data-lang="zh">过往</span><span data-lang="en">Past</span></a>
+            <a href="researches.html?filter=ongoing"><span data-lang="zh">进行中</span><span data-lang="en">Ongoing</span></a>
+            <a href="researches.html?filter=future"><span data-lang="zh">未来方向</span><span data-lang="en">Future</span></a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="publications.html" class="nav-link">Publications</a>
+          <a href="publications.html" class="nav-link"><span data-lang="zh">论文</span><span data-lang="en">Publications</span></a>
           <div class="dropdown-content">
-            <a href="publications.html#journal">Journal Papers</a>
-            <a href="publications.html#conference">Conference Papers</a>
+            <a href="publications.html#journal"><span data-lang="zh">期刊论文</span><span data-lang="en">Journal Papers</span></a>
+            <a href="publications.html#conference"><span data-lang="zh">会议论文</span><span data-lang="en">Conference Papers</span></a>
           </div>
         </div>
-        <a href="blog.html" class="nav-link" aria-current="page">Blog</a>
-        <a href="photos.html" class="nav-link">Photos</a>
-        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+        <a href="blog.html" class="nav-link" aria-current="page"><span data-lang="zh">博客</span><span data-lang="en">Blog</span></a>
+        <a href="photos.html" class="nav-link"><span data-lang="zh">照片</span><span data-lang="en">Photos</span></a>
+        <button id="lang-btn" class="lang-toggle-btn" data-lang-toggle></button>
+        <button id="theme-btn" class="theme-toggle-btn" data-title-zh="切换主题" data-title-en="Toggle theme"><i class="fas fa-moon"></i></button>
       </nav>
     </div>
   </header>
   <main class="container">
     <section class="section">
-      <h1>Blog Posts</h1>
-      <input class="search-box" type="text" id="search" placeholder="Search articles or tags..." />
+      <h1 data-lang="zh">博客文章</h1>
+      <h1 data-lang="en">Blog Posts</h1>
+      <input class="search-box" type="text" id="search" data-placeholder-zh="搜索文章标题或标签..." data-placeholder-en="Search articles or tags..." />
       <div id="filter-header-container"></div>
       <ul id="post-list" class="post-list">
-        <li><small class="muted">Loading and sorting by date…</small></li>
+        <li><small class="muted" data-lang="zh">加载中，正在按日期排序...</small><small class="muted" data-lang="en">Loading and sorting by date...</small></li>
       </ul>
     </section>
   </main>
-  
   <footer class="footer">
-    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+    <div data-lang="zh">© <span id="year"></span> Can Zheng | 基于 GitHub Pages 构建</div>
+    <div data-lang="en">© <span id="year"></span> Can Zheng | Built for GitHub Pages</div>
   </footer>
-
+  <script src="site.js"></script>
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.querySelectorAll("#year").forEach((element) => {
+      element.textContent = new Date().getFullYear();
+    });
 
     const GITHUB_USER = "canzheng0331";
     const GITHUB_REPO = "canzheng0331.github.io";
 
-    let posts = [
-      { id: "Wireless-communications2nd", title: "[Chinese] Notes on Wireless Communications (2nd Edition) by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications2nd.pdf" },
-      { id: "Wireless-communications", title: "[Chinese] Notes on Wireless Communications by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications.md" },
-      { id: "otfs-notes", title: "[Chinese] Notes on OTFS", tags: ["OTFS", "Signal Processing"], file: "posts/otfs-notes.md" },
-      { id: "sats", title: "[Chinese] Notes on Multi-Satellite Cooperative Networks", tags: ["Satellite Communications", "Paper Summarization"], file: "posts/sats.md" },
-      { id: "LLM_BBO", title: "[Chinese] Notes on LLM for Network Optimization", tags: ["Large Language Model", "Optimization", "Paper Summarization"], file: "posts/LLM_BBO.md" }
+    const posts = [
+      { id: "Wireless-communications2nd", titleZh: "Andrea Goldsmith《无线通信（第二版）》中文笔记", titleEn: "Notes on Wireless Communications (2nd Edition) by Andrea Goldsmith", tags: [{ zh: "无线通信", en: "Wireless Communications" }, { zh: "教材笔记", en: "Textbook" }], file: "posts/Wireless-communications2nd.pdf" },
+      { id: "Wireless-communications", titleZh: "Andrea Goldsmith《无线通信》中文笔记", titleEn: "Notes on Wireless Communications by Andrea Goldsmith", tags: [{ zh: "无线通信", en: "Wireless Communications" }, { zh: "教材笔记", en: "Textbook" }], file: "posts/Wireless-communications.md" },
+      { id: "otfs-notes", titleZh: "OTFS 学习笔记", titleEn: "Notes on OTFS", tags: [{ zh: "OTFS", en: "OTFS" }, { zh: "信号处理", en: "Signal Processing" }], file: "posts/otfs-notes.md" },
+      { id: "sats", titleZh: "多卫星协作网络论文笔记", titleEn: "Notes on Multi-Satellite Cooperative Networks", tags: [{ zh: "卫星通信", en: "Satellite Communications" }, { zh: "论文总结", en: "Paper Summarization" }], file: "posts/sats.md" },
+      { id: "LLM_BBO", titleZh: "LLM 用于网络优化的论文笔记", titleEn: "Notes on LLM for Network Optimization", tags: [{ zh: "大语言模型", en: "Large Language Model" }, { zh: "优化", en: "Optimization" }, { zh: "论文总结", en: "Paper Summarization" }], file: "posts/LLM_BBO.md" }
     ];
 
     const list = document.getElementById("post-list");
     const searchBox = document.getElementById("search");
     const filterHeaderContainer = document.getElementById("filter-header-container");
-
     let activeTags = new Set();
-    let tagLogic = 'OR'; 
+    let tagLogic = "OR";
+
+    function getLang() {
+      return document.documentElement.getAttribute("data-lang") || "en";
+    }
 
     async function initializeAndSortPosts() {
       await Promise.all(posts.map(async (post) => {
         try {
           const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits?path=${post.file}&page=1&per_page=1`;
-          const res = await fetch(apiUrl);
-          const commits = await res.json();
-          if (commits && commits.length > 0) {
-            post.date = commits[0].commit.committer.date; 
-            post.displayDate = post.date.split('T')[0];
+          const response = await fetch(apiUrl);
+          const commits = await response.json();
+          if (Array.isArray(commits) && commits.length > 0) {
+            post.date = commits[0].commit.committer.date;
+            post.displayDate = post.date.split("T")[0];
           } else {
             post.date = "1970-01-01T00:00:00Z";
             post.displayDate = "Local / Test File";
           }
-        } catch (err) {
+        } catch (error) {
           post.date = "1970-01-01T00:00:00Z";
           post.displayDate = "Local / Test File";
         }
@@ -191,96 +151,78 @@
     function renderList() {
       list.innerHTML = "";
       const textFilter = searchBox.value.toLowerCase();
+      const lang = getLang();
 
       if (activeTags.size === 0 && textFilter === "") {
-        filterHeaderContainer.innerHTML = ""; 
+        filterHeaderContainer.innerHTML = "";
       } else {
-        let html = `<div class="filter-header">`;
-        
+        let html = '<div class="filter-header">';
         if (activeTags.size > 0) {
-          html += `<div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">`;
-          html += `<span style="font-weight:600; font-size:0.9rem;">Tags:</span>`;
-          activeTags.forEach(t => {
-            html += `<span class="tag" style="cursor:pointer;" onclick="toggleTag('${t}')" title="Remove">${t} &times;</span>`;
+          html += '<div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">';
+          html += `<span style="font-weight:600; font-size:0.9rem;">${lang === "zh" ? "标签" : "Tags"}:</span>`;
+          activeTags.forEach((tag) => {
+            html += `<span class="tag" style="cursor:pointer;" onclick="toggleTag('${tag}')" title="Remove">${tag} &times;</span>`;
           });
           html += `<select class="logic-select" onchange="changeLogic(this.value)">
-                     <option value="OR" ${tagLogic === 'OR' ? 'selected' : ''}>OR (Any)</option>
-                     <option value="AND" ${tagLogic === 'AND' ? 'selected' : ''}>AND (All)</option>
+                     <option value="OR" ${tagLogic === "OR" ? "selected" : ""}>${lang === "zh" ? "OR（任一）" : "OR (Any)"}</option>
+                     <option value="AND" ${tagLogic === "AND" ? "selected" : ""}>${lang === "zh" ? "AND（全部）" : "AND (All)"}</option>
                    </select>`;
-          html += `</div>`;
+          html += "</div>";
         }
 
         if (textFilter !== "") {
-          html += `<span style="font-size:0.9rem;">Search: <strong>${searchBox.value}</strong></span>`;
+          html += `<span style="font-size:0.9rem;">${lang === "zh" ? "搜索" : "Search"}: <strong>${searchBox.value}</strong></span>`;
         }
 
-        html += `<button class="back-btn" onclick="clearFilters()"><i class="fas fa-times"></i> Clear</button>`;
-        html += `</div>`;
+        html += `<button class="back-btn" onclick="clearFilters()">${lang === "zh" ? "清除" : "Clear"}</button></div>`;
         filterHeaderContainer.innerHTML = html;
       }
 
-      const filteredPosts = posts.filter(post => {
-        const titleMatch = post.title.toLowerCase().includes(textFilter);
-        
+      const filteredPosts = posts.filter((post) => {
+        const titleText = `${post.titleZh} ${post.titleEn}`.toLowerCase();
         let tagMatch = true;
         if (activeTags.size > 0) {
-          if (tagLogic === 'OR') {
-            tagMatch = post.tags.some(t => activeTags.has(t));
-          } else {
-            tagMatch = Array.from(activeTags).every(t => post.tags.includes(t));
-          }
+          tagMatch = tagLogic === "OR"
+            ? post.tags.some((tag) => activeTags.has(tag.en))
+            : Array.from(activeTags).every((tag) => post.tags.some((item) => item.en === tag));
         }
-        
-        return titleMatch && tagMatch;
+        return titleText.includes(textFilter) && tagMatch;
       });
 
       if (filteredPosts.length === 0) {
-        list.innerHTML = "<li><small class='muted'>No posts found.</small></li>"; return;
+        list.innerHTML = `<li><small class="muted">${lang === "zh" ? "没有找到匹配文章。" : "No posts found."}</small></li>`;
+        return;
       }
 
-      filteredPosts.forEach(post => {
+      filteredPosts.forEach((post) => {
+        const title = lang === "zh" ? post.titleZh : post.titleEn;
         const li = document.createElement("li");
         li.innerHTML = `
-          <a href="#" style="font-size: 1.1rem; font-weight: 600; display: block; margin-bottom: 6px;">${post.title}</a>
+          <a href="post.html?id=${post.id}" style="font-size: 1.1rem; font-weight: 600; display: block; margin-bottom: 6px;">${title}</a>
           <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
             <span class="post-date"><i class="far fa-calendar-alt"></i> ${post.displayDate}</span>
-            ${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join("")}
+            ${post.tags.map((tag) => `<span class="tag" data-tag="${tag.en}">${lang === "zh" ? tag.zh : tag.en}</span>`).join("")}
           </div>
         `;
-
-        li.querySelector("a").onclick = (e) => {
-          e.preventDefault();
-          window.location.href = `post.html?id=${post.id}`;
-        };
-
-        li.querySelectorAll(".tag").forEach(tagEl => {
-          tagEl.onclick = (e) => { 
-            e.stopPropagation(); 
-            toggleTag(tagEl.dataset.tag); 
-          };
+        li.querySelectorAll(".tag").forEach((tagElement) => {
+          tagElement.addEventListener("click", (event) => {
+            event.preventDefault();
+            toggleTag(tagElement.dataset.tag);
+          });
         });
         list.appendChild(li);
       });
     }
 
-    searchBox.oninput = () => renderList();
+    searchBox.addEventListener("input", renderList);
+    document.addEventListener("site:language-change", renderList);
     initializeAndSortPosts();
 
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = themeBtn.querySelector('i');
-    let currentTheme = localStorage.getItem('theme');
-    if (!currentTheme) {
-      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    function applyThemeMode(themeStr) {
-      document.documentElement.setAttribute('data-theme', themeStr);
-      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    }
-    applyThemeMode(currentTheme);
-    themeBtn.addEventListener('click', () => {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', currentTheme);
-      applyThemeMode(currentTheme);
+    Site.init({
+      titles: {
+        zh: "博客",
+        en: "Blog"
+      }
     });
   </script>
 </body>

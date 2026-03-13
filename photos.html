@@ -3,79 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Photos · Can Zheng</title>
+  <title>照片 | Can Zheng</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <script>
-    (function() {
-      let theme = localStorage.getItem('theme');
-      if (!theme) {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
 </head>
 <body>
   <header class="header">
     <div class="navbar container">
-      <a class="brand" href="index.html">
-        <img src="photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;">
-      </a>
+      <a class="brand" href="index.html"><img src="photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
       <nav>
         <div class="dropdown">
-          <a href="index.html" class="nav-link">Home</a>
-          <div class="dropdown-content">
-            <a href="index.html#about">About Me</a>
-            <a href="index.html#news">News</a>
-            <a href="index.html#explore">Explore</a>
-          </div>
+          <a href="index.html" class="nav-link"><span data-lang="zh">首页</span><span data-lang="en">Home</span></a>
         </div>
         <div class="dropdown">
-          <a href="biography.html" class="nav-link">Biography</a>
-          <div class="dropdown-content">
-            <a href="biography.html#education">Education</a>
-            <a href="biography.html#experience">Work Experience</a>
-            <a href="biography.html#service">Service</a>
-          </div>
+          <a href="biography.html" class="nav-link"><span data-lang="zh">履历</span><span data-lang="en">Biography</span></a>
         </div>
         <div class="dropdown">
-          <a href="researches.html" class="nav-link">Researches</a>
-          <div class="dropdown-content">
-            <a href="researches.html?filter=past">Past</a>
-            <a href="researches.html?filter=ongoing">Ongoing</a>
-            <a href="researches.html?filter=future">Future</a>
-          </div>
+          <a href="researches.html" class="nav-link"><span data-lang="zh">研究</span><span data-lang="en">Researches</span></a>
         </div>
         <div class="dropdown">
-          <a href="publications.html" class="nav-link">Publications</a>
-          <div class="dropdown-content">
-            <a href="publications.html#journal">Journal Papers</a>
-            <a href="publications.html#conference">Conference Papers</a>
-          </div>
+          <a href="publications.html" class="nav-link"><span data-lang="zh">论文</span><span data-lang="en">Publications</span></a>
         </div>
-        <a href="blog.html" class="nav-link">Blog</a>
-        <a href="photos.html" class="nav-link" aria-current="page">Photos</a>
-        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+        <a href="blog.html" class="nav-link"><span data-lang="zh">博客</span><span data-lang="en">Blog</span></a>
+        <a href="photos.html" class="nav-link" aria-current="page"><span data-lang="zh">照片</span><span data-lang="en">Photos</span></a>
+        <button id="lang-btn" class="lang-toggle-btn" data-lang-toggle></button>
+        <button id="theme-btn" class="theme-toggle-btn" data-title-zh="切换主题" data-title-en="Toggle theme"><i class="fas fa-moon"></i></button>
       </nav>
     </div>
   </header>
   <main class="container">
     <article class="prose">
-      <h1>Photos</h1>
-      <p>Click on images to view more details and additional photos in a popup.</p>
+      <h1 data-lang="zh">照片</h1>
+      <h1 data-lang="en">Photos</h1>
+      <p data-lang="zh">点击图片可以查看对应地点的更多描述和补充照片。</p>
+      <p data-lang="en">Click an image to view more details and additional photos in a popup.</p>
     </article>
     <section class="section">
       <div class="figure-grid">
         <figure data-modal-id="beijing">
-          <img src="photos/Beijing_CCTV.jpg" alt="Lab setup">
-          <figcaption>Beijing, China (25.02-25.08)</figcaption>
+          <img src="photos/Beijing_CCTV.jpg" alt="Beijing">
+          <figcaption data-lang="zh">中国北京（2025.02 - 2025.08）</figcaption>
+          <figcaption data-lang="en">Beijing, China (2025.02 - 2025.08)</figcaption>
         </figure>
         <figure data-modal-id="dongguan">
           <img src="photos/Dongguan_Songshan1.jpg" alt="Dongguan">
-          <figcaption>Dongguan, China (24.12-25.01)</figcaption>
+          <figcaption data-lang="zh">中国东莞（2024.12 - 2025.01）</figcaption>
+          <figcaption data-lang="en">Dongguan, China (2024.12 - 2025.01)</figcaption>
         </figure>
       </div>
     </section>
@@ -83,8 +58,10 @@
     <div id="dongguan" class="modal">
       <div class="modal-content">
         <span class="modal-close">&times;</span>
-        <h2 style="margin-top: 0;">Dongguan, China</h2>
-        <p>Theoretically, Guangdong Province is the hottest place in China, but I was there during winter, so the weather was very comfortable. As a visiting student at the GBU, it only took me about 20 minutes to walk to Songshan Lake Park every day. From there, I could see Huawei Ox Horn Campus.</p>
+        <h2 style="margin-top: 0;" data-lang="zh">中国东莞</h2>
+        <h2 style="margin-top: 0;" data-lang="en">Dongguan, China</h2>
+        <p data-lang="zh">理论上广东是中国很热的地区，但我去的时候正值冬天，气候很舒适。作为在大湾区大学访问的学生，我几乎每天都要步行二十分钟去松山湖公园，从那里还能看到华为欧洲小镇。</p>
+        <p data-lang="en">Guangdong is usually known for warm weather, but I visited in winter, so the climate felt very comfortable. During my visiting period at Great Bay University, I often walked about twenty minutes to Songshan Lake Park, where I could also see Huawei Ox Horn Campus.</p>
         <div class="modal-image-grid">
           <img src="photos/Dongguan_GBU.jpg" alt="GBU">
           <img src="photos/Dongguan_Songshan1.jpg" alt="Songshan Lake 1">
@@ -92,11 +69,14 @@
         </div>
       </div>
     </div>
+
     <div id="beijing" class="modal">
       <div class="modal-content">
         <span class="modal-close">&times;</span>
-        <h2 style="margin-top: 0;">Beijing, China</h2>
-        <p>I spent almost two-thirds of my 24th year (my zodiac year) interning in Beijing. It is a city with many opportunities, but also a lot of pressure. The climate seems moderate, but the winters are windy, the springs are filled with willow catkins, and the summers are hot and humid. In any case, I will miss this time of hard work very much.</p>
+        <h2 style="margin-top: 0;" data-lang="zh">中国北京</h2>
+        <h2 style="margin-top: 0;" data-lang="en">Beijing, China</h2>
+        <p data-lang="zh">我 24 岁这一年有将近三分之二的时间都在北京实习。这里机会很多，节奏也很快。冬天风大，春天有杨絮，夏天偏闷热，但这段全力投入工作的经历依然让我非常怀念。</p>
+        <p data-lang="en">I spent almost two-thirds of my twenty-fourth year interning in Beijing. The city offers many opportunities, but also a lot of pressure. Winters are windy, spring brings willow catkins, and summers can be hot and humid, yet I still miss this intense and rewarding period very much.</p>
         <div class="modal-image-grid">
           <img src="photos/Beijing_CCTV.jpg" alt="CCTV">
           <img src="photos/Beijing_Ericsson.jpg" alt="Ericsson">
@@ -104,64 +84,51 @@
         </div>
       </div>
     </div>
-    
   </main>
   <footer class="footer">
-    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+    <div data-lang="zh">© <span id="year"></span> Can Zheng | 基于 GitHub Pages 构建</div>
+    <div data-lang="en">© <span id="year"></span> Can Zheng | Built for GitHub Pages</div>
   </footer>
+  <script src="site.js"></script>
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.querySelectorAll("#year").forEach((element) => {
+      element.textContent = new Date().getFullYear();
+    });
 
-    const figures = document.querySelectorAll('.figure-grid figure');
-    const modals = document.querySelectorAll('.modal');
-    const closeButtons = document.querySelectorAll('.modal-close');
-
-    figures.forEach(figure => {
-      figure.addEventListener('click', () => {
-        const modalId = figure.getAttribute('data-modal-id');
-        const modal = document.getElementById(modalId);
+    document.querySelectorAll(".figure-grid figure").forEach((figure) => {
+      figure.addEventListener("click", () => {
+        const modal = document.getElementById(figure.getAttribute("data-modal-id"));
         if (modal) {
-          modal.style.display = 'block';
-          document.body.style.overflow = 'hidden'; 
+          modal.style.display = "block";
+          document.body.style.overflow = "hidden";
         }
       });
     });
 
-    closeButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const modal = button.closest('.modal');
+    document.querySelectorAll(".modal-close").forEach((button) => {
+      button.addEventListener("click", () => {
+        const modal = button.closest(".modal");
         if (modal) {
-          modal.style.display = 'none';
-          document.body.style.overflow = 'auto';
+          modal.style.display = "none";
+          document.body.style.overflow = "auto";
         }
       });
     });
 
-    window.addEventListener('click', (event) => {
-      modals.forEach(modal => {
+    window.addEventListener("click", (event) => {
+      document.querySelectorAll(".modal").forEach((modal) => {
         if (event.target === modal) {
-          modal.style.display = 'none';
-          document.body.style.overflow = 'auto';
+          modal.style.display = "none";
+          document.body.style.overflow = "auto";
         }
       });
     });
 
-    // Theme logic
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = themeBtn.querySelector('i');
-    let currentTheme = localStorage.getItem('theme');
-    if (!currentTheme) {
-      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    function applyThemeMode(themeStr) {
-      document.documentElement.setAttribute('data-theme', themeStr);
-      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    }
-    applyThemeMode(currentTheme);
-    themeBtn.addEventListener('click', () => {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', currentTheme);
-      applyThemeMode(currentTheme);
+    Site.init({
+      titles: {
+        zh: "照片",
+        en: "Photos"
+      }
     });
   </script>
 </body>

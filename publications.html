@@ -3,55 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Publications · Can Zheng</title>
+  <title>论文 | Can Zheng</title>
   <link rel="stylesheet" href="styles.css" />
-  <script>
-    (function() {
-      let theme = localStorage.getItem('theme');
-      if (!theme) {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-  
   <style>
-    /* 悬浮筛选栏核心 CSS */
-    #filter-header-container { 
-      position: sticky; 
-      top: 65px; 
-      z-index: 990; 
-      margin-bottom: 1rem; 
+    #filter-header-container {
+      position: sticky;
+      top: 65px;
+      z-index: 990;
+      margin-bottom: 1rem;
     }
-    .filter-header { 
-      display: flex; 
-      align-items: center; 
+    .filter-header {
+      display: flex;
+      align-items: center;
       flex-wrap: wrap;
-      gap: 12px; 
-      background: var(--card); 
-      padding: 12px 16px; 
-      border-radius: 8px; 
-      border: 1px solid var(--border); 
-      box-shadow: var(--shadow-md); 
+      gap: 12px;
+      background: var(--card);
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
     }
-    .filter-header .back-btn { 
-      background: var(--accent); 
-      color: white; 
-      border: none; 
-      padding: 6px 12px; 
-      border-radius: 6px; 
-      cursor: pointer; 
-      font-size: 0.9rem; 
-      font-weight: 500; 
+    .filter-header .back-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
       transition: opacity 0.2s;
       margin-left: auto;
     }
     .filter-header .back-btn:hover { opacity: 0.8; }
-    
-    /* 逻辑切换下拉框 */
     .logic-select {
       background: var(--bg);
       color: var(--fg);
@@ -68,237 +55,246 @@
 <body>
   <header class="header">
     <div class="navbar container">
-      <a class="brand" href="index.html">
-        <img src="photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;">
-      </a>
+      <a class="brand" href="index.html"><img src="photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
       <nav>
         <div class="dropdown">
-          <a href="index.html" class="nav-link">Home</a>
+          <a href="index.html" class="nav-link"><span data-lang="zh">首页</span><span data-lang="en">Home</span></a>
           <div class="dropdown-content">
-            <a href="index.html#about">About Me</a>
-            <a href="index.html#news">News</a>
-            <a href="index.html#explore">Explore</a>
+            <a href="index.html#about"><span data-lang="zh">关于我</span><span data-lang="en">About Me</span></a>
+            <a href="index.html#news"><span data-lang="zh">动态</span><span data-lang="en">News</span></a>
+            <a href="index.html#explore"><span data-lang="zh">探索</span><span data-lang="en">Explore</span></a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="biography.html" class="nav-link">Biography</a>
+          <a href="biography.html" class="nav-link"><span data-lang="zh">履历</span><span data-lang="en">Biography</span></a>
           <div class="dropdown-content">
-            <a href="biography.html#education">Education</a>
-            <a href="biography.html#experience">Work Experience</a>
-            <a href="biography.html#service">Service</a>
+            <a href="biography.html#education"><span data-lang="zh">教育经历</span><span data-lang="en">Education</span></a>
+            <a href="biography.html#experience"><span data-lang="zh">工作经历</span><span data-lang="en">Experience</span></a>
+            <a href="biography.html#service"><span data-lang="zh">服务与荣誉</span><span data-lang="en">Service</span></a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="researches.html" class="nav-link">Researches</a>
+          <a href="researches.html" class="nav-link"><span data-lang="zh">研究</span><span data-lang="en">Researches</span></a>
           <div class="dropdown-content">
-            <a href="researches.html?filter=past">Past</a>
-            <a href="researches.html?filter=ongoing">Ongoing</a>
-            <a href="researches.html?filter=future">Future</a>
+            <a href="researches.html?filter=past"><span data-lang="zh">过往</span><span data-lang="en">Past</span></a>
+            <a href="researches.html?filter=ongoing"><span data-lang="zh">进行中</span><span data-lang="en">Ongoing</span></a>
+            <a href="researches.html?filter=future"><span data-lang="zh">未来方向</span><span data-lang="en">Future</span></a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="publications.html" class="nav-link" aria-current="page">Publications</a>
+          <a href="publications.html" class="nav-link" aria-current="page"><span data-lang="zh">论文</span><span data-lang="en">Publications</span></a>
           <div class="dropdown-content">
-            <a href="publications.html#journal">Journal Papers</a>
-            <a href="publications.html#conference">Conference Papers</a>
+            <a href="#journal"><span data-lang="zh">期刊论文</span><span data-lang="en">Journal Papers</span></a>
+            <a href="#conference"><span data-lang="zh">会议论文</span><span data-lang="en">Conference Papers</span></a>
           </div>
         </div>
-        <a href="blog.html" class="nav-link">Blog</a>
-        <a href="photos.html" class="nav-link">Photos</a>
-        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+        <a href="blog.html" class="nav-link"><span data-lang="zh">博客</span><span data-lang="en">Blog</span></a>
+        <a href="photos.html" class="nav-link"><span data-lang="zh">照片</span><span data-lang="en">Photos</span></a>
+        <button id="lang-btn" class="lang-toggle-btn" data-lang-toggle></button>
+        <button id="theme-btn" class="theme-toggle-btn" data-title-zh="切换主题" data-title-en="Toggle theme"><i class="fas fa-moon"></i></button>
       </nav>
     </div>
   </header>
   <main class="container">
+    <article class="prose">
+      <h1 data-lang="zh">论文与在投工作</h1>
+      <h1 data-lang="en">Publications & Under Review</h1>
+      <p data-lang="zh">说明：`*` 表示共同一作，`†` 表示通讯作者。</p>
+      <p data-lang="en">Notation: `*` indicates co-first author and `†` indicates corresponding author.</p>
 
-  <article class="prose">
-    <h1>Publications & Under Review</h1>
-    <p>(*: first author, †: corresponding author)</p>
+      <input class="search-box" type="text" id="pub-search" data-placeholder-zh="按关键词、标签或作者搜索..." data-placeholder-en="Search by keywords, tags, or authors..." />
+      <div id="filter-header-container"></div>
 
-    <input class="search-box" type="text" id="pub-search" placeholder="Search by keywords, tags, or authors..." />
-    <div id="filter-header-container"></div>
-    
-    <h2 id="journal">Journal Papers</h2>
-
-    <h3>Submitted</h3>
-    <div class="pub-grid" id="journal-submitted">
-      <div class="pub-card" data-search="m2beamllm multimodal sensing-empowered mmwave beam prediction large language models llm">
-        <h3 class="pub-title">M<sup>2</sup>BeamLLM: Multimodal Sensing-empowered mmWave Beam Prediction with Large Language Models</h3>
-        <p class="pub-authors">Can Zheng<sup>*</sup>, Jiguang He<sup>†</sup>, Chung G. Kang, Guofa Cai, Zitong Yu, Merouane Debbah.</p>
-        <p class="pub-venue">Preparing</p>
-        <div class="pub-bottom">
-          <div class="pub-tags">
-            <span class="pub-tag" onclick="toggleTag('Beam Prediction')">Beam Prediction</span>
-            <span class="pub-tag" onclick="toggleTag('Multimodal')">Multimodal</span>
-            <span class="pub-tag" onclick="toggleTag('LLM')">LLM</span>
-          </div>
-          <div class="pub-links">
-            <a href="https://arxiv.org/abs/2506.14532" target="_blank" class="pub-btn"><i class="fas fa-file-pdf"></i> arXiv</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <h3>2025</h3>
-    <div class="pub-grid" id="journal-2025">
-      <div class="pub-card" data-search="sparsity-agnostic sl0 channel estimation approach otfs systems">
-        <h3 class="pub-title">A Sparsity-Agnostic SL0 Channel Estimation Approach for OTFS Systems</h3>
-        <p class="pub-authors">Xin Wang<sup>*</sup>, Can Zheng<sup>*</sup>, Pengjiang Hu<sup>†</sup>, Junan Yang, Chung G. Kang.</p>
-        <p class="pub-venue">Published in <em>IEEE Communications Letters</em>, vol. 29, no. 5, pp. 1097-1101, May 2025.</p>
-        <div class="pub-bottom">
-          <div class="pub-tags">
-            <span class="pub-tag" onclick="toggleTag('OTFS')">OTFS</span>
-            <span class="pub-tag" onclick="toggleTag('Channel Estimation')">Channel Estimation</span>
-            <span class="pub-tag" onclick="toggleTag('SL0')">SL0</span>
-          </div>
-          <div class="pub-links">
-            <a href="https://ieeexplore.ieee.org/document/10938192" target="_blank" class="pub-btn"><i class="fas fa-link"></i> IEEE Xplore</a>
-            <a href="https://github.com/CanZheng0331/Compressed_Sensing_OTFS_Channel_Estimation" target="_blank" class="pub-btn"><i class="fab fa-github"></i> Code</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <h2 id="conference">Conference Papers</h2>
-
-    <h3>Submitted</h3>
-    <div class="pub-grid" id="conference-submitted">
-      <div class="pub-card" data-search="rectified flow vision-aided mmwave v2i beam prediction generative ai">
-        <h3 class="pub-title">Rectified Flow for Vision-Aided mmWave V2I Beam Prediction</h3>
-        <p class="pub-authors">Can Zheng, Jiguang He, Chung G. Kang, Guofa Cai, Chongwen Huang, Henk Wymeersch.</p>
-        <p class="pub-venue">Preparing</p>
-        <div class="pub-bottom">
-          <div class="pub-tags">
-            <span class="pub-tag" onclick="toggleTag('Beam Prediction')">Beam Prediction</span>
-            <span class="pub-tag" onclick="toggleTag('Generative AI')">Generative AI</span>
-          </div>
-          <div class="pub-links">
-            <a href="https://arxiv.org/abs/2511.20265" target="_blank" class="pub-btn"><i class="fas fa-file-pdf"></i> arXiv</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <h3>2026</h3>
-    <div class="pub-grid" id="conference-2026">
-      <div class="pub-card" data-search="multimodal radio vision fusion robust localization urban v2i communications">
-        <h3 class="pub-title">Multimodal Radio and Vision Fusion for Robust Localization in Urban V2I Communications</h3>
-        <p class="pub-authors">Can Zheng, Jiguang He, Chung G. Kang, Guofa Cai, Henk Wymeersch.</p>
-        <p class="pub-venue">Accepted by <em>IEEE Wireless Communications and Networking Conference (WCNC)</em></p>
-        <div class="pub-bottom">
-          <div class="pub-tags">
-            <span class="pub-tag" onclick="toggleTag('Localization')">Localization</span>
-            <span class="pub-tag" onclick="toggleTag('Multimodal')">Multimodal</span>
-          </div>
-          <div class="pub-links">
-            <a href="https://arxiv.org/abs/2508.17640" target="_blank" class="pub-btn"><i class="fas fa-file-pdf"></i> arXiv</a>
+      <h2 id="journal"><span data-lang="zh">期刊论文</span><span data-lang="en">Journal Papers</span></h2>
+      <h3><span data-lang="zh">在投 / 准备中</span><span data-lang="en">Submitted / Preparing</span></h3>
+      <div class="pub-grid">
+        <div class="pub-card" data-search="m2beamllm multimodal sensing-empowered mmwave beam prediction large language models llm">
+          <h3 class="pub-title">M<sup>2</sup>BeamLLM: Multimodal Sensing-empowered mmWave Beam Prediction with Large Language Models</h3>
+          <p class="pub-authors">Can Zheng<sup>*</sup>, Jiguang He<sup>†</sup>, Chung G. Kang, Guofa Cai, Zitong Yu, Merouane Debbah.</p>
+          <p class="pub-venue"><span data-lang="zh">准备中</span><span data-lang="en">Preparing</span></p>
+          <div class="pub-bottom">
+            <div class="pub-tags">
+              <span class="pub-tag" onclick="toggleTag('Beam Prediction')"><span data-lang="zh">波束预测</span><span data-lang="en">Beam Prediction</span></span>
+              <span class="pub-tag" onclick="toggleTag('Multimodal')"><span data-lang="zh">多模态</span><span data-lang="en">Multimodal</span></span>
+              <span class="pub-tag" onclick="toggleTag('LLM')"><span data-lang="zh">大语言模型</span><span data-lang="en">LLM</span></span>
+            </div>
+            <div class="pub-links">
+              <a href="https://arxiv.org/abs/2506.14532" target="_blank" class="pub-btn"><i class="fas fa-file-pdf"></i><span data-lang="zh">预印本</span><span data-lang="en">arXiv</span></a>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="pub-card" data-search="low-complexity afdm signal detection high-mobility leo satellite communications">
-        <h3 class="pub-title">Low-Complexity AFDM Signal Detection for High-Mobility and LEO Satellite Communications</h3>
-        <p class="pub-authors">Can Zheng, Chung G. Kang.</p>
-        <p class="pub-venue">Published in <em>IEEE Consumer Communications and Networking Conference (CCNC)</em></p>
-        <div class="pub-bottom">
-          <div class="pub-tags">
-            <span class="pub-tag" onclick="toggleTag('AFDM')">AFDM</span>
-            <span class="pub-tag" onclick="toggleTag('Signal Detection')">Signal Detection</span>
-          </div>
-          <div class="pub-links">
-            <a href="https://ieeexplore.ieee.org/document/11366569" target="_blank" class="pub-btn"><i class="fas fa-link"></i> IEEE Xplore</a>
-            <a href="/slides/CCNC26_VB_AFDM_0109.pdf" target="_blank" class="pub-btn"><i class="fas fa-image"></i> Poster</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <h3>2025</h3>
-    <div class="pub-grid" id="conference-2025">
-      <div class="pub-card" data-search="delay-doppler domain channel estimation otfs system gradient projection method">
-        <h3 class="pub-title">Delay-Doppler Domain Channel Estimation for OTFS System Using the Gradient Projection Method</h3>
-        <p class="pub-authors">Can Zheng, Chung G. Kang.</p>
-        <p class="pub-venue">Published in <em>Asia-Pacific Conference on Communications (APCC)</em></p>
-        <div class="pub-bottom">
-          <div class="pub-tags">
-            <span class="pub-tag" onclick="toggleTag('OTFS')">OTFS</span>
-            <span class="pub-tag" onclick="toggleTag('Channel Estimation')">Channel Estimation</span>
-            <span class="pub-tag" onclick="toggleTag('Gradient Projection')">Gradient Projection</span>
-          </div>
-          <div class="pub-links">
-            <a href="https://ieeexplore.ieee.org/document/11279852" target="_blank" class="pub-btn"><i class="fas fa-link"></i> IEEE Xplore</a>
-            <a href="/slides/APCC25_GPSOONE_OTFS_1124.pdf" target="_blank" class="pub-btn"><i class="fas fa-tv"></i> Slides</a>
+      <h3>2025</h3>
+      <div class="pub-grid">
+        <div class="pub-card" data-search="sparsity-agnostic sl0 channel estimation approach otfs systems">
+          <h3 class="pub-title">A Sparsity-Agnostic SL0 Channel Estimation Approach for OTFS Systems</h3>
+          <p class="pub-authors">Xin Wang<sup>*</sup>, Can Zheng<sup>*</sup>, Pengjiang Hu<sup>†</sup>, Junan Yang, Chung G. Kang.</p>
+          <p class="pub-venue" data-lang="zh">发表于 <em>IEEE Communications Letters</em>, vol. 29, no. 5, pp. 1097-1101, 2025 年 5 月。</p>
+          <p class="pub-venue" data-lang="en">Published in <em>IEEE Communications Letters</em>, vol. 29, no. 5, pp. 1097-1101, May 2025.</p>
+          <div class="pub-bottom">
+            <div class="pub-tags">
+              <span class="pub-tag" onclick="toggleTag('OTFS')">OTFS</span>
+              <span class="pub-tag" onclick="toggleTag('Channel Estimation')"><span data-lang="zh">信道估计</span><span data-lang="en">Channel Estimation</span></span>
+              <span class="pub-tag" onclick="toggleTag('SL0')">SL0</span>
+            </div>
+            <div class="pub-links">
+              <a href="https://ieeexplore.ieee.org/document/10938192" target="_blank" class="pub-btn"><i class="fas fa-link"></i><span data-lang="zh">IEEE 文献</span><span data-lang="en">IEEE Xplore</span></a>
+              <a href="https://github.com/CanZheng0331/Compressed_Sensing_OTFS_Channel_Estimation" target="_blank" class="pub-btn"><i class="fab fa-github"></i><span data-lang="zh">代码</span><span data-lang="en">Code</span></a>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="pub-card" data-search="beamllm vision-empowered mmwave beam prediction large language models">
-        <h3 class="pub-title">BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models</h3>
-        <p class="pub-authors">Can Zheng, Jiguang He, Guofa Cai, Zitong Yu, Chung G. Kang.</p>
-        <p class="pub-venue">Published in <em>IEEE Vehicular Technology Conference (VTC-Fall)</em></p>
-        <div class="pub-bottom">
-          <div class="pub-tags">
-            <span class="pub-tag" onclick="toggleTag('Beam Prediction')">Beam Prediction</span>
-            <span class="pub-tag" onclick="toggleTag('LLM')">LLM</span>
-          </div>
-          <div class="pub-links">
-            <a href="https://ieeexplore.ieee.org/document/11309918" target="_blank" class="pub-btn"><i class="fas fa-link"></i> IEEE Xplore</a>
-            <a href="https://arxiv.org/abs/2503.10432" target="_blank" class="pub-btn"><i class="fas fa-file-pdf"></i> arXiv</a>
-            <a href="https://github.com/CanZheng0331/BeamLLM-Vision-Empowered-mmWave-Beam-Prediction-with-Large-Language-Models" target="_blank" class="pub-btn"><i class="fab fa-github"></i> Code</a>
-            <a href="/slides/VTC25fall_BeamLLM_1024.pdf" target="_blank" class="pub-btn"><i class="fas fa-tv"></i> Slides</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pub-card" data-search="admm-based delay-doppler domain channel estimation otfs systems">
-        <h3 class="pub-title">ADMM-Based Delay-Doppler Domain Channel Estimation for OTFS Systems</h3>
-        <p class="pub-authors">Can Zheng, Xin Wang, Chung G. Kang.</p>
-        <p class="pub-venue">Published in <em>IEEE Vehicular Technology Conference (VTC-Fall)</em></p>
-        <div class="pub-bottom">
-          <div class="pub-tags">
-            <span class="pub-tag" onclick="toggleTag('OTFS')">OTFS</span>
-            <span class="pub-tag" onclick="toggleTag('Channel Estimation')">Channel Estimation</span>
-            <span class="pub-tag" onclick="toggleTag('ADMM')">ADMM</span>
-          </div>
-          <div class="pub-links">
-            <a href="https://ieeexplore.ieee.org/document/11310380" target="_blank" class="pub-btn"><i class="fas fa-link"></i> IEEE Xplore</a>
-            <a href="/slides/VTC25fall_ADMM_OTFS_1024.pdf" target="_blank" class="pub-btn"><i class="fas fa-tv"></i> Slides</a>
+      <h2 id="conference"><span data-lang="zh">会议论文</span><span data-lang="en">Conference Papers</span></h2>
+      <h3><span data-lang="zh">在投 / 准备中</span><span data-lang="en">Submitted / Preparing</span></h3>
+      <div class="pub-grid">
+        <div class="pub-card" data-search="rectified flow vision-aided mmwave v2i beam prediction generative ai">
+          <h3 class="pub-title">Rectified Flow for Vision-Aided mmWave V2I Beam Prediction</h3>
+          <p class="pub-authors">Can Zheng, Jiguang He, Chung G. Kang, Guofa Cai, Chongwen Huang, Henk Wymeersch.</p>
+          <p class="pub-venue"><span data-lang="zh">准备中</span><span data-lang="en">Preparing</span></p>
+          <div class="pub-bottom">
+            <div class="pub-tags">
+              <span class="pub-tag" onclick="toggleTag('Beam Prediction')"><span data-lang="zh">波束预测</span><span data-lang="en">Beam Prediction</span></span>
+              <span class="pub-tag" onclick="toggleTag('Generative AI')"><span data-lang="zh">生成式 AI</span><span data-lang="en">Generative AI</span></span>
+            </div>
+            <div class="pub-links">
+              <a href="https://arxiv.org/abs/2511.20265" target="_blank" class="pub-btn"><i class="fas fa-file-pdf"></i><span data-lang="zh">预印本</span><span data-lang="en">arXiv</span></a>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="pub-card" data-search="joint clustering uplink power control cell-free massive mimo leo satellite networks">
-        <h3 class="pub-title">Joint Clustering and Uplink Power Control for Cell-free Massive MIMO in LEO Satellite Networks</h3>
-        <p class="pub-authors">Can Zheng, Fitsum Debebe Tilahun, Chung G. Kang.</p>
-        <p class="pub-venue">Published in <em>International Conference on Ubiquitous and Future Networks (ICUFN)</em>.</p>
-        <div class="pub-bottom">
-          <div class="pub-tags">
-            <span class="pub-tag" onclick="toggleTag('LEO Satellite')">LEO Satellite</span>
-            <span class="pub-tag" onclick="toggleTag('Cell-Free')">Cell-Free</span>
-            <span class="pub-tag" onclick="toggleTag('Power Control')">Power Control</span>
+      <h3>2026</h3>
+      <div class="pub-grid">
+        <div class="pub-card" data-search="multimodal radio vision fusion robust localization urban v2i communications">
+          <h3 class="pub-title">Multimodal Radio and Vision Fusion for Robust Localization in Urban V2I Communications</h3>
+          <p class="pub-authors">Can Zheng, Jiguang He, Chung G. Kang, Guofa Cai, Henk Wymeersch.</p>
+          <p class="pub-venue" data-lang="zh">已被 <em>IEEE Wireless Communications and Networking Conference (WCNC)</em> 接收。</p>
+          <p class="pub-venue" data-lang="en">Accepted by <em>IEEE Wireless Communications and Networking Conference (WCNC)</em>.</p>
+          <div class="pub-bottom">
+            <div class="pub-tags">
+              <span class="pub-tag" onclick="toggleTag('Localization')"><span data-lang="zh">定位</span><span data-lang="en">Localization</span></span>
+              <span class="pub-tag" onclick="toggleTag('Multimodal')"><span data-lang="zh">多模态</span><span data-lang="en">Multimodal</span></span>
+            </div>
+            <div class="pub-links">
+              <a href="https://arxiv.org/abs/2508.17640" target="_blank" class="pub-btn"><i class="fas fa-file-pdf"></i><span data-lang="zh">预印本</span><span data-lang="en">arXiv</span></a>
+            </div>
           </div>
-          <div class="pub-links">
-            <a href="/others/ICUFN 2025_Runner_Up_Award.pdf" target="_blank" class="pub-award"><i class="fas fa-trophy"></i> Runner-Up Award</a>
-            <a href="https://ieeexplore.ieee.org/document/11169882" target="_blank" class="pub-btn"><i class="fas fa-link"></i> IEEE Xplore</a>
-            <a href="/slides/ICUFN25_CF_LEO_1024.pdf" target="_blank" class="pub-btn"><i class="fas fa-tv"></i> Slides</a>
+        </div>
+
+        <div class="pub-card" data-search="low-complexity afdm signal detection high-mobility leo satellite communications">
+          <h3 class="pub-title">Low-Complexity AFDM Signal Detection for High-Mobility and LEO Satellite Communications</h3>
+          <p class="pub-authors">Can Zheng, Chung G. Kang.</p>
+          <p class="pub-venue" data-lang="zh">发表于 <em>IEEE Consumer Communications and Networking Conference (CCNC)</em>。</p>
+          <p class="pub-venue" data-lang="en">Published in <em>IEEE Consumer Communications and Networking Conference (CCNC)</em>.</p>
+          <div class="pub-bottom">
+            <div class="pub-tags">
+              <span class="pub-tag" onclick="toggleTag('AFDM')">AFDM</span>
+              <span class="pub-tag" onclick="toggleTag('Signal Detection')"><span data-lang="zh">信号检测</span><span data-lang="en">Signal Detection</span></span>
+            </div>
+            <div class="pub-links">
+              <a href="https://ieeexplore.ieee.org/document/11366569" target="_blank" class="pub-btn"><i class="fas fa-link"></i><span data-lang="zh">IEEE 文献</span><span data-lang="en">IEEE Xplore</span></a>
+              <a href="/slides/CCNC26_VB_AFDM_0109.pdf" target="_blank" class="pub-btn"><i class="fas fa-image"></i><span data-lang="zh">海报</span><span data-lang="en">Poster</span></a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-  </article>
+      <h3>2025</h3>
+      <div class="pub-grid">
+        <div class="pub-card" data-search="delay-doppler domain channel estimation otfs system gradient projection method">
+          <h3 class="pub-title">Delay-Doppler Domain Channel Estimation for OTFS System Using the Gradient Projection Method</h3>
+          <p class="pub-authors">Can Zheng, Chung G. Kang.</p>
+          <p class="pub-venue" data-lang="zh">发表于 <em>Asia-Pacific Conference on Communications (APCC)</em>。</p>
+          <p class="pub-venue" data-lang="en">Published in <em>Asia-Pacific Conference on Communications (APCC)</em>.</p>
+          <div class="pub-bottom">
+            <div class="pub-tags">
+              <span class="pub-tag" onclick="toggleTag('OTFS')">OTFS</span>
+              <span class="pub-tag" onclick="toggleTag('Channel Estimation')"><span data-lang="zh">信道估计</span><span data-lang="en">Channel Estimation</span></span>
+              <span class="pub-tag" onclick="toggleTag('Gradient Projection')"><span data-lang="zh">梯度投影</span><span data-lang="en">Gradient Projection</span></span>
+            </div>
+            <div class="pub-links">
+              <a href="https://ieeexplore.ieee.org/document/11279852" target="_blank" class="pub-btn"><i class="fas fa-link"></i><span data-lang="zh">IEEE 文献</span><span data-lang="en">IEEE Xplore</span></a>
+              <a href="https://github.com/CanZheng0331/archived-paper-code/tree/main/APCC2025_GP_SOONE_OTFS_CE" target="_blank" class="pub-btn"><i class="fab fa-github"></i><span data-lang="zh">代码</span><span data-lang="en">Code</span></a>
+              <a href="/slides/APCC25_GPSOONE_OTFS_1124.pdf" target="_blank" class="pub-btn"><i class="fas fa-tv"></i><span data-lang="zh">幻灯片</span><span data-lang="en">Slides</span></a>
+            </div>
+          </div>
+        </div>
 
+        <div class="pub-card" data-search="beamllm vision-empowered mmwave beam prediction large language models">
+          <h3 class="pub-title">BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models</h3>
+          <p class="pub-authors">Can Zheng, Jiguang He, Guofa Cai, Zitong Yu, Chung G. Kang.</p>
+          <p class="pub-venue" data-lang="zh">发表于 <em>IEEE Vehicular Technology Conference (VTC-Fall)</em>。</p>
+          <p class="pub-venue" data-lang="en">Published in <em>IEEE Vehicular Technology Conference (VTC-Fall)</em>.</p>
+          <div class="pub-bottom">
+            <div class="pub-tags">
+              <span class="pub-tag" onclick="toggleTag('Beam Prediction')"><span data-lang="zh">波束预测</span><span data-lang="en">Beam Prediction</span></span>
+              <span class="pub-tag" onclick="toggleTag('LLM')"><span data-lang="zh">大语言模型</span><span data-lang="en">LLM</span></span>
+            </div>
+            <div class="pub-links">
+              <a href="https://ieeexplore.ieee.org/document/11309918" target="_blank" class="pub-btn"><i class="fas fa-link"></i><span data-lang="zh">IEEE 文献</span><span data-lang="en">IEEE Xplore</span></a>
+              <a href="https://arxiv.org/abs/2503.10432" target="_blank" class="pub-btn"><i class="fas fa-file-pdf"></i><span data-lang="zh">预印本</span><span data-lang="en">arXiv</span></a>
+              <a href="https://github.com/CanZheng0331/BeamLLM-Vision-Empowered-mmWave-Beam-Prediction-with-Large-Language-Models" target="_blank" class="pub-btn"><i class="fab fa-github"></i><span data-lang="zh">代码</span><span data-lang="en">Code</span></a>
+              <a href="/slides/VTC25fall_BeamLLM_1024.pdf" target="_blank" class="pub-btn"><i class="fas fa-tv"></i><span data-lang="zh">幻灯片</span><span data-lang="en">Slides</span></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pub-card" data-search="admm-based delay-doppler domain channel estimation otfs systems">
+          <h3 class="pub-title">ADMM-Based Delay-Doppler Domain Channel Estimation for OTFS Systems</h3>
+          <p class="pub-authors">Can Zheng, Xin Wang, Chung G. Kang.</p>
+          <p class="pub-venue" data-lang="zh">发表于 <em>IEEE Vehicular Technology Conference (VTC-Fall)</em>。</p>
+          <p class="pub-venue" data-lang="en">Published in <em>IEEE Vehicular Technology Conference (VTC-Fall)</em>.</p>
+          <div class="pub-bottom">
+            <div class="pub-tags">
+              <span class="pub-tag" onclick="toggleTag('OTFS')">OTFS</span>
+              <span class="pub-tag" onclick="toggleTag('Channel Estimation')"><span data-lang="zh">信道估计</span><span data-lang="en">Channel Estimation</span></span>
+              <span class="pub-tag" onclick="toggleTag('ADMM')">ADMM</span>
+            </div>
+            <div class="pub-links">
+              <a href="https://ieeexplore.ieee.org/document/11310380" target="_blank" class="pub-btn"><i class="fas fa-link"></i><span data-lang="zh">IEEE 文献</span><span data-lang="en">IEEE Xplore</span></a>
+              <a href="/slides/VTC25fall_ADMM_OTFS_1024.pdf" target="_blank" class="pub-btn"><i class="fas fa-tv"></i><span data-lang="zh">幻灯片</span><span data-lang="en">Slides</span></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pub-card" data-search="joint clustering uplink power control cell-free massive mimo leo satellite networks">
+          <h3 class="pub-title">Joint Clustering and Uplink Power Control for Cell-free Massive MIMO in LEO Satellite Networks</h3>
+          <p class="pub-authors">Can Zheng, Fitsum Debebe Tilahun, Chung G. Kang.</p>
+          <p class="pub-venue" data-lang="zh">发表于 <em>International Conference on Ubiquitous and Future Networks (ICUFN)</em>。</p>
+          <p class="pub-venue" data-lang="en">Published in <em>International Conference on Ubiquitous and Future Networks (ICUFN)</em>.</p>
+          <div class="pub-bottom">
+            <div class="pub-tags">
+              <span class="pub-tag" onclick="toggleTag('LEO Satellite')"><span data-lang="zh">低轨卫星</span><span data-lang="en">LEO Satellite</span></span>
+              <span class="pub-tag" onclick="toggleTag('Cell-Free')"><span data-lang="zh">无蜂窝</span><span data-lang="en">Cell-Free</span></span>
+              <span class="pub-tag" onclick="toggleTag('Power Control')"><span data-lang="zh">功率控制</span><span data-lang="en">Power Control</span></span>
+            </div>
+            <div class="pub-links">
+              <a href="/others/ICUFN 2025_Runner_Up_Award.pdf" target="_blank" class="pub-award"><i class="fas fa-trophy"></i><span data-lang="zh">亚军奖</span><span data-lang="en">Runner-Up Award</span></a>
+              <a href="https://ieeexplore.ieee.org/document/11169882" target="_blank" class="pub-btn"><i class="fas fa-link"></i><span data-lang="zh">IEEE 文献</span><span data-lang="en">IEEE Xplore</span></a>
+              <a href="https://github.com/CanZheng0331/archived-paper-code/tree/main/ICUFN2025_CF_NTN_UL" target="_blank" class="pub-btn"><i class="fab fa-github"></i><span data-lang="zh">代码</span><span data-lang="en">Code</span></a>
+              <a href="/slides/ICUFN25_CF_LEO_1024.pdf" target="_blank" class="pub-btn"><i class="fas fa-tv"></i><span data-lang="zh">幻灯片</span><span data-lang="en">Slides</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
   </main>
   <footer class="footer">
-    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+    <div data-lang="zh">© <span id="year"></span> Can Zheng | 基于 GitHub Pages 构建</div>
+    <div data-lang="en">© <span id="year"></span> Can Zheng | Built for GitHub Pages</div>
   </footer>
+  <script src="site.js"></script>
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.querySelectorAll("#year").forEach((element) => {
+      element.textContent = new Date().getFullYear();
+    });
 
-    const pubSearch = document.getElementById('pub-search');
-    const filterHeaderContainer = document.getElementById('filter-header-container');
-
+    const pubSearch = document.getElementById("pub-search");
+    const filterHeaderContainer = document.getElementById("filter-header-container");
     let activeTags = new Set();
-    let tagLogic = 'OR'; 
+    let tagLogic = "OR";
 
     function toggleTag(tag) {
       if (activeTags.has(tag)) {
@@ -320,76 +316,62 @@
       filterPubs();
     }
 
+    function currentLang() {
+      return document.documentElement.getAttribute("data-lang") || "en";
+    }
+
     function filterPubs() {
       const query = pubSearch.value.toLowerCase();
-      const cards = document.querySelectorAll('.pub-card');
-      
+      const cards = document.querySelectorAll(".pub-card");
+      const lang = currentLang();
+
       if (activeTags.size === 0 && query === "") {
-        filterHeaderContainer.innerHTML = '';
+        filterHeaderContainer.innerHTML = "";
       } else {
-        let html = `<div class="filter-header">`;
-        
+        let html = '<div class="filter-header">';
         if (activeTags.size > 0) {
-          html += `<div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">`;
-          html += `<span style="font-weight:600; font-size:0.9rem;">Tags:</span>`;
-          activeTags.forEach(t => {
-            html += `<span class="pub-tag" style="cursor:pointer;" onclick="toggleTag('${t}')" title="Remove">${t} &times;</span>`;
+          html += '<div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">';
+          html += `<span style="font-weight:600; font-size:0.9rem;">${lang === "zh" ? "标签" : "Tags"}:</span>`;
+          activeTags.forEach((tag) => {
+            html += `<span class="pub-tag" style="cursor:pointer;" onclick="toggleTag('${tag}')" title="Remove">${tag} &times;</span>`;
           });
           html += `<select class="logic-select" onchange="changeLogic(this.value)">
-                     <option value="OR" ${tagLogic === 'OR' ? 'selected' : ''}>OR (Any)</option>
-                     <option value="AND" ${tagLogic === 'AND' ? 'selected' : ''}>AND (All)</option>
+                     <option value="OR" ${tagLogic === "OR" ? "selected" : ""}>${lang === "zh" ? "OR（任一）" : "OR (Any)"}</option>
+                     <option value="AND" ${tagLogic === "AND" ? "selected" : ""}>${lang === "zh" ? "AND（全部）" : "AND (All)"}</option>
                    </select>`;
-          html += `</div>`;
+          html += "</div>";
         }
-        
         if (query !== "") {
-          html += `<span style="font-size:0.9rem;">Search: <strong>${pubSearch.value}</strong></span>`;
+          html += `<span style="font-size:0.9rem;">${lang === "zh" ? "搜索" : "Search"}: <strong>${pubSearch.value}</strong></span>`;
         }
-        
-        html += `<button class="back-btn" onclick="clearFilters()"><i class="fas fa-times"></i> Clear</button>`;
-        html += `</div>`;
+        html += `<button class="back-btn" onclick="clearFilters()">${lang === "zh" ? "清除" : "Clear"}</button></div>`;
         filterHeaderContainer.innerHTML = html;
       }
 
-      cards.forEach(card => {
-        const textToSearch = card.getAttribute('data-search') + " " + card.innerText.toLowerCase();
+      cards.forEach((card) => {
+        const textToSearch = `${card.getAttribute("data-search")} ${card.innerText.toLowerCase()}`;
         const textMatch = textToSearch.includes(query);
-        
         let tagMatch = true;
+
         if (activeTags.size > 0) {
-          const cardTags = Array.from(card.querySelectorAll('.pub-tag')).map(el => el.innerText.trim());
-          if (tagLogic === 'OR') {
-            tagMatch = Array.from(activeTags).some(t => cardTags.includes(t));
-          } else {
-            tagMatch = Array.from(activeTags).every(t => cardTags.includes(t));
-          }
+          const cardTags = Array.from(card.querySelectorAll(".pub-tag")).map((element) => element.innerText.trim());
+          tagMatch = tagLogic === "OR"
+            ? Array.from(activeTags).some((tag) => cardTags.includes(tag))
+            : Array.from(activeTags).every((tag) => cardTags.includes(tag));
         }
 
-        if (textMatch && tagMatch) {
-          card.style.display = 'block'; 
-        } else {
-          card.style.display = 'none';
-        }
+        card.style.display = textMatch && tagMatch ? "block" : "none";
       });
     }
 
-    pubSearch.addEventListener('input', filterPubs);
+    pubSearch.addEventListener("input", filterPubs);
+    document.addEventListener("site:language-change", filterPubs);
 
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = themeBtn.querySelector('i');
-    let currentTheme = localStorage.getItem('theme');
-    if (!currentTheme) {
-      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    function applyThemeMode(themeStr) {
-      document.documentElement.setAttribute('data-theme', themeStr);
-      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    }
-    applyThemeMode(currentTheme);
-    themeBtn.addEventListener('click', () => {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', currentTheme);
-      applyThemeMode(currentTheme);
+    Site.init({
+      titles: {
+        zh: "论文",
+        en: "Publications"
+      }
     });
   </script>
 </body>

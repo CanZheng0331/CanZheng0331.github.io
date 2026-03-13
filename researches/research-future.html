@@ -3,20 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Future Directions · Can Zheng</title>
+  <title>未来方向 | Can Zheng</title>
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <script>
-    (function() {
-      let theme = localStorage.getItem('theme');
-      if (!theme) {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
 </head>
 <body>
   <header class="header">
@@ -24,68 +15,73 @@
       <a class="brand" href="../index.html"><img src="../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
       <nav>
         <div class="dropdown">
-          <a href="../index.html" class="nav-link">Home</a>
-        </div>
-        <div class="dropdown">
-          <a href="../biography.html" class="nav-link">Biography</a>
-        </div>
-        <div class="dropdown">
-          <a href="../researches.html" class="nav-link" aria-current="page">Researches</a>
+          <a href="../index.html" class="nav-link"><span data-lang="zh">首页</span><span data-lang="en">Home</span></a>
           <div class="dropdown-content">
-            <a href="../researches.html?filter=past">Past</a>
-            <a href="../researches.html?filter=ongoing">Ongoing</a>
-            <a href="../researches.html?filter=future">Future</a>
+            <a href="../index.html#about"><span data-lang="zh">关于我</span><span data-lang="en">About Me</span></a>
+            <a href="../index.html#news"><span data-lang="zh">动态</span><span data-lang="en">News</span></a>
+            <a href="../index.html#explore"><span data-lang="zh">探索</span><span data-lang="en">Explore</span></a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="../publications.html" class="nav-link">Publications</a>
+          <a href="../biography.html" class="nav-link"><span data-lang="zh">履历</span><span data-lang="en">Biography</span></a>
+          <div class="dropdown-content">
+            <a href="../biography.html#education"><span data-lang="zh">教育经历</span><span data-lang="en">Education</span></a>
+            <a href="../biography.html#experience"><span data-lang="zh">工作经历</span><span data-lang="en">Experience</span></a>
+            <a href="../biography.html#service"><span data-lang="zh">服务与荣誉</span><span data-lang="en">Service</span></a>
+          </div>
         </div>
-        <a href="../blog.html" class="nav-link">Blog</a>
-        <a href="../photos.html" class="nav-link">Photos</a>
-        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+        <div class="dropdown">
+          <a href="../researches.html" class="nav-link" aria-current="page"><span data-lang="zh">研究</span><span data-lang="en">Researches</span></a>
+          <div class="dropdown-content">
+            <a href="../researches.html?filter=past"><span data-lang="zh">过往</span><span data-lang="en">Past</span></a>
+            <a href="../researches.html?filter=ongoing"><span data-lang="zh">进行中</span><span data-lang="en">Ongoing</span></a>
+            <a href="../researches.html?filter=future"><span data-lang="zh">未来方向</span><span data-lang="en">Future</span></a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="../publications.html" class="nav-link"><span data-lang="zh">论文</span><span data-lang="en">Publications</span></a>
+          <div class="dropdown-content">
+            <a href="../publications.html#journal"><span data-lang="zh">期刊论文</span><span data-lang="en">Journal Papers</span></a>
+            <a href="../publications.html#conference"><span data-lang="zh">会议论文</span><span data-lang="en">Conference Papers</span></a>
+          </div>
+        </div>
+        <a href="../blog.html" class="nav-link"><span data-lang="zh">博客</span><span data-lang="en">Blog</span></a>
+        <a href="../photos.html" class="nav-link"><span data-lang="zh">照片</span><span data-lang="en">Photos</span></a>
+        <button id="lang-btn" class="lang-toggle-btn" data-lang-toggle></button>
+        <button id="theme-btn" class="theme-toggle-btn" data-title-zh="切换主题" data-title-en="Toggle theme"><i class="fas fa-moon"></i></button>
       </nav>
     </div>
   </header>
   <main class="container">
-
-  <article class="prose">
-    <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> Back to all researches</a>
-    <h1 style="margin-top: 16px;">AI/ML for Positioning & Pre-6G</h1>
-    <p style="color: var(--accent); font-weight: 600;">Status: Future Concept</p>
-
-    <div style="height:220px; background:var(--card); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size: 4rem; border: 1px solid var(--border); border-radius: 12px; margin: 32px 0;">
+    <article class="prose">
+      <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> <span data-lang="zh">返回研究总览</span><span data-lang="en">Back to all researches</span></a>
+      <h1 style="margin-top: 16px;" data-lang="zh">定位、网络优化与 Pre-6G AI</h1>
+      <h1 style="margin-top: 16px;" data-lang="en">AI/ML for Positioning & Pre-6G</h1>
+      <p style="color: var(--accent); font-weight: 600;" data-lang="zh">状态：未来方向</p>
+      <p style="color: var(--accent); font-weight: 600;" data-lang="en">Status: Future Concept</p>
+      <div style="height:220px; background:var(--card); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size: 4rem; border: 1px solid var(--border); border-radius: 12px; margin: 32px 0;">
         <i class="fas fa-rocket"></i>
-    </div>
-
-    <p>
-      Currently, I am expanding my knowledge base and conceptualizing new ideas.
-    </p>
-    <p>
-      This space will be updated as new concrete projects and publications emerge in the future.
-    </p>
-  </article>
-
+      </div>
+      <p data-lang="zh">目前我正在继续扩展知识边界，并把在 Intel、Ericsson 等产业经历中的观察整理成更系统的问题意识，尤其关注定位、网络自治、负载均衡与下一代无线系统架构。</p>
+      <p data-lang="en">I am currently broadening this direction by turning observations from industry experience into more concrete research questions, especially around positioning, network autonomy, load balancing, and next-generation wireless architectures.</p>
+      <p data-lang="zh">随着后续项目和论文逐渐成形，这个页面会继续更新。</p>
+      <p data-lang="en">This page will be updated as new projects and publications take shape.</p>
+    </article>
   </main>
   <footer class="footer">
-    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+    <div data-lang="zh">© <span id="year"></span> Can Zheng | 基于 GitHub Pages 构建</div>
+    <div data-lang="en">© <span id="year"></span> Can Zheng | Built for GitHub Pages</div>
   </footer>
+  <script src="../site.js"></script>
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = themeBtn.querySelector('i');
-    let currentTheme = localStorage.getItem('theme');
-    if (!currentTheme) {
-      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    function applyThemeMode(themeStr) {
-      document.documentElement.setAttribute('data-theme', themeStr);
-      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    }
-    applyThemeMode(currentTheme);
-    themeBtn.addEventListener('click', () => {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', currentTheme);
-      applyThemeMode(currentTheme);
+    document.querySelectorAll("#year").forEach((element) => {
+      element.textContent = new Date().getFullYear();
+    });
+    Site.init({
+      titles: {
+        zh: "未来方向",
+        en: "Future Directions"
+      }
     });
   </script>
 </body>

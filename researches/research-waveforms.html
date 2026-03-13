@@ -3,21 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Next-Gen Waveforms · Can Zheng</title>
+  <title>OTFS 与 AFDM | Can Zheng</title>
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
-  <script>
-    (function() {
-      let theme = localStorage.getItem('theme');
-      if (!theme) {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
 </head>
 <body>
   <header class="header">
@@ -25,91 +16,124 @@
       <a class="brand" href="../index.html"><img src="../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
       <nav>
         <div class="dropdown">
-          <a href="../index.html" class="nav-link">Home</a>
-        </div>
-        <div class="dropdown">
-          <a href="../biography.html" class="nav-link">Biography</a>
-        </div>
-        <div class="dropdown">
-          <a href="../researches.html" class="nav-link" aria-current="page">Researches</a>
+          <a href="../index.html" class="nav-link"><span data-lang="zh">首页</span><span data-lang="en">Home</span></a>
           <div class="dropdown-content">
-            <a href="../researches.html?filter=past">Past</a>
-            <a href="../researches.html?filter=ongoing">Ongoing</a>
-            <a href="../researches.html?filter=future">Future</a>
+            <a href="../index.html#about"><span data-lang="zh">关于我</span><span data-lang="en">About Me</span></a>
+            <a href="../index.html#news"><span data-lang="zh">动态</span><span data-lang="en">News</span></a>
+            <a href="../index.html#explore"><span data-lang="zh">探索</span><span data-lang="en">Explore</span></a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="../publications.html" class="nav-link">Publications</a>
+          <a href="../biography.html" class="nav-link"><span data-lang="zh">履历</span><span data-lang="en">Biography</span></a>
+          <div class="dropdown-content">
+            <a href="../biography.html#education"><span data-lang="zh">教育经历</span><span data-lang="en">Education</span></a>
+            <a href="../biography.html#experience"><span data-lang="zh">工作经历</span><span data-lang="en">Experience</span></a>
+            <a href="../biography.html#service"><span data-lang="zh">服务与荣誉</span><span data-lang="en">Service</span></a>
+          </div>
         </div>
-        <a href="../blog.html" class="nav-link">Blog</a>
-        <a href="../photos.html" class="nav-link">Photos</a>
-        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+        <div class="dropdown">
+          <a href="../researches.html" class="nav-link" aria-current="page"><span data-lang="zh">研究</span><span data-lang="en">Researches</span></a>
+          <div class="dropdown-content">
+            <a href="../researches.html?filter=past"><span data-lang="zh">过往</span><span data-lang="en">Past</span></a>
+            <a href="../researches.html?filter=ongoing"><span data-lang="zh">进行中</span><span data-lang="en">Ongoing</span></a>
+            <a href="../researches.html?filter=future"><span data-lang="zh">未来方向</span><span data-lang="en">Future</span></a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="../publications.html" class="nav-link"><span data-lang="zh">论文</span><span data-lang="en">Publications</span></a>
+          <div class="dropdown-content">
+            <a href="../publications.html#journal"><span data-lang="zh">期刊论文</span><span data-lang="en">Journal Papers</span></a>
+            <a href="../publications.html#conference"><span data-lang="zh">会议论文</span><span data-lang="en">Conference Papers</span></a>
+          </div>
+        </div>
+        <a href="../blog.html" class="nav-link"><span data-lang="zh">博客</span><span data-lang="en">Blog</span></a>
+        <a href="../photos.html" class="nav-link"><span data-lang="zh">照片</span><span data-lang="en">Photos</span></a>
+        <button id="lang-btn" class="lang-toggle-btn" data-lang-toggle></button>
+        <button id="theme-btn" class="theme-toggle-btn" data-title-zh="切换主题" data-title-en="Toggle theme"><i class="fas fa-moon"></i></button>
       </nav>
     </div>
   </header>
   <main class="container">
+    <article class="prose">
+      <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> <span data-lang="zh">返回研究总览</span><span data-lang="en">Back to all researches</span></a>
+      <h1 style="margin-top: 16px;" data-lang="zh">新型波形：OTFS / AFDM</h1>
+      <h1 style="margin-top: 16px;" data-lang="en">Next-Generation Waveforms (OTFS/AFDM)</h1>
+      <p style="color: var(--accent); font-weight: 600;" data-lang="zh">状态：过往研究（2024.03 - 2026.02）</p>
+      <p style="color: var(--accent); font-weight: 600;" data-lang="en">Status: Past (2024.03 - 2026.02)</p>
 
-  <article class="prose">
-    <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> Back to all researches</a>
-    <h1 style="margin-top: 16px;">Next-Generation Waveforms (OTFS/AFDM)</h1>
-    <p style="color: var(--accent); font-weight: 600;">Status: Past (2024.03 - 2026.02)</p>
-
-    <div style="text-align: center; margin: 32px 0;">
+      <div style="text-align: center; margin: 32px 0;">
         <img src="../photos/proj_figure/OTFS.png" alt="Waveforms Architecture" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-sm);">
-    </div>
+      </div>
 
-    <p>
-      These researches focuses on receiver design and performance analysis for novel modulation techniques such as orthogonal time-frequency space (OTFS) and affine frequency division multiplexing (AFDM), especially in high-speed mobile scenarios.
-    </p>
+      <h2><span data-lang="zh">研究动机</span><span data-lang="en">Motivation</span></h2>
+      <p data-lang="zh">这一方向的研究动机来自高移动性通信中的基本难题：当信道在时频域快速变化时，传统接收机结构会变得脆弱，而系统又必须在复杂度可接受的前提下完成可靠估计与检测。OTFS 与 AFDM 之所以重要，是因为它们尝试用更适合高多普勒传播环境的表示方式来重构接收机问题。不过，我后来也逐渐意识到，这条线更像是理解高移动性物理层与稀疏结构利用的训练场，而不一定是我建议新同学长期投入的首选主线。</p>
+      <p data-lang="en">The motivation of this direction comes from a basic challenge in high-mobility communications: when channels vary rapidly in the time-frequency domain, conventional receiver structures become fragile, yet the system must still perform reliable estimation and detection under practical complexity constraints. OTFS and AFDM are attractive because they attempt to reformulate the receiver problem using signal representations better suited to high-Doppler propagation. At the same time, I later came to see this line more as a training ground for understanding high-mobility physical-layer design and sparse structure exploitation, rather than the main long-term direction I would recommend to new students.</p>
 
-    <h2>OTFS Channel Estimation Based on Sparse Recovery</h2>
-    <p>
-      To address the sparsity of the OTFS system, we can construct the \(\ell_0\)-norm minimization problem: \(\min_{\mathbf{h}} ||\mathbf{h}||_0,\) where \(\mathbf{h}\) is the sparse channel vector rearranged from 2D delay-Doppler domain. Since this problem is NP-hard, we apply a variety of compresses sensing (CS) techniques to solve it.
-    </p>
+      <h2><span data-lang="zh">数学问题模型</span><span data-lang="en">Mathematical Problem</span></h2>
+      <p data-lang="zh">对于 OTFS，这条线的核心问题通常可以写成时延-多普勒域中的稀疏信道恢复。设接收向量为 \(\mathbf{y}\)，观测矩阵为 \(\mathbf{A}\)，待恢复信道向量为 \(\mathbf{h}\)，则基础形式可写为</p>
+      <p data-lang="en">For OTFS, the core problem can usually be written as sparse channel recovery in the delay-Doppler domain. Let \(\mathbf{y}\) be the received vector, \(\mathbf{A}\) the observation matrix, and \(\mathbf{h}\) the channel vector to be recovered.</p>
+      <p>
+        $$
+        \min_{\mathbf{h}} \|\mathbf{y}-\mathbf{A}\mathbf{h}\|_2^2 + \lambda \Phi(\mathbf{h}),
+        $$
+      </p>
+      <p data-lang="zh">其中 \(\Phi(\mathbf{h})\) 代表稀疏约束、平滑近似的 \(\ell_0\) 正则项，或在变量分裂后的等价约束。对 AFDM 而言，问题又进一步转为高多普勒场景下的低复杂度检测，即在复杂度受限条件下逼近更优的接收性能。</p>
+      <p data-lang="en">Here \(\Phi(\mathbf{h})\) may represent a sparsity prior, a smooth approximation to the \(\ell_0\) norm, or an equivalent split-variable constraint. For AFDM, the focus shifts further toward low-complexity detection under high Doppler, where the goal is to approach strong receiver performance under practical complexity limits.</p>
 
-    <h2>Useful Resources</h2>
-    <ul>
-      <li>
-        <strong>Related Publications</strong>
-        <ul>
-          <li><a href="https://ieeexplore.ieee.org/abstract/document/10938192" target="_blank" rel="noopener">A Sparsity-Agnostic SL0 Channel Estimation Approach for OTFS Systems</a> (COMML)</li>
-        </ul>
-      </li>
-      <li>
-        <strong>Codes</strong>
-        <ul>
-          <li><a href="https://github.com/CanZheng0331/EP_Channel_Estimation_OTFS" target="_blank" rel="noopener">[Embedded pilot-aided]</a></li>
-          <li><a href="https://github.com/CanZheng0331/Compressed_Sensing_OTFS_Channel_Estimation" target="_blank" rel="noopener">[CS-based]</a></li>
-        </ul>
-      </li>
-    </ul>
+      <h2><span data-lang="zh">方法与研究路径</span><span data-lang="en">Methods</span></h2>
+      <p data-lang="zh">围绕这个问题，我走的是一条优化方法逐步演进的路径。最早是基于 <strong>Gradient Projection</strong> 的 OTFS 信道估计，把问题看成稀疏恢复；随后用 <strong>ADMM</strong> 继续推进，更强调结构化优化求解；再后来则转向 <strong>SL0</strong>，尝试在更弱的稀疏先验依赖下完成稳健估计。与此同时，我把研究对象从 OTFS 扩展到 AFDM，在高移动性和卫星场景中研究低复杂度检测问题。这条线给我留下的最重要能力，不只是会做某一种波形，而是会从 optimization、compressed sensing 和 receiver complexity trade-off 的角度理解物理层问题。</p>
+      <p data-lang="en">Around this problem, I followed a gradually evolving optimization-based path. The first step was <strong>gradient projection</strong> for OTFS channel estimation, viewing the task as sparse recovery. Then I moved to <strong>ADMM</strong>, with more emphasis on structured optimization. Later, I explored <strong>SL0</strong>-style methods to achieve robust estimation with weaker dependence on exact sparsity priors. In parallel, I extended the line from OTFS to AFDM and studied low-complexity detection under high mobility and satellite settings. The most valuable thing this line gave me was not simply familiarity with a waveform, but a way to understand physical-layer problems through optimization, compressed sensing, and complexity-performance tradeoffs.</p>
 
-    <blockquote>
-      <strong>Note:</strong> I do not recommend any new graduate students to make it their main research direction, because OFDM has recently been designated as the 6G air interface waveform: <a href="https://www.linkedin.com/pulse/first-6g-agreement-ofdm-confirmed-what-means-doesnt-iwss25-invite-238rf" target="_blank" rel="noopener">[First 6G Agreement: OFDM confirmed: What it means?]</a>
-    </blockquote>
-  </article>
+      <h2><span data-lang="zh">资源与代码</span><span data-lang="en">Resources and Code</span></h2>
 
+      <h3><span data-lang="zh">我的论文</span><span data-lang="en">My Papers</span></h3>
+      <ul>
+        <li><a href="https://ieeexplore.ieee.org/document/11279852" target="_blank" rel="noopener">Delay-Doppler Domain Channel Estimation for OTFS System Using the Gradient Projection Method</a></li>
+        <li><a href="https://ieeexplore.ieee.org/document/11310380" target="_blank" rel="noopener">ADMM-Based Delay-Doppler Domain Channel Estimation for OTFS Systems</a></li>
+        <li><a href="https://ieeexplore.ieee.org/document/10938192" target="_blank" rel="noopener">A Sparsity-Agnostic SL0 Channel Estimation Approach for OTFS Systems</a></li>
+        <li><a href="https://ieeexplore.ieee.org/document/11366569" target="_blank" rel="noopener">Low-Complexity AFDM Signal Detection for High-Mobility and LEO Satellite Communications</a></li>
+      </ul>
+
+      <h3><span data-lang="zh">这个方向值得读的代表论文</span><span data-lang="en">Representative Papers in This Area</span></h3>
+      <ul>
+        <li data-lang="zh">建议从 OTFS 系统模型、delay-Doppler 域信道估计、以及 AFDM 接收机设计三类文献依次建立脉络，这样更容易把“波形、估计、检测”三件事连起来看。</li>
+        <li data-lang="en">I recommend reading sequentially across OTFS system modeling, delay-Doppler channel estimation, and AFDM receiver design so that waveform design, estimation, and detection are understood as one connected line.</li>
+      </ul>
+
+      <h3><span data-lang="zh">我的代码</span><span data-lang="en">My Code</span></h3>
+      <ul>
+        <li><a href="https://github.com/CanZheng0331/archived-paper-code/tree/main/APCC2025_GP_SOONE_OTFS_CE" target="_blank" rel="noopener">APCC 2025 GP-based OTFS channel estimation</a></li>
+        <li><a href="https://github.com/CanZheng0331/EP_Channel_Estimation_OTFS" target="_blank" rel="noopener">Embedded pilot-aided OTFS channel estimation</a></li>
+        <li><a href="https://github.com/CanZheng0331/Compressed_Sensing_OTFS_Channel_Estimation" target="_blank" rel="noopener">Compressed sensing-based OTFS channel estimation</a></li>
+        <li><a href="../slides/APCC25_GPSOONE_OTFS_1124.pdf" target="_blank" rel="noopener">APCC 2025 slides</a></li>
+        <li><a href="../slides/CCNC26_VB_AFDM_0109.pdf" target="_blank" rel="noopener">CCNC 2026 poster</a></li>
+        <li><a href="https://github.com/CanZheng0331" target="_blank" rel="noopener">My GitHub profile</a></li>
+      </ul>
+
+      <h3><span data-lang="zh">我认为不错的开源代码</span><span data-lang="en">Open-Source Code I Find Useful</span></h3>
+      <ul>
+        <li data-lang="zh">如果你愿意，我可以继续把这一部分扩成一个更完整的 OTFS / AFDM 学习路线和代码索引页，专门整理基础论文、实现仓库与适合入门的资源。</li>
+        <li data-lang="en">If helpful, I can further turn this into a dedicated OTFS/AFDM reading and code guide that organizes foundational papers, repositories, and beginner-friendly resources.</li>
+      </ul>
+
+      <blockquote data-lang="zh"><strong>备注：</strong>这一方向更适合理解高移动性接收机问题与稀疏优化思想，不一定是我建议新同学长期投入的首选主线。另一个现实背景是，我之前也关注过关于 6G 空口波形选择的行业动态：<a href="https://www.linkedin.com/pulse/first-6g-agreement-ofdm-confirmed-what-means-doesnt-iwss25-invite-238rf" target="_blank" rel="noopener">First 6G Agreement: OFDM confirmed</a>。</blockquote>
+      <blockquote data-lang="en"><strong>Note:</strong> This direction is very useful for building strong fundamentals, but it may not be the first long-term direction I would recommend to new students today.</blockquote>
+    </article>
   </main>
   <footer class="footer">
-    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+    <div data-lang="zh">© <span id="year"></span> Can Zheng | 基于 GitHub Pages 构建</div>
+    <div data-lang="en">© <span id="year"></span> Can Zheng | Built for GitHub Pages</div>
   </footer>
+  <script src="../site.js"></script>
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = themeBtn.querySelector('i');
-    let currentTheme = localStorage.getItem('theme');
-    if (!currentTheme) {
-      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    function applyThemeMode(themeStr) {
-      document.documentElement.setAttribute('data-theme', themeStr);
-      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    }
-    applyThemeMode(currentTheme);
-    themeBtn.addEventListener('click', () => {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', currentTheme);
-      applyThemeMode(currentTheme);
+    document.querySelectorAll("#year").forEach((element) => {
+      element.textContent = new Date().getFullYear();
+    });
+    Site.init({
+      titles: {
+        zh: "OTFS 与 AFDM",
+        en: "OTFS and AFDM"
+      }
     });
   </script>
 </body>

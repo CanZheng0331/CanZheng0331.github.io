@@ -3,21 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Home · Can Zheng</title>
+  <title>主页 | Can Zheng</title>
   <link rel="stylesheet" href="styles.css" />
-  
-  <script>
-    (function() {
-      let theme = localStorage.getItem('theme');
-      // 强制拦截并清理掉旧版本残留的 'auto' 或 null
-      if (theme !== 'light' && theme !== 'dark') {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        localStorage.setItem('theme', theme); // 直接把正确的初次判断写回缓存
-      }
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
-  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -28,119 +15,125 @@
       <a class="brand" href="index.html"><img src="photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
       <nav>
         <div class="dropdown">
-          <a href="index.html" class="nav-link" aria-current="page">Home</a>
+          <a href="index.html" class="nav-link" aria-current="page">
+            <span data-lang="zh">首页</span>
+            <span data-lang="en">Home</span>
+          </a>
           <div class="dropdown-content">
-            <a href="index.html#about">About Me</a>
-            <a href="index.html#news">News</a>
-            <a href="index.html#explore">Explore</a>
+            <a href="index.html#about"><span data-lang="zh">关于我</span><span data-lang="en">About Me</span></a>
+            <a href="index.html#news"><span data-lang="zh">动态</span><span data-lang="en">News</span></a>
+            <a href="index.html#explore"><span data-lang="zh">探索</span><span data-lang="en">Explore</span></a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="biography.html" class="nav-link">Biography</a>
+          <a href="biography.html" class="nav-link"><span data-lang="zh">履历</span><span data-lang="en">Biography</span></a>
           <div class="dropdown-content">
-            <a href="biography.html#education">Education</a>
-            <a href="biography.html#experience">Work Experience</a>
-            <a href="biography.html#service">Service</a>
+            <a href="biography.html#education"><span data-lang="zh">教育经历</span><span data-lang="en">Education</span></a>
+            <a href="biography.html#experience"><span data-lang="zh">工作经历</span><span data-lang="en">Experience</span></a>
+            <a href="biography.html#service"><span data-lang="zh">服务与荣誉</span><span data-lang="en">Service</span></a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="researches.html" class="nav-link">Researches</a>
+          <a href="researches.html" class="nav-link"><span data-lang="zh">研究</span><span data-lang="en">Researches</span></a>
           <div class="dropdown-content">
-            <a href="researches.html?filter=past">Past</a>
-            <a href="researches.html?filter=ongoing">Ongoing</a>
-            <a href="researches.html?filter=future">Future</a>
+            <a href="researches.html?filter=past"><span data-lang="zh">过往</span><span data-lang="en">Past</span></a>
+            <a href="researches.html?filter=ongoing"><span data-lang="zh">进行中</span><span data-lang="en">Ongoing</span></a>
+            <a href="researches.html?filter=future"><span data-lang="zh">未来方向</span><span data-lang="en">Future</span></a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="publications.html" class="nav-link">Publications</a>
+          <a href="publications.html" class="nav-link"><span data-lang="zh">论文</span><span data-lang="en">Publications</span></a>
           <div class="dropdown-content">
-            <a href="publications.html#journal">Journal Papers</a>
-            <a href="publications.html#conference">Conference Papers</a>
+            <a href="publications.html#journal"><span data-lang="zh">期刊论文</span><span data-lang="en">Journal Papers</span></a>
+            <a href="publications.html#conference"><span data-lang="zh">会议论文</span><span data-lang="en">Conference Papers</span></a>
           </div>
         </div>
-        <a href="blog.html" class="nav-link">Blog</a>
-        <a href="photos.html" class="nav-link">Photos</a>
-        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+        <a href="blog.html" class="nav-link"><span data-lang="zh">博客</span><span data-lang="en">Blog</span></a>
+        <a href="photos.html" class="nav-link"><span data-lang="zh">照片</span><span data-lang="en">Photos</span></a>
+        <button id="lang-btn" class="lang-toggle-btn" data-lang-toggle></button>
+        <button id="theme-btn" class="theme-toggle-btn" data-title-zh="切换主题" data-title-en="Toggle theme"><i class="fas fa-moon"></i></button>
       </nav>
     </div>
   </header>
   <main class="container">
-
-  <section class="hero">
-    <h1>Hi, I’m Can Zheng (郑灿).</h1>
-      <p style="font-size: 1.2rem; margin-bottom: 24px; color: var(--fg);">
-        MS in Electrical Engineering @ <strong>Korea University</strong> | Wireless AI
+    <section class="hero">
+      <h1 data-lang="zh">你好，我是郑灿。</h1>
+      <h1 data-lang="en">Hi, I'm Can Zheng.</h1>
+      <p style="font-size: 1.2rem; margin-bottom: 24px; color: var(--fg);" data-lang="zh">
+        高丽大学电气工程硕士 | Wireless AI
+      </p>
+      <p style="font-size: 1.2rem; margin-bottom: 24px; color: var(--fg);" data-lang="en">
+        M.S. in Electrical Engineering at Korea University | Wireless AI
       </p>
       <p class="social-links">
-        <a href="https://scholar.google.com/citations?user=EMGpwm8AAAAJ" target="_blank"><i class="fas fa-graduation-cap"></i> Google Scholar</a>
-        <a href="https://www.linkedin.com/in/can-zheng-4a5839331/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-        <a href="https://github.com/CanZheng0331" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-        <a href="mailto:zc331_@korea.ac.kr"><i class="fas fa-envelope"></i> Email</a>
+        <a href="https://scholar.google.com/citations?user=EMGpwm8AAAAJ" target="_blank"><i class="fas fa-graduation-cap"></i><span data-lang="zh">谷歌学术</span><span data-lang="en">Google Scholar</span></a>
+        <a href="https://www.linkedin.com/in/can-zheng-4a5839331/" target="_blank"><i class="fab fa-linkedin"></i><span data-lang="zh">领英</span><span data-lang="en">LinkedIn</span></a>
+        <a href="https://github.com/CanZheng0331" target="_blank"><i class="fab fa-github"></i><span data-lang="zh">GitHub</span><span data-lang="en">GitHub</span></a>
+        <a href="mailto:zc331_@korea.ac.kr"><i class="fas fa-envelope"></i><span data-lang="zh">邮箱</span><span data-lang="en">Email</span></a>
       </p>
-  </section>
+    </section>
 
-  <section class="grid section">
-    <div class="col-6">
-      <div class="card" id="about">
-        <h2><i class="fas fa-user-circle"></i> About Me</h2>
-        <p>I received my M.Eng. in Electrical Engineering from <em>Korea University</em> in Feb. 2026. My research spans OTFS/AFDM and AI/ML for beam prediction/localization.</p>
-        <p><a href="biography.html">Read my biography</a></p>
+    <section class="grid section">
+      <div class="col-6">
+        <div class="card" id="about">
+          <h2><i class="fas fa-user-circle"></i> <span data-lang="zh">关于我</span><span data-lang="en">About Me</span></h2>
+          <p data-lang="zh">我于 2026 年 2 月获得高丽大学电气工程硕士学位。当前研究横跨 OTFS/AFDM 与面向波束预测、定位的 AI/ML 无线通信。</p>
+          <p data-lang="en">I received my M.S. in Electrical Engineering from Korea University in February 2026. My recent work spans OTFS/AFDM and AI/ML for beam prediction and localization in wireless systems.</p>
+          <p><a href="biography.html"><span data-lang="zh">查看完整履历</span><span data-lang="en">Read my biography</span></a></p>
+        </div>
       </div>
-    </div>
-    <div class="col-6">
-      <div class="card" id="news">
-        <h2><i class="fas fa-bullhorn"></i> News</h2>
-        <ul>
-          <li>02/2026: Graduated with my MS from Korea University.</li>
-          <li>08/2025: Built my homepage (Thanks to GenAI).</li>
-        </ul>
+      <div class="col-6">
+        <div class="card" id="news">
+          <h2><i class="fas fa-bullhorn"></i> <span data-lang="zh">最新动态</span><span data-lang="en">News</span></h2>
+          <ul data-lang="zh">
+            <li>2026/02：从高丽大学硕士毕业。</li>
+            <li>2025/08：完成个人主页第一版搭建。</li>
+          </ul>
+          <ul data-lang="en">
+            <li>02/2026: Graduated with my M.S. from Korea University.</li>
+            <li>08/2025: Built the first version of my personal homepage.</li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="col-12">
-      <div class="card" id="explore">
-        <h2><i class="fas fa-lightbulb"></i> Explore</h2>
-        <ul>
-          <li> See my research directions on the <a href="researches.html">researches</a>.</li>
-          <li> See my publications and under review manuscripts on the <a href="publications.html">publications</a>.</li>
-          <li> See recent writing on the <a href="blog.html">blog</a>.</li>
-          <li> See plotting tool on the <a href="tools/plot.html">plot</a>.</li>
-        </ul>
-        <p>
-       
+      <div class="col-12">
+        <div class="card" id="explore">
+          <h2><i class="fas fa-lightbulb"></i> <span data-lang="zh">继续探索</span><span data-lang="en">Explore</span></h2>
+          <ul data-lang="zh">
+            <li>在 <a href="researches.html">研究页面</a> 查看我的主要研究方向。</li>
+            <li>在 <a href="publications.html">论文页面</a> 查看已发表与在投成果。</li>
+            <li>在 <a href="blog.html">博客页面</a> 阅读近期笔记与写作。</li>
+            <li>在 <a href="tools/plot.html">绘图工具</a> 页面查看我做的小工具。</li>
+          </ul>
+          <ul data-lang="en">
+            <li>See my main research directions on the <a href="researches.html">research page</a>.</li>
+            <li>Browse published and under-review work on the <a href="publications.html">publications page</a>.</li>
+            <li>Read recent notes and writing on the <a href="blog.html">blog</a>.</li>
+            <li>Try a small utility on the <a href="tools/plot.html">plot tool</a> page.</li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </section>
-  <hr>
+    </section>
+    <hr>
   </main>
 
   <footer class="footer">
-    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+    <div data-lang="zh">© <span id="year"></span> Can Zheng | 基于 GitHub Pages 构建</div>
+    <div data-lang="en">© <span id="year"></span> Can Zheng | Built for GitHub Pages</div>
     <div style="max-width:250px; margin:auto; margin-top:20px;">
       <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=GtDZVi4tsLCxCMPsshi4UGUmYEeEN1BC-yvrYvb1Rt4&cl=ffffff&w=250&h=150"></script>
     </div>
   </footer>
-  
+
+  <script src="site.js"></script>
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = themeBtn.querySelector('i');
-    
-    // 从缓存读取（由于头部的拦截，这里一定是 light 或 dark）
-    let currentTheme = localStorage.getItem('theme') || 'light';
-    
-    function applyThemeMode(themeStr) {
-      document.documentElement.setAttribute('data-theme', themeStr);
-      // 如果当前是亮色，显示月亮（代表点击将切黑）；当前是暗色，显示太阳（代表点击将切亮）
-      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    }
-    
-    applyThemeMode(currentTheme);
-    
-    themeBtn.addEventListener('click', () => {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', currentTheme);
-      applyThemeMode(currentTheme);
+    document.querySelectorAll("#year").forEach((element) => {
+      element.textContent = new Date().getFullYear();
+    });
+    Site.init({
+      titles: {
+        zh: "主页",
+        en: "Home"
+      }
     });
   </script>
 </body>
