@@ -64,7 +64,7 @@
         <img src="../photos/proj_figure/AIML.png" alt="Sensing-Aided Communications" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-sm);">
       </div>
 
-      <p data-lang="zh">我的研究主要围绕高移动性场景（V2I/UAV）中的感知辅助通信展开，重点关注如何利用视觉、雷达、LiDAR、GPS 以及无线信号本身的互补信息，提升毫米波系统中的波束预测与定位性能。与传统依赖历史信道或反复波束训练的方案不同，我更关注让系统直接利用环境感知信息理解链路变化的物理原因，从而实现更主动、更稳健的无线决策。</p>
+      <p data-lang="zh">我的研究主要围绕高移动性场景（V2I/UAV）中的感知辅助通信展开，重点关注如何利用视觉、雷达、激光雷达、GPS 以及无线信号本身的互补信息，提升毫米波系统中的波束预测与定位性能。与传统依赖历史信道或反复波束训练的方案不同，我更关注让系统直接利用环境感知信息理解链路变化的物理原因，从而实现更主动、更稳健的无线决策。</p>
       <p data-lang="en">My recent work focuses on sensing-aided communications in high-mobility scenarios such as V2I and UAV systems. The main goal is to exploit the complementary information carried by vision, radar, LiDAR, GPS, and wireless signals themselves to improve beam prediction and localization in mmWave systems. Rather than relying only on historical channels or repeated beam training, I am more interested in enabling the system to use environmental sensing to understand the physical causes of link evolution, leading to more proactive and robust wireless decisions.</p>
 
       <p data-lang="zh">首先，在毫米波 V2I 场景中，窄波束虽然能提供高增益，但也对移动性、遮挡和环境变化高度敏感。传统波束训练与对齐机制开销大，在高速动态场景下难以及时响应。我希望通过历史感知信息直接预测未来波束，减少反复扫波束的成本。其次，纯无线观测往往更像是对链路状态的“事后反映”，而感知数据能够更直接地揭示环境几何、目标运动和遮挡变化等链路演化原因。整个范式因此需要从依赖历史无线反馈的被动适配，转向利用环境信息进行主动预测。</p>
@@ -73,11 +73,11 @@
       <h2><span data-lang="zh">研究是如何一步步推进的</span><span data-lang="en">How This Research Progressed</span></h2>
 
       <h3><span data-lang="zh">1. 从单一视觉模态出发，验证感知信息可以直接服务波束预测</span><span data-lang="en">1. Starting from a single visual modality</span></h3>
-      <p data-lang="zh">在 <strong>BeamLLM</strong> 中，我首先关注一个相对克制但关键的问题：如果不依赖历史 beam index 或 AoD 等额外无线先验，仅利用基站侧历史 RGB 图像，能否完成未来波束预测？这项工作给出的回答是肯定的。BeamLLM 通过目标检测提取车辆边界框序列，并借助重编程与提示词机制，将视觉时序特征映射到适合大模型处理的表示空间，从而实现仅基于视觉的波束预测。它的意义在于说明：在真实 V2I 数据上，环境感知本身就已经包含了对未来波束演化有用的信息。</p>
+      <p data-lang="zh">在 <strong>BeamLLM</strong> 中，我首先关注一个相对克制但关键的问题：如果不依赖历史波束索引或 AoD 等额外无线先验，仅利用基站侧历史 RGB 图像，能否完成未来波束预测？这项工作给出的回答是肯定的。BeamLLM 通过目标检测提取车辆边界框序列，并借助重编程与提示词机制，将视觉时序特征映射到适合大模型处理的表示空间，从而实现仅基于视觉的波束预测。它的意义在于说明：在真实 V2I 数据上，环境感知本身就已经包含了对未来波束演化有用的信息。</p>
       <p data-lang="en">In <strong>BeamLLM</strong>, I first asked a restrained but important question: without using historical beam indices, AoD, or other extra wireless priors, can future beam prediction be achieved using only historical RGB images observed at the base station? The answer from this work is yes. BeamLLM extracts vehicle bounding-box sequences through object detection and then uses reprogramming and prompting mechanisms to map visual temporal features into a representation space suitable for large-model-style processing, enabling vision-only beam prediction. The key message is that on realistic V2I data, environmental sensing itself already contains useful information about future beam evolution.</p>
 
       <h3><span data-lang="zh">2. 从单模态走向多模态，提升复杂环境下的鲁棒性</span><span data-lang="en">2. From single-modal to multimodal modeling</span></h3>
-      <p data-lang="zh">在 <strong>M<sup>2</sup>BeamLLM</strong> 中，研究进一步从“视觉可不可行”推进到“多模态如何更稳健”。这篇工作引入图像、雷达、LiDAR 和 GPS 四类感知输入，并通过模态特征编码、对齐和融合，再结合 GPT-2 的监督微调来预测未来波束。相比 BeamLLM，这一步的核心进展不是简单地“模态变多了”，而是明确强调：复杂动态场景下，单一模态容易受到遮挡、光照或局部感知失效影响，而多模态互补能够显著提升预测准确率与稳定性。</p>
+      <p data-lang="zh">在 <strong>M<sup>2</sup>BeamLLM</strong> 中，研究进一步从“视觉可不可行”推进到“多模态如何更稳健”。这篇工作引入图像、雷达、激光雷达和 GPS 四类感知输入，并通过模态特征编码、对齐和融合，再结合 GPT-2 的监督微调来预测未来波束。相比 BeamLLM，这一步的核心进展不是简单地“模态变多了”，而是明确强调：复杂动态场景下，单一模态容易受到遮挡、光照或局部感知失效影响，而多模态互补能够显著提升预测准确率与稳定性。</p>
       <p data-lang="en">In <strong>M<sup>2</sup>BeamLLM</strong>, the research moved from asking whether vision alone is feasible to asking how multimodality can improve robustness. This work introduces four sensing inputs: images, radar, LiDAR, and GPS. Their features are encoded, aligned, and fused, and then a supervised fine-tuning pipeline built on GPT-2 is used for future beam prediction. Compared with BeamLLM, the main contribution is not simply adding more modalities, but showing that under complex dynamic environments, any single modality can fail due to blockage, lighting, or local sensing breakdown, while multimodal complementarity significantly improves accuracy and stability.</p>
 
       <h3><span data-lang="zh">3. 进一步关注动态建模方式与部署效率</span><span data-lang="en">3. Modeling beam evolution and deployment efficiency</span></h3>
@@ -89,7 +89,7 @@
       <p data-lang="en">This research line naturally extended from beam prediction to localization. Here the task is no longer predicting a future beam, but performing 3D localization using CSI and visual images together. The main observation is that vision provides clear scene and geometric cues but may suffer from missed or false detections, while wireless CSI is also vulnerable to multipath and NLOS effects in complex propagation environments. Neither modality alone is sufficiently robust, but cross-modal alignment and fusion can substantially improve localization accuracy. In that sense, the localization work continues the same core idea: different modalities provide complementary views of the same physical scene, and this complementarity can be converted into more robust communication-aware perception through learned shared representations.</p>
 
       <h2><span data-lang="zh">这条研究线的核心思想</span><span data-lang="en">Core Idea of This Research Line</span></h2>
-      <p data-lang="zh">在高动态 V2I 场景中，未来的 beam 或位置状态并不只是历史无线观测的延续，它更深层地受到环境几何、目标运动和多模态观测条件的共同影响。因此，比起单纯依赖历史信道序列，更值得研究的是如何引入环境感知信息，并设计合适的跨模态建模机制，把“看见环境”和“理解无线演化”连接起来。</p>
+      <p data-lang="zh">在高速移动场景中，未来的波束或位置状态并不只是历史无线观测的延续，它更深层地受到环境几何、目标运动和多模态观测条件的共同影响。因此，比起单纯依赖历史信道序列，更值得研究的是如何引入环境感知信息，并设计合适的跨模态建模机制，把“看见环境”和“理解无线演化”连接起来。</p>
       <p data-lang="en">In highly dynamic V2I scenarios, future beam or position states are not merely continuations of historical wireless observations. They are jointly shaped by scene geometry, target motion, and multimodal observation conditions. Therefore, instead of relying only on historical channel sequences, a more meaningful direction is to incorporate environmental sensing and design suitable cross-modal modeling mechanisms that connect seeing the environment with understanding wireless evolution.</p>
 
       <p data-lang="zh">具体来说，这条研究线包含三个持续推进的重点：一是感知替代或补充纯无线反馈，让系统具备主动预测能力；二是跨模态表示对齐与融合，让不同模态对同一场景的互补信息能够被有效利用；三是兼顾预测性能与部署效率，使方法不仅在离线指标上有效，也具备走向真实 RSU 或边缘设备部署的可能。</p>
@@ -97,9 +97,9 @@
 
       <h2><span data-lang="zh">代表工作</span><span data-lang="en">Representative Works</span></h2>
       <ul data-lang="zh">
-        <li><a href="https://ieeexplore.ieee.org/document/11309918" target="_blank" rel="noopener">BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models</a><br>证明仅依赖基站侧历史视觉信息，也可以完成未来波束预测，并探索了 LLM-inspired 时序建模在该任务中的可行性。</li>
-        <li><a href="https://arxiv.org/abs/2506.14532" target="_blank" rel="noopener">M²BeamLLM: Multimodal Sensing-empowered mmWave Beam Prediction with Large Language Models</a><br>将 beam prediction 从单一视觉模态扩展到图像、雷达、LiDAR 与 GPS 的多模态融合，提升了复杂环境中的准确率与鲁棒性。</li>
-        <li><a href="https://arxiv.org/abs/2511.20265" target="_blank" rel="noopener">Rectified Flow for Vision-Aided mmWave V2I Beam Prediction</a><br>将未来波束演化建模为连续 flow，兼顾长时预测稳定性与边缘部署效率。</li>
+        <li><a href="https://ieeexplore.ieee.org/document/11309918" target="_blank" rel="noopener">BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models</a><br>证明仅依赖基站侧历史视觉信息，也可以完成未来波束预测，并探索了基于大模型时序建模在该任务中的可行性。</li>
+        <li><a href="https://arxiv.org/abs/2506.14532" target="_blank" rel="noopener">M²BeamLLM: Multimodal Sensing-empowered mmWave Beam Prediction with Large Language Models</a><br>将波束预测从单一视觉模态扩展到图像、雷达、激光雷达与 GPS 的多模态融合，提升了复杂环境中的准确率与鲁棒性。</li>
+        <li><a href="https://arxiv.org/abs/2511.20265" target="_blank" rel="noopener">Rectified Flow for Vision-Aided mmWave V2I Beam Prediction</a><br>将未来波束演化建模为连续向量场，兼顾长时预测稳定性与边缘部署效率。</li>
         <li><a href="https://arxiv.org/abs/2508.17640" target="_blank" rel="noopener">Multimodal Radio and Vision Fusion for Robust Localization in Urban V2I Communications</a><br>将跨模态互补思想扩展到 CSI-视觉融合定位，提升复杂城市环境下的定位精度与稳健性。</li>
       </ul>
       <ul data-lang="en">
