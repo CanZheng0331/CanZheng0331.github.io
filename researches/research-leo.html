@@ -1,14 +1,23 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-site-ready="false">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>低轨卫星通信 | Can Zheng</title>
+  <title>LEO Satellite Communications · Can Zheng</title>
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+  <script>
+    (function() {
+      let theme = localStorage.getItem('theme');
+      if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
 </head>
 <body>
   <header class="header">
@@ -16,106 +25,86 @@
       <a class="brand" href="../index.html"><img src="../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
       <nav>
         <div class="dropdown">
-          <a href="../index.html" class="nav-link"><span data-lang="zh">首页</span><span data-lang="en">Home</span></a>
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="dropdown">
+          <a href="../biography.html" class="nav-link">Biography</a>
+        </div>
+        <div class="dropdown">
+          <a href="../researches.html" class="nav-link" aria-current="page">Researches</a>
           <div class="dropdown-content">
-            <a href="../index.html#about"><span data-lang="zh">关于我</span><span data-lang="en">About Me</span></a>
-            <a href="../index.html#news"><span data-lang="zh">动态</span><span data-lang="en">News</span></a>
-            <a href="../index.html#explore"><span data-lang="zh">探索</span><span data-lang="en">Explore</span></a>
+            <a href="../researches.html?filter=past">Past Projects</a>
+            <a href="../researches.html?filter=ongoing">Ongoing Research</a>
+            <a href="../researches.html?filter=future">Future Directions</a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="../biography.html" class="nav-link"><span data-lang="zh">履历</span><span data-lang="en">Biography</span></a>
-          <div class="dropdown-content">
-            <a href="../biography.html#education"><span data-lang="zh">教育经历</span><span data-lang="en">Education</span></a>
-            <a href="../biography.html#experience"><span data-lang="zh">工作经历</span><span data-lang="en">Experience</span></a>
-            <a href="../biography.html#service"><span data-lang="zh">服务与荣誉</span><span data-lang="en">Service</span></a>
-          </div>
+          <a href="../publications.html" class="nav-link">Publications</a>
         </div>
-        <div class="dropdown">
-          <a href="../researches.html" class="nav-link" aria-current="page"><span data-lang="zh">研究</span><span data-lang="en">Researches</span></a>
-          <div class="dropdown-content">
-            <a href="../researches.html?filter=past"><span data-lang="zh">过往</span><span data-lang="en">Past</span></a>
-            <a href="../researches.html?filter=ongoing"><span data-lang="zh">进行中</span><span data-lang="en">Ongoing</span></a>
-            <a href="../researches.html?filter=future"><span data-lang="zh">未来方向</span><span data-lang="en">Future</span></a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="../publications.html" class="nav-link"><span data-lang="zh">论文</span><span data-lang="en">Publications</span></a>
-          <div class="dropdown-content">
-            <a href="../publications.html#journal"><span data-lang="zh">期刊论文</span><span data-lang="en">Journal Papers</span></a>
-            <a href="../publications.html#conference"><span data-lang="zh">会议论文</span><span data-lang="en">Conference Papers</span></a>
-          </div>
-        </div>
-        <a href="../blog.html" class="nav-link"><span data-lang="zh">博客</span><span data-lang="en">Blog</span></a>
-        <a href="../photos.html" class="nav-link"><span data-lang="zh">照片</span><span data-lang="en">Photos</span></a>
-        <button id="lang-btn" class="lang-toggle-btn" data-lang-toggle></button>
-        <button id="theme-btn" class="theme-toggle-btn" data-title-zh="切换主题" data-title-en="Toggle theme"><i class="fas fa-moon"></i></button>
+        <a href="../blog.html" class="nav-link">Blog</a>
+        <a href="../photos.html" class="nav-link">Photos</a>
+        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
       </nav>
     </div>
   </header>
   <main class="container">
-    <article class="prose">
-      <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> <span data-lang="zh">返回研究总览</span><span data-lang="en">Back to all researches</span></a>
-      <h1 style="margin-top: 16px;" data-lang="zh">低轨卫星通信</h1>
-      <h1 style="margin-top: 16px;" data-lang="en">Low Earth Orbit (LEO) Satellite Communications</h1>
-      <p style="color: var(--accent); font-weight: 600;" data-lang="zh">状态：过往研究（2024.07 - 2025.07）</p>
-      <p style="color: var(--accent); font-weight: 600;" data-lang="en">Status: Past (2024.07 - 2025.07)</p>
 
-      <div style="text-align: center; margin: 32px 0;">
+  <article class="prose">
+    <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> Back to all researches</a>
+    <h1 style="margin-top: 16px;">Low Earth Orbit (LEO) Satellite Communications</h1>
+    <p style="color: var(--accent); font-weight: 600;">Status: Past (2024.07 - 2025.07)</p>
+
+    <div style="text-align: center; margin: 32px 0;">
         <img src="../photos/proj_figure/LEO.png" alt="LEO Architecture" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-sm);">
-      </div>
+    </div>
 
-      <h2><span data-lang="zh">研究动机</span><span data-lang="en">Motivation</span></h2>
-      <p data-lang="zh">这一方向的核心动机来自 direct-to-cell 低轨卫星场景中的系统瓶颈。随着终端数增加，传统多波束架构在容量、链路预算和用户公平性上都很容易受限，尤其在上行方向，用户发射功率受限、卫星协作关系复杂、系统几何快速变化，使得“单小区、单卫星、独立服务”的思路越来越不够。我关注的是：能否把 terrestrial cell-free massive MIMO 的协作思想迁移到低轨卫星网络中，用多星协同来重构 uplink 资源分配问题。</p>
-      <p data-lang="en">The motivation of this direction comes from the system bottlenecks of direct-to-cell LEO satellite communications. As the number of terminals increases, conventional multi-beam architectures quickly run into limits in capacity, link budget, and fairness. The uplink is particularly challenging because user transmit power is constrained, satellite cooperation is nontrivial, and the geometry changes rapidly. I am therefore interested in whether the cooperative ideas of terrestrial cell-free massive MIMO can be transferred to LEO networks to redesign uplink resource allocation.</p>
+    <p>
+      Why use cell-free (CF) concepts in LEO satellite communications, or rather, why do multi-satellite collaborative transmission? When considering direct-to-cell (D2C) users, i.e., single-antenna users, we found that the existing multi-beam satellite communication link budget is very tight and may not be able to meet quality of service (QoS) requirements, especially with the increasing number of users using satellite communication services. To meet greater capacity requirements and for fairness considerations, we adopted the concept of CF massive MIMO from terrestrial networks.
+    </p>
 
-      <h2><span data-lang="zh">数学问题模型</span><span data-lang="en">Mathematical Problem</span></h2>
-      <p data-lang="zh">从建模角度看，这一问题可以写成联合离散-连续优化：给定用户集合 \(\mathcal{U}\) 和卫星集合 \(\mathcal{S}\)，同时优化聚类变量 \(\mathbf{C}\) 与上行功率向量 \(\mathbf{p}\)，使系统效用最大化，例如加权和速率或兼顾公平性的目标：</p>
-      <p data-lang="en">From a modeling perspective, the problem becomes a joint discrete-continuous optimization. Given a user set \(\mathcal{U}\) and a satellite set \(\mathcal{S}\), the clustering variables \(\mathbf{C}\) and uplink power vector \(\mathbf{p}\) are optimized jointly to maximize a system utility such as weighted sum rate or a fairness-aware objective.</p>
-      <p>
-        $$
-        \max_{\mathbf{C},\,\mathbf{p}} U(\mathbf{C},\mathbf{p})
-        \quad
-        \text{s.t.}\;
-        C_{s,u}\in\{0,1\},\;
-        0 \le p_u \le p_u^{\max}.
-        $$
-      </p>
-      <p data-lang="zh">难点在于聚类与功率控制高度耦合，而且 NTN 的大尺度几何关系、覆盖变化和用户服务关系都会让搜索空间快速膨胀。</p>
-      <p data-lang="en">The main difficulty is that clustering and power control are strongly coupled, while the large-scale geometry, coverage dynamics, and user-service relationships in NTN make the search space explode quickly.</p>
+    <h2>Cell-free NTN Uplink Optimization</h2>
+    <p>
+      Until I finished this work, most of the work involved downlink optimization. However, we believe that uplink demand will also increase. In particular, to my knowledge, some telecommunications companies are considering uplink enhancements.
+    </p>
 
-      <h2><span data-lang="zh">方法与研究路径</span><span data-lang="en">Methods</span></h2>
-      <p data-lang="zh">围绕这个问题，我把多星协同上行建模成联合聚类与功率控制问题，重点不是只优化某一个局部模块，而是从系统层面寻找“协同接入”的结构。与很多文献主要研究 downlink 不同，我更关心 uplink enhancement，因为它更能体现 D2C 卫星系统未来的真实瓶颈。这条线目前公开成果主要集中在 ICUFN 2025 的工作上，但其核心价值在于提出一种 cell-free NTN uplink 的系统视角。</p>
-      <p data-lang="en">Around this problem, I modeled multi-satellite cooperative uplink transmission as a joint clustering-and-power-control task. The emphasis is not on optimizing a single local module, but on discovering a cooperative access structure from a system-level perspective. Unlike much of the literature centered on downlink optimization, I focus more on uplink enhancement because it better reflects future bottlenecks of direct-to-cell systems. The public output of this direction is currently concentrated in the ICUFN 2025 work, but its core contribution is a cell-free NTN uplink viewpoint.</p>
+    <h2>Useful Resources</h2>
+    <ul>
+      <li>
+        <strong>Related Publications</strong>
+        <ul>
+          <li><a href="https://ieeexplore.ieee.org/document/11169882" target="_blank" rel="noopener">Joint Clustering and Uplink Power Control for Cell-Free Massive MIMO in LEO Satellite Networks</a> (Proc. ICUFN 2025)</li>
+        </ul>
+      </li>
+      <li>
+        <strong>GitHub Repository</strong>
+        <ul>
+          <li>To appear (after graduation)</li>
+        </ul>
+      </li>
+    </ul>
+  </article>
 
-      <h2><span data-lang="zh">资源与代码</span><span data-lang="en">Resources and Code</span></h2>
-
-      <h3><span data-lang="zh">我的论文</span><span data-lang="en">My Papers</span></h3>
-      <ul>
-        <li><a href="https://ieeexplore.ieee.org/document/11169882" target="_blank" rel="noopener">Joint Clustering and Uplink Power Control for Cell-Free Massive MIMO in LEO Satellite Networks</a></li>
-      </ul>
-
-
-      <h3><span data-lang="zh">我的代码</span><span data-lang="en">My Code</span></h3>
-      <ul>
-        <li><a href="https://github.com/CanZheng0331/archived-paper-code/tree/main/ICUFN2025_CF_NTN_UL" target="_blank" rel="noopener">ICUFN 2025 CF-NTN uplink optimization code</a></li>
-      </ul>
-    </article>
   </main>
   <footer class="footer">
-    <div data-lang="zh">© <span id="year"></span> Can Zheng | 基于 GitHub Pages 构建</div>
-    <div data-lang="en">© <span id="year"></span> Can Zheng | Built for GitHub Pages</div>
+    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
   </footer>
-  <script src="../site.js"></script>
   <script>
-    document.querySelectorAll("#year").forEach((element) => {
-      element.textContent = new Date().getFullYear();
-    });
-    Site.init({
-      titles: {
-        zh: "低轨卫星通信",
-        en: "LEO Satellite Communications"
-      }
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = themeBtn.querySelector('i');
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function applyThemeMode(themeStr) {
+      document.documentElement.setAttribute('data-theme', themeStr);
+      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+    applyThemeMode(currentTheme);
+    themeBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', currentTheme);
+      applyThemeMode(currentTheme);
     });
   </script>
 </body>

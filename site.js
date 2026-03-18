@@ -1,6 +1,30 @@
 (function () {
   const THEME_KEY = "theme";
   const LANG_KEY = "site-lang";
+  let readyMarked = false;
+  let loadingTimer = null;
+
+  document.documentElement.setAttribute("data-site-ready", "false");
+  document.documentElement.setAttribute("data-site-loading", "false");
+
+  loadingTimer = window.setTimeout(function () {
+    if (!readyMarked) {
+      document.documentElement.setAttribute("data-site-loading", "true");
+    }
+  }, 120);
+
+  function markReady() {
+    if (readyMarked) {
+      return;
+    }
+    readyMarked = true;
+    if (loadingTimer) {
+      window.clearTimeout(loadingTimer);
+      loadingTimer = null;
+    }
+    document.documentElement.setAttribute("data-site-loading", "false");
+    document.documentElement.setAttribute("data-site-ready", "true");
+  }
 
   function detectLanguage() {
     const saved = localStorage.getItem(LANG_KEY);
@@ -43,8 +67,8 @@
     });
 
     document.querySelectorAll("[data-lang-toggle]").forEach((element) => {
-      element.textContent = lang === "zh" ? "EN" : "中";
-      element.title = lang === "zh" ? "Switch to English" : "切换到中文";
+      element.textContent = lang === "zh" ? "EN" : "ZH";
+      element.title = lang === "zh" ? "Switch to English" : "Switch to Chinese";
       element.setAttribute("aria-label", element.title);
     });
 
@@ -99,11 +123,24 @@
         setLanguage(currentLang === "zh" ? "en" : "zh");
       });
     }
+
+    markReady();
   }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    window.setTimeout(markReady, 300);
+  });
+
+  window.addEventListener("load", function () {
+    markReady();
+  });
+
+  window.setTimeout(markReady, 1500);
 
   window.Site = {
     init,
     setLanguage,
     getLanguage: detectLanguage,
+    markReady,
   };
 }());

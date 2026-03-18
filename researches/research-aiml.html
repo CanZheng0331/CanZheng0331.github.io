@@ -1,13 +1,23 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-site-ready="false">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>感知辅助通信 | Can Zheng</title>
+  <title>AI/ML for Wireless · Can Zheng</title>
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+  <script>
+    (function() {
+      let theme = localStorage.getItem('theme');
+      if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
 </head>
 <body>
   <header class="header">
@@ -15,125 +25,198 @@
       <a class="brand" href="../index.html"><img src="../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
       <nav>
         <div class="dropdown">
-          <a href="../index.html" class="nav-link"><span data-lang="zh">首页</span><span data-lang="en">Home</span></a>
+          <a href="../index.html" class="nav-link">Home</a>
           <div class="dropdown-content">
-            <a href="../index.html#about"><span data-lang="zh">关于我</span><span data-lang="en">About Me</span></a>
-            <a href="../index.html#news"><span data-lang="zh">动态</span><span data-lang="en">News</span></a>
-            <a href="../index.html#explore"><span data-lang="zh">探索</span><span data-lang="en">Explore</span></a>
+            <a href="../index.html#about">About Me</a>
+            <a href="../index.html#news">News</a>
+            <a href="../index.html#explore">Explore</a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="../biography.html" class="nav-link"><span data-lang="zh">履历</span><span data-lang="en">Biography</span></a>
+          <a href="../biography.html" class="nav-link">Biography</a>
           <div class="dropdown-content">
-            <a href="../biography.html#education"><span data-lang="zh">教育经历</span><span data-lang="en">Education</span></a>
-            <a href="../biography.html#experience"><span data-lang="zh">工作经历</span><span data-lang="en">Experience</span></a>
-            <a href="../biography.html#service"><span data-lang="zh">服务与荣誉</span><span data-lang="en">Service</span></a>
+            <a href="../biography.html#education">Education</a>
+            <a href="../biography.html#experience">Work Experience</a>
+            <a href="../biography.html#service">Service</a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="../researches.html" class="nav-link" aria-current="page"><span data-lang="zh">研究</span><span data-lang="en">Researches</span></a>
+          <a href="../researches.html" class="nav-link" aria-current="page">Researches</a>
           <div class="dropdown-content">
-            <a href="../researches.html?filter=past"><span data-lang="zh">过往</span><span data-lang="en">Past</span></a>
-            <a href="../researches.html?filter=ongoing"><span data-lang="zh">进行中</span><span data-lang="en">Ongoing</span></a>
-            <a href="../researches.html?filter=future"><span data-lang="zh">未来方向</span><span data-lang="en">Future</span></a>
+            <a href="../researches.html?filter=past">Past</a>
+            <a href="../researches.html?filter=ongoing">Ongoing</a>
+            <a href="../researches.html?filter=future">Futures</a>
           </div>
         </div>
         <div class="dropdown">
-          <a href="../publications.html" class="nav-link"><span data-lang="zh">论文</span><span data-lang="en">Publications</span></a>
+          <a href="../publications.html" class="nav-link">Publications</a>
           <div class="dropdown-content">
-            <a href="../publications.html#journal"><span data-lang="zh">期刊论文</span><span data-lang="en">Journal Papers</span></a>
-            <a href="../publications.html#conference"><span data-lang="zh">会议论文</span><span data-lang="en">Conference Papers</span></a>
+            <a href="../publications.html#journal">Journal Papers</a>
+            <a href="../publications.html#conference">Conference Papers</a>
           </div>
         </div>
-        <a href="../blog.html" class="nav-link"><span data-lang="zh">博客</span><span data-lang="en">Blog</span></a>
-        <a href="../photos.html" class="nav-link"><span data-lang="zh">照片</span><span data-lang="en">Photos</span></a>
-        <button id="lang-btn" class="lang-toggle-btn" data-lang-toggle></button>
-        <button id="theme-btn" class="theme-toggle-btn" data-title-zh="切换主题" data-title-en="Toggle theme"><i class="fas fa-moon"></i></button>
+        <a href="../blog.html" class="nav-link">Blog</a>
+        <a href="../photos.html" class="nav-link">Photos</a>
+        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
       </nav>
     </div>
   </header>
   <main class="container">
-    <article class="prose">
-      <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> <span data-lang="zh">返回研究总览</span><span data-lang="en">Back to all researches</span></a>
-      <h1 style="margin-top: 16px;" data-lang="zh">感知辅助通信：面向高移动性场景的波束预测与定位</h1>
-      <h1 style="margin-top: 16px;" data-lang="en">Sensing-Aided Communications: Beam Prediction and Localization in High-Mobility Scenarios</h1>
-      <p style="color: var(--accent); font-weight: 600;" data-lang="zh">状态：进行中（2024.12 - 至今）</p>
-      <p style="color: var(--accent); font-weight: 600;" data-lang="en">Status: Ongoing (2024.12 - Present)</p>
 
-      <div style="text-align: center; margin: 32px 0;">
-        <img src="../photos/proj_figure/AIML.png" alt="Sensing-Aided Communications" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-sm);">
-      </div>
+<article class="prose">
+  <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> Back to all researches</a>
+  <h1 style="margin-top: 16px;">Multimodal AI for Wireless Communications</h1>
+  <p style="color: var(--accent); font-weight: 600;">Status: Ongoing (2024.12 - Present)</p>
 
-      <p data-lang="zh">我的研究主要围绕高移动性场景（V2I/UAV）中的感知辅助通信展开，重点关注如何利用视觉、雷达、激光雷达、GPS 以及无线信号本身的互补信息，提升毫米波系统中的波束预测与定位性能。与传统依赖历史信道或反复波束训练的方案不同，我更关注让系统直接利用环境感知信息理解链路变化的物理原因，从而实现更主动、更稳健的无线决策。</p>
-      <p data-lang="en">My recent work focuses on sensing-aided communications in high-mobility scenarios such as V2I and UAV systems. The main goal is to exploit the complementary information carried by vision, radar, LiDAR, GPS, and wireless signals themselves to improve beam prediction and localization in mmWave systems. Rather than relying only on historical channels or repeated beam training, I am more interested in enabling the system to use environmental sensing to understand the physical causes of link evolution, leading to more proactive and robust wireless decisions.</p>
+  <div style="text-align: center; margin: 32px 0;">
+    <img src="../photos/proj_figure/AIML.png" alt="AI/ML for Wireless Communications" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-sm);">
+  </div>
 
-      <p data-lang="zh">首先，在毫米波 V2I 场景中，窄波束虽然能提供高增益，但也对移动性、遮挡和环境变化高度敏感。传统波束训练与对齐机制开销大，在高速动态场景下难以及时响应。我希望通过历史感知信息直接预测未来波束，减少反复扫波束的成本。其次，纯无线观测往往更像是对链路状态的“事后反映”，而感知数据能够更直接地揭示环境几何、目标运动和遮挡变化等链路演化原因。整个范式因此需要从依赖历史无线反馈的被动适配，转向利用环境信息进行主动预测。</p>
-      <p data-lang="en">There are two main reasons why this problem matters. First, in mmWave V2I systems, narrow beams provide high gain but are also highly sensitive to mobility, blockage, and environmental changes. Traditional beam training and alignment incur large overhead and often fail to react in time under fast dynamics. I therefore want to use historical sensing information to predict future beams directly and reduce repeated sweeping. Second, purely wireless observations often behave more like a delayed reflection of the link state, whereas sensing data can more directly reveal the geometric causes of link evolution, such as scene structure, target motion, and blockage changes. This motivates a shift from passive adaptation based on historical wireless feedback to proactive prediction based on environmental information.</p>
+  <p>
+    This research direction explores how artificial intelligence and machine learning can fundamentally reshape future wireless communication systems, with a particular focus on <strong>millimeter-wave (mmWave)</strong>, <strong>Terahertz (THz)</strong>, and <strong>vehicle-to-infrastructure (V2I)</strong> scenarios. My recent work investigates how deep learning, multimodal sensing, and foundation models can be used to improve <strong>beam prediction</strong>, <strong>user localization</strong>, and <strong>radio decision-making</strong> in highly dynamic environments.
+  </p>
 
-      <h2><span data-lang="zh">研究是如何一步步推进的</span><span data-lang="en">How This Research Progressed</span></h2>
+  <p>
+    Unlike conventional model-driven pipelines that rely heavily on exhaustive beam sweeping or iterative optimization, these studies aim to build <strong>data-driven wireless intelligence</strong>: systems that can proactively infer future radio states from perception and historical observations, thereby reducing signaling overhead, improving robustness under mobility and blockage, and enabling more efficient real-time adaptation.
+  </p>
 
-      <h3><span data-lang="zh">1. 从单一视觉模态出发，验证感知信息可以直接服务波束预测</span><span data-lang="en">1. Starting from a single visual modality</span></h3>
-      <p data-lang="zh">在 <strong>BeamLLM</strong> 中，我首先关注一个相对克制但关键的问题：如果不依赖历史波束索引或 AoD 等额外无线先验，仅利用基站侧历史 RGB 图像，能否完成未来波束预测？这项工作给出的回答是肯定的。BeamLLM 通过目标检测提取车辆边界框序列，并借助重编程与提示词机制，将视觉时序特征映射到适合大模型处理的表示空间，从而实现仅基于视觉的波束预测。它的意义在于说明：在真实 V2I 数据上，环境感知本身就已经包含了对未来波束演化有用的信息。</p>
-      <p data-lang="en">In <strong>BeamLLM</strong>, I first asked a restrained but important question: without using historical beam indices, AoD, or other extra wireless priors, can future beam prediction be achieved using only historical RGB images observed at the base station? The answer from this work is yes. BeamLLM extracts vehicle bounding-box sequences through object detection and then uses reprogramming and prompting mechanisms to map visual temporal features into a representation space suitable for large-model-style processing, enabling vision-only beam prediction. The key message is that on realistic V2I data, environmental sensing itself already contains useful information about future beam evolution.</p>
+  <h2>Research Motivation</h2>
+  <p>
+    High-frequency wireless systems offer enormous bandwidth, but they are also highly sensitive to blockage, rapid channel variations, and alignment errors. In practical urban V2I environments, reliable communication depends on how quickly and accurately the system can understand the physical scene and react to user movement. This motivates a new paradigm: instead of relying solely on RF measurements, the network should exploit <strong>multimodal side information</strong>—such as RGB images, LiDAR, radar, GPS, and historical beam observations—to infer future communication states.
+  </p>
 
-      <h3><span data-lang="zh">2. 从单模态走向多模态，提升复杂环境下的鲁棒性</span><span data-lang="en">2. From single-modal to multimodal modeling</span></h3>
-      <p data-lang="zh">在 <strong>M<sup>2</sup>BeamLLM</strong> 中，研究进一步从“视觉可不可行”推进到“多模态如何更稳健”。这篇工作引入图像、雷达、激光雷达和 GPS 四类感知输入，并通过模态特征编码、对齐和融合，再结合 GPT-2 的监督微调来预测未来波束。相比 BeamLLM，这一步的核心进展不是简单地“模态变多了”，而是明确强调：复杂动态场景下，单一模态容易受到遮挡、光照或局部感知失效影响，而多模态互补能够显著提升预测准确率与稳定性。</p>
-      <p data-lang="en">In <strong>M<sup>2</sup>BeamLLM</strong>, the research moved from asking whether vision alone is feasible to asking how multimodality can improve robustness. This work introduces four sensing inputs: images, radar, LiDAR, and GPS. Their features are encoded, aligned, and fused, and then a supervised fine-tuning pipeline built on GPT-2 is used for future beam prediction. Compared with BeamLLM, the main contribution is not simply adding more modalities, but showing that under complex dynamic environments, any single modality can fail due to blockage, lighting, or local sensing breakdown, while multimodal complementarity significantly improves accuracy and stability.</p>
+  <p>
+    My work therefore focuses on building wireless systems that are not merely reactive, but <strong>predictive</strong>, <strong>scene-aware</strong>, and <strong>cross-modal</strong>.
+  </p>
 
-      <h3><span data-lang="zh">3. 进一步关注动态建模方式与部署效率</span><span data-lang="en">3. Modeling beam evolution and deployment efficiency</span></h3>
-      <p data-lang="zh">在流模型用于波束预测的工作中，研究重点从“用什么模态”和“用什么 backbone”进一步转向“如何刻画波束演化本身”。这篇工作指出，RNN/LSTM 一类离散序列预测器在长时域上容易误差积累，而大模型虽然性能强，但对边缘部署并不友好。因此，这篇论文将未来波束演化建模为一个连续潜空间中的向量场，并通过 rectified flow 与 terminal flow constraint 保证长时预测稳定性，同时显著降低推理延迟。</p>
-      <p data-lang="en">In the flow-based beam prediction work, the focus moved beyond which modality or backbone to use and toward how to model beam evolution itself. This work argues that discrete sequential predictors such as RNNs and LSTMs tend to accumulate errors over long horizons, while large models, although powerful, are less friendly to edge deployment. The paper therefore models future beam evolution as a vector field in a continuous latent space, and uses rectified flow together with a terminal flow constraint to improve long-horizon stability while significantly reducing inference latency.</p>
+  <h2>Beam Prediction</h2>
+  <p>
+    A major research focus is <strong>sensing-assisted beam prediction</strong>, where multimodal perception is used to proactively estimate the optimal beam direction or beam sequence for future transmission slots. Compared with exhaustive beam search, this paradigm can significantly reduce training overhead and latency, especially in fast-changing vehicular environments.
+  </p>
 
-      <h3><span data-lang="zh">4. 将跨模态互补思想扩展到定位任务</span><span data-lang="en">4. Extending the cross-modal idea to localization</span></h3>
-      <p data-lang="zh">这条研究线从波束预测自然扩展到了定位。这里的问题不再是预测未来波束，而是利用 CSI 与视觉图像进行 3D 定位。研究的核心观察是：视觉信息能提供清晰的场景与几何线索，但可能受到目标漏检和误检影响；无线 CSI 在复杂传播环境中也会受多径与 NLOS 干扰。二者单独使用都不够稳健，而跨模态对齐与融合能够显著提升定位精度。因此，这篇工作本质上延续的还是同一个研究思想：不同模态对同一物理场景的观测具有互补性，而这种互补性可以通过学习到的共享表示转化为更稳健的通信感知能力。</p>
-      <p data-lang="en">This research line naturally extended from beam prediction to localization. Here the task is no longer predicting a future beam, but performing 3D localization using CSI and visual images together. The main observation is that vision provides clear scene and geometric cues but may suffer from missed or false detections, while wireless CSI is also vulnerable to multipath and NLOS effects in complex propagation environments. Neither modality alone is sufficiently robust, but cross-modal alignment and fusion can substantially improve localization accuracy. In that sense, the localization work continues the same core idea: different modalities provide complementary views of the same physical scene, and this complementarity can be converted into more robust communication-aware perception through learned shared representations.</p>
+  <p>
+    My recent studies investigate how to combine <strong>vision</strong>, <strong>radar</strong>, <strong>LiDAR</strong>, <strong>GPS</strong>, and <strong>historical beam feedback</strong> with deep sequence models, transformers, and large language models. The central objective is to learn a robust mapping from past multimodal observations to future beam decisions.
+  </p>
 
-      <h2><span data-lang="zh">这条研究线的核心思想</span><span data-lang="en">Core Idea of This Research Line</span></h2>
-      <p data-lang="zh">在高速移动场景中，未来的波束或位置状态并不只是历史无线观测的延续，它更深层地受到环境几何、目标运动和多模态观测条件的共同影响。因此，比起单纯依赖历史信道序列，更值得研究的是如何引入环境感知信息，并设计合适的跨模态建模机制，把“看见环境”和“理解无线演化”连接起来。</p>
-      <p data-lang="en">In highly dynamic V2I scenarios, future beam or position states are not merely continuations of historical wireless observations. They are jointly shaped by scene geometry, target motion, and multimodal observation conditions. Therefore, instead of relying only on historical channel sequences, a more meaningful direction is to incorporate environmental sensing and design suitable cross-modal modeling mechanisms that connect seeing the environment with understanding wireless evolution.</p>
+  <p>
+    Formally, given only historical observations \(\mathbf{X}_{t-T_{\mathrm{History}}:t-1}\), the goal is to predict the future beam sequence \(\hat{\mathbf{y}}_{t:t+T_{\mathrm{Prediction}}-1}\):
+    $$
+    \hat{\mathbf{y}}_{t:t+T_{\mathrm{Prediction}}-1}
+    = f_{\Theta}\!\big(\mathbf{X}_{t-T_{\mathrm{History}}:t-1}\big),
+    $$
+    where \(f_{\Theta}(\cdot)\) denotes the learned predictor and \(\Theta\) represents the trainable model parameters.
+  </p>
 
-      <p data-lang="zh">具体来说，这条研究线包含三个持续推进的重点：一是感知替代或补充纯无线反馈，让系统具备主动预测能力；二是跨模态表示对齐与融合，让不同模态对同一场景的互补信息能够被有效利用；三是兼顾预测性能与部署效率，使方法不仅在离线指标上有效，也具备走向真实 RSU 或边缘设备部署的可能。</p>
-      <p data-lang="en">More specifically, this line keeps advancing along three themes: first, using sensing to replace or complement pure wireless feedback so that the system becomes predictive rather than reactive; second, aligning and fusing cross-modal representations so that complementary views of the same scene can be effectively exploited; and third, balancing prediction performance with deployment efficiency so that the methods are not only strong on offline metrics but also promising for real RSU and edge deployment.</p>
+  <p>
+    Beyond standard supervised prediction, I am also interested in <strong>generative and flow-based approaches</strong> for sequential beam forecasting, which model future beam evolution in a more flexible and continuous manner than conventional discrete predictors.
+  </p>
 
-      <h2><span data-lang="zh">代表工作</span><span data-lang="en">Representative Works</span></h2>
-      <ul data-lang="zh">
-        <li><a href="https://ieeexplore.ieee.org/document/11309918" target="_blank" rel="noopener">BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models</a><br>证明仅依赖基站侧历史视觉信息，也可以完成未来波束预测，并探索了基于大模型时序建模在该任务中的可行性。</li>
-        <li><a href="https://arxiv.org/abs/2506.14532" target="_blank" rel="noopener">M²BeamLLM: Multimodal Sensing-empowered mmWave Beam Prediction with Large Language Models</a><br>将波束预测从单一视觉模态扩展到图像、雷达、激光雷达与 GPS 的多模态融合，提升了复杂环境中的准确率与鲁棒性。</li>
-        <li><a href="https://arxiv.org/abs/2511.20265" target="_blank" rel="noopener">Rectified Flow for Vision-Aided mmWave V2I Beam Prediction</a><br>将未来波束演化建模为连续向量场，兼顾长时预测稳定性与边缘部署效率。</li>
-        <li><a href="https://arxiv.org/abs/2508.17640" target="_blank" rel="noopener">Multimodal Radio and Vision Fusion for Robust Localization in Urban V2I Communications</a><br>将跨模态互补思想扩展到 CSI-视觉融合定位，提升复杂城市环境下的定位精度与稳健性。</li>
+  <h2>Wireless Localization</h2>
+  <p>
+    Another important direction is <strong>multimodal localization for wireless systems</strong>, especially in V2I scenarios with multiple active users. The goal is to estimate user positions by jointly exploiting communication signals and visual context, rather than treating localization as a purely geometric or purely signal-based task.
+  </p>
+
+  <p>
+    In recent work, I study <strong>vision + CSI fusion</strong> for multi-user localization, where camera observations provide semantic and spatial cues while CSI captures wireless propagation characteristics. A key challenge here is how to align heterogeneous modalities and correctly associate wireless users with visual targets in cluttered urban scenes.
+  </p>
+
+  <p>
+    This line of research aims not only to improve localization accuracy, but also to provide a stronger physical basis for downstream wireless tasks such as beam management, tracking, and predictive communication.
+  </p>
+
+  <p>
+    Representative topics include:
+  </p>
+  <ul>
+    <li><strong>LLM-based beam prediction</strong> with multimodal sensing inputs;</li>
+    <li><strong>cross-modal transformers</strong> for wireless localization and environment-aware inference;</li>
+    <li><strong>flow matching / rectified flow models</strong> for future beam sequence generation;</li>
+    <li><strong>foundation-model-inspired architectures</strong> for robust decision-making under incomplete or noisy observations.</li>
+  </ul>
+
+  <p>
+    More broadly, I view this research direction as part of an emerging effort to bridge <strong>AI foundation models</strong> and <strong>next-generation wireless communications</strong>, especially for complex dynamic systems where environment understanding is as important as channel estimation itself.
+  </p>
+
+  <h2>Current Research Themes</h2>
+  <ul>
+    <li>
+      <strong>Multimodal Beam Prediction:</strong>
+      Using RGB images, radar, LiDAR, GPS, and historical beam feedback to predict future beam indices in dynamic V2I scenarios.
+    </li>
+    <li>
+      <strong>Vision-Aided / CSI-Aided Localization:</strong>
+      Fusing visual semantics and wireless measurements for accurate multi-user positioning and user association.
+    </li>
+    <li>
+      <strong>Cross-Modal Representation Learning:</strong>
+      Designing attention-based architectures that align perception and communication modalities in a unified latent space.
+    </li>
+    <li>
+      <strong>Generative Wireless Prediction:</strong>
+      Exploring rectified flow and other generative paradigms for sequential beam forecasting.
+    </li>
+    <li>
+      <strong>LLMs for Wireless Intelligence:</strong>
+      Adapting transformer-based large models to PHY-layer prediction and decision tasks with domain-specific lightweight modules.
+    </li>
+  </ul>
+
+  <h2>Selected Progress</h2>
+  <p>
+    So far, this research line has led to several representative works on <strong>vision-empowered beam prediction</strong>, <strong>multimodal LLM-based beam forecasting</strong>, and <strong>flow-based future beam sequence modeling</strong>. More recently, the scope has been extended from beam prediction alone to a broader cross-modal wireless intelligence framework that also includes <strong>multi-user localization</strong> and <strong>environment-aware fusion</strong>.
+  </p>
+
+  <p>
+    In particular, my current efforts focus on developing unified models that can simultaneously reason over scene context, user motion, and wireless observations, with the long-term goal of enabling more general-purpose AI agents for next-generation communication systems.
+  </p>
+
+  <h2>Useful Resources</h2>
+  <ul>
+    <li>
+      <strong>Related Publications</strong>
+      <ul>
+        <li><a href="https://arxiv.org/abs/2511.20265" target="_blank" rel="noopener">Rectified Flow for Vision-Aided mmWave V2I Beam Prediction</a></li>
+        <li><a href="https://arxiv.org/abs/2508.17640" target="_blank" rel="noopener">Multimodal Radio and Vision Fusion for Robust Localization in Urban V2I Communications</a></li>
+        <li><a href="https://arxiv.org/abs/2506.14532" target="_blank" rel="noopener">M<sup>2</sup>BeamLLM: Multimodal Sensing-Empowered mmWave Beam Prediction with Large Language Models</a></li>
+        <li><a href="https://ieeexplore.ieee.org/abstract/document/11309918/" target="_blank" rel="noopener">BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models</a></li>
       </ul>
-      <ul data-lang="en">
-        <li><a href="https://ieeexplore.ieee.org/document/11309918" target="_blank" rel="noopener">BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models</a><br>Shows that future beam prediction can be achieved using only historical visual observations from the base station, and explores the feasibility of LLM-inspired temporal modeling for this task.</li>
-        <li><a href="https://arxiv.org/abs/2506.14532" target="_blank" rel="noopener">M²BeamLLM: Multimodal Sensing-empowered mmWave Beam Prediction with Large Language Models</a><br>Extends beam prediction from a single visual modality to multimodal fusion of image, radar, LiDAR, and GPS, improving robustness and prediction accuracy in complex environments.</li>
-        <li><a href="https://arxiv.org/abs/2511.20265" target="_blank" rel="noopener">Rectified Flow for Vision-Aided mmWave V2I Beam Prediction</a><br>Models future beam evolution as a continuous flow, balancing long-horizon stability and edge deployment efficiency.</li>
-        <li><a href="https://arxiv.org/abs/2508.17640" target="_blank" rel="noopener">Multimodal Radio and Vision Fusion for Robust Localization in Urban V2I Communications</a><br>Extends the cross-modal complementarity idea to CSI-vision fusion for localization, improving accuracy and robustness in complex urban environments.</li>
+    </li>
+    <li>
+      <strong>GitHub Repository</strong>
+      <ul>
+        <li><a href="https://github.com/CanZheng0331/Sensing_aided_Communications" target="_blank" rel="noopener">Demos of Beam Prediction</a></li>
+        <li><a href="https://github.com/CanZheng0331/BeamLLM-Vision-Empowered-mmWave-Beam-Prediction-with-Large-Language-Models" target="_blank" rel="noopener">Official Implementation of BeamLLM</a></li>
       </ul>
+    </li>
+  </ul>
 
-      <h2><span data-lang="zh">有用资源</span><span data-lang="en">Useful Resources</span></h2>
-      <ul data-lang="zh">
-        <li>【代码】<a href="https://github.com/CanZheng0331/Sensing_aided_Communications" target="_blank" rel="noopener">视觉辅助波束预测示例</a></li>
-        <li>【代码】<a href="https://github.com/CanZheng0331/BeamLLM-Vision-Empowered-mmWave-Beam-Prediction-with-Large-Language-Models" target="_blank" rel="noopener">BeamLLM 复现代码</a></li>
-      </ul>
-      <ul data-lang="en">
-        <li>[Code] <a href="https://github.com/CanZheng0331/Sensing_aided_Communications" target="_blank" rel="noopener">Examples of vision-aided beam prediction</a></li>
-        <li>[Code] <a href="https://github.com/CanZheng0331/BeamLLM-Vision-Empowered-mmWave-Beam-Prediction-with-Large-Language-Models" target="_blank" rel="noopener">BeamLLM reproduction code</a></li>
-      </ul>
-    </article>
+  <h2>Outlook</h2>
+  <p>
+    Looking ahead, I plan to further explore <strong>foundation-model-driven wireless systems</strong> that can jointly perform perception, prediction, localization, and decision-making. I believe future communication networks will increasingly evolve from isolated signal processing pipelines into <strong>intelligent multimodal systems</strong> capable of understanding both the radio environment and the physical world.
+  </p>
+</article>
   </main>
   <footer class="footer">
-    <div data-lang="zh">© <span id="year"></span> Can Zheng | 基于 GitHub Pages 构建</div>
-    <div data-lang="en">© <span id="year"></span> Can Zheng | Built for GitHub Pages</div>
+    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
   </footer>
-  <script src="../site.js"></script>
   <script>
-    document.querySelectorAll("#year").forEach((element) => {
-      element.textContent = new Date().getFullYear();
-    });
-    Site.init({
-      titles: {
-        zh: "感知辅助通信",
-        en: "Sensing-Aided Communications"
-      }
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = themeBtn.querySelector('i');
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function applyThemeMode(themeStr) {
+      document.documentElement.setAttribute('data-theme', themeStr);
+      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+    applyThemeMode(currentTheme);
+    themeBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', currentTheme);
+      applyThemeMode(currentTheme);
     });
   </script>
 </body>

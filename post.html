@@ -1,22 +1,32 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-site-ready="false">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>文章 | Can Zheng</title>
+  <title>Article · Can Zheng</title>
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    (function() {
+      let theme = localStorage.getItem('theme');
+      if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <style>
-    .tag { display: inline-block; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); padding: 4px 8px; margin: 0 4px 0 0; border-radius: 6px; font-size: 0.8rem; font-weight: 600; }
+    .tag { display: inline-block; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); padding: 4px 8px; margin: 0 4px 0 0; border-radius: 6px; font-size: 0.8rem; font-weight: 600;}
     #post-content .math-display mjx-container { display: block !important; margin: 1em 0 !important; text-align: center; }
     #post-content mjx-container[display="false"] { display: inline-block !important; margin: 0 .1em !important; }
-    body.pdf-mode { overflow: hidden; }
+    
+    body.pdf-mode { overflow: hidden; } 
     body.pdf-mode main.container { height: 100vh; padding-bottom: 24px; display: flex; flex-direction: column; }
     body.pdf-mode main.container .card { flex: 1; display: flex; flex-direction: column; margin-bottom: 0; overflow: hidden; padding: 24px 32px; }
-    body.pdf-mode #post-content { flex: 1; display: flex; overflow: hidden; margin-top: 16px; }
-    body.pdf-mode .pdf-container { width: 100%; height: 100%; border: 1px solid var(--border); border-radius: 8px; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05); }
+    body.pdf-mode #post-content { flex: 1; display: flex; overflow: hidden; margin-top: 16px;}
+    body.pdf-mode .pdf-container { width: 100%; height: 100%; border: 1px solid var(--border); border-radius: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
     body.pdf-mode .footer { display: none; }
   </style>
 </head>
@@ -26,208 +36,167 @@
       <a class="brand" href="index.html"><img src="photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
       <nav>
         <div class="dropdown">
-          <a href="index.html" class="nav-link"><span data-lang="zh">首页</span><span data-lang="en">Home</span></a>
+          <a href="index.html" class="nav-link">Home</a>
+          <div class="dropdown-content">
+            <a href="index.html#about">About Me</a>
+            <a href="index.html#news">News</a>
+            <a href="index.html#explore">Explore</a>
+          </div>
         </div>
         <div class="dropdown">
-          <a href="biography.html" class="nav-link"><span data-lang="zh">履历</span><span data-lang="en">Biography</span></a>
+          <a href="biography.html" class="nav-link">Biography</a>
+          <div class="dropdown-content">
+            <a href="biography.html#education">Education</a>
+            <a href="biography.html#experience">Work Experience</a>
+            <a href="biography.html#service">Service</a>
+          </div>
         </div>
         <div class="dropdown">
-          <a href="researches.html" class="nav-link"><span data-lang="zh">研究</span><span data-lang="en">Researches</span></a>
+          <a href="researches.html" class="nav-link">Researches</a>
+          <div class="dropdown-content">
+            <a href="researches.html?filter=past">Past</a>
+            <a href="researches.html?filter=ongoing">Ongoing</a>
+            <a href="researches.html?filter=future">Future</a>
+          </div>
         </div>
         <div class="dropdown">
-          <a href="publications.html" class="nav-link"><span data-lang="zh">论文</span><span data-lang="en">Publications</span></a>
+          <a href="publications.html" class="nav-link">Publications</a>
+          <div class="dropdown-content">
+            <a href="publications.html#journal">Journal Papers</a>
+            <a href="publications.html#conference">Conference Papers</a>
+          </div>
         </div>
-        <a href="blog.html" class="nav-link" aria-current="page"><span data-lang="zh">博客</span><span data-lang="en">Blog</span></a>
-        <a href="photos.html" class="nav-link"><span data-lang="zh">照片</span><span data-lang="en">Photos</span></a>
-        <button id="lang-btn" class="lang-toggle-btn" data-lang-toggle></button>
-        <button id="theme-btn" class="theme-toggle-btn" data-title-zh="切换主题" data-title-en="Toggle theme"><i class="fas fa-moon"></i></button>
+        <a href="blog.html" class="nav-link" aria-current="page">Blog</a>
+        <a href="photos.html" class="nav-link">Photos</a>
+        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
       </nav>
     </div>
   </header>
   <main class="container">
     <article class="prose card">
-      <a href="blog.html" style="font-weight: 500; display: inline-block; margin-bottom: 12px;">
-        <i class="fas fa-arrow-left"></i>
-        <span data-lang="zh">返回博客</span>
-        <span data-lang="en">Back to Blog</span>
-      </a>
+      <a href="blog.html" style="font-weight: 500; display: inline-block; margin-bottom: 12px;"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+      
       <h1 id="post-title" style="margin-top: 0; margin-bottom: 12px;">Loading...</h1>
       <div id="post-tags" style="margin-bottom: 16px;"></div>
       <div id="post-content"></div>
     </article>
   </main>
+  
   <footer class="footer">
-    <div data-lang="zh">© <span id="year"></span> Can Zheng | 基于 GitHub Pages 构建</div>
-    <div data-lang="en">© <span id="year"></span> Can Zheng | Built for GitHub Pages</div>
+    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     window.MathJax = {
-      tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], processEscapes: true, packages: { "[+]": ["textmacros"] } },
-      loader: { load: ["[tex]/textmacros"] }
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true, packages: {'[+]': ['textmacros']} },
+      loader: { load: ['[tex]/textmacros'] }
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-  <script src="site.js"></script>
-  <script>
-    document.querySelectorAll("#year").forEach((element) => {
-      element.textContent = new Date().getFullYear();
-    });
 
-    const posts = [
-      { id: "novel_app_dpss6g", titleZh: "DeepSense 6G 数据集的几个新奇用法", titleEn: "Several Novel Applications of the DeepSense 6G Dataset", tags: ["DeepSense 6G", "Paper Summarization"], file: "posts/novel_app_dpss6g.md" },
-      { id: "Wireless-communications2nd", titleZh: "Andrea Goldsmith《无线通信（第二版）》中文笔记", titleEn: "Notes on Wireless Communications (2nd Edition) by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications2nd.pdf" },
-      { id: "Wireless-communications", titleZh: "Andrea Goldsmith《无线通信》中文笔记", titleEn: "Notes on Wireless Communications by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications.md" },
-      { id: "otfs-notes", titleZh: "OTFS 学习笔记", titleEn: "Notes on OTFS", tags: ["OTFS", "Signal Processing"], file: "posts/otfs-notes.md" },
-      { id: "sats", titleZh: "多卫星协作网络论文笔记", titleEn: "Notes on Multi-Satellite Cooperative Networks", tags: ["Satellite Communications", "Paper Summarization"], file: "posts/sats.md" },
-      { id: "LLM_BBO", titleZh: "LLM 用于网络优化的论文笔记", titleEn: "Notes on LLM for Network Optimization", tags: ["Large Language Model", "Optimization", "Paper Summarization"], file: "posts/LLM_BBO.md" }
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    let posts = [
+      { id: "Wireless-communications2nd", title: "[Chinese] Notes on Wireless Communications (2nd Edition) by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications2nd.pdf" },
+      { id: "Wireless-communications", title: "[Chinese] Notes on Wireless Communications by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications.md" },
+      { id: "otfs-notes", title: "[Chinese] Notes on OTFS", tags: ["OTFS", "Signal Processing"], file: "posts/otfs-notes.md" },
+      { id: "sats", title: "[Chinese] Notes on Multi-Satellite Cooperative Networks", tags: ["Satellite Communications", "Paper Summarization"], file: "posts/sats.md" },
+      { id: "LLM_BBO", title: "[Chinese] Notes on LLM for Network Optimization", tags: ["Large Language Model", "Optimization", "Paper Summarization"], file: "posts/LLM_BBO.md" }
     ];
 
     const postTitle = document.getElementById("post-title");
     const postTags = document.getElementById("post-tags");
     const postContent = document.getElementById("post-content");
 
-    function getLang() {
-      return document.documentElement.getAttribute("data-lang") || "en";
-    }
-
-    function extractMath(markdown) {
+    function extractMath(md) {
       const chunks = [];
-      let output = "";
-      let index = 0;
-      const pushToken = (text) => {
-        const key = `@@MATH_${chunks.length}@@`;
-        chunks.push(text);
-        return key;
-      };
-
-      while (index < markdown.length) {
-        if (markdown.startsWith("$$", index)) {
-          const end = markdown.indexOf("$$", index + 2);
-          if (end !== -1) {
-            output += pushToken(markdown.slice(index, end + 2));
-            index = end + 2;
-            continue;
-          }
+      let out = ''; let i = 0;
+      const pushToken = (text) => { const key = `@@MATH_${chunks.length}@@`; chunks.push(text); return key; };
+      while (i < md.length) {
+        if (md.startsWith('$$', i)) { const j = md.indexOf('$$', i + 2); if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; } }
+        if (md.startsWith('\\[', i)) { const j = md.indexOf('\\]', i + 2); if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; } }
+        if (md.startsWith('\\(', i)) { const j = md.indexOf('\\)', i + 2); if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; } }
+        if (md[i] === '$' && md[i+1] !== '$') {
+          let j = i + 1;
+          while (j < md.length) { if (md[j] === '\\') { j += 2; continue; } if (md[j] === '$') break; j++; }
+          if (j < md.length && md[j] === '$') { out += pushToken(md.slice(i, j + 1)); i = j + 1; continue; }
         }
-        if (markdown.startsWith("\\[", index)) {
-          const end = markdown.indexOf("\\]", index + 2);
-          if (end !== -1) {
-            output += pushToken(markdown.slice(index, end + 2));
-            index = end + 2;
-            continue;
-          }
-        }
-        if (markdown.startsWith("\\(", index)) {
-          const end = markdown.indexOf("\\)", index + 2);
-          if (end !== -1) {
-            output += pushToken(markdown.slice(index, end + 2));
-            index = end + 2;
-            continue;
-          }
-        }
-        if (markdown[index] === "$" && markdown[index + 1] !== "$") {
-          let end = index + 1;
-          while (end < markdown.length) {
-            if (markdown[end] === "\\") {
-              end += 2;
-              continue;
-            }
-            if (markdown[end] === "$") {
-              break;
-            }
-            end += 1;
-          }
-          if (end < markdown.length && markdown[end] === "$") {
-            output += pushToken(markdown.slice(index, end + 1));
-            index = end + 1;
-            continue;
-          }
-        }
-        output += markdown[index];
-        index += 1;
+        out += md[i++];
       }
-      return { masked: output, chunks };
+      return { masked: out, chunks };
     }
 
     function restoreMath(html, chunks) {
-      let output = html;
+      let out = html;
       chunks.forEach((raw, idx) => {
         const key = `@@MATH_${idx}@@`;
-        const isDisplay = /^\$\$[\s\S]*\$\$$/.test(raw) || /^\\\[[\s\S]*\\\]$/.test(raw);
-        output = output.replaceAll(key, isDisplay ? `<div class="math-display">${raw}</div>` : raw);
+        const isDisplay = (/^\$\$[\s\S]*\$\$$/.test(raw) || /^\\\[[\s\S]*\\\]$/.test(raw));
+        const replacement = isDisplay ? `<div class="math-display">${raw}</div>` : raw;
+        out = out.replaceAll(key, replacement);
       });
-      return output;
+      return out;
     }
 
     async function typesetPostContent() {
-      if (!window.MathJax) {
-        return;
-      }
+      if (!window.MathJax) return;
       try {
-        if (MathJax.startup && MathJax.startup.promise) {
-          await MathJax.startup.promise;
-        }
-        if (MathJax.texReset) {
-          MathJax.texReset();
-        }
-        if (MathJax.typesetClear) {
-          MathJax.typesetClear([postContent]);
-        }
+        if (MathJax.startup && MathJax.startup.promise) await MathJax.startup.promise;
+        if (MathJax.texReset) MathJax.texReset();
+        if (MathJax.typesetClear) MathJax.typesetClear([postContent]);
         await MathJax.typesetPromise([postContent]);
-      } catch (error) {
-      }
-    }
-
-    function updateMeta(post) {
-      const lang = getLang();
-      if (!post) {
-        document.title = `${lang === "zh" ? "文章不存在" : "Post Not Found"} | Can Zheng`;
-        postTitle.textContent = lang === "zh" ? "文章不存在" : "Post Not Found";
-        postContent.innerHTML = `<p>${lang === "zh" ? "抱歉，请求的文章不存在或已被移除。" : "Sorry, the requested post does not exist or has been removed."}</p>`;
-        return;
-      }
-
-      const title = lang === "zh" ? post.titleZh : post.titleEn;
-      document.title = `${title} | Can Zheng`;
-      postTitle.textContent = title;
-      postTags.innerHTML = post.tags.map((tag) => `<span class="tag">${tag}</span>`).join("");
+      } catch (err) {}
     }
 
     const urlParams = new URLSearchParams(window.location.search);
-    const post = posts.find((item) => item.id === urlParams.get("id"));
+    const postId = urlParams.get('id');
+    const post = posts.find(p => p.id === postId);
 
     if (post) {
+      document.title = `${post.title} · Can Zheng`;
+      postTitle.textContent = post.title;
+      postTags.innerHTML = post.tags.map(t => `<span class="tag">${t}</span>`).join("");
+
       if (post.file.toLowerCase().endsWith(".pdf")) {
-        document.body.classList.add("pdf-mode");
-        postContent.innerHTML = `<iframe class="pdf-container" src="${post.file}"></iframe>`;
+         document.body.classList.add('pdf-mode');
+         postContent.innerHTML = `<iframe class="pdf-container" src="${post.file}"></iframe>`;
       } else {
-        fetch(post.file)
-          .then((response) => response.text())
+         fetch(post.file)
+          .then(r => r.text())
           .then(async (markdown) => {
-            const { masked, chunks } = extractMath(markdown);
-            const html = restoreMath(marked.parse(masked), chunks);
-            postContent.innerHTML = html;
-            await new Promise(requestAnimationFrame);
-            await typesetPostContent();
+             const { masked, chunks } = extractMath(markdown);
+             const htmlMasked = marked.parse(masked);
+             const html = restoreMath(htmlMasked, chunks);
+             postContent.innerHTML = html;
+             await new Promise(requestAnimationFrame);
+             await typesetPostContent();
           })
-          .catch((error) => {
-            const lang = getLang();
-            postContent.innerHTML = `<p style="color:red;">${lang === "zh" ? "加载文章失败" : "Error loading post"}: ${error.message}</p>`;
+          .catch(err => {
+             postContent.innerHTML = `<p style="color:red;">Error loading post: ${err.message}</p>`;
           });
       }
+    } else {
+      postTitle.textContent = "Post Not Found";
+      postContent.innerHTML = "<p>Sorry, the requested post does not exist or has been removed.</p>";
     }
 
-    document.addEventListener("site:language-change", () => updateMeta(post));
-
-    Site.init({
-      titles: {
-        zh: "文章",
-        en: "Article"
-      }
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = themeBtn.querySelector('i');
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function applyThemeMode(themeStr) {
+      document.documentElement.setAttribute('data-theme', themeStr);
+      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+    applyThemeMode(currentTheme);
+    themeBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', currentTheme);
+      applyThemeMode(currentTheme);
     });
-    updateMeta(post);
   </script>
 </body>
 </html>
