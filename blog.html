@@ -3,8 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Blog · Can Zheng</title>
+  <title>Blogs · Can Zheng</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true, packages: {'[+]': ['textmacros']} },
+      loader: { load: ['[tex]/textmacros'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
   <script>
     (function() {
       let theme = localStorage.getItem('theme');
@@ -66,6 +75,14 @@
       outline: none;
       cursor: pointer;
     }
+    #post-content .math-display mjx-container { display: block !important; margin: 1em 0 !important; text-align: center; }
+    #post-content mjx-container[display="false"] { display: inline-block !important; margin: 0 .1em !important; }
+    body.pdf-mode { overflow: hidden; }
+    body.pdf-mode main.container { height: 100vh; padding-bottom: 24px; display: flex; flex-direction: column; }
+    body.pdf-mode #article-section { flex: 1; display: flex; flex-direction: column; margin-bottom: 0; overflow: hidden; padding: 24px 32px; }
+    body.pdf-mode #post-content { flex: 1; display: flex; overflow: hidden; margin-top: 16px; }
+    body.pdf-mode .pdf-container { width: 100%; height: 100%; border: 1px solid var(--border); border-radius: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+    body.pdf-mode .footer { display: none; }
   </style>
 </head>
 <body>
@@ -104,21 +121,27 @@
             <a href="publications.html#conference">Conference Papers</a>
           </div>
         </div>
-        <a href="blog.html" class="nav-link" aria-current="page">Blog</a>
+        <a href="blog.html" class="nav-link" aria-current="page">Blogs</a>
         <a href="photos.html" class="nav-link">Photos</a>
         <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
       </nav>
     </div>
   </header>
   <main class="container">
-    <section class="section">
-      <h1>Blog Posts</h1>
+    <section id="list-section" class="section">
+      <h1>Blogs</h1>
       <input class="search-box" type="text" id="search" placeholder="Search articles or tags..." />
       <div id="filter-header-container"></div>
       <ul id="post-list" class="post-list">
         <li><small class="muted">Loading and sorting by date…</small></li>
       </ul>
     </section>
+    <article id="article-section" class="prose card" hidden>
+      <a href="blog.html" style="font-weight: 500; display: inline-block; margin-bottom: 12px;"><i class="fas fa-arrow-left"></i> Back to Blogs</a>
+      <h1 id="post-title" style="margin-top: 0; margin-bottom: 12px;">Loading...</h1>
+      <div id="post-tags" style="margin-bottom: 16px;"></div>
+      <div id="post-content"></div>
+    </article>
   </main>
   
   <footer class="footer">
@@ -130,24 +153,57 @@
 
     const GITHUB_USER = "canzheng0331";
     const GITHUB_REPO = "canzheng0331.github.io";
+    const POSTS_INDEX = "posts/posts.json";
 
-    let posts = [
-      { id: "SSL_metrics", title: "[Chinese] Notes on Two Metrics of Self-Supervised Learning: RankMe and LiDAR", tags: ["Self-Supervised Learning", "Paper Summarization"], file: "posts/SSL_metrics.md" },
-      { id: "Wireless-communications2nd", title: "[Chinese] Notes on Wireless Communications (2nd Edition) by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications2nd.pdf" },
-      { id: "Wireless-communications", title: "[Chinese] Notes on Wireless Communications by Andrea Goldsmith", tags: ["Wireless Communications", "Textbook"], file: "posts/Wireless-communications.md" },
-      { id: "otfs-notes", title: "[Chinese] Notes on OTFS", tags: ["OTFS", "Signal Processing"], file: "posts/otfs-notes.md" },
-      { id: "sats", title: "[Chinese] Notes on Multi-Satellite Cooperative Networks", tags: ["Satellite Communications", "Paper Summarization"], file: "posts/sats.md" },
-      { id: "LLM_BBO", title: "[Chinese] Notes on LLM for Network Optimization", tags: ["Large Language Model", "Optimization", "Paper Summarization"], file: "posts/LLM_BBO.md" }
-    ];
+    let posts = [];
 
     const list = document.getElementById("post-list");
     const searchBox = document.getElementById("search");
     const filterHeaderContainer = document.getElementById("filter-header-container");
+    const listSection = document.getElementById("list-section");
+    const articleSection = document.getElementById("article-section");
+    const postTitle = document.getElementById("post-title");
+    const postTags = document.getElementById("post-tags");
+    const postContent = document.getElementById("post-content");
 
     let activeTags = new Set();
     let tagLogic = 'OR'; 
 
+    function normalizePost(post) {
+      const id = post.id || post.slug;
+      return {
+        ...post,
+        id,
+        tags: Array.isArray(post.tags) ? post.tags : [],
+        file: post.file || `posts/${id}.md`
+      };
+    }
+
+    async function loadPostsIndex() {
+      const res = await fetch(POSTS_INDEX);
+      if (!res.ok) throw new Error(`Failed to load ${POSTS_INDEX}`);
+      const data = await res.json();
+      posts = (data.posts || []).map(normalizePost).filter(post => post.id && post.title && post.file);
+    }
+
+    function escapeHtml(text) {
+      return String(text).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
     async function initializeAndSortPosts() {
+      try {
+        await loadPostsIndex();
+      } catch (err) {
+        list.innerHTML = `<li><small class="muted">${escapeHtml(err.message)}</small></li>`;
+        return;
+      }
+
       await Promise.all(posts.map(async (post) => {
         try {
           const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits?path=${post.file}&page=1&per_page=1`;
@@ -156,17 +212,105 @@
           if (commits && commits.length > 0) {
             post.date = commits[0].commit.committer.date; 
             post.displayDate = post.date.split('T')[0];
+          } else if (post.date) {
+            post.displayDate = post.date;
           } else {
             post.date = "1970-01-01T00:00:00Z";
             post.displayDate = "Local / Test File";
           }
         } catch (err) {
-          post.date = "1970-01-01T00:00:00Z";
-          post.displayDate = "Local / Test File";
+          post.date = post.date || "1970-01-01T00:00:00Z";
+          post.displayDate = post.date === "1970-01-01T00:00:00Z" ? "Local / Test File" : post.date;
         }
       }));
       posts.sort((a, b) => new Date(b.date) - new Date(a.date));
       renderList();
+    }
+
+    function extractMath(md) {
+      const chunks = [];
+      let out = ''; let i = 0;
+      const pushToken = (text) => { const key = `@@MATH_${chunks.length}@@`; chunks.push(text); return key; };
+      while (i < md.length) {
+        if (md.startsWith('$$', i)) { const j = md.indexOf('$$', i + 2); if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; } }
+        if (md.startsWith('\\[', i)) { const j = md.indexOf('\\]', i + 2); if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; } }
+        if (md.startsWith('\\(', i)) { const j = md.indexOf('\\)', i + 2); if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; } }
+        if (md[i] === '$' && md[i+1] !== '$') {
+          let j = i + 1;
+          while (j < md.length) { if (md[j] === '\\') { j += 2; continue; } if (md[j] === '$') break; j++; }
+          if (j < md.length && md[j] === '$') { out += pushToken(md.slice(i, j + 1)); i = j + 1; continue; }
+        }
+        out += md[i++];
+      }
+      return { masked: out, chunks };
+    }
+
+    function restoreMath(html, chunks) {
+      let out = html;
+      chunks.forEach((raw, idx) => {
+        const key = `@@MATH_${idx}@@`;
+        const isDisplay = (/^\$\$[\s\S]*\$\$$/.test(raw) || /^\\\[[\s\S]*\\\]$/.test(raw));
+        const replacement = isDisplay ? `<div class="math-display">${raw}</div>` : raw;
+        out = out.replaceAll(key, replacement);
+      });
+      return out;
+    }
+
+    async function typesetPostContent() {
+      if (!window.MathJax) return;
+      try {
+        if (MathJax.startup && MathJax.startup.promise) await MathJax.startup.promise;
+        if (MathJax.texReset) MathJax.texReset();
+        if (MathJax.typesetClear) MathJax.typesetClear([postContent]);
+        await MathJax.typesetPromise([postContent]);
+      } catch (err) {}
+    }
+
+    async function renderPost(post) {
+      listSection.hidden = true;
+      articleSection.hidden = false;
+      document.title = `${post.title} · Can Zheng`;
+      postTitle.textContent = post.title;
+      postTags.innerHTML = post.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("");
+
+      if (post.file.toLowerCase().endsWith(".pdf")) {
+         document.body.classList.add('pdf-mode');
+         postContent.innerHTML = `<iframe class="pdf-container" src="${encodeURI(post.file)}"></iframe>`;
+      } else {
+         fetch(post.file)
+          .then(r => r.text())
+          .then(async (markdown) => {
+             const { masked, chunks } = extractMath(markdown);
+             const htmlMasked = marked.parse(masked);
+             const html = restoreMath(htmlMasked, chunks);
+             postContent.innerHTML = html;
+             await new Promise(requestAnimationFrame);
+             await typesetPostContent();
+          })
+          .catch(err => {
+             postContent.innerHTML = `<p style="color:red;">Error loading post: ${escapeHtml(err.message)}</p>`;
+          });
+      }
+    }
+
+    async function renderPostRoute(postId) {
+      try {
+        await loadPostsIndex();
+        const post = posts.find(p => p.id === postId);
+        if (post) {
+          await renderPost(post);
+        } else {
+          listSection.hidden = true;
+          articleSection.hidden = false;
+          postTitle.textContent = "Post Not Found";
+          postContent.innerHTML = "<p>Sorry, the requested post does not exist or has been removed.</p>";
+        }
+      } catch (err) {
+        listSection.hidden = true;
+        articleSection.hidden = false;
+        postTitle.textContent = "Unable to Load Posts";
+        postContent.innerHTML = `<p style="color:red;">${escapeHtml(err.message)}</p>`;
+      }
     }
 
     function toggleTag(tag) {
@@ -202,7 +346,7 @@
           html += `<div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">`;
           html += `<span style="font-weight:600; font-size:0.9rem;">Tags:</span>`;
           activeTags.forEach(t => {
-            html += `<span class="tag" style="cursor:pointer;" onclick="toggleTag('${t}')" title="Remove">${t} &times;</span>`;
+            html += `<span class="tag" style="cursor:pointer;" data-remove-tag="${escapeHtml(t)}" title="Remove">${escapeHtml(t)} &times;</span>`;
           });
           html += `<select class="logic-select" onchange="changeLogic(this.value)">
                      <option value="OR" ${tagLogic === 'OR' ? 'selected' : ''}>OR (Any)</option>
@@ -212,16 +356,20 @@
         }
 
         if (textFilter !== "") {
-          html += `<span style="font-size:0.9rem;">Search: <strong>${searchBox.value}</strong></span>`;
+          html += `<span style="font-size:0.9rem;">Search: <strong>${escapeHtml(searchBox.value)}</strong></span>`;
         }
 
         html += `<button class="back-btn" onclick="clearFilters()"><i class="fas fa-times"></i> Clear</button>`;
         html += `</div>`;
         filterHeaderContainer.innerHTML = html;
+        filterHeaderContainer.querySelectorAll("[data-remove-tag]").forEach(tagEl => {
+          tagEl.onclick = () => toggleTag(tagEl.dataset.removeTag);
+        });
       }
 
       const filteredPosts = posts.filter(post => {
         const titleMatch = post.title.toLowerCase().includes(textFilter);
+        const tagTextMatch = post.tags.some(t => t.toLowerCase().includes(textFilter));
         
         let tagMatch = true;
         if (activeTags.size > 0) {
@@ -232,7 +380,7 @@
           }
         }
         
-        return titleMatch && tagMatch;
+        return (titleMatch || tagTextMatch) && tagMatch;
       });
 
       if (filteredPosts.length === 0) {
@@ -242,16 +390,16 @@
       filteredPosts.forEach(post => {
         const li = document.createElement("li");
         li.innerHTML = `
-          <a href="#" style="font-size: 1.1rem; font-weight: 600; display: block; margin-bottom: 6px;">${post.title}</a>
+          <a href="#" style="font-size: 1.1rem; font-weight: 600; display: block; margin-bottom: 6px;">${escapeHtml(post.title)}</a>
           <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
-            <span class="post-date"><i class="far fa-calendar-alt"></i> ${post.displayDate}</span>
-            ${post.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join("")}
+            <span class="post-date"><i class="far fa-calendar-alt"></i> ${escapeHtml(post.displayDate)}</span>
+            ${post.tags.map(t => `<span class="tag" data-tag="${escapeHtml(t)}">${escapeHtml(t)}</span>`).join("")}
           </div>
         `;
 
         li.querySelector("a").onclick = (e) => {
           e.preventDefault();
-          window.location.href = `post.html?id=${post.id}`;
+          window.location.href = `blog.html?id=${post.id}`;
         };
 
         li.querySelectorAll(".tag").forEach(tagEl => {
@@ -264,8 +412,20 @@
       });
     }
 
+    async function initializeBlog() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const postId = urlParams.get('id') || urlParams.get('p');
+
+      if (postId) {
+        await renderPostRoute(postId);
+        return;
+      }
+
+      await initializeAndSortPosts();
+    }
+
     searchBox.oninput = () => renderList();
-    initializeAndSortPosts();
+    initializeBlog();
 
     const themeBtn = document.getElementById('theme-btn');
     const themeIcon = themeBtn.querySelector('i');

@@ -1,14 +1,45 @@
 {
   "posts": [
     {
-      "slug": "hello-world",
-      "title": "Hello, World: Markdown + LaTeX Demo",
-      "date": "2025-08-19"
+      "id": "SSL_metrics",
+      "title": "[Chinese] Notes on Two Metrics of Self-Supervised Learning: RankMe and LiDAR",
+      "date": "2026-03-16",
+      "tags": ["Self-Supervised Learning", "Paper Summarization"],
+      "file": "posts/SSL_metrics.md"
     },
     {
-      "slug": "otfs-notes",
-      "title": "Notes on OTFS Channel Estimation",
-      "date": "2025-08-18"
+      "id": "Wireless-communications2nd",
+      "title": "[Chinese] Notes on Wireless Communications (2nd Edition) by Andrea Goldsmith",
+      "tags": ["Wireless Communications", "Textbook"],
+      "file": "posts/Wireless-communications2nd.pdf"
+    },
+    {
+      "id": "Wireless-communications",
+      "title": "[Chinese] Notes on Wireless Communications by Andrea Goldsmith",
+      "date": "2025-09-08",
+      "tags": ["Wireless Communications", "Textbook"],
+      "file": "posts/Wireless-communications.md"
+    },
+    {
+      "id": "otfs-notes",
+      "title": "[Chinese] Notes on OTFS",
+      "date": "2025-08-22",
+      "tags": ["OTFS", "Signal Processing"],
+      "file": "posts/otfs-notes.md"
+    },
+    {
+      "id": "sats",
+      "title": "[Chinese] Notes on Multi-Satellite Cooperative Networks",
+      "date": "2025-09-26",
+      "tags": ["Satellite Communications", "Paper Summarization"],
+      "file": "posts/sats.md"
+    },
+    {
+      "id": "LLM_BBO",
+      "title": "[Chinese] Notes on LLM for Network Optimization",
+      "date": "2025-11-17",
+      "tags": ["Large Language Model", "Optimization", "Paper Summarization"],
+      "file": "posts/LLM_BBO.md"
     }
   ]
 }
