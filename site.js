@@ -1,6 +1,8 @@
 (function () {
   const THEME_KEY = "theme";
   const LANG_KEY = "site-lang";
+  const STATS_OPT_OUT_KEY = "visitor-stats-opt-out";
+  const CLUSTRMAPS_SRC = "https://clustrmaps.com/map_v2.js?d=GtDZVi4tsLCxCMPsshi4UGUmYEeEN1BC-yvrYvb1Rt4&cl=ffffff&w=250&h=150";
   let readyMarked = false;
   let loadingTimer = null;
 
@@ -88,6 +90,73 @@
     }
   }
 
+  function syncYear() {
+    const yearEl = document.getElementById("year");
+    if (yearEl) {
+      yearEl.textContent = new Date().getFullYear();
+    }
+  }
+
+  function updateStatsPreference() {
+    const params = new URLSearchParams(window.location.search);
+    const stats = params.get("stats");
+
+    if (stats === "off" || params.get("no-count") === "1") {
+      localStorage.setItem(STATS_OPT_OUT_KEY, "true");
+    } else if (stats === "on") {
+      localStorage.removeItem(STATS_OPT_OUT_KEY);
+    }
+  }
+
+  function isStatsOptedOut() {
+    return localStorage.getItem(STATS_OPT_OUT_KEY) === "true";
+  }
+
+  function isLocalPreview() {
+    return window.location.protocol === "file:" ||
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1" ||
+      window.location.hostname === "::1";
+  }
+
+  function initVisitorStats() {
+    updateStatsPreference();
+
+    if (isStatsOptedOut() || isLocalPreview()) {
+      const footer = document.querySelector(".footer");
+      if (footer && isStatsOptedOut() && !footer.querySelector("[data-visitor-stats-status]")) {
+        const status = document.createElement("div");
+        status.className = "visitor-stats-status";
+        status.dataset.visitorStatsStatus = "off";
+        status.textContent = "Visitor stats disabled for this browser.";
+        footer.appendChild(status);
+      }
+      return;
+    }
+
+    if (document.getElementById("clustrmaps")) {
+      return;
+    }
+
+    const footer = document.querySelector(".footer");
+    const mount = document.createElement("div");
+    mount.className = "visitor-stats";
+    mount.setAttribute("aria-label", "Visitor statistics");
+
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.id = "clustrmaps";
+    script.src = CLUSTRMAPS_SRC;
+    mount.appendChild(script);
+
+    if (footer) {
+      footer.appendChild(mount);
+    } else {
+      mount.hidden = true;
+      document.body.appendChild(mount);
+    }
+  }
+
   function init(options) {
     const settings = options || {};
     const titles = settings.titles || {};
@@ -128,6 +197,8 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    syncYear();
+    initVisitorStats();
     window.setTimeout(markReady, 300);
   });
 
@@ -141,6 +212,8 @@
     init,
     setLanguage,
     getLanguage: detectLanguage,
+    initVisitorStats,
+    isStatsOptedOut,
     markReady,
   };
 }());
