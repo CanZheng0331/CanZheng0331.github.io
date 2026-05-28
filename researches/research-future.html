@@ -68,7 +68,20 @@
   </main>
   <footer class="footer">
     <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
-    <script src="../stats.js?v=20260529"></script>
+    <script>
+      (function () {
+        const key = "visitor-stats-opt-out";
+        const params = new URLSearchParams(window.location.search);
+        const stats = params.get("stats");
+        if (stats === "off" || params.get("no-count") === "1") localStorage.setItem(key, "true");
+        if (stats === "on") localStorage.removeItem(key);
+        if (localStorage.getItem(key) === "true") {
+          document.write('<div class="visitor-stats-status" data-visitor-stats-status="off">Visitor stats disabled for this browser.</div>');
+          return;
+        }
+        document.write('<div class="visitor-stats" aria-label="Visitor statistics"><script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=GtDZVi4tsLCxCMPsshi4UGUmYEeEN1BC-yvrYvb1Rt4&cl=ffffff&w=250&h=150"><\/script></div>');
+      }());
+    </script>
     <script src="../site.js?v=20260529"></script>
   </footer>
   <script>
