@@ -78,8 +78,8 @@
     #post-content .math-display mjx-container { display: block !important; margin: 1em 0 !important; text-align: center; }
     #post-content mjx-container[display="false"] { display: inline-block !important; margin: 0 .1em !important; }
     .post-layout { display: grid; grid-template-columns: minmax(180px, 260px) minmax(0, 1fr); gap: 28px; align-items: start; }
-    .post-back-link { position: fixed; right: 24px; bottom: 24px; z-index: 1200; display: inline-flex; align-items: center; gap: 6px; width: fit-content; padding: 8px 12px; border-radius: 8px; background: color-mix(in srgb, var(--card) 94%, transparent); border: 1px solid var(--border); box-shadow: var(--shadow-md); font-weight: 500; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-    .post-back-link[hidden] { display: none; }
+    .post-back-link { position: fixed; right: 24px; bottom: 24px; z-index: 1200; display: none; align-items: center; gap: 6px; width: fit-content; padding: 8px 12px; border-radius: 8px; background: color-mix(in srgb, var(--card) 94%, transparent); border: 1px solid var(--border); box-shadow: var(--shadow-md); font-weight: 500; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    body.post-view .post-back-link { display: inline-flex; }
     .post-back-link:hover { text-decoration: none; border-color: var(--accent); }
     .post-toc { position: sticky; top: 86px; max-height: calc(100vh - 110px); overflow: auto; border-right: 1px solid var(--border); padding: 4px 16px 8px 0; font-size: 0.9rem; text-align: left !important; }
     .post-toc * { text-align: left !important; }
@@ -171,7 +171,7 @@
         <div id="post-content"></div>
       </div>
     </article>
-    <a id="post-back-link" href="blog.html" class="post-back-link" hidden><i class="fas fa-arrow-left"></i> Back to Blogs</a>
+    <a id="post-back-link" href="blog.html" class="post-back-link"><i class="fas fa-arrow-left"></i> Back to Blogs</a>
   </main>
   
   <footer class="footer">
@@ -197,7 +197,6 @@
     const postContent = document.getElementById("post-content");
     const postToc = document.getElementById("post-toc");
     const postTocList = document.getElementById("post-toc-list");
-    const postBackLink = document.getElementById("post-back-link");
 
     let activeTags = new Set();
     let tagLogic = 'OR'; 
@@ -372,7 +371,7 @@
     async function renderPost(post) {
       listSection.hidden = true;
       articleSection.hidden = false;
-      postBackLink.hidden = false;
+      document.body.classList.add("post-view");
       document.body.classList.remove('pdf-mode');
       postToc.hidden = true;
       postTocList.innerHTML = "";
@@ -410,14 +409,14 @@
         } else {
           listSection.hidden = true;
           articleSection.hidden = false;
-          postBackLink.hidden = false;
+          document.body.classList.add("post-view");
           postTitle.textContent = "Post Not Found";
           postContent.innerHTML = "<p>Sorry, the requested post does not exist or has been removed.</p>";
         }
       } catch (err) {
         listSection.hidden = true;
         articleSection.hidden = false;
-        postBackLink.hidden = false;
+        document.body.classList.add("post-view");
         postTitle.textContent = "Unable to Load Posts";
         postContent.innerHTML = `<p style="color:red;">${escapeHtml(err.message)}</p>`;
       }
@@ -531,6 +530,7 @@
         return;
       }
 
+      document.body.classList.remove("post-view", "pdf-mode");
       await initializeAndSortPosts();
     }
 

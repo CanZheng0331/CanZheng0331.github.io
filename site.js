@@ -128,16 +128,13 @@
     updateStatsPreference();
 
     if (isStatsOptedOut() || isLocalPreview()) {
-      const footer = document.querySelector(".footer");
-      if (footer && !footer.querySelector("[data-visitor-stats-status]")) {
-        const status = document.createElement("div");
-        status.className = "visitor-stats-status";
-        status.dataset.visitorStatsStatus = "off";
-        status.textContent = isStatsOptedOut()
-          ? "Visitor stats disabled for this browser."
-          : "Visitor stats disabled in local preview.";
-        footer.appendChild(status);
-      }
+      insertVisitorStatsMarkup(
+        `<div class="visitor-stats-status" data-visitor-stats-status="off">${
+          isStatsOptedOut()
+            ? "Visitor stats disabled for this browser."
+            : "Visitor stats disabled in local preview."
+        }</div>`
+      );
       return;
     }
 
@@ -145,22 +142,23 @@
       return;
     }
 
+    insertVisitorStatsMarkup(
+      `<div class="visitor-stats" aria-label="Visitor statistics"><script type="text/javascript" id="clustrmaps" src="${CLUSTRMAPS_SRC}"><\/script></div>`
+    );
+  }
+
+  function insertVisitorStatsMarkup(html) {
+    if (document.readyState === "loading") {
+      document.write(html);
+      return;
+    }
+
     const footer = document.querySelector(".footer");
     const mount = document.createElement("div");
-    mount.className = "visitor-stats";
-    mount.setAttribute("aria-label", "Visitor statistics");
+    mount.innerHTML = html;
 
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.id = "clustrmaps";
-    script.src = CLUSTRMAPS_SRC;
-    mount.appendChild(script);
-
-    if (footer) {
-      footer.appendChild(mount);
-    } else {
-      mount.hidden = true;
-      document.body.appendChild(mount);
+    while (mount.firstChild) {
+      (footer || document.body).appendChild(mount.firstChild);
     }
   }
 
