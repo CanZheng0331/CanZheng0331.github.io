@@ -4,6 +4,7 @@
   const STATS_OPT_OUT_KEY = "visitor-stats-opt-out";
   const CLUSTRMAPS_SRC = "https://clustrmaps.com/map_v2.js?d=GtDZVi4tsLCxCMPsshi4UGUmYEeEN1BC-yvrYvb1Rt4&cl=ffffff&w=250&h=150";
   let readyMarked = false;
+  let statsInitialized = false;
   let loadingTimer = null;
 
   document.documentElement.setAttribute("data-site-ready", "false");
@@ -120,15 +121,21 @@
   }
 
   function initVisitorStats() {
+    if (statsInitialized) {
+      return;
+    }
+    statsInitialized = true;
     updateStatsPreference();
 
     if (isStatsOptedOut() || isLocalPreview()) {
       const footer = document.querySelector(".footer");
-      if (footer && isStatsOptedOut() && !footer.querySelector("[data-visitor-stats-status]")) {
+      if (footer && !footer.querySelector("[data-visitor-stats-status]")) {
         const status = document.createElement("div");
         status.className = "visitor-stats-status";
         status.dataset.visitorStatsStatus = "off";
-        status.textContent = "Visitor stats disabled for this browser.";
+        status.textContent = isStatsOptedOut()
+          ? "Visitor stats disabled for this browser."
+          : "Visitor stats disabled in local preview.";
         footer.appendChild(status);
       }
       return;
@@ -155,6 +162,11 @@
       mount.hidden = true;
       document.body.appendChild(mount);
     }
+  }
+
+  function initSharedPageBits() {
+    syncYear();
+    initVisitorStats();
   }
 
   function init(options) {
@@ -196,9 +208,10 @@
     markReady();
   }
 
+  initSharedPageBits();
+
   document.addEventListener("DOMContentLoaded", function () {
-    syncYear();
-    initVisitorStats();
+    initSharedPageBits();
     window.setTimeout(markReady, 300);
   });
 
