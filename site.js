@@ -5,26 +5,15 @@
   const CLUSTRMAPS_SRC = "https://clustrmaps.com/map_v2.js?d=GtDZVi4tsLCxCMPsshi4UGUmYEeEN1BC-yvrYvb1Rt4&cl=ffffff&w=250&h=150";
   let readyMarked = false;
   let statsInitialized = false;
-  let loadingTimer = null;
 
-  document.documentElement.setAttribute("data-site-ready", "false");
   document.documentElement.setAttribute("data-site-loading", "false");
-
-  loadingTimer = window.setTimeout(function () {
-    if (!readyMarked) {
-      document.documentElement.setAttribute("data-site-loading", "true");
-    }
-  }, 120);
+  document.documentElement.setAttribute("data-site-ready", "true");
 
   function markReady() {
     if (readyMarked) {
       return;
     }
     readyMarked = true;
-    if (loadingTimer) {
-      window.clearTimeout(loadingTimer);
-      loadingTimer = null;
-    }
     document.documentElement.setAttribute("data-site-loading", "false");
     document.documentElement.setAttribute("data-site-ready", "true");
   }
@@ -142,9 +131,7 @@
       return;
     }
 
-    insertVisitorStatsMarkup(
-      `<div class="visitor-stats" aria-label="Visitor statistics"><script type="text/javascript" id="clustrmaps" src="${CLUSTRMAPS_SRC}"><\/script></div>`
-    );
+    insertVisitorStatsMarkup(`<div class="visitor-stats" aria-label="Visitor statistics"><script type="text/javascript" id="clustrmaps" src="${CLUSTRMAPS_SRC}"><\/script></div>`);
   }
 
   function insertVisitorStatsMarkup(html) {
