@@ -78,11 +78,12 @@
     #post-content .math-display mjx-container { display: block !important; margin: 1em 0 !important; text-align: center; }
     #post-content mjx-container[display="false"] { display: inline-block !important; margin: 0 .1em !important; }
     .post-layout { display: grid; grid-template-columns: minmax(180px, 260px) minmax(0, 1fr); gap: 28px; align-items: start; }
-    .post-back-link { position: sticky; top: 72px; z-index: 20; display: inline-flex; align-items: center; gap: 6px; width: fit-content; margin-bottom: 12px; padding: 6px 10px; border-radius: 8px; background: color-mix(in srgb, var(--card) 92%, transparent); border: 1px solid var(--border); box-shadow: var(--shadow-sm); font-weight: 500; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .post-back-link { position: fixed; right: 24px; bottom: 24px; z-index: 1200; display: inline-flex; align-items: center; gap: 6px; width: fit-content; padding: 8px 12px; border-radius: 8px; background: color-mix(in srgb, var(--card) 94%, transparent); border: 1px solid var(--border); box-shadow: var(--shadow-md); font-weight: 500; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
     .post-back-link:hover { text-decoration: none; border-color: var(--accent); }
-    .post-toc { position: sticky; top: 86px; max-height: calc(100vh - 110px); overflow: auto; border-right: 1px solid var(--border); padding: 4px 16px 8px 0; font-size: 0.9rem; text-align: left; }
+    .post-toc { position: sticky; top: 86px; max-height: calc(100vh - 110px); overflow: auto; border-right: 1px solid var(--border); padding: 4px 16px 8px 0; font-size: 0.9rem; text-align: left !important; }
+    .post-toc * { text-align: left !important; }
     .post-toc[hidden] { display: none; }
-    .post-toc-title { color: var(--muted); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; margin: 0 0 10px; text-transform: uppercase; }
+    .post-toc-title { color: var(--muted); display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; margin: 0 0 10px; text-align: left !important; text-transform: uppercase; width: 100%; }
     .post-toc nav { display: flex; flex-direction: column; gap: 2px; }
     .post-toc a { border-left: 3px solid transparent; color: var(--muted); display: block; line-height: 1.35; padding: 6px 0 6px 10px; text-align: left; text-decoration: none; }
     .post-toc a:hover, .post-toc a.active { color: var(--accent); border-left-color: var(--accent); }
@@ -102,6 +103,7 @@
     @media (max-width: 900px) {
       .post-layout { display: block; }
       .post-toc { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; padding: 0 0 14px; }
+      .post-back-link { right: 16px; bottom: 16px; }
     }
   </style>
 </head>
