@@ -79,6 +79,7 @@
     #post-content mjx-container[display="false"] { display: inline-block !important; margin: 0 .1em !important; }
     .post-layout { display: grid; grid-template-columns: minmax(180px, 260px) minmax(0, 1fr); gap: 28px; align-items: start; }
     .post-back-link { position: fixed; right: 24px; bottom: 24px; z-index: 1200; display: inline-flex; align-items: center; gap: 6px; width: fit-content; padding: 8px 12px; border-radius: 8px; background: color-mix(in srgb, var(--card) 94%, transparent); border: 1px solid var(--border); box-shadow: var(--shadow-md); font-weight: 500; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .post-back-link[hidden] { display: none; }
     .post-back-link:hover { text-decoration: none; border-color: var(--accent); }
     .post-toc { position: sticky; top: 86px; max-height: calc(100vh - 110px); overflow: auto; border-right: 1px solid var(--border); padding: 4px 16px 8px 0; font-size: 0.9rem; text-align: left !important; }
     .post-toc * { text-align: left !important; }
