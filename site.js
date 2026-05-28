@@ -1,10 +1,7 @@
 (function () {
   const THEME_KEY = "theme";
   const LANG_KEY = "site-lang";
-  const STATS_OPT_OUT_KEY = "visitor-stats-opt-out";
-  const CLUSTRMAPS_SRC = "https://clustrmaps.com/map_v2.js?d=GtDZVi4tsLCxCMPsshi4UGUmYEeEN1BC-yvrYvb1Rt4&cl=ffffff&w=250&h=150";
   let readyMarked = false;
-  let statsInitialized = false;
 
   document.documentElement.setAttribute("data-site-loading", "false");
   document.documentElement.setAttribute("data-site-ready", "true");
@@ -87,71 +84,8 @@
     }
   }
 
-  function updateStatsPreference() {
-    const params = new URLSearchParams(window.location.search);
-    const stats = params.get("stats");
-
-    if (stats === "off" || params.get("no-count") === "1") {
-      localStorage.setItem(STATS_OPT_OUT_KEY, "true");
-    } else if (stats === "on") {
-      localStorage.removeItem(STATS_OPT_OUT_KEY);
-    }
-  }
-
-  function isStatsOptedOut() {
-    return localStorage.getItem(STATS_OPT_OUT_KEY) === "true";
-  }
-
-  function isLocalPreview() {
-    return window.location.protocol === "file:" ||
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1" ||
-      window.location.hostname === "::1";
-  }
-
-  function initVisitorStats() {
-    if (statsInitialized) {
-      return;
-    }
-    statsInitialized = true;
-    updateStatsPreference();
-
-    if (isStatsOptedOut() || isLocalPreview()) {
-      insertVisitorStatsMarkup(
-        `<div class="visitor-stats-status" data-visitor-stats-status="off">${
-          isStatsOptedOut()
-            ? "Visitor stats disabled for this browser."
-            : "Visitor stats disabled in local preview."
-        }</div>`
-      );
-      return;
-    }
-
-    if (document.getElementById("clustrmaps")) {
-      return;
-    }
-
-    insertVisitorStatsMarkup(`<div class="visitor-stats" aria-label="Visitor statistics"><script type="text/javascript" id="clustrmaps" src="${CLUSTRMAPS_SRC}"><\/script></div>`);
-  }
-
-  function insertVisitorStatsMarkup(html) {
-    if (document.readyState === "loading") {
-      document.write(html);
-      return;
-    }
-
-    const footer = document.querySelector(".footer");
-    const mount = document.createElement("div");
-    mount.innerHTML = html;
-
-    while (mount.firstChild) {
-      (footer || document.body).appendChild(mount.firstChild);
-    }
-  }
-
   function initSharedPageBits() {
     syncYear();
-    initVisitorStats();
   }
 
   function init(options) {
@@ -210,8 +144,6 @@
     init,
     setLanguage,
     getLanguage: detectLanguage,
-    initVisitorStats,
-    isStatsOptedOut,
     markReady,
   };
 }());
