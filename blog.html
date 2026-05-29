@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Blogs · Can Zheng</title>
-  <link rel="stylesheet" href="styles.css?v=20260530" />
+  <link rel="stylesheet" href="styles.css?v=20260530-copy" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     window.MathJax = {
@@ -371,6 +371,64 @@
       } catch (err) {}
     }
 
+    function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+      }
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand("copy");
+        return Promise.resolve();
+      } catch (err) {
+        return Promise.reject(err);
+      } finally {
+        textarea.remove();
+      }
+    }
+
+    function enhanceCodeBlocks() {
+      postContent.querySelectorAll("pre").forEach((pre) => {
+        if (pre.parentElement && pre.parentElement.classList.contains("code-block")) return;
+        const code = pre.querySelector("code");
+        if (!code) return;
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "code-block";
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "copy-code-btn";
+        button.textContent = "Copy";
+        button.title = "Copy code";
+        button.setAttribute("aria-label", "Copy code");
+        button.addEventListener("click", async () => {
+          try {
+            await copyText(code.textContent || "");
+            button.textContent = "Copied";
+            button.classList.add("copied");
+            window.setTimeout(() => {
+              button.textContent = "Copy";
+              button.classList.remove("copied");
+            }, 1400);
+          } catch (err) {
+            button.textContent = "Failed";
+            window.setTimeout(() => {
+              button.textContent = "Copy";
+            }, 1400);
+          }
+        });
+        wrapper.appendChild(button);
+      });
+    }
+
     async function renderPost(post) {
       listSection.hidden = true;
       articleSection.hidden = false;
@@ -393,6 +451,7 @@
              const htmlMasked = marked.parse(masked);
              const html = restoreMath(htmlMasked, chunks);
              postContent.innerHTML = html;
+             enhanceCodeBlocks();
              buildPostToc();
              await new Promise(requestAnimationFrame);
              await typesetPostContent();
