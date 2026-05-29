@@ -216,7 +216,7 @@ pre {
 }
 .code-block pre {
   margin: 0;
-  padding-top: 46px;
+  padding: 20px 96px 20px 20px;
 }
 .copy-code-btn {
   align-items: center;
