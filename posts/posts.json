@@ -16,13 +16,13 @@
     },
     {
       "id": "Wireless-communications2nd",
-      "title": "《无线通信》第二版读书笔记：Andrea Goldsmith",
+      "title": "《无线通信-Andrea Goldsmith》第二版读书笔记",
       "tags": ["Wireless Communications", "Textbook"],
       "file": "posts/Wireless-communications2nd.pdf"
     },
     {
       "id": "Wireless-communications",
-      "title": "《无线通信》读书笔记：Andrea Goldsmith",
+      "title": "《无线通信-Andrea Goldsmith》读书笔记",
       "date": "2025-09-08",
       "tags": ["Wireless Communications", "Textbook"],
       "file": "posts/Wireless-communications.md"
@@ -45,7 +45,7 @@
       "id": "LLM_BBO",
       "title": "大模型用于网络优化的论文笔记",
       "date": "2025-11-17",
-      "tags": ["Large Language Model", "Optimization", "Paper Summarization"],
+      "tags": ["LLM", "Optimization", "Paper Summarization"],
       "file": "posts/LLM_BBO.md"
     }
   ]
