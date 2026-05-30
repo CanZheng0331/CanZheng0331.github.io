@@ -219,6 +219,28 @@ nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 .prose h3 { margin-top: 24px; margin-bottom: 8px; }
 .prose p, .prose li { color: var(--fg); opacity: 0.9; }
 .prose blockquote { margin: 20px 0; padding: 12px 20px; border-left: 4px solid var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); border-radius: 0 8px 8px 0; }
+.prose table {
+  border-collapse: collapse;
+  display: block;
+  margin: 20px 0;
+  overflow-x: auto;
+  width: 100%;
+}
+.prose th,
+.prose td {
+  border: 1px solid var(--border);
+  padding: 9px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+.prose th {
+  background: color-mix(in srgb, var(--border) 52%, var(--card));
+  color: var(--fg);
+  font-weight: 700;
+}
+.prose tr:nth-child(even) td {
+  background: color-mix(in srgb, var(--border) 24%, transparent);
+}
 .prose code {
   background: color-mix(in srgb, var(--border) 70%, transparent);
   border: 1px solid color-mix(in srgb, var(--border) 85%, var(--fg) 15%);

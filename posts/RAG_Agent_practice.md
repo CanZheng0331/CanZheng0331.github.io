@@ -107,8 +107,6 @@ print(response.choices[0].message.content)
 
 这个例子说明：模型能回答“5 个”，不是因为它跨请求存储了记忆，而是因为我们把前面的猫和狗数量作为上下文传给了它。
 
----
-
 ## 3. RAG 开发
 
 ### 3.1 LangChain 简介
@@ -164,8 +162,6 @@ RAG 通常分为两条线：
 1. Indexing：把文档切成 chunk，并转换成 embedding；
 2. Retriever：把 query 向量化，并从向量数据库中找 top-k 相关片段；
 3. Generation：把检索片段和原始问题一起输入模型，生成最终回答。
-
----
 
 ### 3.4 LangChain 调用大语言模型
 
@@ -277,8 +273,6 @@ print(doc_vectors)
 ```
 
 这里输出不是自然语言，而是向量。语义越接近的文本，在向量空间中距离通常越近。
-
----
 
 ### 3.8 LangChain 通用提示词模板（zero-shot）
 
@@ -396,8 +390,6 @@ text='我的邻居是：李四，最喜欢:跑步' <class 'langchain_core.prompt
 
 课堂中容易问到的问题是：既然二者都能填变量，为什么还要 `invoke`？答案是：`invoke` 是 LangChain 的统一执行接口，返回 `PromptValue`，可以自然进入后续模型、解析器、Runnable 链中；而 `format` 更像是普通 Python 字符串工具。
 
----
-
 ### 3.11 ChatPromptTemplate 的使用
 
 `ChatPromptTemplate` 用于构造多轮聊天模板。它可以通过 `MessagesPlaceholder` 动态注入历史消息。
@@ -433,8 +425,6 @@ print(res.content)
 ```
 
 这里 `MessagesPlaceholder` 很关键。普通 `{history}` 只是字符串占位，而 `MessagesPlaceholder` 表示这里要插入一组结构化消息。
-
----
 
 ### 3.12 Chain 的基础使用
 
@@ -530,8 +520,6 @@ print(type(chain))
 ```text
 <class 'langchain_core.runnables.base.RunnableSequence'>
 ```
-
----
 
 ### 3.15 StrOutputParser 字符串输出解析器
 
