@@ -259,7 +259,7 @@ pre code,
 
 /* Researches Filter & Cards */
 .research-filters { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0; }
-.filter-btn { background: var(--card); border: 1px solid var(--border); color: var(--fg); padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; }
+.filter-btn { display: inline-flex; align-items: center; background: var(--card); border: 1px solid var(--border); color: var(--fg); padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 600; line-height: 1.2; text-decoration: none; transition: all 0.2s ease; }
 .filter-btn:hover { background: var(--border); }
 .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
