@@ -150,14 +150,14 @@ $$
 \text{RAG} = \text{Retrieval} + \text{LLM Prompting}
 $$
 
-#### RAG 的工作原理：离线准备线、在线服务线
+**RAG 的工作原理：离线准备线、在线服务线**
 
 RAG 通常分为两条线：
 
 - 离线准备线：文档加载 -> 文本切分 -> 向量化 -> 写入向量数据库；
 - 在线服务线：用户提问 -> 检索相关文本 -> 拼接 Prompt -> LLM 生成回答。
 
-#### RAG 标准流程
+**RAG 标准流程**
 
 标准流程包括：
 
@@ -321,7 +321,7 @@ print(res)
 
 这里的 <font color='red'>**|**</font> 不是普通的位或运算，而是 LangChain 重写后的链式组合操作。
 
-### 3.9 Few-shot 提示词模板
+### 3.9 LangChain Few-shot 提示词模板
 
 Few-shot 的核心思想是给模型一些示例，让模型模仿示例格式回答。
 
