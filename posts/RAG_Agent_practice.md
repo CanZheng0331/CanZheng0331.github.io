@@ -842,7 +842,7 @@ Document loaders 用于把不同来源的数据统一加载成 LangChain 的 <fo
 - `load()`：一次性把所有文档读入内存；
 - `lazy_load()`：懒加载，边遍历边读取，更适合大文件。
 
-#### CSVLoader
+**CSVLoader**
 
 ```python
 from langchain_community.document_loaders import CSVLoader
@@ -871,7 +871,7 @@ gender: 女' metadata={'source': './data/stu.csv', 'row': 1}
 
 CSVLoader 默认会把每一行转成一个 `Document`，列名和值会一起进入 `page_content`，`row` 记录该条来自第几行。
 
-#### JSONLoader
+**JSONLoader**
 
 `JSONLoader` 需要额外安装 `jq`：
 
@@ -938,7 +938,7 @@ print(document)
 [Document(... page_content='周杰轮'), Document(... page_content='李华'), Document(... page_content='王强')]
 ```
 
-#### TextLoader 与文本切分
+**TextLoader 与文本切分**
 
 ```python
 from langchain_community.document_loaders import TextLoader
@@ -993,7 +993,7 @@ page_content='小说是艺术的一种，艺术的基本内容是人的感情和
 
 `RecursiveCharacterTextSplitter` 会按照 `separators` 的优先级递归切分，尽量优先按段落、换行、句号等自然边界切开。`chunk_overlap=50` 表示相邻 chunk 之间保留 50 个字符重叠，用来减少语义断裂。
 
-#### PyPDFLoader
+**PyPDFLoader**
 
 ```python
 pip install pypdf
@@ -1033,7 +1033,7 @@ page_content='Contents
 
 Vector store 用来保存文本 embedding，并支持相似度检索。RAG 中它承担的是“知识库检索”的角色。
 
-#### InMemoryVectorStore
+**InMemoryVectorStore**
 
 ```python
 from langchain_core.vectorstores import InMemoryVectorStore
@@ -1078,7 +1078,7 @@ info: 今日发布了一篇关于城市交通改善的报道'),
 
 `InMemoryVectorStore` 只存在于内存中，程序结束后数据会丢失，适合学习、测试和小 demo。
 
-#### Chroma 持久化向量库
+**Chroma 持久化向量库**
 
 ```python
 pip install langchain_chroma
