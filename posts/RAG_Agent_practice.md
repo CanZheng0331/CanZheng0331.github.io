@@ -705,3 +705,615 @@ print("第二次执行：", res2)
 ```
 
 这里的 <font color='red'>**session_id**</font> 很重要。不同 session 会对应不同历史记录；相同 session 才会共享同一段对话记忆。
+
+
+### 3.19 Memory <font color='red'>**长期会话记忆**</font>
+
+上一节使用的 `InMemoryChatMessageHistory` 只能在 Python 进程内保存历史消息。程序一旦重启，`store = {}` 会重新变成空字典，历史对话也就丢失了。
+
+如果希望会话历史跨程序运行长期保留，可以自己实现一个基于文件的历史记录类。核心思路是：每个 `session_id` 对应一个 JSON 文件，读取历史时从文件反序列化为 LangChain 的 Message 对象，写入历史时再把 Message 对象序列化回 JSON。
+
+```python
+import os
+import json
+from typing import List, Sequence
+
+from langchain_core.messages import BaseMessage, messages_from_dict, messages_to_dict
+from langchain_core.chat_history import BaseChatMessageHistory
+
+
+class FileChatMessageHistory(BaseChatMessageHistory):
+    def __init__(self, session_id: str, storage_path: str):
+        self.session_id = session_id
+        self.storage_path = storage_path
+        self.file_path = os.path.join(self.storage_path, f"{self.session_id}.json")
+        os.makedirs(self.storage_path, exist_ok=True)
+
+        if not os.path.exists(self.file_path):
+            with open(self.file_path, "w", encoding="utf-8") as f:
+                json.dump([], f, ensure_ascii=False, indent=4)
+
+    @property
+    def messages(self) -> List[BaseMessage]:
+        with open(self.file_path, "r", encoding="utf-8") as f:
+            messages_data = json.load(f)
+        return messages_from_dict(messages_data)
+
+    def add_messages(self, messages: Sequence[BaseMessage]) -> None:
+        all_messages = self.messages
+        all_messages.extend(messages)
+        messages_data = messages_to_dict(all_messages)
+        with open(self.file_path, "w", encoding="utf-8") as f:
+            json.dump(messages_data, f, ensure_ascii=False, indent=4)
+
+    def clear(self) -> None:
+        with open(self.file_path, "w", encoding="utf-8") as f:
+            json.dump([], f, ensure_ascii=False, indent=4)
+```
+
+接入 `RunnableWithMessageHistory` 的方式与上一节类似，只是 `get_history()` 返回的不再是内存对象，而是文件历史对象：
+
+```python
+from langchain_community.chat_models.tongyi import ChatTongyi
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnableWithMessageHistory
+
+model = ChatTongyi(model="qwen3-max")
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "你需要根据历史对话内容回答用户问题。"),
+    MessagesPlaceholder(variable_name="chat_history"),
+    ("human", "请根据会话历史回应用户问题：{question}。")
+])
+
+def print_prompt(full_prompt):
+    print("=" * 20, full_prompt.to_string(), "=" * 20)
+    return full_prompt
+
+base_chain = prompt | print_prompt | model | StrOutputParser()
+
+def get_history(session_id):
+    return FileChatMessageHistory(session_id, "./chat_history")
+
+conversation_chain = RunnableWithMessageHistory(
+    base_chain,
+    get_history,
+    input_messages_key="question",
+    history_messages_key="chat_history"
+)
+
+session_config = {"configurable": {"session_id": "user_001"}}
+
+# 前两次执行用于写入 user_001.json
+# conversation_chain.invoke({"question": "小明有 2 只猫。"}, session_config)
+# conversation_chain.invoke({"question": "小刚有 1 只狗。"}, session_config)
+
+# 后续可以只执行第三次
+res = conversation_chain.invoke({"question": "总共有几只宠物？"}, session_config)
+print("第三次执行：", res)
+```
+
+运行结果节选：
+
+```text
+System: 你需要根据历史对话内容回答用户问题。
+Human: 小明有 2 只猫。
+AI: 好的，小明有 2 只猫。......
+Human: 小刚有 1 只狗。
+AI: 明白了，小明有 2 只猫，小刚有 1 只狗。......
+Human: 请根据会话历史回应用户问题：总共有几只宠物？
+====================
+第三次执行：根据会话历史：小明有 2 只猫，小刚有 1 只狗，所以总共有 3 只宠物。
+```
+
+这里的疑惑是：为什么把第一、二次执行注释掉，只执行第三次，模型还能知道历史？
+
+答案是：历史不是模型自己记住的，也不是 notebook 变量记住的，而是 `user_001.json` 文件记住的。第一次、第二次执行时，`RunnableWithMessageHistory` 会在调用结束后自动把本轮 HumanMessage 和 AIMessage 写进 `./chat_history/user_001.json`。之后即使重启程序，只要第三次仍然使用同一个 `session_id="user_001"`，`get_history("user_001")` 就会重新打开同一个 JSON 文件，并通过 `messages_from_dict` 把文件中的历史内容恢复成 Message 对象，然后注入到 <font color='red'>**MessagesPlaceholder**</font> 所在位置。
+
+内部流程可以概括为：
+
+```text
+invoke 输入 question
+-> 根据 config 里的 session_id 调用 get_history
+-> FileChatMessageHistory.messages 从 user_001.json 读历史
+-> 把历史填入 MessagesPlaceholder
+-> 调用原始 chain 得到回答
+-> 把本轮 user 问题和 AI 回答 append 回 user_001.json
+```
+
+如果想清空长期记忆，可以调用：
+
+```python
+get_history("user_001").clear()
+```
+
+或者直接删除 `./chat_history/user_001.json`。
+
+### 3.20 文档加载器
+
+Document loaders 用于把不同来源的数据统一加载成 LangChain 的 <font color='red'>**Document**</font> 对象。`Document` 主要包含两部分：
+
+- `page_content`：真正参与后续切分、向量化、检索的文本内容；
+- `metadata`：来源、行号、页码等元信息，方便追踪和过滤。
+
+常见加载方式有：
+
+- `load()`：一次性把所有文档读入内存；
+- `lazy_load()`：懒加载，边遍历边读取，更适合大文件。
+
+#### CSVLoader
+
+```python
+from langchain_community.document_loaders import CSVLoader
+
+loader = CSVLoader(
+    file_path="./data/stu.csv",
+    csv_args={"delimiter": ","},
+    encoding="utf-8"
+)
+
+for document in loader.lazy_load():
+    print(document)
+```
+
+运行结果节选：
+
+```text
+page_content='name: 张伟
+age: 28
+gender: 男' metadata={'source': './data/stu.csv', 'row': 0}
+page_content='name: 李娜
+age: 24
+gender: 女' metadata={'source': './data/stu.csv', 'row': 1}
+......
+```
+
+CSVLoader 默认会把每一行转成一个 `Document`，列名和值会一起进入 `page_content`，`row` 记录该条来自第几行。
+
+#### JSONLoader
+
+`JSONLoader` 需要额外安装 `jq`：
+
+```python
+pip install jq
+```
+
+`jq_schema` 用来指定从 JSON 中抽取哪一部分内容。
+
+```python
+from langchain_community.document_loaders import JSONLoader
+
+loader = JSONLoader(
+    file_path="./data/stu.json",
+    jq_schema=".name"
+)
+
+document = loader.load()
+print(document)
+```
+
+运行结果：
+
+```text
+[Document(metadata={'source': '.../data/stu.json', 'seq_num': 1}, page_content='周杰轮')]
+```
+
+如果 JSON 顶层是数组，可以用 `.[].name`：
+
+```python
+loader = JSONLoader(
+    file_path="./data/stus.json",
+    jq_schema=".[].name",
+    text_content=False
+)
+
+document = loader.load()
+print(document)
+```
+
+运行结果节选：
+
+```text
+[Document(... page_content='周杰轮'), Document(... page_content='李华'), Document(... page_content='王强')]
+```
+
+如果是 JSON Lines，也就是每一行都是一个独立 JSON 对象，需要加 `json_lines=True`：
+
+```python
+loader = JSONLoader(
+    file_path="./data/stu_json_lines.jsonl",
+    jq_schema=".name",
+    text_content=False,
+    json_lines=True
+)
+
+document = loader.load()
+print(document)
+```
+
+运行结果节选：
+
+```text
+[Document(... page_content='周杰轮'), Document(... page_content='李华'), Document(... page_content='王强')]
+```
+
+#### TextLoader 与文本切分
+
+```python
+from langchain_community.document_loaders import TextLoader
+
+loader = TextLoader("./data/text.txt", encoding="utf-8")
+docs = loader.load()
+print(docs)
+print(len(docs))
+```
+
+运行结果节选：
+
+```text
+[Document(metadata={'source': './data/text.txt'}, page_content='“金庸作品集”新序\n　　小说是写给人看的......')]
+1
+```
+
+遗留问题：如果一个文档很大，全部加载到一个 `Document` 是否不合适？
+
+答案是：加载成一个 `Document` 本身不是最终问题，真正用于 RAG 前通常还要做 <font color='red'>**文本切分**</font>。大文档如果不切分，直接向量化会有几个问题：文本超过 embedding 模型长度限制；一个向量承载太多主题，检索粒度太粗；后续塞进 prompt 也容易超过上下文窗口。
+
+所以常见流程是：先用 Loader 读成原始 Document，再用 Splitter 切成多个 <font color='red'>**chunk**</font>。
+
+```python
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500,
+    chunk_overlap=50,
+    separators=["\n\n", "\n", "。", "，", "！", "？", ".", ",", "!", "?", " ", ""],
+    length_function=len
+)
+
+split_docs = splitter.split_documents(docs)
+print(len(split_docs))
+for doc in split_docs:
+    print("=" * 20)
+    print(doc)
+```
+
+运行结果节选：
+
+```text
+81
+====================
+page_content='“金庸作品集”新序
+　　小说是写给人看的。小说的内容是人。......' metadata={'source': './data/text.txt'}
+====================
+page_content='小说是艺术的一种，艺术的基本内容是人的感情和生命......' metadata={'source': './data/text.txt'}
+......
+```
+
+`RecursiveCharacterTextSplitter` 会按照 `separators` 的优先级递归切分，尽量优先按段落、换行、句号等自然边界切开。`chunk_overlap=50` 表示相邻 chunk 之间保留 50 个字符重叠，用来减少语义断裂。
+
+#### PyPDFLoader
+
+```python
+pip install pypdf
+```
+
+```python
+from langchain_community.document_loaders import PyPDFLoader
+
+loader = PyPDFLoader(
+    "./data/0_Preface.pdf",
+    mode="page"
+)
+
+i = 0
+for doc in loader.lazy_load():
+    i += 1
+    print(doc)
+    print("=" * 20, i)
+```
+
+运行结果节选：
+
+```text
+page_content='Wireless Communications
+Andrea J. Goldsmith
+Second Edition' metadata={'source': './data/0_Preface.pdf', 'total_pages': 9, 'page': 0, 'page_label': '1'}
+==================== 1
+page_content='Contents
+1 Overview of Wireless Communications 1
+1.1 History of Wireless Communications ......'
+==================== 2
+```
+
+`mode="page"` 表示每页生成一个 `Document`，metadata 中会包含页码信息，适合 RAG 追踪引用来源。`mode="single"` 会把整个 PDF 合成一个 Document，适合较短 PDF 或全文摘要。
+
+### 3.21 Vector stores 向量存储
+
+Vector store 用来保存文本 embedding，并支持相似度检索。RAG 中它承担的是“知识库检索”的角色。
+
+#### InMemoryVectorStore
+
+```python
+from langchain_core.vectorstores import InMemoryVectorStore
+from langchain_community.embeddings import DashScopeEmbeddings
+from langchain_community.document_loaders import CSVLoader
+
+vector_store = InMemoryVectorStore(
+    embedding=DashScopeEmbeddings()
+)
+
+loader = CSVLoader(
+    file_path="./data/info.csv",
+    encoding="utf-8",
+    source_column="source"
+)
+
+documents = loader.load()
+
+vector_store.add_documents(
+    documents=documents,
+    ids=["id" + str(i) for i in range(len(documents))]
+)
+
+vector_store.delete(["id1", "id2"])
+
+result = vector_store.similarity_search(
+    query="什么时候道路维修？",
+    k=3
+)
+print(result)
+```
+
+运行结果节选：
+
+```text
+[Document(id='id6', metadata={'source': '政府通知', 'row': 6}, page_content='source: 政府通知
+info: 社区将于本周末进行道路维修'),
+ Document(id='id0', metadata={'source': '新闻网站', 'row': 0}, page_content='source: 新闻网站
+info: 今日发布了一篇关于城市交通改善的报道'),
+ ......]
+```
+
+`InMemoryVectorStore` 只存在于内存中，程序结束后数据会丢失，适合学习、测试和小 demo。
+
+#### Chroma 持久化向量库
+
+```python
+pip install langchain_chroma
+```
+
+```python
+from langchain_community.embeddings import DashScopeEmbeddings
+from langchain_community.document_loaders import CSVLoader
+from langchain_chroma import Chroma
+
+vector_store = Chroma(
+    collection_name="test",
+    embedding_function=DashScopeEmbeddings(),
+    persist_directory="./data/Chroma"
+)
+
+loader = CSVLoader(
+    file_path="./data/info.csv",
+    encoding="utf-8",
+    source_column="source"
+)
+
+documents = loader.load()
+
+vector_store.add_documents(
+    documents=documents,
+    ids=["id" + str(i) for i in range(len(documents))]
+)
+
+vector_store.delete(["id1", "id2"])
+
+result = vector_store.similarity_search(
+    query="什么时候道路维修？",
+    k=3
+)
+print(result)
+```
+
+运行结果节选：
+
+```text
+[Document(id='id6', metadata={'source': '政府通知', 'row': 6}, page_content='source: 政府通知
+info: 社区将于本周末进行道路维修'),
+ Document(id='id0', metadata={'source': '新闻网站', 'row': 0}, page_content='source: 新闻网站
+info: 今日发布了一篇关于城市交通改善的报道'),
+ Document(id='id9', metadata={'source': '行业报告', 'row': 9}, page_content='source: 行业报告
+info: 报告指出新能源产业增长速度较快')]
+```
+
+Chroma 会把向量数据保存到 `persist_directory`，因此可以跨程序运行保留。它适合本地 RAG、小型知识库和原型系统。
+
+还可以按 metadata 做过滤：
+
+```python
+result = vector_store.similarity_search(
+    query="什么时候道路维修？",
+    k=3,
+    filter={"source": "政府通知"}
+)
+print(result)
+```
+
+运行结果：
+
+```text
+[Document(id='id6', metadata={'source': '政府通知', 'row': 6}, page_content='source: 政府通知
+info: 社区将于本周末进行道路维修')]
+```
+
+这里要注意：<font color='red'>**向量检索**</font> 是语义相似度检索，不是精确关键词搜索。因此 top-k 中可能混入一些“语义上相关但不是答案”的内容。实际 RAG 中通常会结合 metadata filter、rerank、阈值过滤或更好的 chunk 设计来提升质量。
+
+### 3.22 基于向量检索构建提示词
+
+这一节开始把前面的组件串起来，形成最小 RAG 流程：
+
+```text
+用户问题 -> 向量检索 -> 得到参考资料 -> 填入 Prompt -> 调用 LLM -> 输出答案
+```
+
+先用手动方式完成检索和 prompt 拼接：
+
+```python
+from langchain_community.chat_models.tongyi import ChatTongyi
+from langchain_core.vectorstores import InMemoryVectorStore
+from langchain_community.embeddings import DashScopeEmbeddings
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+
+model = ChatTongyi(model="qwen3-max")
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "以我提供的已知参考资料为主，简洁和专业地回答用户问题。参考资料：{context}。"),
+    ("user", "用户提问：{input}？")
+])
+
+vector_store = InMemoryVectorStore(
+    embedding=DashScopeEmbeddings(model="text-embedding-v4")
+)
+
+vector_store.add_texts(["先理解概念，再动手练习", "多做小案例，逐步加难度", "养成调试习惯"])
+
+input_text = "怎么练习编程？"
+
+result = vector_store.similarity_search(input_text, k=2)
+reference_text = "["
+for doc in result:
+    reference_text += doc.page_content
+reference_text += "]"
+
+def print_prompt(prompt):
+    print(prompt.to_string())
+    print("==" * 20)
+    return prompt
+
+chain = prompt | print_prompt | model | StrOutputParser()
+
+chain.invoke({"input": input_text, "context": reference_text})
+```
+
+运行结果节选：
+
+```text
+System: 以我提供的已知参考资料为主，简洁和专业地回答用户问题。参考资料：[多做小案例，逐步加难度先理解概念，再动手练习]。
+Human: 用户提问：怎么练习编程？？
+========================================
+
+按照参考资料的建议，练习编程可以遵循以下步骤：
+1. 多做小案例......
+4. 通过实际编写代码巩固所学，遇到问题及时调试和查阅资料。
+```
+
+这个版本的缺点是：检索步骤在 chain 外面手动完成了，`chain.invoke()` 需要同时传入 `input` 和 `context`。更理想的形式是只传入用户问题，让检索也自动进入链。
+
+### 3.23 RunnablePassthrough 的使用
+
+<font color='red'>**RunnablePassthrough**</font> 的作用是把输入原样传递给后续组件。它在 RAG 链里很常用，因为同一个用户问题往往要走两条路：
+
+- 一路原样保留，作为 prompt 中的 `{input}`；
+- 另一路送入 retriever，检索出文档后格式化为 `{context}`。
+
+```python
+from langchain_community.chat_models.tongyi import ChatTongyi
+from langchain_core.vectorstores import InMemoryVectorStore
+from langchain_community.embeddings import DashScopeEmbeddings
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.documents import Document
+
+model = ChatTongyi(model="qwen3-max")
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "以我提供的已知参考资料为主，简洁和专业地回答用户问题。参考资料：{context}。"),
+    ("user", "用户提问：{input}？")
+])
+
+def print_prompt(prompt):
+    print(prompt.to_string())
+    print("==" * 20)
+    return prompt
+
+vector_store = InMemoryVectorStore(
+    embedding=DashScopeEmbeddings(model="text-embedding-v4")
+)
+
+vector_store.add_texts(["先理解概念，再动手练习", "多做小案例，逐步加难度", "养成调试习惯"])
+
+input_text = "怎么练习编程？"
+
+retriever = vector_store.as_retriever(search_kwargs={"k": 2})
+
+def format_func(docs: list[Document]):
+    if not docs:
+        return "没有相关资料"
+
+    formatted_str = "["
+    for doc in docs:
+        formatted_str += doc.page_content
+    formatted_str += "]"
+    return formatted_str
+
+chain = (
+    {
+        "input": RunnablePassthrough(),
+        "context": retriever | format_func,
+    }
+    | prompt
+    | print_prompt
+    | model
+    | StrOutputParser()
+)
+
+res = chain.invoke(input_text)
+print(res)
+```
+
+运行结果节选：
+
+```text
+System: 以我提供的已知参考资料为主，简洁和专业地回答用户问题。参考资料：[多做小案例，逐步加难度先理解概念，再动手练习]。
+Human: 用户提问：怎么练习编程？？
+========================================
+按照参考资料的建议，练习编程可以遵循以下步骤：
+1. 先理解概念......
+4. 边学边练：理论结合实践，每学一个新知识点就立即写代码验证。
+```
+
+关键在这一行：
+
+```python
+{"input": RunnablePassthrough(), "context": retriever | format_func}
+```
+
+它表示把同一个输入 `input_text` 分发到两个分支：
+
+```text
+input_text
+├── RunnablePassthrough() -> 原样输出 -> 填入 {input}
+└── retriever -> List[Document] -> format_func -> 字符串 -> 填入 {context}
+```
+
+所以整个链的输入输出类型是：
+
+```text
+str
+-> {"input": str, "context": str}
+-> ChatPromptValue
+-> AIMessage
+-> str
+```
+
+这就解决了上一节的遗留问题：不需要在链外手动检索，也不需要手动构造 `{"input": ..., "context": ...}`。只要调用 `chain.invoke("怎么练习编程？")`，链内部会自动完成检索、上下文格式化、prompt 构造和模型回答。
+
+至此，一个最小 RAG 链就完整了：
+
+```text
+问题 -> retriever -> context
+问题 -> passthrough -> input
+context + input -> prompt -> model -> parser -> answer
+```
