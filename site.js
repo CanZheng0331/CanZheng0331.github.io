@@ -1,6 +1,7 @@
 (function () {
   const THEME_KEY = "theme";
   const LANG_KEY = "site-lang";
+  const CLOUDFLARE_WEB_ANALYTICS_TOKEN = "64e81903e46f467fa5480cafdebd2e35";
   let readyMarked = false;
 
   document.documentElement.setAttribute("data-site-loading", "false");
@@ -84,8 +85,28 @@
     }
   }
 
+  function initCloudflareAnalytics() {
+    if (!CLOUDFLARE_WEB_ANALYTICS_TOKEN || CLOUDFLARE_WEB_ANALYTICS_TOKEN === "REPLACE_WITH_CLOUDFLARE_WEB_ANALYTICS_TOKEN") {
+      return;
+    }
+
+    if (document.querySelector('script[src="https://static.cloudflareinsights.com/beacon.min.js"]')) {
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.defer = true;
+    script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    script.dataset.cfBeacon = JSON.stringify({
+      token: CLOUDFLARE_WEB_ANALYTICS_TOKEN,
+      spa: false,
+    });
+    document.head.appendChild(script);
+  }
+
   function initSharedPageBits() {
     syncYear();
+    initCloudflareAnalytics();
   }
 
   function init(options) {
