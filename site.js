@@ -84,37 +84,8 @@
     }
   }
 
-  function initVisitorStats() {
-    const containers = document.querySelectorAll("[data-visitor-map]");
-    if (!containers.length) {
-      return;
-    }
-
-    const mapUrl = "https://cdn.clustrmaps.com/map_v2.js?d=GtDZVi4tsLCxCMPsshi4UGUmYEeEN1BC-yvrYvb1Rt4&cl=ffffff&w=250&h=150";
-
-    containers.forEach((container) => {
-      if (container.dataset.loaded === "true") {
-        return;
-      }
-      container.dataset.loaded = "true";
-      container.textContent = "";
-
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.id = "clustrmaps";
-      script.src = mapUrl;
-
-      script.addEventListener("error", () => {
-        container.innerHTML = '<div class="visitor-stats-status">Visitor statistics are temporarily unavailable.</div>';
-      }, { once: true });
-
-      container.appendChild(script);
-    });
-  }
-
   function initSharedPageBits() {
     syncYear();
-    initVisitorStats();
   }
 
   function init(options) {
