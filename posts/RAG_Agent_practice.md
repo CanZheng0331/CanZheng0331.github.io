@@ -1317,3 +1317,54 @@ str
 问题 -> passthrough -> input
 context + input -> prompt -> model -> parser -> answer
 ```
+
+
+## 4. RAG 项目
+
+### 4.1 RAG 项目案例介绍
+
+RAG 即检索、增强和生成，主要分为两条线：
+- 离线处理：向私有知识库（向量存储）源源不断添加私有知识文档。
+    - 向知识库添加来自未来的知识文档（基于模型训练完成时间）
+    - 向模型添加私有知识文档
+    - 给出模型参考资料，规避模型幻觉
+- 在线处理：用户提问会先基于私有知识库做检索，获取参考资料，同步组装新提示词询问大模型获取结果。
+
+**项目需求和思路**
+
+离线流程：
+- 本地知识文件加载和读取
+- 文本切分
+- 向量数据库
+
+在线流程：
+- Query 向量化
+- 向量匹配
+- Prompt 工程
+- 提交 LLM 生成答案
+
+项目主要实现：
+```
+.
+├── chat_history/
+├── chroma_db/
+├── data/
+│   ├── xxx.txt
+│   ├── xxx.txt
+│   └── xxx.txt
+├── app_file_upload.py
+├── app_qa.py
+├── config_data.py
+├── file_history_store.py
+├── knowledge_base.py
+├── rag.py
+└── vector_stores.py
+```
+
+### 4.2 RAG 文本上传 WEB 服务
+主要实现 `app_file_upload.py`、`knowledge_base.py`
+
+
+![离线流程](/figs/offline_proc.png)
+
+![在线流程](/figs/online_proc.png)
