@@ -225,11 +225,14 @@
     return `
       <svg class="visitor-world-map" viewBox="0 0 360 180" role="img" aria-label="World visitor frequency map">
         <rect x="0" y="0" width="360" height="180" rx="10"></rect>
-        <path class="visitor-land" d="M23 51c13-17 42-24 64-15 13 5 24 17 20 31-4 15-23 18-35 26-11 8-18 23-34 21-18-3-27-20-29-37-1-9 5-18 14-26z"></path>
-        <path class="visitor-land" d="M111 102c16-5 35 3 42 18 8 17-2 39-17 49-14 8-30-5-35-20-5-15-7-39 10-47z"></path>
-        <path class="visitor-land" d="M156 45c25-16 63-13 87-1 19 10 23 30 11 45-15 17-44 11-61 24-13 10-9 33-25 37-17 4-32-14-29-31 2-13 17-20 20-32 3-14-16-26-3-42z"></path>
-        <path class="visitor-land" d="M233 75c18-16 48-17 70-9 20 8 34 25 29 43-5 18-30 15-45 22-18 8-31 28-50 20-17-7-13-29-5-44 6-11-11-20 1-32z"></path>
-        <path class="visitor-land" d="M273 124c18-6 42 3 53 18 8 12 0 26-14 29-18 3-41-5-49-20-5-10 0-23 10-27z"></path>
+        <path class="visitor-land" d="M18 54 L31 40 L58 34 L86 39 L101 52 L99 67 L79 76 L65 91 L44 98 L27 88 L17 70 Z"></path>
+        <path class="visitor-land" d="M93 100 L111 96 L128 106 L137 125 L131 151 L115 166 L101 151 L96 129 Z"></path>
+        <path class="visitor-land" d="M144 52 L165 42 L196 42 L219 51 L225 68 L212 82 L190 86 L179 103 L158 105 L146 88 L154 70 Z"></path>
+        <path class="visitor-land" d="M175 105 L190 112 L198 132 L190 154 L175 161 L164 143 L165 122 Z"></path>
+        <path class="visitor-land" d="M210 58 L239 49 L278 54 L311 72 L330 93 L321 112 L285 112 L262 101 L234 104 L215 90 Z"></path>
+        <path class="visitor-land" d="M243 107 L266 112 L286 128 L291 146 L278 155 L255 147 L241 128 Z"></path>
+        <path class="visitor-land" d="M286 133 L310 129 L331 139 L338 153 L323 164 L295 159 Z"></path>
+        <path class="visitor-land" d="M180 116 L192 126 L197 145 L189 158 L176 151 L171 132 Z"></path>
         ${markers || '<text class="visitor-map-empty" x="180" y="96" text-anchor="middle">No country data yet</text>'}
       </svg>
     `;
@@ -252,17 +255,16 @@
       .visitor-total { background: color-mix(in srgb, var(--accent, #2563eb) 8%, transparent); border: 1px solid color-mix(in srgb, var(--accent, #2563eb) 18%, var(--border, #d7dde8)); border-radius: 8px; margin: 0 0 12px; padding: 14px; }
       .visitor-total span { color: var(--accent, #2563eb); display: block; font-size: 2rem; font-weight: 850; line-height: 1; }
       .visitor-countries-title { color: var(--muted, #64748b); font-size: 11px; font-weight: 800; letter-spacing: 0.04em; margin: 0 0 8px; text-transform: uppercase; }
-      .visitor-country { margin-top: 10px; }
-      .visitor-country-meta { align-items: center; display: flex; font-size: 12px; justify-content: space-between; margin-bottom: 5px; }
-      .visitor-country-track { background: color-mix(in srgb, var(--accent, #2563eb) 12%, transparent); border-radius: 999px; height: 6px; overflow: hidden; }
-      .visitor-country-track span { background: var(--accent, #2563eb); border-radius: inherit; display: block; height: 100%; }
+      .visitor-country-list { display: grid; gap: 6px; }
+      .visitor-country-line { align-items: center; display: flex; font-size: 13px; justify-content: space-between; }
+      .visitor-country-line strong { color: var(--accent, #2563eb); }
       .visitor-map-wrap { min-width: 0; }
       .visitor-map-title { align-items: baseline; display: flex; justify-content: space-between; margin-bottom: 8px; }
       .visitor-map-title strong { font-size: 12px; }
       .visitor-map-title span { color: var(--muted, #64748b); font-size: 11px; }
       .visitor-world-map { display: block; height: auto; width: 100%; }
       .visitor-world-map rect { fill: color-mix(in srgb, var(--accent, #2563eb) 5%, var(--card, #fff)); }
-      .visitor-land { fill: color-mix(in srgb, var(--fg, #0f172a) 10%, transparent); stroke: color-mix(in srgb, var(--fg, #0f172a) 18%, transparent); stroke-width: 0.8; }
+      .visitor-land { fill: color-mix(in srgb, var(--fg, #0f172a) 13%, transparent); stroke: color-mix(in srgb, var(--fg, #0f172a) 26%, transparent); stroke-linejoin: round; stroke-width: 0.9; }
       .visitor-map-marker circle:last-child { stroke: var(--card, #fff); stroke-width: 1.8; }
       .visitor-map-empty { fill: var(--muted, #64748b); font-size: 11px; }
       .visitor-note { line-height: 1.45; margin: 12px 0 0; }
@@ -277,22 +279,16 @@
     document.querySelectorAll(".visitor-stats").forEach((container) => {
       const { top, others, entries } = visitorCountryGroups(data.countries || {});
       const listedCountries = others > 0 ? [...top, ["OTHERS", others]] : top;
-      const maxCountryCount = listedCountries.reduce((max, item) => Math.max(max, Number(item[1]) || 0), 1);
-
       const countryRows = listedCountries.length
-        ? listedCountries.map(([code, count]) => {
-            const percent = Math.max(6, Math.round((Number(count) / maxCountryCount) * 100));
+        ? `<div class="visitor-country-list">${listedCountries.map(([code, count]) => {
             const label = code === "OTHERS" ? "Others" : countryName(code);
             return `
-              <div class="visitor-country">
-                <div class="visitor-country-meta">
-                  <span>${label}</span>
-                  <strong>${formatNumber(count)}</strong>
-                </div>
-                <div class="visitor-country-track"><span style="width: ${percent}%"></span></div>
+              <div class="visitor-country-line">
+                <span>${label}</span>
+                <strong>${formatNumber(count)}</strong>
               </div>
             `;
-          }).join("")
+          }).join("")}</div>`
         : '<div class="visitor-empty">No country data yet.</div>';
 
       container.innerHTML = `
