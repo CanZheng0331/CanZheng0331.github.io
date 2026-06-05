@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Home · Can Zheng</title>
-  <link rel="stylesheet" href="styles.css?v=20260605-visitors" />
-  
+  <link rel="stylesheet" href="styles.css?v=20260605-visitor-widget" />
+
   <script>
     (function() {
       let theme = localStorage.getItem('theme');
@@ -17,7 +17,7 @@
       document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>
-  
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -107,7 +107,7 @@
           <li> See plotting tool on the <a href="tools/plot.html">plot</a>.</li>
         </ul>
         <p>
-       
+
       </div>
     </div>
   </section>
@@ -117,27 +117,27 @@
   <footer class="footer">
     <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
     <div class="visitor-stats" aria-label="Visitor statistics">
-      <span class="visitor-stats-status">Analytics powered by Cloudflare</span>
+
     </div>
-    <script src="site.js?v=20260605-cloudflare-token"></script>
+    <script src="site.js?v=20260605-visitor-ignore"></script>
   </footer>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    
+
     const themeBtn = document.getElementById('theme-btn');
     const themeIcon = themeBtn.querySelector('i');
-    
+
     // 从缓存读取（由于头部的拦截，这里一定是 light 或 dark）
     let currentTheme = localStorage.getItem('theme') || 'light';
-    
+
     function applyThemeMode(themeStr) {
       document.documentElement.setAttribute('data-theme', themeStr);
       // 如果当前是亮色，显示月亮（代表点击将切黑）；当前是暗色，显示太阳（代表点击将切亮）
       themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
     }
-    
+
     applyThemeMode(currentTheme);
-    
+
     themeBtn.addEventListener('click', () => {
       currentTheme = currentTheme === 'light' ? 'dark' : 'light';
       localStorage.setItem('theme', currentTheme);

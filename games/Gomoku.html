@@ -128,7 +128,7 @@
 <div class="game-container">
     <h1>GOMOKU (五子棋)</h1>
     <p class="tagline" style="margin-top: 20px; margin-bottom: 0;">Collaborated with Gemini 3 Pro</p>
-    
+
     <div id="board-wrapper">
         <canvas id="chess" width="450" height="450"></canvas>
         <div id="resultOverlay">
@@ -162,7 +162,7 @@
     const size = 15;
     const padding = 15;
     const step = 30;
-    
+
     let chessBoard = [];
     let over = false;
     let isPlayerTurn = false;
@@ -250,7 +250,7 @@
     function aiMove() {
         if (over) return;
         let best = { x: 7, y: 7, score: -1 };
-        
+
         for (let i = 0; i < size; i++) {
             for (let j = 0; j < size; j++) {
                 if (chessBoard[i][j] === 0) {
@@ -261,7 +261,7 @@
                 }
             }
         }
-        
+
         drawPiece(best.x, best.y, !playerIsBlack);
         chessBoard[best.x][best.y] = 2;
 
@@ -325,8 +325,8 @@
     initData();
 </script>
     <div class="visitor-stats" aria-label="Visitor statistics">
-      <span class="visitor-stats-status">Analytics powered by Cloudflare</span>
+
     </div>
-  <script src="../site.js?v=20260605-cloudflare-token"></script>
+  <script src="../site.js?v=20260605-visitor-ignore"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Blogs · Can Zheng</title>
-  <link rel="stylesheet" href="styles.css?v=20260605-visitors" />
+  <link rel="stylesheet" href="styles.css?v=20260605-visitor-widget" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     window.MathJax = {
@@ -32,7 +32,7 @@
     .post-date { font-size: 0.85rem; color: var(--muted); margin: 0 10px; }
     .tag { display: inline-block; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); padding: 4px 8px; margin: 0 4px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: background 0.2s;}
     .tag:hover { background: var(--accent); color: #fff; }
-    
+
     /* 悬浮筛选栏核心 CSS */
     #filter-header-container { 
       position: sticky; 
@@ -173,13 +173,13 @@
     </article>
     <a id="post-back-link" href="blog.html" class="post-back-link"><i class="fas fa-arrow-left"></i> Back to Blogs</a>
   </main>
-  
+
   <footer class="footer">
     <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
     <div class="visitor-stats" aria-label="Visitor statistics">
-      <span class="visitor-stats-status">Analytics powered by Cloudflare</span>
+
     </div>
-    <script src="site.js?v=20260605-cloudflare-token"></script>
+    <script src="site.js?v=20260605-visitor-ignore"></script>
   </footer>
 
   <script>
@@ -513,7 +513,7 @@
         filterHeaderContainer.innerHTML = ""; 
       } else {
         let html = `<div class="filter-header">`;
-        
+
         if (activeTags.size > 0) {
           html += `<div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">`;
           html += `<span style="font-weight:600; font-size:0.9rem;">Tags:</span>`;
@@ -542,7 +542,7 @@
       const filteredPosts = posts.filter(post => {
         const titleMatch = post.title.toLowerCase().includes(textFilter);
         const tagTextMatch = post.tags.some(t => t.toLowerCase().includes(textFilter));
-        
+
         let tagMatch = true;
         if (activeTags.size > 0) {
           if (tagLogic === 'OR') {
@@ -551,7 +551,7 @@
             tagMatch = Array.from(activeTags).every(t => post.tags.includes(t));
           }
         }
-        
+
         return (titleMatch || tagTextMatch) && tagMatch;
       });
 

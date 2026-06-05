@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Performance Visualizer · Can Zheng</title>
-  
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  
-  <link rel="stylesheet" href="../styles.css?v=20260605-visitors" />
-  
+
+  <link rel="stylesheet" href="../styles.css?v=20260605-visitor-widget" />
+
   <script>
     // 主题初始化逻辑
     (function() {
@@ -22,11 +22,11 @@
       document.documentElement.setAttribute('data-bs-theme', theme); // 同步 Bootstrap 主题
     })();
   </script>
-  
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-  
+
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -37,7 +37,7 @@
       font-weight: 500;
       border-radius: 6px;
     }
-    
+
     .chart-container {
       width: 100%;
       aspect-ratio: 4 / 3;
@@ -63,7 +63,7 @@
       border: 1px solid var(--border-color, #e2e8f0);
       overflow: hidden;
     }
-    
+
     html[data-theme="dark"] .table-container {
       border-color: #444;
     }
@@ -154,7 +154,7 @@
   </header>
 
   <main class="container" style="margin-top: 2rem; margin-bottom: 4rem;">
-    
+
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
       <h2 style="margin: 0; font-weight: 700; display: flex; align-items: center; gap: 10px;">
         <i class="bi bi-graph-up-arrow text-primary"></i>
@@ -173,7 +173,7 @@
 
     <div class="row g-4">
       <div class="col-lg-5 col-xl-4 d-flex flex-column gap-3">
-        
+
         <div class="card card-tool mb-0">
           <h5 class="mb-3" style="font-weight: 600;"><i class="bi bi-gear-fill text-primary me-2"></i><span data-i18n="basicSet">Basic Settings</span></h5>
           <div class="row g-3">
@@ -259,7 +259,7 @@
               </button>
             </div>
           </div>
-          
+
           <div class="table-container flex-grow-1 overflow-auto">
             <table class="table table-hover align-middle text-center" id="dataTable">
               <thead id="tableHead"></thead>
@@ -283,11 +283,11 @@
   <footer class="footer">
     <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
     <div class="visitor-stats" aria-label="Visitor statistics">
-      <span class="visitor-stats-status">Analytics powered by Cloudflare</span>
+
     </div>
-    <script src="../site.js?v=20260605-cloudflare-token"></script>
+    <script src="../site.js?v=20260605-visitor-ignore"></script>
   </footer>
-  
+
   <script>
     // ==========================================
     // 1. 数据状态与多语言配置（必须最先声明，防止报错）
@@ -368,11 +368,10 @@
         [0.47, 0.67, 0.19],
         [0.30, 0.75, 0.93] 
     ];
-    
+
     const matlabColors = matlabColorsRGB.map(c => `rgb(${c[0]*255}, ${c[1]*255}, ${c[2]*255})`);
     const matlabMarkers = ['diamond', 'triangle-right', 'triangle-up', 'square', 'circle', 'cross'];
     const matlabMarkersCode = ['-d', '->', '-^', '-s', '-o', '-x'];
-
 
     // ==========================================
     // 2. 核心功能函数声明
@@ -380,17 +379,17 @@
     function toggleLang() {
         currentLang = currentLang === 'en' ? 'zh' : 'en';
         document.getElementById('btnLang').innerText = dict[currentLang].langBtn;
-        
+
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             if (dict[currentLang][key]) {
                 el.innerText = dict[currentLang][key];
             }
         });
-        
+
         document.getElementById('btnAddAlgo').innerHTML = `<i class="bi bi-plus-lg me-1"></i> ${dict[currentLang].btnAddAlgo}`;
         document.getElementById('btnAddSnr').innerHTML = `<i class="bi bi-plus-lg me-1"></i> ${dict[currentLang].btnAddSnr}`;
-        
+
         renderTable();
     }
 
@@ -398,7 +397,7 @@
         const chartType = document.getElementById('chartType').value;
         const thead = document.getElementById('tableHead');
         const tbody = document.getElementById('tableBody');
-        
+
         const xHeaderName = chartType === 'ACC' ? dict[currentLang].thK : dict[currentLang].thSnr;
 
         let headHTML = `<tr><th style="width: 80px;">${xHeaderName}</th>`;
@@ -475,7 +474,7 @@
         let lastSNR = dataState.snrPoints[dataState.snrPoints.length - 1] || 0;
         let step = parseFloat(document.getElementById('xDt').value) || 5;
         dataState.snrPoints.push(lastSNR + step);
-        
+
         dataState.algorithms.forEach(algo => {
             algo.data.push('');
         });
@@ -495,7 +494,7 @@
     function updateChart() {
         const chartType = document.getElementById('chartType').value;
         const isBar = chartType === 'ACC'; 
-        
+
         const fontFamily = document.getElementById('fontFamily').value;
         const titleFontSize = parseInt(document.getElementById('titleFontSize').value) || 16;
         const tickFontSize = parseInt(document.getElementById('tickFontSize').value) || 14;
@@ -524,7 +523,7 @@
         dataState.algorithms.forEach((algo, index) => {
             let validY = [];
             let validX = [];
-            
+
             algo.data.forEach((v, i) => {
                 if (v !== '' && !isNaN(v)) {
                     validY.push(v);
@@ -563,7 +562,7 @@
 
         let xAxisTitleText = isBar ? '<i>K</i>' : 'SNR (dB)';
         let yAxisTitleText = isBar ? 'Average Top-<i>K</i> Accuracy' : (chartType === 'BER' ? 'BER' : 'NMSE');
-        
+
         let yLogMin = -6; 
         let yLogMax = 1;
         let customYTickVals = [];
@@ -669,7 +668,7 @@
 
         const chartType = document.getElementById('chartType').value;
         const isBar = chartType === 'ACC';
-        
+
         const fontName = document.getElementById('fontFamily').value.includes('Times') ? 'Times New Roman' : 'Arial';
         const titleFontSize = document.getElementById('titleFontSize').value;
         const tickFontSize = document.getElementById('tickFontSize').value;
@@ -692,7 +691,7 @@
                 }
             });
         });
-        
+
         let yLogMin = -6, yLogMax = 1;
         if (!isBar && globalMinY !== Infinity) {
             yLogMin = Math.floor(Math.log10(globalMinY)) - 1;
@@ -725,7 +724,7 @@
             let dataVars = dataState.algorithms.map(algo => `data_${algo.name.replace(/[^a-zA-Z0-9_]/g, '_')}'`);
             mCode += `data_matrix = [${dataVars.join(', ')}];\n`;
             mCode += `b = bar(data_matrix, 'grouped');\n\n`; 
-            
+
             mCode += `% Coloring Bars\n`;
             dataState.algorithms.forEach((_, index) => {
                 let color = matlabColorsRGB[index % matlabColorsRGB.length];
@@ -747,7 +746,7 @@
         mCode += `grid on; \n`;
         if (!isBar) mCode += `grid minor;\n`;
         mCode += `set(ax, 'TickLabelInterpreter', 'latex', 'FontSize', ${tickFontSize}, 'LineWidth', ${axisLineWidth}, 'FontName', '${fontName}');\n`;
-        
+
         if (isBar) {
             mCode += `xlabel('$K$', 'Interpreter', 'latex', 'FontSize', ${titleFontSize});\n`;
             mCode += `ylabel('Average Top-$K$ Accuracy', 'Interpreter', 'latex', 'FontSize', ${titleFontSize});\n`;
@@ -787,30 +786,29 @@
         URL.revokeObjectURL(url);
     }
 
-
     // ==========================================
     // 3. 页面与主题初始化逻辑
     // ==========================================
     document.getElementById('year').textContent = new Date().getFullYear();
     const themeBtn = document.getElementById('theme-btn');
     const themeIcon = themeBtn.querySelector('i');
-    
+
     let currentTheme = localStorage.getItem('theme') || 'light';
-    
+
     function applyThemeMode(themeStr) {
       document.documentElement.setAttribute('data-theme', themeStr);
       document.documentElement.setAttribute('data-bs-theme', themeStr); 
       if (themeIcon) {
           themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
       }
-      
+
       // 当主题切换时，实时重绘 Plotly 图表以自适应黑夜/白天模式
       // （现在放在最后执行，数据都已经完全加载，绝不会再报错了）
       if (typeof updateChart === 'function' && document.getElementById('chartDiv')) {
         updateChart();
       }
     }
-    
+
     themeBtn.addEventListener('click', () => {
       currentTheme = currentTheme === 'light' ? 'dark' : 'light';
       localStorage.setItem('theme', currentTheme);
@@ -829,7 +827,7 @@
                 el.innerText = dict[currentLang][key];
             }
         });
-        
+
         // 渲染基础数据与图表
         renderTable();
         updateChart();

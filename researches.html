@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Researches · Can Zheng</title>
-  <link rel="stylesheet" href="styles.css?v=20260605-visitors" />
+  <link rel="stylesheet" href="styles.css?v=20260605-visitor-widget" />
   <script>
     (function() {
       let theme = localStorage.getItem('theme');
@@ -66,7 +66,7 @@
   <article class="prose">
     <h1>My Research Domains</h1>
     <p>Select a category to explore my various research directions. Click on a card to view detailed contents, derivations, and resources.</p>
-    
+
     <div class="research-filters">
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="past">Past</button>
@@ -76,7 +76,7 @@
     </div>
 
     <div class="research-grid" id="res-grid">
-      
+
       <a href="researches/research-aiml.html" class="res-card" data-cat="ongoing">
         <img src="photos/proj_figure/AIML.png" alt="AI/ML">
         <div class="res-card-content">
@@ -122,21 +122,21 @@
   <footer class="footer">
     <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
     <div class="visitor-stats" aria-label="Visitor statistics">
-      <span class="visitor-stats-status">Analytics powered by Cloudflare</span>
+
     </div>
-    <script src="site.js?v=20260605-cloudflare-token"></script>
+    <script src="site.js?v=20260605-visitor-ignore"></script>
   </footer>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    
+
     const filterBtns = document.querySelectorAll('.filter-btn');
     const resCards = document.querySelectorAll('.res-card');
-    
+
     function applyFilter(filterValue) {
       filterBtns.forEach(b => b.classList.remove('active'));
       const activeBtn = document.querySelector(`.filter-btn[data-filter="${filterValue}"]`);
       if (activeBtn) activeBtn.classList.add('active');
-      
+
       resCards.forEach(card => {
         if (filterValue === 'all' || card.getAttribute('data-cat') === filterValue) {
           card.style.display = 'flex';

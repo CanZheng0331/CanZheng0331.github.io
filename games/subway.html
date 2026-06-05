@@ -226,7 +226,7 @@ function animate() {
         o.position.z += speed * 25;
         const dx = Math.abs(player.position.x - o.position.x);
         const dz = Math.abs(player.position.z - o.position.z);
-        
+
         // Horizontal hit box
         if (dx < 2.0 && dz < 1.0) {
             const obsTop = o.position.y + o.userData.height / 2;
@@ -304,8 +304,8 @@ window.addEventListener('keydown', (e) => {
 });
 </script>
     <div class="visitor-stats" aria-label="Visitor statistics">
-      <span class="visitor-stats-status">Analytics powered by Cloudflare</span>
+
     </div>
-  <script src="../site.js?v=20260605-cloudflare-token"></script>
+  <script src="../site.js?v=20260605-visitor-ignore"></script>
 </body>
 </html>

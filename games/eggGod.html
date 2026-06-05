@@ -41,7 +41,7 @@
         .tagline { font-size: 1rem; color: #95a5a6; font-weight: 300; letter-spacing: 1px; }
 
         .btn-group { margin-top: 50px; display: flex; flex-direction: column; gap: 15px; }
-        
+
         .main-btn {
             padding: 15px 50px; font-size: 1.1rem; border: none; border-radius: 30px;
             cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -86,7 +86,7 @@
         .pot.cooking { border-color: var(--fire); background: #fffcf0; box-shadow: 0 10px 20px rgba(230,126,34,0.15); }
         .pot.cooking .egg-icon { animation: flame-burn 0.5s infinite alternate; }
         @keyframes flame-burn { from { transform: scale(1); } to { transform: scale(1.1); filter: drop-shadow(0 0 5px orange); } }
-        
+
         .pot.perfect { background: var(--primary); color: white; border-color: #d35400; }
         .pot.failed { background: #34495e; color: white; }
 
@@ -108,7 +108,7 @@
     <div id="menu-overlay">
         <h1 class="title">EGG MASTER</h1>
         <p class="tagline" data-i18n="tagline">Collaborated with Gemini 3 Pro</p>
-        
+
         <div class="btn-group">
             <button class="main-btn btn-start" onclick="enterGame()" data-i18n="start">开始挑战</button>
             <button class="main-btn btn-info" onclick="toggleModal(true)" data-i18n="howTo">玩法介绍</button>
@@ -123,7 +123,7 @@
         <div class="origin-story" data-i18n="originText">
             这个游戏的灵感源自 2025 年底爆红的抖音博主“爱吃蛋”。他研究出了精准到秒的煮蛋秘籍：“水开下蛋，煮 9 分 12 秒，立马过凉水”。这种把平凡小事做到极致的精神，成就了互联网上的“蛋神”传说。
         </div>
-        
+
         <h3 data-i18n="ruleTitle">游戏规则</h3>
         <p data-i18n="ruleText">
             • 点击空闲的锅开始。在 <b>9.2s</b> (模拟 9'12") 瞬间捞出。<br>
@@ -202,7 +202,7 @@
             const key = el.getAttribute('data-i18n');
             el.innerHTML = i18n[currentLang][key];
         });
-        
+
         // 更新实时状态（锅的状态文字）
         pots.forEach((p, i) => {
             if (p.status === 'idle') {
@@ -210,7 +210,7 @@
                 if(el) el.querySelector('.pot-timer').innerText = i18n[currentLang].ready;
             }
         });
-        
+
         // 更新语言按钮背景色提示当前选择
         document.getElementById('lang-toggle').style.color = currentLang === 'en' ? '#f39c12' : '#fff';
     }
@@ -260,7 +260,7 @@
         pots[i].start = Date.now();
         el.classList.add('cooking');
         el.querySelector('.egg-icon').innerText = '🔥';
-        
+
         pots[i].timer = setInterval(() => {
             let diff = (Date.now() - pots[i].start) / 1000;
             el.querySelector('.pot-timer').innerText = diff.toFixed(1) + 's';
@@ -274,7 +274,7 @@
         const el = document.getElementsByClassName('pot')[i];
         let diff = (Date.now() - pots[i].start) / 1000;
         let error = Math.abs(diff - TARGET);
-        
+
         if (error <= 0.2) {
             pots[i].status = 'perfect';
             el.className = 'pot perfect';
@@ -294,7 +294,7 @@
             updateHUD();
             if (lives <= 0) endGame();
         }
-        
+
         document.getElementById('score').innerText = score;
         if (lives > 0) setTimeout(() => resetPot(i), 2000);
     }
@@ -329,14 +329,14 @@
         clearTimeout(gameLoopTimeout);
         document.getElementById('game-over').style.display = 'flex';
         document.getElementById('final-stats').innerText = `${i18n[currentLang].scoreLabel}: ${score}`;
-        
+
         let evalKey = score >= 2000 ? "eval_god" : (score >= 800 ? "eval_good" : "eval_bad");
         document.getElementById('final-eval').innerText = i18n[currentLang][evalKey];
     }
 </script>
     <div class="visitor-stats" aria-label="Visitor statistics">
-      <span class="visitor-stats-status">Analytics powered by Cloudflare</span>
+
     </div>
-  <script src="../site.js?v=20260605-cloudflare-token"></script>
+  <script src="../site.js?v=20260605-visitor-ignore"></script>
 </body>
 </html>
