@@ -114,6 +114,11 @@
 
   function countryName(code) {
     const names = {
+      AE: "United Arab Emirates",
+      AR: "Argentina",
+      AT: "Austria",
+      BE: "Belgium",
+      BR: "Brazil",
       CN: "China",
       HK: "Hong Kong",
       MO: "Macau",
@@ -128,9 +133,102 @@
       FR: "France",
       AU: "Australia",
       IN: "India",
+      ID: "Indonesia",
+      IT: "Italy",
+      MY: "Malaysia",
+      NL: "Netherlands",
+      NZ: "New Zealand",
+      PH: "Philippines",
+      RU: "Russia",
+      SE: "Sweden",
+      TH: "Thailand",
+      VN: "Vietnam",
       ZZ: "Unknown",
     };
     return names[code] || code || "Unknown";
+  }
+
+  function countryLocation(code) {
+    const locations = {
+      AE: [226, 88],
+      AR: [112, 142],
+      AT: [184, 72],
+      AU: [289, 136],
+      BE: [175, 68],
+      BR: [121, 125],
+      CA: [71, 50],
+      CN: [260, 83],
+      DE: [181, 67],
+      FR: [174, 74],
+      GB: [168, 62],
+      HK: [267, 96],
+      ID: [264, 120],
+      IN: [235, 100],
+      IT: [183, 82],
+      JP: [293, 83],
+      KR: [281, 82],
+      MO: [266, 97],
+      MY: [257, 111],
+      NL: [177, 66],
+      NZ: [313, 151],
+      PH: [280, 105],
+      RU: [244, 52],
+      SE: [184, 55],
+      SG: [259, 114],
+      TH: [257, 102],
+      TW: [278, 97],
+      US: [72, 79],
+      VN: [262, 101],
+    };
+    return locations[code] || null;
+  }
+
+  function visitorCountryGroups(countriesData) {
+    const entries = Object.entries(countriesData || {})
+      .map(([code, count]) => [code, Number(count) || 0])
+      .filter(([, count]) => count > 0)
+      .sort((a, b) => b[1] - a[1]);
+    const top = entries.slice(0, 5);
+    const others = entries.slice(5).reduce((sum, [, count]) => sum + count, 0);
+    return { top, others, entries };
+  }
+
+  function visitorHeatColor(count, maxCount) {
+    if (!count || !maxCount) {
+      return "rgba(37, 99, 235, 0.18)";
+    }
+    const intensity = Math.max(0.22, Math.min(1, count / maxCount));
+    return `rgba(37, 99, 235, ${0.28 + intensity * 0.62})`;
+  }
+
+  function renderVisitorMap(entries) {
+    const mapped = entries
+      .map(([code, count]) => ({ code, count, point: countryLocation(code) }))
+      .filter((item) => item.point);
+    const maxCount = mapped.reduce((max, item) => Math.max(max, item.count), 1);
+    const markers = mapped.map((item) => {
+      const [x, y] = item.point;
+      const radius = Math.max(4, Math.min(13, 4 + (item.count / maxCount) * 9));
+      return `
+        <g class="visitor-map-marker">
+          <circle cx="${x}" cy="${y}" r="${radius + 3}" fill="${visitorHeatColor(item.count, maxCount)}"></circle>
+          <circle cx="${x}" cy="${y}" r="${radius}" fill="var(--accent, #2563eb)"></circle>
+          <title>${countryName(item.code)}: ${formatNumber(item.count)}</title>
+        </g>
+      `;
+    }).join("");
+
+    return `
+      <svg class="visitor-world-map" viewBox="0 0 360 180" role="img" aria-label="World visitor frequency map">
+        <rect x="0" y="0" width="360" height="180" rx="10"></rect>
+        <path class="visitor-land" d="M23 51c13-17 42-24 64-15 13 5 24 17 20 31-4 15-23 18-35 26-11 8-18 23-34 21-18-3-27-20-29-37-1-9 5-18 14-26z"></path>
+        <path class="visitor-land" d="M111 102c16-5 35 3 42 18 8 17-2 39-17 49-14 8-30-5-35-20-5-15-7-39 10-47z"></path>
+        <path class="visitor-land" d="M156 45c25-16 63-13 87-1 19 10 23 30 11 45-15 17-44 11-61 24-13 10-9 33-25 37-17 4-32-14-29-31 2-13 17-20 20-32 3-14-16-26-3-42z"></path>
+        <path class="visitor-land" d="M233 75c18-16 48-17 70-9 20 8 34 25 29 43-5 18-30 15-45 22-18 8-31 28-50 20-17-7-13-29-5-44 6-11-11-20 1-32z"></path>
+        <path class="visitor-land" d="M273 124c18-6 42 3 53 18 8 12 0 26-14 29-18 3-41-5-49-20-5-10 0-23 10-27z"></path>
+        ${markers || '<text class="visitor-map-empty" x="180" y="96" text-anchor="middle">No country data yet</text>'}
+      </svg>
+    `;
   }
 
   function ensureVisitorStatsStyles() {
@@ -141,17 +239,30 @@
     const style = document.createElement("style");
     style.id = "visitor-stats-styles";
     style.textContent = `
-      .visitor-stats { max-width: 340px; margin: 20px auto 0; }
-      .visitor-panel { background: var(--card, #fff); border: 1px solid var(--border, #d7dde8); border-radius: 8px; box-shadow: var(--shadow-sm, 0 4px 14px rgba(15, 23, 42, 0.08)); color: var(--fg, #0f172a); padding: 14px; text-align: left; }
-      .visitor-panel-head { align-items: baseline; display: flex; gap: 12px; justify-content: space-between; font-weight: 700; }
+      .visitor-stats { max-width: 760px; margin: 24px auto 0; }
+      .visitor-panel { background: var(--card, #fff); border: 1px solid var(--border, #d7dde8); border-radius: 8px; box-shadow: var(--shadow-sm, 0 4px 14px rgba(15, 23, 42, 0.08)); color: var(--fg, #0f172a); padding: 18px; text-align: left; }
+      .visitor-panel-head { align-items: baseline; display: flex; gap: 12px; justify-content: space-between; font-weight: 800; }
       .visitor-panel-head small, .visitor-total small, .visitor-note, .visitor-empty { color: var(--muted, #64748b); font-size: 12px; }
-      .visitor-total { border-bottom: 1px solid var(--border, #d7dde8); border-top: 1px solid var(--border, #d7dde8); margin: 12px 0; padding: 12px 0; }
-      .visitor-total span { color: var(--accent, #2563eb); display: block; font-size: 1.8rem; font-weight: 800; line-height: 1; }
+      .visitor-layout { align-items: stretch; display: grid; gap: 18px; grid-template-columns: minmax(210px, 0.9fr) minmax(280px, 1.4fr); margin-top: 14px; }
+      .visitor-summary { display: flex; flex-direction: column; min-width: 0; }
+      .visitor-total { background: color-mix(in srgb, var(--accent, #2563eb) 8%, transparent); border: 1px solid color-mix(in srgb, var(--accent, #2563eb) 18%, var(--border, #d7dde8)); border-radius: 8px; margin: 0 0 12px; padding: 14px; }
+      .visitor-total span { color: var(--accent, #2563eb); display: block; font-size: 2rem; font-weight: 850; line-height: 1; }
+      .visitor-countries-title { color: var(--muted, #64748b); font-size: 11px; font-weight: 800; letter-spacing: 0.04em; margin: 0 0 8px; text-transform: uppercase; }
       .visitor-country { margin-top: 10px; }
       .visitor-country-meta { align-items: center; display: flex; font-size: 12px; justify-content: space-between; margin-bottom: 5px; }
       .visitor-country-track { background: color-mix(in srgb, var(--accent, #2563eb) 12%, transparent); border-radius: 999px; height: 6px; overflow: hidden; }
       .visitor-country-track span { background: var(--accent, #2563eb); border-radius: inherit; display: block; height: 100%; }
+      .visitor-map-wrap { min-width: 0; }
+      .visitor-map-title { align-items: baseline; display: flex; justify-content: space-between; margin-bottom: 8px; }
+      .visitor-map-title strong { font-size: 12px; }
+      .visitor-map-title span { color: var(--muted, #64748b); font-size: 11px; }
+      .visitor-world-map { display: block; height: auto; width: 100%; }
+      .visitor-world-map rect { fill: color-mix(in srgb, var(--accent, #2563eb) 5%, var(--card, #fff)); }
+      .visitor-land { fill: color-mix(in srgb, var(--fg, #0f172a) 10%, transparent); stroke: color-mix(in srgb, var(--fg, #0f172a) 18%, transparent); stroke-width: 0.8; }
+      .visitor-map-marker circle:last-child { stroke: var(--card, #fff); stroke-width: 1.8; }
+      .visitor-map-empty { fill: var(--muted, #64748b); font-size: 11px; }
       .visitor-note { line-height: 1.45; margin: 12px 0 0; }
+      @media (max-width: 720px) { .visitor-layout { grid-template-columns: 1fr; } .visitor-panel { padding: 14px; } }
     `;
     document.head.appendChild(style);
   }
@@ -160,18 +271,18 @@
     ensureVisitorStatsStyles();
 
     document.querySelectorAll(".visitor-stats").forEach((container) => {
-      const countries = Object.entries(data.countries || {})
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 5);
-      const maxCountryCount = countries.reduce((max, item) => Math.max(max, Number(item[1]) || 0), 1);
+      const { top, others, entries } = visitorCountryGroups(data.countries || {});
+      const listedCountries = others > 0 ? [...top, ["OTHERS", others]] : top;
+      const maxCountryCount = listedCountries.reduce((max, item) => Math.max(max, Number(item[1]) || 0), 1);
 
-      const countryRows = countries.length
-        ? countries.map(([code, count]) => {
+      const countryRows = listedCountries.length
+        ? listedCountries.map(([code, count]) => {
             const percent = Math.max(6, Math.round((Number(count) / maxCountryCount) * 100));
+            const label = code === "OTHERS" ? "Others" : countryName(code);
             return `
               <div class="visitor-country">
                 <div class="visitor-country-meta">
-                  <span>${countryName(code)}</span>
+                  <span>${label}</span>
                   <strong>${formatNumber(count)}</strong>
                 </div>
                 <div class="visitor-country-track"><span style="width: ${percent}%"></span></div>
@@ -186,12 +297,24 @@
             <span>Visitor Statistics</span>
             <small>Since ${VISITOR_STATS_SINCE}</small>
           </div>
-          <div class="visitor-total">
-            <span>${formatNumber(data.totalVisits)}</span>
-            <small>Total visits</small>
-          </div>
-          <div class="visitor-countries" aria-label="Visitor countries">
-            ${countryRows}
+          <div class="visitor-layout">
+            <div class="visitor-summary">
+              <div class="visitor-total">
+                <span>${formatNumber(data.totalVisits)}</span>
+                <small>Total visits</small>
+              </div>
+              <div class="visitor-countries" aria-label="Visitor countries">
+                <div class="visitor-countries-title">Top regions</div>
+                ${countryRows}
+              </div>
+            </div>
+            <div class="visitor-map-wrap">
+              <div class="visitor-map-title">
+                <strong>World Map</strong>
+                <span>Frequency by region</span>
+              </div>
+              ${renderVisitorMap(entries)}
+            </div>
           </div>
           <p class="visitor-note">Restarted on ${VISITOR_STATS_SINCE} because clustrmaps.com became unavailable.</p>
         </section>
