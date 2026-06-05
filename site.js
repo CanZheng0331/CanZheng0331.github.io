@@ -90,7 +90,7 @@
       return;
     }
 
-    const mapUrl = "https://clustrmaps.com/map_v2.png?d=GtDZVi4tsLCxCMPsshi4UGUmYEeEN1BC-yvrYvb1Rt4&cl=ffffff&w=250&h=150";
+    const mapUrl = "https://cdn.clustrmaps.com/map_v2.js?d=GtDZVi4tsLCxCMPsshi4UGUmYEeEN1BC-yvrYvb1Rt4&cl=ffffff&w=250&h=150";
 
     containers.forEach((container) => {
       if (container.dataset.loaded === "true") {
@@ -99,32 +99,16 @@
       container.dataset.loaded = "true";
       container.textContent = "";
 
-      const link = document.createElement("a");
-      link.className = "visitor-map-link";
-      link.href = "https://clustrmaps.com/";
-      link.target = "_blank";
-      link.rel = "noopener";
-      link.setAttribute("aria-label", "Open visitor statistics");
-      link.style.display = "block";
-      link.style.lineHeight = "0";
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.id = "clustrmaps";
+      script.src = mapUrl;
 
-      const image = document.createElement("img");
-      image.className = "visitor-map-image";
-      image.src = mapUrl;
-      image.width = 250;
-      image.height = 150;
-      image.loading = "lazy";
-      image.alt = "Visitor map";
-      image.style.display = "block";
-      image.style.height = "auto";
-      image.style.maxWidth = "100%";
-
-      image.addEventListener("error", () => {
+      script.addEventListener("error", () => {
         container.innerHTML = '<div class="visitor-stats-status">Visitor statistics are temporarily unavailable.</div>';
       }, { once: true });
 
-      link.appendChild(image);
-      container.appendChild(link);
+      container.appendChild(script);
     });
   }
 
