@@ -93,6 +93,10 @@
       return;
     }
 
+    if (localStorage.getItem(VISITOR_STATS_IGNORE_KEY)) {
+      return;
+    }
+
     if (document.querySelector('script[src="https://static.cloudflareinsights.com/beacon.min.js"]')) {
       return;
     }
