@@ -53,10 +53,11 @@ export default {
     const page = url.searchParams.get("page") || "unknown";
     const country = normalizeCountry(request);
     const state = await readState(env);
+    const readOnly = url.searchParams.get("mode") === "read";
     const ignoreToken = url.searchParams.get("ignore");
     const shouldIgnoreVisit = Boolean(env.IGNORE_TOKEN && ignoreToken && ignoreToken === env.IGNORE_TOKEN);
 
-    if (shouldIgnoreVisit) {
+    if (readOnly || shouldIgnoreVisit) {
       return json({
         since: state.since || SINCE,
         totalVisits: Number(state.totalVisits || 0),

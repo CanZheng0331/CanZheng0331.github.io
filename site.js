@@ -221,6 +221,7 @@
     const ignoreToken = localStorage.getItem(VISITOR_STATS_IGNORE_KEY);
     if (ignoreToken) {
       requestUrl.searchParams.set("ignore", ignoreToken);
+      requestUrl.searchParams.set("mode", "read");
     }
 
     fetch(requestUrl.toString(), {
