@@ -276,7 +276,7 @@
   function renderVisitorStats(data) {
     ensureVisitorStatsStyles();
 
-    document.querySelectorAll(".visitor-stats").forEach((container) => {
+    document.querySelectorAll(".visitor-stats:not([data-skip-worker-stats])").forEach((container) => {
       const { top, others, entries } = visitorCountryGroups(data.countries || {});
       const listedCountries = others > 0 ? [...top, ["OTHERS", others]] : top;
       const countryRows = listedCountries.length
@@ -323,7 +323,7 @@
   }
 
   function initVisitorStats() {
-    const containers = document.querySelectorAll(".visitor-stats");
+    const containers = document.querySelectorAll(".visitor-stats:not([data-skip-worker-stats])");
     if (!containers.length) {
       return;
     }
