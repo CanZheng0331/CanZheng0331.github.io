@@ -213,6 +213,24 @@ nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 
 .footer { border-top: 1px solid var(--border); color: var(--muted); padding: 32px 24px; text-align: center; margin-top: 64px; font-size: 14px; }
 .visitor-stats { max-width: 760px; margin: 24px auto 0; }
+.visitor-stats-mapmyvisitors {
+  max-width: 260px;
+}
+.visitor-stats-mapmyvisitors iframe,
+.visitor-stats-mapmyvisitors img,
+.visitor-stats-mapmyvisitors canvas,
+.visitor-stats-mapmyvisitors embed,
+.visitor-stats-mapmyvisitors object {
+  height: auto !important;
+  max-width: 100% !important;
+}
+.visitor-reset-note {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+  margin: 10px auto 0;
+  max-width: 260px;
+}
 .visitor-panel {
   background: var(--card);
   border: 1px solid var(--border);
