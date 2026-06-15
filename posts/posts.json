@@ -1,6 +1,13 @@
 {
   "posts": [
     {
+      "id": "multimodal",
+      "title": "多模态模型演进",
+      "date": "2026-06-15",
+      "tags": ["Multimodal", "Paper Summarization", "Learning Records"],
+      "file": "posts/RAG_Agent_practice.md"
+    },
+    {
       "id": "RAG_Agent_practice",
       "title": "大模型 RAG 与 Agent 项目实战记录",
       "date": "2026-05-30",
