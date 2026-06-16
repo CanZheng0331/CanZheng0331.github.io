@@ -20,21 +20,16 @@
     .paper-count { color: var(--muted); font-size: 0.92rem; margin: 4px 0 10px; }
     .paper-list { margin: 0; padding-left: 1.4rem; }
     .paper-item { border-bottom: 1px dashed var(--border); line-height: 1.55; padding: 8px 0; }
+    .paper-line-main { align-items: baseline; display: flex; flex-wrap: wrap; gap: 8px; }
+    .paper-line-tags { margin-top: 3px; }
     .paper-title { font-weight: 700; }
-    .bibtex-btn { background: var(--card); border: 1px solid var(--border); border-radius: 6px; color: var(--fg); cursor: pointer; font: inherit; font-size: 0.82rem; line-height: 1.15; margin-left: 8px; padding: 3px 8px; vertical-align: 1px; }
-    .bibtex-btn:hover { border-color: var(--accent); color: var(--accent); }
-    .paper-tag { background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: 6px; color: var(--accent); display: inline-block; font-size: 0.78rem; font-weight: 700; margin-left: 6px; padding: 2px 6px; white-space: nowrap; }
-    .paper-source { margin-left: 6px; white-space: nowrap; }
-    .bibtex-modal-backdrop { align-items: center; background: rgb(0 0 0 / 0.48); display: flex; inset: 0; justify-content: center; padding: 20px; position: fixed; z-index: 2000; }
-    .bibtex-modal-backdrop[hidden] { display: none; }
-    .bibtex-modal { background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--shadow-hover); max-width: min(680px, 92vw); width: 100%; }
-    .bibtex-modal-head { align-items: center; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; padding: 10px 12px; }
-    .bibtex-modal-head strong { font-size: 0.96rem; }
-    .bibtex-close { background: transparent; border: 0; color: var(--muted); cursor: pointer; font-size: 1.1rem; padding: 2px 6px; }
-    .bibtex-modal pre { background: var(--code-bg); color: var(--code-fg); font-size: 0.82rem; margin: 0; max-height: 360px; overflow: auto; padding: 12px; white-space: pre; }
+    .paper-tag { background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: 6px; color: var(--accent); display: inline-block; font-size: 0.78rem; font-weight: 700; margin: 0 6px 0 0; padding: 2px 6px; white-space: nowrap; }
+    .paper-added { color: var(--muted); display: inline-block; font-size: 0.78rem; margin-left: 4px; white-space: nowrap; }
+    .paper-source { align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 6px; color: var(--accent); display: inline-flex; height: 28px; justify-content: center; text-decoration: none; width: 28px; }
+    .paper-source:hover { border-color: var(--accent); text-decoration: none; }
     @media (max-width: 680px) {
       .filter-label { min-width: 0; width: 100%; }
-      .paper-tag, .paper-source, .bibtex-btn { margin-top: 4px; }
+      .paper-source { flex: 0 0 auto; }
     }
   </style>
 </head>
@@ -106,16 +101,6 @@
     </section>
   </main>
 
-  <div class="bibtex-modal-backdrop" id="bibtex-modal" hidden>
-    <div class="bibtex-modal" role="dialog" aria-modal="true" aria-labelledby="bibtex-modal-title">
-      <div class="bibtex-modal-head">
-        <strong id="bibtex-modal-title">BibTeX</strong>
-        <button class="bibtex-close" type="button" id="bibtex-close" aria-label="Close BibTeX">&times;</button>
-      </div>
-      <pre id="bibtex-content"></pre>
-    </div>
-  </div>
-
   <footer class="footer">
     <div>&copy; <span id="year"></span> Can Zheng &middot; Built for GitHub Pages</div>
     <script src="../../site.js?v=20260614-worker-stats"></script>
@@ -128,21 +113,26 @@
         pdf: "Centimeter_Wave_Next_Paradigm_for_Wireless_Communication_and_Sensing.pdf",
         source: "https://ieeexplore.ieee.org/document/11236989",
         year: 2025,
+        added: "2026-06-16",
+        addedOrder: 1,
         period: "2020-2025",
-        field: "wireless",
-        fieldLabel: "Wireless Communications",
+        fields: ["wireless"],
+        fieldLabels: ["Wireless Communications"],
         category: "magazine",
-        categoryLabel: "Magazine",
-        bibtex: `@ARTICLE{11236989,
-  author={Wang, Zhaocheng and Zhuo, Yinxiao and Mao, Tianqi},
-  journal={IEEE Communications Magazine},
-  title={Centimeter Wave: Next Paradigm for Wireless Communication and Sensing},
-  year={2025},
-  volume={63},
-  number={12},
-  pages={64-70},
-  keywords={Millimeter wave communication;Antenna arrays;Massive MIMO;Wireless communication;Precoding;Channel capacity;Antennas;Transmitting antennas;Signal to noise ratio;Receiving antennas;Integrated sensing and communication},
-  doi={10.1109/MCOM.001.2500008}}`
+        categoryLabel: "Magazine"
+      },
+      {
+        title: "CL-SEC: Cross-Layer Semantic Error Correction Empowered by Language Models",
+        pdf: "https://arxiv.org/abs/2603.26125",
+        source: "https://arxiv.org/abs/2603.26125",
+        year: 2026,
+        added: "2026-06-16",
+        addedOrder: 2,
+        period: "2026-2030",
+        fields: ["wireless", "ai"],
+        fieldLabels: ["Wireless Communications", "AI"],
+        category: "conference",
+        categoryLabel: "Conference"
       }
     ];
 
@@ -154,10 +144,6 @@
 
     const listEl = document.getElementById("paper-list");
     const countEl = document.getElementById("paper-count");
-    const bibtexModal = document.getElementById("bibtex-modal");
-    const bibtexContent = document.getElementById("bibtex-content");
-    const bibtexClose = document.getElementById("bibtex-close");
-
     function escapeHtml(text) {
       return String(text).replace(/[&<>"']/g, (char) => ({
         "&": "&amp;",
@@ -171,21 +157,31 @@
     function renderPapers() {
       const filtered = papers.filter((paper) => {
         return (activeFilters.period === "all" || paper.period === activeFilters.period)
-          && (activeFilters.field === "all" || paper.field === activeFilters.field)
+          && (activeFilters.field === "all" || (paper.fields || []).includes(activeFilters.field))
           && (activeFilters.category === "all" || paper.category === activeFilters.category);
+      }).sort((a, b) => {
+        const dateCompare = String(b.added || "").localeCompare(String(a.added || ""));
+        return dateCompare || Number(b.addedOrder || 0) - Number(a.addedOrder || 0);
       });
 
       countEl.textContent = `${filtered.length} item${filtered.length === 1 ? "" : "s"}`;
-      listEl.innerHTML = filtered.map((paper, index) => `
+      listEl.innerHTML = filtered.map((paper) => {
+        const tags = [
+          paper.year,
+          ...(paper.fieldLabels || []),
+          paper.categoryLabel
+        ].map((tag) => `<span class="paper-tag">${escapeHtml(tag)}</span>`).join("");
+
+        return `
         <li class="paper-item">
-          <a class="paper-title" href="${paper.pdf}" target="_blank" rel="noopener">${escapeHtml(paper.title)}</a>
-          <button class="bibtex-btn" type="button" data-bibtex-index="${index}">BibTeX</button>
-          <span class="paper-tag">${paper.year}</span>
-          <span class="paper-tag">${escapeHtml(paper.fieldLabel)}</span>
-          <span class="paper-tag">${escapeHtml(paper.categoryLabel)}</span>
-          <a class="paper-source" href="${paper.source}" target="_blank" rel="noopener">Original <i class="fas fa-arrow-up-right-from-square"></i></a>
+          <div class="paper-line-main">
+            <a class="paper-title" href="${paper.pdf}" target="_blank" rel="noopener">${escapeHtml(paper.title)}</a>
+            <a class="paper-source" href="${paper.source}" target="_blank" rel="noopener" aria-label="Open original paper" title="Open original paper"><i class="fas fa-arrow-up-right-from-square"></i></a>
+          </div>
+          <div class="paper-line-tags">${tags}<span class="paper-added">Added ${escapeHtml(paper.added || "")}</span></div>
         </li>
-      `).join("") || '<li class="muted">No papers match the selected filters.</li>';
+        `;
+      }).join("") || '<li class="muted">No papers match the selected filters.</li>';
     }
 
     document.querySelectorAll(".filter-group").forEach((group) => {
@@ -197,31 +193,6 @@
           renderPapers();
         });
       });
-    });
-
-    listEl.addEventListener("click", (event) => {
-      const button = event.target.closest(".bibtex-btn");
-      if (!button) return;
-      const paper = papers[Number(button.dataset.bibtexIndex)];
-      if (!paper) return;
-      bibtexContent.textContent = paper.bibtex;
-      bibtexModal.hidden = false;
-    });
-
-    bibtexClose.addEventListener("click", () => {
-      bibtexModal.hidden = true;
-    });
-
-    bibtexModal.addEventListener("click", (event) => {
-      if (event.target === bibtexModal) {
-        bibtexModal.hidden = true;
-      }
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        bibtexModal.hidden = true;
-      }
     });
 
     renderPapers();
