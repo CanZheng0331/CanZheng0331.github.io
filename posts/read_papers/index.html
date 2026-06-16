@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-site-ready="false">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Annotated Paper Notes &middot; Can Zheng</title>
+  <link rel="stylesheet" href="../../styles.css?v=20260616-blog-notes" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <meta name="color-scheme" content="light dark">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    .papers-hero { max-width: 1100px; }
+    .papers-intro { color: var(--muted); margin: 0 0 18px; max-width: 860px; }
+    .paper-filters { display: grid; gap: 8px; margin: 18px 0 20px; }
+    .filter-group { align-items: center; display: flex; flex-wrap: wrap; gap: 8px; }
+    .filter-label { color: var(--muted); flex: 0 0 auto; font-size: 0.86rem; font-weight: 800; min-width: 92px; }
+    .filter-row { display: flex; flex: 1 1 auto; flex-wrap: wrap; gap: 6px; }
+    .filter-chip { background: var(--card); border: 1px solid var(--border); border-radius: 7px; color: var(--fg); cursor: pointer; font: inherit; font-size: 0.86rem; font-weight: 700; line-height: 1.2; padding: 5px 9px; transition: background 0.2s, border-color 0.2s, color 0.2s; }
+    .filter-chip:hover, .filter-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .paper-count { color: var(--muted); font-size: 0.92rem; margin: 4px 0 10px; }
+    .paper-list { margin: 0; padding-left: 1.4rem; }
+    .paper-item { border-bottom: 1px dashed var(--border); line-height: 1.55; padding: 8px 0; }
+    .paper-title { font-weight: 700; }
+    .bibtex-btn { background: var(--card); border: 1px solid var(--border); border-radius: 6px; color: var(--fg); cursor: pointer; font: inherit; font-size: 0.82rem; line-height: 1.15; margin-left: 8px; padding: 3px 8px; vertical-align: 1px; }
+    .bibtex-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .paper-tag { background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: 6px; color: var(--accent); display: inline-block; font-size: 0.78rem; font-weight: 700; margin-left: 6px; padding: 2px 6px; white-space: nowrap; }
+    .paper-source { margin-left: 6px; white-space: nowrap; }
+    .bibtex-modal-backdrop { align-items: center; background: rgb(0 0 0 / 0.48); display: flex; inset: 0; justify-content: center; padding: 20px; position: fixed; z-index: 2000; }
+    .bibtex-modal-backdrop[hidden] { display: none; }
+    .bibtex-modal { background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--shadow-hover); max-width: min(680px, 92vw); width: 100%; }
+    .bibtex-modal-head { align-items: center; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; padding: 10px 12px; }
+    .bibtex-modal-head strong { font-size: 0.96rem; }
+    .bibtex-close { background: transparent; border: 0; color: var(--muted); cursor: pointer; font-size: 1.1rem; padding: 2px 6px; }
+    .bibtex-modal pre { background: var(--code-bg); color: var(--code-fg); font-size: 0.82rem; margin: 0; max-height: 360px; overflow: auto; padding: 12px; white-space: pre; }
+    @media (max-width: 680px) {
+      .filter-label { min-width: 0; width: 100%; }
+      .paper-tag, .paper-source, .bibtex-btn { margin-top: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar container">
+      <a class="brand" href="../../index.html"><img src="../../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
+      <nav>
+        <a class="nav-link" href="../../index.html">Home</a>
+        <a class="nav-link" href="../../biography.html">Biography</a>
+        <a class="nav-link" href="../../researches.html">Researches</a>
+        <a class="nav-link" href="../../publications.html">Publications</a>
+        <div class="dropdown">
+          <a class="nav-link" href="../../blog.html" aria-current="page">Blogs</a>
+          <div class="dropdown-content">
+            <a href="../../blog.html">Blogs</a>
+            <a href="./">Papers</a>
+          </div>
+        </div>
+        <a class="nav-link" href="../../photos.html">Photos</a>
+        <button class="theme-toggle-btn" id="theme-btn" aria-label="Toggle color theme"><i class="fas fa-sun"></i></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section papers-hero">
+      <h1>Annotated Paper Notes</h1>
+      <p class="papers-intro">These are PDF-based reading notes with highlights, annotations, and margin sketches. The collection is informal and mainly maintained for my own research workflow.</p>
+
+      <div class="paper-filters" aria-label="Paper filters">
+        <div class="filter-group" data-filter-group="period">
+          <div class="filter-label">Year Range:</div>
+          <div class="filter-row">
+            <button class="filter-chip active" data-value="all">All</button>
+            <button class="filter-chip" data-value="earlier">Earlier</button>
+            <button class="filter-chip" data-value="2020-2025">2020-2025</button>
+            <button class="filter-chip" data-value="2026-2030">2026-2030</button>
+          </div>
+        </div>
+
+        <div class="filter-group" data-filter-group="field">
+          <div class="filter-label">Field:</div>
+          <div class="filter-row">
+            <button class="filter-chip active" data-value="all">All</button>
+            <button class="filter-chip" data-value="wireless">Wireless Communications</button>
+            <button class="filter-chip" data-value="signal">Signal Processing</button>
+            <button class="filter-chip" data-value="ai">AI</button>
+            <button class="filter-chip" data-value="other">Other</button>
+          </div>
+        </div>
+
+        <div class="filter-group" data-filter-group="category">
+          <div class="filter-label">Category:</div>
+          <div class="filter-row">
+            <button class="filter-chip active" data-value="all">All</button>
+            <button class="filter-chip" data-value="magazine">Magazine</button>
+            <button class="filter-chip" data-value="journal">Journal</button>
+            <button class="filter-chip" data-value="conference">Conference</button>
+            <button class="filter-chip" data-value="textbook">Textbook</button>
+            <button class="filter-chip" data-value="blog">Blog</button>
+            <button class="filter-chip" data-value="other">Other</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="paper-count" id="paper-count"></div>
+      <ul class="paper-list" id="paper-list"></ul>
+    </section>
+  </main>
+
+  <div class="bibtex-modal-backdrop" id="bibtex-modal" hidden>
+    <div class="bibtex-modal" role="dialog" aria-modal="true" aria-labelledby="bibtex-modal-title">
+      <div class="bibtex-modal-head">
+        <strong id="bibtex-modal-title">BibTeX</strong>
+        <button class="bibtex-close" type="button" id="bibtex-close" aria-label="Close BibTeX">&times;</button>
+      </div>
+      <pre id="bibtex-content"></pre>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div>&copy; <span id="year"></span> Can Zheng &middot; Built for GitHub Pages</div>
+    <script src="../../site.js?v=20260614-worker-stats"></script>
+  </footer>
+
+  <script>
+    const papers = [
+      {
+        title: "Centimeter Wave: Next Paradigm for Wireless Communication and Sensing",
+        pdf: "Centimeter_Wave_Next_Paradigm_for_Wireless_Communication_and_Sensing.pdf",
+        source: "https://ieeexplore.ieee.org/document/11236989",
+        year: 2025,
+        period: "2020-2025",
+        field: "wireless",
+        fieldLabel: "Wireless Communications",
+        category: "magazine",
+        categoryLabel: "Magazine",
+        bibtex: `@ARTICLE{11236989,
+  author={Wang, Zhaocheng and Zhuo, Yinxiao and Mao, Tianqi},
+  journal={IEEE Communications Magazine},
+  title={Centimeter Wave: Next Paradigm for Wireless Communication and Sensing},
+  year={2025},
+  volume={63},
+  number={12},
+  pages={64-70},
+  keywords={Millimeter wave communication;Antenna arrays;Massive MIMO;Wireless communication;Precoding;Channel capacity;Antennas;Transmitting antennas;Signal to noise ratio;Receiving antennas;Integrated sensing and communication},
+  doi={10.1109/MCOM.001.2500008}}`
+      }
+    ];
+
+    const activeFilters = {
+      period: "all",
+      field: "all",
+      category: "all"
+    };
+
+    const listEl = document.getElementById("paper-list");
+    const countEl = document.getElementById("paper-count");
+    const bibtexModal = document.getElementById("bibtex-modal");
+    const bibtexContent = document.getElementById("bibtex-content");
+    const bibtexClose = document.getElementById("bibtex-close");
+
+    function escapeHtml(text) {
+      return String(text).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    function renderPapers() {
+      const filtered = papers.filter((paper) => {
+        return (activeFilters.period === "all" || paper.period === activeFilters.period)
+          && (activeFilters.field === "all" || paper.field === activeFilters.field)
+          && (activeFilters.category === "all" || paper.category === activeFilters.category);
+      });
+
+      countEl.textContent = `${filtered.length} item${filtered.length === 1 ? "" : "s"}`;
+      listEl.innerHTML = filtered.map((paper, index) => `
+        <li class="paper-item">
+          <a class="paper-title" href="${paper.pdf}" target="_blank" rel="noopener">${escapeHtml(paper.title)}</a>
+          <button class="bibtex-btn" type="button" data-bibtex-index="${index}">BibTeX</button>
+          <span class="paper-tag">${paper.year}</span>
+          <span class="paper-tag">${escapeHtml(paper.fieldLabel)}</span>
+          <span class="paper-tag">${escapeHtml(paper.categoryLabel)}</span>
+          <a class="paper-source" href="${paper.source}" target="_blank" rel="noopener">Original <i class="fas fa-arrow-up-right-from-square"></i></a>
+        </li>
+      `).join("") || '<li class="muted">No papers match the selected filters.</li>';
+    }
+
+    document.querySelectorAll(".filter-group").forEach((group) => {
+      const groupName = group.dataset.filterGroup;
+      group.querySelectorAll(".filter-chip").forEach((button) => {
+        button.addEventListener("click", () => {
+          activeFilters[groupName] = button.dataset.value;
+          group.querySelectorAll(".filter-chip").forEach((chip) => chip.classList.toggle("active", chip === button));
+          renderPapers();
+        });
+      });
+    });
+
+    listEl.addEventListener("click", (event) => {
+      const button = event.target.closest(".bibtex-btn");
+      if (!button) return;
+      const paper = papers[Number(button.dataset.bibtexIndex)];
+      if (!paper) return;
+      bibtexContent.textContent = paper.bibtex;
+      bibtexModal.hidden = false;
+    });
+
+    bibtexClose.addEventListener("click", () => {
+      bibtexModal.hidden = true;
+    });
+
+    bibtexModal.addEventListener("click", (event) => {
+      if (event.target === bibtexModal) {
+        bibtexModal.hidden = true;
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        bibtexModal.hidden = true;
+      }
+    });
+
+    renderPapers();
+    window.Site && window.Site.init({ titles: { zh: "论文阅读记录", en: "Annotated Paper Notes" } });
+  </script>
+</body>
+</html>

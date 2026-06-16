@@ -205,6 +205,14 @@ nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 /* Card通用 */
 .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm); transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
 .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
+.blog-note {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  border-radius: 8px;
+  color: var(--fg);
+  margin: 10px 0 16px;
+  padding: 14px 16px;
+}
 .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
 .col-4 { grid-column: span 4; }
 .col-6 { grid-column: span 6; }

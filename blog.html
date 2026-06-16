@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Blogs · Can Zheng</title>
-  <link rel="stylesheet" href="styles.css?v=20260605-visitor-map" />
+  <link rel="stylesheet" href="styles.css?v=20260616-blog-notes" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     window.MathJax = {
@@ -145,7 +145,13 @@
             <a href="publications.html#conference">Conference Papers</a>
           </div>
         </div>
-        <a href="blog.html" class="nav-link" aria-current="page">Blogs</a>
+        <div class="dropdown">
+          <a href="blog.html" class="nav-link" aria-current="page">Blogs</a>
+          <div class="dropdown-content">
+            <a href="blog.html">Blogs</a>
+            <a href="posts/read_papers/">Papers</a>
+          </div>
+        </div>
         <a href="photos.html" class="nav-link">Photos</a>
         <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
       </nav>
@@ -154,6 +160,9 @@
   <main class="container">
     <section id="list-section" class="section">
       <h1>Blogs</h1>
+      <div class="blog-note">
+        These notes are mostly written for my own reference, so many of them are unfinished, loosely organized, and mainly written in Chinese. Thanks for your patience. I also keep some paper-reading notes as annotated PDF files with highlights and hand-written markings. If you are interested, please <a href="posts/read_papers/">click here</a>.
+      </div>
       <input class="search-box" type="text" id="search" placeholder="Search articles or tags..." />
       <div id="filter-header-container"></div>
       <ul id="post-list" class="post-list">
