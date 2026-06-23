@@ -167,7 +167,7 @@
       <input class="search-box" type="text" id="search" placeholder="Search articles or tags..." />
       <div id="filter-header-container"></div>
       <ul id="post-list" class="post-list">
-        <li><small class="muted">Loading and sorting by date鈥?/small></li>
+        <li><small class="muted">Loading and sorting by date...</small></li>
       </ul>
     </section>
     <article id="article-section" class="prose card" hidden>
@@ -185,7 +185,7 @@
   </main>
 
   <footer class="footer">
-    <div>漏 <span id="year"></span> Can Zheng 路 Built for GitHub Pages</div>
+    <div>&copy; <span id="year"></span> Can Zheng &middot; Built for GitHub Pages</div>
     <script src="site.js?v=20260614-worker-stats"></script>
   </footer>
 
@@ -444,7 +444,7 @@
       document.body.classList.remove('pdf-mode');
       postToc.hidden = true;
       postTocList.innerHTML = "";
-      document.title = `${post.title} 路 Can Zheng`;
+      document.title = `${post.title} - Can Zheng`;
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("");
 
