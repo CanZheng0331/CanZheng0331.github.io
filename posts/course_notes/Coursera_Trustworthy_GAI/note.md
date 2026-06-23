@@ -7,18 +7,27 @@
   .note-toolbar button {
     margin-right: 8px;
     padding: 6px 12px;
-    border: 1px solid #c9d4e5;
+    border: 1px solid var(--border);
     border-radius: 6px;
-    background: #f6f8fb;
+    background: var(--card);
+    color: var(--fg);
     cursor: pointer;
+    font-weight: 700;
+  }
+  .note-toolbar button:hover,
+  .note-toolbar button.active {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
   }
   .emph {
     color: #c62828;
     font-weight: 700;
   }
   .example {
-    border-left: 4px solid #9aa0a6;
-    background: #f6f6f6;
+    border-left: 4px solid var(--accent);
+    background: color-mix(in srgb, var(--accent) 8%, var(--card));
+    color: var(--fg);
     padding: 10px 12px;
     margin: 10px 0;
     border-radius: 6px;
@@ -26,8 +35,8 @@
 </style>
 
 <div class="note-toolbar">
-  <button onclick="document.querySelectorAll('.zh').forEach(e => e.style.display = 'block'); document.querySelectorAll('.en').forEach(e => e.style.display = 'none');">中文</button>
-  <button onclick="document.querySelectorAll('.zh').forEach(e => e.style.display = 'none'); document.querySelectorAll('.en').forEach(e => e.style.display = 'block');">English</button>
+  <button type="button" class="active" data-note-lang="zh">中文</button>
+  <button type="button" data-note-lang="en">English</button>
 </div>
 
 
@@ -53,7 +62,7 @@
 
 ## 模块一：适合用生成式 AI 解决的问题类型
 
-### 第 1 章：引言
+### 1. 引言
 
 生成式 AI 可以生成文本、展示推理、产生创意，也可能生成看似真实但未经验证的内容。幻觉在创意任务中可能是能力来源，在事实任务中则可能成为风险。
 
@@ -67,7 +76,7 @@
 - 提示词会影响模型把任务理解为事实说明还是创意生成。
 - 使用前要先判断任务类型，以及答案是否容易检查。
 
-### 第 2 章：生成式 AI 不是事实来源
+### 2. 生成式 AI 不是事实来源
 
 生成式 AI 不应该被当作搜索引擎或事实数据库。它可以处理文本、总结资料、帮助导航到事实，但不适合凭训练记忆直接生成事实。
 
@@ -81,7 +90,7 @@
 - 更可靠的做法是给模型真实资料，让它基于资料总结。
 - 如果关心事实和来源，不应让模型自由生成答案。
 
-### 第 3 章：确保答案容易检查
+### 3. 确保答案容易检查
 
 如果正确性很重要，就要选择那些答案容易验证的任务。生成答案可以便宜，但检查答案也必须便宜，否则使用模型未必划算。
 
@@ -95,7 +104,7 @@
 - 适合的任务像 Wordle 或填字游戏，规则清楚、验证简单。
 - 如果检查答案很困难，就要谨慎使用。
 
-### 第 4 章：避免难以检查的答案
+### 4. 避免难以检查的答案
 
 如果你不具备判断答案真伪的能力，并且验证成本接近重新找专家解决问题的成本，这通常是不合适的用法。
 
@@ -109,7 +118,7 @@
 - 不懂领域时，模型输出越像真的，越需要警惕。
 - 需要高正确性的任务，应优先找可靠来源或专家。
 
-### 第 5 章：寻找“部分答案也有价值”的问题
+### 5. 寻找“部分答案也有价值”的问题
 
 有些任务不要求答案完美，模型的价值在于帮助人启动思考、产生选项、形成初稿或拓展视野。这类任务很适合生成式 AI。
 
@@ -123,7 +132,7 @@
 - 模型适合用来生成备选方案、初稿、流程图和探索路径。
 - 输出应作为起点，而不是终点。
 
-### 第 6 章：思考风险
+### 6. 思考风险
 
 是否适合使用生成式 AI，还取决于错误会造成多大伤害。如果错误可能影响生命、健康、声誉或重大决策，就不能让模型直接替人做判断。
 
@@ -137,7 +146,7 @@
 - 可以把任务改写成帮助用户准备沟通、列问题、启动对话。
 - 合适的用法应保留人在环路中，并降低下游伤害。
 
-### 第 7 章：这种用法是否让人受益
+### 7. 这种用法是否让人受益
 
 合适与否还取决于它是否真正帮助使用者成长。把模型答案直接复制到测验里，会损害学习，也可能构成作弊；把模型作为解释、类比和练习的起点，则可以帮助学习。
 
@@ -151,7 +160,7 @@
 - 重要的是学习、追问、核查、修改和改进。
 - 如果只是复制粘贴，人就容易被流程自动化替代。
 
-### 第 8 章：ACHIEVE 框架
+### 8. ACHIEVE 框架
 
 课程最后提出 ACHIEVE 框架，强调生成式 AI 应被看作增强人的工具，而不是替代人的工具。它的目标是创造一种“思维外骨骼”：放大人的创造力、生产力和问题解决能力，同时让人始终留在判断、指导和改进的过程中。
 
@@ -174,7 +183,7 @@ ACHIEVE 可以概括为：
 
 ## 模块二：面向可信使用的提示工程与问题表述
 
-### 第 1 章：过滤
+### 1. 过滤
 
 过滤是很适合生成式 AI 的操作，但前提是：用户本来就应该访问这些信息。模型不应该决定用户能不能看某些敏感信息，它应该在已允许的信息范围内，帮助人更快找到相关内容。
 
@@ -189,7 +198,7 @@ ACHIEVE 可以概括为：
 - 总结和解释也可以使用，但最好要求模型给出原文行号、引用或 ID。
 - 参考资料中的常用模式包括 simple filter、semantic filter、summarize and cite。
 
-### 第 2 章：构思
+### 2. 构思
 
 构思是生成式 AI 的强项，因为目标不是得到完美答案，而是激发人的想法。模型可以快速给出许多方向，人再选择、丢弃、修改或继续追问。
 
@@ -203,7 +212,7 @@ ACHIEVE 可以概括为：
 - 生成大量想法很便宜，不合适的可以直接丢掉。
 - 人要对输出有反应、有筛选、有改写，才是真正的 ideation。
 
-### 第 3 章：导航
+### 3. 导航
 
 导航是处理敏感信息时更安全的思路。不要让模型直接生成敏感答案，而是让它把用户带到已有系统中存放答案的位置。
 
@@ -218,7 +227,7 @@ ACHIEVE 可以概括为：
 - 参考资料中的常用模式包括 direct navigation 和 navigate instead。
 - 仍然要注意访问控制：模型不应把用户带到他们不该访问的信息。
 
-### 第 4 章：专业能力
+### 4. 专业能力
 
 人的专业能力决定了许多用法是否安全。模型输出应被看成草稿；如果你有能力发现错误、修正错误、继续查证，它就可以成为很强的加速器。反过来，如果你无法判断输出是否正确，风险就会上升。
 
@@ -254,7 +263,7 @@ Core idea: <span class="emph">trustworthy use means using AI to help humans thin
 
 ## Module 1: The Right Types of Problems to Solve with Generative AI
 
-### Chapter 1: Introduction
+### 1. Introduction
 
 Generative AI can generate text, show reasoning, and produce creative ideas. It can also produce content that looks factual but has not been verified. Hallucination can be useful in creative work and risky in factual work.
 
@@ -268,7 +277,7 @@ Takeaways:
 - Prompt wording can shift the task between factual explanation and creative generation.
 - Before using the model, decide what kind of task it is and whether the answer can be checked.
 
-### Chapter 2: Generative AI Is Not a Source of Facts
+### 2. Generative AI Is Not a Source of Facts
 
 Generative AI should not be treated like a search engine or a factual database. It can process text, summarize evidence, and help navigate to facts, but it should not be relied on to generate facts from memory.
 
@@ -282,7 +291,7 @@ Takeaways:
 - A safer pattern is to give the model real source material and ask it to summarize from that material.
 - If facts and sources matter, do not ask the model to freely generate the answer.
 
-### Chapter 3: Make Sure Checking If the Answer Is Correct Is Easy
+### 3. Make Sure Checking If the Answer Is Correct Is Easy
 
 If correctness matters, choose tasks where the answer is easy to verify. It may be cheap to generate an answer, but checking it also needs to be cheap.
 
@@ -296,7 +305,7 @@ Takeaways:
 - Good tasks have clear rules and simple consistency checks.
 - If checking is hard, use generative AI cautiously.
 
-### Chapter 4: Avoid Hard-to-Check Answers
+### 4. Avoid Hard-to-Check Answers
 
 If you cannot judge whether the answer is correct, and checking it would cost almost as much as solving the problem properly, the use case is probably inappropriate.
 
@@ -310,7 +319,7 @@ Takeaways:
 - In unfamiliar expert domains, plausible-looking answers are especially risky.
 - High-correctness tasks should use reliable sources or real experts.
 
-### Chapter 5: Look for Problems Where Partial Answers Provide Value
+### 5. Look for Problems Where Partial Answers Provide Value
 
 Some tasks do not require perfect answers. The model is useful when it helps people start thinking, generate options, create a first draft, or explore possible paths.
 
@@ -324,7 +333,7 @@ Takeaways:
 - The model is good for options, drafts, workflows, and exploration.
 - Treat the output as a starting point, not the final answer.
 
-### Chapter 6: Think About Risk
+### 6. Think About Risk
 
 Appropriate use depends on the possible harm of being wrong. If a wrong answer could harm life, health, reputation, or important decisions, the model should not directly make the decision.
 
@@ -338,7 +347,7 @@ Takeaways:
 - Reframe the task as preparing questions or supporting communication.
 - Keep humans in the loop and reduce downstream harm.
 
-### Chapter 7: Does the Use Benefit You as a Human?
+### 7. Does the Use Benefit You as a Human?
 
 Appropriateness also depends on whether the use helps the user grow. Copying an answer into a quiz harms learning and may be cheating; using the model as an explanation and analogy tool can support learning.
 
@@ -352,7 +361,7 @@ Takeaways:
 - The user should learn, question, verify, revise, and improve.
 - If all a person does is copy and paste, that step can be automated away.
 
-### Chapter 8: ACHIEVE
+### 8. ACHIEVE
 
 The course ends with the ACHIEVE framework. It presents generative AI as augmented intelligence rather than human replacement: an “exoskeleton for the mind” that amplifies human creativity, productivity, coordination, and problem solving while keeping people in the loop.
 
@@ -375,7 +384,7 @@ Takeaways:
 
 ## Module 2: Prompt Engineering and Problem Formulation for Trust
 
-### Chapter 1: Filter
+### 1. Filter
 
 Filtering is an appropriate use of generative AI when the user already has access to the information. The model should not decide what information a person is allowed to see. It should help people reason over information they are allowed to use.
 
@@ -390,7 +399,7 @@ Takeaways:
 - Summaries and explanations can work too, especially when the model cites source lines or IDs.
 - Useful prompt patterns include simple filter, semantic filter, and summarize and cite.
 
-### Chapter 2: Ideation
+### 2. Ideation
 
 Ideation is one of the strongest uses of generative AI because the goal is not a perfect final answer. The goal is to spark human thinking. The model can produce many directions quickly, and the human can keep, reject, revise, or extend them.
 
@@ -404,7 +413,7 @@ Takeaways:
 - Generating many ideas is cheap. Bad ideas can be discarded.
 - The human should react to the output, filter it, and build on it.
 
-### Chapter 3: Navigation
+### 3. Navigation
 
 Navigation is a safer way to use AI with sensitive information. Instead of generating sensitive answers, the model helps the user find where the answer already exists in a trusted system.
 
@@ -419,7 +428,7 @@ Takeaways:
 - Useful prompt patterns include direct navigation and navigate instead.
 - Access control still matters. The model should not navigate users to information they should not see.
 
-### Chapter 4: Expertise
+### 4. Expertise
 
 Human expertise changes what is safe and useful. Model output should be treated as a draft. If the user can spot errors, fix them, and investigate further, the model can be a strong accelerator. If the user cannot judge the output, the risk increases.
 

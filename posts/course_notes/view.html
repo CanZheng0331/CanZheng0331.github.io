@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN" data-site-ready="false">
 <head>
   <meta charset="UTF-8" />
@@ -59,7 +59,7 @@
           <a class="nav-link" href="../../blog.html" aria-current="page">Blogs</a>
           <div class="dropdown-content">
             <a href="../../blog.html">Technical Blogs</a>
-            <a href="../read_papers/">Paper Reading Notes</a>
+            <a href="../read_papers/">Paper Notes</a>
             <a href="./">Course Notes</a>
           </div>
         </div>
@@ -142,7 +142,9 @@
     function buildToc() {
       if (tocObserver) tocObserver.disconnect();
       noteTocList.innerHTML = "";
-      const headings = Array.from(noteContent.querySelectorAll("h1, h2, h3, h4")).filter(heading => heading.textContent.trim());
+      const headings = Array.from(noteContent.querySelectorAll("h1, h2, h3, h4")).filter((heading) => {
+        return heading.textContent.trim() && heading.getClientRects().length > 0;
+      });
       if (headings.length < 2) {
         noteToc.hidden = true;
         return;
@@ -171,6 +173,27 @@
         noteTocList.appendChild(link);
       });
       noteToc.hidden = false;
+    }
+
+    function setCourseNoteLanguage(lang) {
+      noteContent.querySelectorAll(".zh").forEach((section) => {
+        section.style.display = lang === "zh" ? "block" : "none";
+      });
+      noteContent.querySelectorAll(".en").forEach((section) => {
+        section.style.display = lang === "en" ? "block" : "none";
+      });
+      noteContent.querySelectorAll("[data-note-lang]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.noteLang === lang);
+      });
+      buildToc();
+      typesetNoteContent();
+    }
+
+    function initCourseNoteLanguageControls() {
+      noteContent.querySelectorAll("[data-note-lang]").forEach((button) => {
+        button.addEventListener("click", () => setCourseNoteLanguage(button.dataset.noteLang));
+      });
+      setCourseNoteLanguage("zh");
     }
 
     async function typesetNoteContent() {
@@ -208,7 +231,7 @@
         const markdown = await res.text();
         const { masked, chunks } = extractMath(markdown);
         noteContent.innerHTML = restoreMath(marked.parse(masked), chunks);
-        buildToc();
+        initCourseNoteLanguageControls();
         await new Promise(requestAnimationFrame);
         await typesetNoteContent();
       } catch (err) {
@@ -218,7 +241,7 @@
 
     document.getElementById("year").textContent = new Date().getFullYear();
     renderNote();
-    window.Site && window.Site.init({ titles: { zh: "课程笔记", en: "Course Notes" } });
+    window.Site && window.Site.init({ titles: { zh: "璇剧▼绗旇", en: "Course Notes" } });
   </script>
 </body>
 </html>

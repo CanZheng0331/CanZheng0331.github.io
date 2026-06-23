@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN" data-bs-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Performance Visualizer · Can Zheng</title>
+  <title>Performance Visualizer 路 Can Zheng</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../styles.css?v=20260605-visitor-map" />
 
   <script>
-    // 主题初始化逻辑
+    // 涓婚鍒濆鍖栭€昏緫
     (function() {
       let theme = localStorage.getItem('theme');
       if (theme !== 'light' && theme !== 'dark') {
@@ -19,7 +19,7 @@
         localStorage.setItem('theme', theme); 
       }
       document.documentElement.setAttribute('data-theme', theme);
-      document.documentElement.setAttribute('data-bs-theme', theme); // 同步 Bootstrap 主题
+      document.documentElement.setAttribute('data-bs-theme', theme); // 鍚屾 Bootstrap 涓婚
     })();
   </script>
 
@@ -31,7 +31,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <style>
-    /* 针对可视化工具的微调样式，对齐主页风格 */
+    /* 閽堝鍙鍖栧伐鍏风殑寰皟鏍峰紡锛屽榻愪富椤甸鏍?*/
     .tool-header-actions .btn {
       font-family: 'Inter', sans-serif;
       font-weight: 500;
@@ -95,7 +95,7 @@
       box-shadow: none !important;
     }
 
-    /* 优化卡片内部间距 */
+    /* 浼樺寲鍗＄墖鍐呴儴闂磋窛 */
     .card-tool {
       padding: 20px;
       margin-bottom: 20px;
@@ -150,7 +150,7 @@
           <a href="../blog.html" class="nav-link">Blogs</a>
           <div class="dropdown-content">
             <a href="../blog.html">Technical Blogs</a>
-            <a href="../posts/read_papers/">Paper Reading Notes</a>
+            <a href="../posts/read_papers/">Paper Notes</a>
             <a href="../posts/course_notes/">Course Notes</a>
           </div>
         </div>
@@ -174,7 +174,7 @@
         <button class="btn btn-info btn-sm text-white shadow-sm" onclick="exportMATLAB()">
           <i class="bi bi-file-earmark-code me-1"></i><span data-i18n="btnMatlab">Export MATLAB</span>
         </button>
-        <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 ms-2" onclick="toggleLang()" id="btnLang">中文</button>
+        <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 ms-2" onclick="toggleLang()" id="btnLang">涓枃</button>
       </div>
     </div>
 
@@ -288,20 +288,19 @@
   <hr style="margin: 0; border-top: 1px solid var(--border-color, #eaeaea);">
 
   <footer class="footer">
-    <div>© <span id="year"></span> Can Zheng · Built for GitHub Pages</div>
+    <div>漏 <span id="year"></span> Can Zheng 路 Built for GitHub Pages</div>
     <script src="../site.js?v=20260614-worker-stats"></script>
   </footer>
 
   <script>
     // ==========================================
-    // 1. 数据状态与多语言配置（必须最先声明，防止报错）
-    // ==========================================
+    // 1. 鏁版嵁鐘舵€佷笌澶氳瑷€閰嶇疆锛堝繀椤绘渶鍏堝０鏄庯紝闃叉鎶ラ敊锛?    // ==========================================
     const dict = {
         en: {
             navTitle: "Performance Visualizer",
             btnSvg: "Export SVG",
             btnMatlab: "Export MATLAB",
-            langBtn: "中文",
+            langBtn: "涓枃",
             basicSet: "Basic Settings",
             advancedSet: "Advanced Formatting",
             chartType: "Chart Type",
@@ -327,33 +326,33 @@
             defaultAlgoName: "Algorithm"
         },
         zh: {
-            navTitle: "通信系统性能可视化工具",
-            btnSvg: "导出 SVG 矢量图",
-            btnMatlab: "导出 MATLAB 脚本",
+            navTitle: "閫氫俊绯荤粺鎬ц兘鍙鍖栧伐鍏?,
+            btnSvg: "瀵煎嚭 SVG 鐭㈤噺鍥?,
+            btnMatlab: "瀵煎嚭 MATLAB 鑴氭湰",
             langBtn: "English",
-            basicSet: "基础设置",
-            advancedSet: "高级格式参数",
-            chartType: "图表类型",
-            typeNmse: "SNR vs NMSE (误差)",
-            typeBer: "SNR vs BER (误码率)",
-            typeAcc: "K vs Top-K Accuracy (准确率)",
-            fontGlobal: "全局英文字体",
-            titleSize: "标题字号",
-            tickSize: "刻度字号",
-            legendSize: "图例字号",
-            lineWidth: "坐标轴线粗细",
-            boxWidth: "图例框粗细",
-            snrMin: "横轴下限",
-            snrMax: "横轴上限",
-            snrStep: "步长",
-            dataInput: "性能数据矩阵",
-            btnAddAlgo: "添加算法",
-            btnAddSnr: "添加横轴点",
+            basicSet: "鍩虹璁剧疆",
+            advancedSet: "楂樼骇鏍煎紡鍙傛暟",
+            chartType: "鍥捐〃绫诲瀷",
+            typeNmse: "SNR vs NMSE (璇樊)",
+            typeBer: "SNR vs BER (璇爜鐜?",
+            typeAcc: "K vs Top-K Accuracy (鍑嗙‘鐜?",
+            fontGlobal: "鍏ㄥ眬鑻辨枃瀛椾綋",
+            titleSize: "鏍囬瀛楀彿",
+            tickSize: "鍒诲害瀛楀彿",
+            legendSize: "鍥句緥瀛楀彿",
+            lineWidth: "鍧愭爣杞寸嚎绮楃粏",
+            boxWidth: "鍥句緥妗嗙矖缁?,
+            snrMin: "妯酱涓嬮檺",
+            snrMax: "妯酱涓婇檺",
+            snrStep: "姝ラ暱",
+            dataInput: "鎬ц兘鏁版嵁鐭╅樀",
+            btnAddAlgo: "娣诲姞绠楁硶",
+            btnAddSnr: "娣诲姞妯酱鐐?,
             thSnr: "SNR (dB)",
-            thK: "K 值",
-            thOp: "删除",
-            emptyAlgo: "点击 '添加算法' 开始",
-            defaultAlgoName: "对比算法"
+            thK: "K 鍊?,
+            thOp: "鍒犻櫎",
+            emptyAlgo: "鐐瑰嚮 '娣诲姞绠楁硶' 寮€濮?,
+            defaultAlgoName: "瀵规瘮绠楁硶"
         }
     };
 
@@ -378,7 +377,7 @@
     const matlabMarkersCode = ['-d', '->', '-^', '-s', '-o', '-x'];
 
     // ==========================================
-    // 2. 核心功能函数声明
+    // 2. 鏍稿績鍔熻兘鍑芥暟澹版槑
     // ==========================================
     function toggleLang() {
         currentLang = currentLang === 'en' ? 'zh' : 'en';
@@ -510,7 +509,7 @@
         const xMax = parseFloat(document.getElementById('xMax').value);
         const xDt = parseFloat(document.getElementById('xDt').value);
 
-        // 主题动态颜色适配
+        // 涓婚鍔ㄦ€侀鑹查€傞厤
         const isDarkTheme = document.documentElement.getAttribute('data-theme') === 'dark';
         const plotBgColor = isDarkTheme ? 'transparent' : 'white';
         const paperBgColor = isDarkTheme ? 'transparent' : 'white';
@@ -666,7 +665,7 @@
 
     function exportMATLAB() {
         if (dataState.algorithms.length === 0) {
-            alert(currentLang === 'zh' ? "请先添加算法和数据。" : "Please add algorithms and data first.");
+            alert(currentLang === 'zh' ? "璇峰厛娣诲姞绠楁硶鍜屾暟鎹€? : "Please add algorithms and data first.");
             return;
         }
 
@@ -791,7 +790,7 @@
     }
 
     // ==========================================
-    // 3. 页面与主题初始化逻辑
+    // 3. 椤甸潰涓庝富棰樺垵濮嬪寲閫昏緫
     // ==========================================
     document.getElementById('year').textContent = new Date().getFullYear();
     const themeBtn = document.getElementById('theme-btn');
@@ -806,8 +805,8 @@
           themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
       }
 
-      // 当主题切换时，实时重绘 Plotly 图表以自适应黑夜/白天模式
-      // （现在放在最后执行，数据都已经完全加载，绝不会再报错了）
+      // 褰撲富棰樺垏鎹㈡椂锛屽疄鏃堕噸缁?Plotly 鍥捐〃浠ヨ嚜閫傚簲榛戝/鐧藉ぉ妯″紡
+      // 锛堢幇鍦ㄦ斁鍦ㄦ渶鍚庢墽琛岋紝鏁版嵁閮藉凡缁忓畬鍏ㄥ姞杞斤紝缁濅笉浼氬啀鎶ラ敊浜嗭級
       if (typeof updateChart === 'function' && document.getElementById('chartDiv')) {
         updateChart();
       }
@@ -820,10 +819,10 @@
     });
 
     window.onload = function() {
-        // 应用本地主题记录
+        // 搴旂敤鏈湴涓婚璁板綍
         applyThemeMode(currentTheme);
 
-        // 应用多语言
+        // 搴旂敤澶氳瑷€
         document.getElementById('btnLang').innerText = dict[currentLang].langBtn;
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
@@ -832,8 +831,7 @@
             }
         });
 
-        // 渲染基础数据与图表
-        renderTable();
+        // 娓叉煋鍩虹鏁版嵁涓庡浘琛?        renderTable();
         updateChart();
     };
   </script>
