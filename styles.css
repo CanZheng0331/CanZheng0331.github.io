@@ -139,8 +139,10 @@ nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
   background-color: var(--card); min-width: 180px; box-shadow: var(--shadow-md);
   z-index: 1001; border-radius: 8px; border: 1px solid var(--border); padding: 8px 0;
   transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  pointer-events: none;
 }
-.dropdown:hover .dropdown-content { visibility: visible; opacity: 1; transform: translateY(0); }
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content { visibility: visible; opacity: 1; transform: translateY(0); pointer-events: auto; }
 .dropdown-content a { color: var(--fg); padding: 10px 16px; text-decoration: none; display: block; font-size: 0.95rem; transition: background-color 0.2s; }
 .dropdown-content a:hover { background-color: var(--border); color: var(--accent); text-decoration: none; }
 

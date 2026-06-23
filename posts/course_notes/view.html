@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-site-ready="false">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Course Note &middot; Can Zheng</title>
+  <link rel="stylesheet" href="../../styles.css?v=20260616-blog-notes" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true, packages: {'[+]': ['textmacros']} },
+      loader: { load: ['[tex]/textmacros'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <meta name="color-scheme" content="light dark">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    .note-layout { display: grid; grid-template-columns: minmax(180px, 260px) minmax(0, 1fr); gap: 28px; align-items: start; }
+    .note-toc { position: sticky; top: 86px; max-height: calc(100vh - 110px); overflow: auto; border-right: 1px solid var(--border); padding: 4px 16px 8px 0; font-size: 0.9rem; text-align: left !important; }
+    .note-toc[hidden] { display: none; }
+    .note-toc-title { color: var(--muted); display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; margin: 0 0 10px; text-transform: uppercase; }
+    .note-toc nav { align-items: stretch; display: flex; flex-direction: column; gap: 2px; justify-content: flex-start; width: 100%; }
+    .note-toc a { border-left: 3px solid transparent; color: var(--muted); display: block; line-height: 1.35; padding: 6px 0 6px 10px; text-align: left; text-decoration: none; }
+    .note-toc a:hover, .note-toc a.active { color: var(--accent); border-left-color: var(--accent); }
+    .note-toc .toc-level-1 { font-weight: 700; color: var(--fg); }
+    .note-toc .toc-level-3 { padding-left: 24px; font-size: 0.86rem; }
+    .note-toc .toc-level-4 { padding-left: 38px; font-size: 0.82rem; }
+    #note-content { min-width: 0; }
+    #note-content h1, #note-content h2, #note-content h3, #note-content h4 { scroll-margin-top: 96px; }
+    .note-meta { margin-bottom: 16px; }
+    .note-tag { background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: 6px; color: var(--accent); display: inline-block; font-size: 0.78rem; font-weight: 700; margin: 0 6px 0 0; padding: 2px 6px; white-space: nowrap; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 16px; font-weight: 600; }
+    body.pdf-mode { overflow: hidden; }
+    body.pdf-mode main.container { height: 100vh; padding-bottom: 24px; display: flex; flex-direction: column; }
+    body.pdf-mode article.card { flex: 1; display: flex; flex-direction: column; margin-bottom: 0; overflow: hidden; }
+    body.pdf-mode .note-layout { display: block; flex: 1 1 auto; min-height: 0; overflow: hidden; }
+    body.pdf-mode .note-toc { display: none; }
+    body.pdf-mode #note-content { height: calc(100vh - 250px); min-height: 520px; overflow: hidden; margin-top: 16px; }
+    body.pdf-mode .pdf-container { display: block; width: 100%; height: 100%; border: 1px solid var(--border); border-radius: 8px; }
+    @media (max-width: 900px) {
+      .note-layout { display: block; }
+      .note-toc { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; padding: 0 0 14px; }
+      body.pdf-mode #note-content { height: calc(100vh - 230px); min-height: 420px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar container">
+      <a class="brand" href="../../index.html"><img src="../../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
+      <nav>
+        <a class="nav-link" href="../../index.html">Home</a>
+        <a class="nav-link" href="../../biography.html">Biography</a>
+        <a class="nav-link" href="../../researches.html">Researches</a>
+        <a class="nav-link" href="../../publications.html">Publications</a>
+        <div class="dropdown">
+          <a class="nav-link" href="../../blog.html" aria-current="page">Blogs</a>
+          <div class="dropdown-content">
+            <a href="../../blog.html">Technical Blogs</a>
+            <a href="../read_papers/">Paper Reading Notes</a>
+            <a href="./">Course Notes</a>
+          </div>
+        </div>
+        <a class="nav-link" href="../../photos.html">Photos</a>
+        <button class="theme-toggle-btn" id="theme-btn" aria-label="Toggle color theme"><i class="fas fa-sun"></i></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="prose card">
+      <a class="back-link" href="./"><i class="fas fa-arrow-left"></i> Back to Course Notes</a>
+      <h1 id="note-title" style="margin-top: 0;">Loading...</h1>
+      <div class="note-meta" id="note-tags"></div>
+      <div class="note-layout">
+        <aside class="note-toc" id="note-toc" hidden>
+          <div class="note-toc-title">Contents</div>
+          <nav id="note-toc-list" aria-label="Course note contents"></nav>
+        </aside>
+        <div id="note-content"></div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div>&copy; <span id="year"></span> Can Zheng &middot; Built for GitHub Pages</div>
+    <script src="../../site.js?v=20260614-worker-stats"></script>
+  </footer>
+
+  <script>
+    const notes = {
+      "trustworthy-gai": {
+        title: "Trustworthy Generative AI",
+        file: "Coursera_Trustworthy_GAI/note.md",
+        tags: ["Advanced", "AI", "Chinese", "Online Course"]
+      }
+    };
+
+    const noteTitle = document.getElementById("note-title");
+    const noteTags = document.getElementById("note-tags");
+    const noteContent = document.getElementById("note-content");
+    const noteToc = document.getElementById("note-toc");
+    const noteTocList = document.getElementById("note-toc-list");
+    let tocObserver = null;
+
+    function escapeHtml(text) {
+      return String(text).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    function extractMath(markdown) {
+      const chunks = [];
+      const masked = markdown.replace(/(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|(?<!\\)\$(?!\s)(?:\\.|[^\n$\\])+(?<!\s)(?<!\\)\$)/g, (match) => {
+        const token = `@@MATH_${chunks.length}@@`;
+        chunks.push(match);
+        return token;
+      });
+      return { masked, chunks };
+    }
+
+    function restoreMath(html, chunks) {
+      return html.replace(/@@MATH_(\d+)@@/g, (_, index) => chunks[Number(index)] || "");
+    }
+
+    function slugifyHeading(text, fallback) {
+      const slug = text.trim().toLowerCase().normalize("NFKD")
+        .replace(/[^\p{L}\p{N}\s-]/gu, "")
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "")
+        .slice(0, 80);
+      return slug || fallback;
+    }
+
+    function buildToc() {
+      if (tocObserver) tocObserver.disconnect();
+      noteTocList.innerHTML = "";
+      const headings = Array.from(noteContent.querySelectorAll("h1, h2, h3, h4")).filter(heading => heading.textContent.trim());
+      if (headings.length < 2) {
+        noteToc.hidden = true;
+        return;
+      }
+      const usedIds = new Set();
+      headings.forEach((heading, index) => {
+        const baseId = heading.id || slugifyHeading(heading.textContent, `section-${index + 1}`);
+        let uniqueId = baseId;
+        let suffix = 2;
+        while (usedIds.has(uniqueId)) {
+          uniqueId = `${baseId}-${suffix}`;
+          suffix += 1;
+        }
+        heading.id = uniqueId;
+        usedIds.add(uniqueId);
+        const level = Number(heading.tagName.slice(1));
+        const link = document.createElement("a");
+        link.href = `#${encodeURIComponent(uniqueId)}`;
+        link.className = `toc-level-${level}`;
+        link.textContent = heading.textContent.trim();
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          heading.scrollIntoView({ behavior: "smooth", block: "start" });
+          history.replaceState(null, "", `#${encodeURIComponent(uniqueId)}`);
+        });
+        noteTocList.appendChild(link);
+      });
+      noteToc.hidden = false;
+    }
+
+    async function typesetNoteContent() {
+      if (!window.MathJax) return;
+      try {
+        if (MathJax.startup && MathJax.startup.promise) await MathJax.startup.promise;
+        if (MathJax.texReset) MathJax.texReset();
+        if (MathJax.typesetClear) MathJax.typesetClear([noteContent]);
+        await MathJax.typesetPromise([noteContent]);
+      } catch (err) {}
+    }
+
+    async function renderNote() {
+      const id = new URLSearchParams(window.location.search).get("id") || "trustworthy-gai";
+      const note = notes[id];
+      if (!note) {
+        noteTitle.textContent = "Course Note Not Found";
+        noteContent.innerHTML = "<p>Sorry, this course note does not exist or has been removed.</p>";
+        return;
+      }
+
+      document.title = `${note.title} - Can Zheng`;
+      noteTitle.textContent = note.title;
+      noteTags.innerHTML = note.tags.map(tag => `<span class="note-tag">${escapeHtml(tag)}</span>`).join("");
+
+      if (note.file.toLowerCase().endsWith(".pdf")) {
+        document.body.classList.add("pdf-mode");
+        noteContent.innerHTML = `<iframe class="pdf-container" src="${encodeURI(note.file)}"></iframe>`;
+        return;
+      }
+
+      try {
+        const res = await fetch(note.file);
+        if (!res.ok) throw new Error(`Failed to load ${note.file}`);
+        const markdown = await res.text();
+        const { masked, chunks } = extractMath(markdown);
+        noteContent.innerHTML = restoreMath(marked.parse(masked), chunks);
+        buildToc();
+        await new Promise(requestAnimationFrame);
+        await typesetNoteContent();
+      } catch (err) {
+        noteContent.innerHTML = `<p style="color:red;">${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    renderNote();
+    window.Site && window.Site.init({ titles: { zh: "课程笔记", en: "Course Notes" } });
+  </script>
+</body>
+</html>

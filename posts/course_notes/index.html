@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-site-ready="false">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Course Notes &middot; Can Zheng</title>
+  <link rel="stylesheet" href="../../styles.css?v=20260616-blog-notes" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <meta name="color-scheme" content="light dark">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    .course-hero { max-width: 1120px; }
+    .course-intro { color: var(--muted); margin: 0 0 18px; max-width: 860px; }
+    .course-filters { display: grid; gap: 8px; margin: 18px 0 20px; }
+    .filter-group { align-items: center; display: flex; flex-wrap: wrap; gap: 8px; }
+    .filter-label { color: var(--muted); flex: 0 0 auto; font-size: 0.86rem; font-weight: 800; min-width: 92px; }
+    .filter-row { display: flex; flex: 1 1 auto; flex-wrap: wrap; gap: 6px; }
+    .filter-chip { background: var(--card); border: 1px solid var(--border); border-radius: 7px; color: var(--fg); cursor: pointer; font: inherit; font-size: 0.86rem; font-weight: 700; line-height: 1.2; padding: 5px 9px; transition: background 0.2s, border-color 0.2s, color 0.2s; }
+    .filter-chip:hover, .filter-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .course-count { color: var(--muted); font-size: 0.92rem; margin: 4px 0 10px; }
+    .course-list { margin: 0; padding-left: 1.4rem; }
+    .course-item { border-bottom: 1px dashed var(--border); line-height: 1.55; padding: 8px 0; }
+    .course-line-main { align-items: baseline; display: flex; flex-wrap: wrap; gap: 8px; }
+    .course-title { font-weight: 700; }
+    .course-toggle { align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 6px; color: var(--accent); cursor: pointer; display: inline-flex; height: 28px; justify-content: center; width: 28px; }
+    .course-toggle:hover, .course-toggle[aria-expanded="true"] { border-color: var(--accent); }
+    .course-toggle i { transition: transform 0.2s ease; }
+    .course-toggle[aria-expanded="true"] i { transform: rotate(180deg); }
+    .course-line-tags { margin-top: 3px; }
+    .course-tag { background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: 6px; color: var(--accent); display: inline-block; font-size: 0.78rem; font-weight: 700; margin: 0 6px 0 0; padding: 2px 6px; white-space: nowrap; }
+    .course-added { color: var(--muted); display: inline-block; font-size: 0.78rem; margin-left: 4px; white-space: nowrap; }
+    .course-references { margin: 8px 0 2px; padding: 8px 12px; background: color-mix(in srgb, var(--accent) 6%, transparent); border-left: 3px solid var(--accent); border-radius: 6px; }
+    .course-references[hidden] { display: none; }
+    .course-references strong { display: block; font-size: 0.82rem; margin-bottom: 4px; color: var(--muted); text-transform: uppercase; }
+    .course-references a { display: inline-flex; align-items: center; gap: 5px; margin: 2px 12px 2px 0; font-size: 0.9rem; font-weight: 600; }
+    @media (max-width: 680px) {
+      .filter-label { min-width: 0; width: 100%; }
+      .course-toggle { flex: 0 0 auto; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar container">
+      <a class="brand" href="../../index.html"><img src="../../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
+      <nav>
+        <a class="nav-link" href="../../index.html">Home</a>
+        <a class="nav-link" href="../../biography.html">Biography</a>
+        <a class="nav-link" href="../../researches.html">Researches</a>
+        <a class="nav-link" href="../../publications.html">Publications</a>
+        <div class="dropdown">
+          <a class="nav-link" href="../../blog.html" aria-current="page">Blogs</a>
+          <div class="dropdown-content">
+            <a href="../../blog.html">Technical Blogs</a>
+            <a href="../read_papers/">Paper Reading Notes</a>
+            <a href="./">Course Notes</a>
+          </div>
+        </div>
+        <a class="nav-link" href="../../photos.html">Photos</a>
+        <button class="theme-toggle-btn" id="theme-btn" aria-label="Toggle color theme"><i class="fas fa-sun"></i></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section course-hero">
+      <h1>Course Notes</h1>
+      <p class="course-intro">Notes from courses, online classes, lectures, and oral reports. Markdown notes open as standalone reading pages; PDF notes open directly.</p>
+
+      <div class="course-filters" aria-label="Course note filters">
+        <div class="filter-group" data-filter-group="level">
+          <div class="filter-label">Level:</div>
+          <div class="filter-row">
+            <button class="filter-chip active" data-value="all">All</button>
+            <button class="filter-chip" data-value="undergrad">Undergrad</button>
+            <button class="filter-chip" data-value="grad">Grad</button>
+            <button class="filter-chip" data-value="advanced">Advanced</button>
+          </div>
+        </div>
+
+        <div class="filter-group" data-filter-group="field">
+          <div class="filter-label">Field:</div>
+          <div class="filter-row">
+            <button class="filter-chip active" data-value="all">All</button>
+            <button class="filter-chip" data-value="wireless">Wireless Communications</button>
+            <button class="filter-chip" data-value="signal">Signal Processing</button>
+            <button class="filter-chip" data-value="ai">AI</button>
+            <button class="filter-chip" data-value="other">Other</button>
+          </div>
+        </div>
+
+        <div class="filter-group" data-filter-group="category">
+          <div class="filter-label">Category:</div>
+          <div class="filter-row">
+            <button class="filter-chip active" data-value="all">All</button>
+            <button class="filter-chip" data-value="chinese">Chinese</button>
+            <button class="filter-chip" data-value="english">English</button>
+            <button class="filter-chip" data-value="course">Course</button>
+            <button class="filter-chip" data-value="online-course">Online Course</button>
+            <button class="filter-chip" data-value="lecture">Lecture</button>
+            <button class="filter-chip" data-value="oral-report">Oral Report</button>
+            <button class="filter-chip" data-value="other">Other</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="course-count" id="course-count"></div>
+      <ul class="course-list" id="course-list"></ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>&copy; <span id="year"></span> Can Zheng &middot; Built for GitHub Pages</div>
+    <script src="../../site.js?v=20260614-worker-stats"></script>
+  </footer>
+
+  <script>
+    const notes = [
+      {
+        id: "trustworthy-gai",
+        title: "Trustworthy Generative AI",
+        primary: "view.html?id=trustworthy-gai",
+        type: "markdown",
+        added: "2026-06-24",
+        level: "advanced",
+        levelLabel: "Advanced",
+        fields: ["ai"],
+        fieldLabels: ["AI"],
+        categories: ["chinese", "online-course"],
+        categoryLabels: ["Chinese", "Online Course"],
+        references: [
+          { label: "Open note", href: "view.html?id=trustworthy-gai", icon: "fa-book-open" },
+          { label: "Coursera course", href: "https://www.coursera.org/learn/trustworthy-generative-ai", icon: "fa-arrow-up-right-from-square" }
+        ]
+      }
+    ];
+
+    const activeFilters = {
+      level: "all",
+      field: "all",
+      category: "all"
+    };
+
+    const listEl = document.getElementById("course-list");
+    const countEl = document.getElementById("course-count");
+
+    function escapeHtml(text) {
+      return String(text).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    function renderNotes() {
+      const filtered = notes.filter((note) => {
+        return (activeFilters.level === "all" || note.level === activeFilters.level)
+          && (activeFilters.field === "all" || (note.fields || []).includes(activeFilters.field))
+          && (activeFilters.category === "all" || (note.categories || []).includes(activeFilters.category));
+      }).sort((a, b) => String(b.added || "").localeCompare(String(a.added || "")));
+
+      countEl.textContent = `${filtered.length} item${filtered.length === 1 ? "" : "s"}`;
+      listEl.innerHTML = filtered.map((note) => {
+        const tags = [
+          note.levelLabel,
+          ...(note.fieldLabels || []),
+          ...(note.categoryLabels || [])
+        ].map((tag) => `<span class="course-tag">${escapeHtml(tag)}</span>`).join("");
+        const refs = (note.references || []).map((ref) => `
+          <a href="${ref.href}" target="${ref.href.startsWith("http") ? "_blank" : "_self"}" rel="noopener">
+            <i class="fas ${escapeHtml(ref.icon || "fa-link")}"></i>${escapeHtml(ref.label)}
+          </a>
+        `).join("");
+        const refId = `refs-${note.id}`;
+
+        return `
+        <li class="course-item">
+          <div class="course-line-main">
+            <a class="course-title" href="${note.primary}">${escapeHtml(note.title)}</a>
+            <button class="course-toggle" type="button" aria-expanded="false" aria-controls="${refId}" title="Show references">
+              <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <div class="course-line-tags">${tags}<span class="course-added">Added ${escapeHtml(note.added || "")}</span></div>
+          <div class="course-references" id="${refId}" hidden>
+            <strong>References</strong>
+            ${refs}
+          </div>
+        </li>
+        `;
+      }).join("") || '<li class="muted">No course notes match the selected filters.</li>';
+
+      document.querySelectorAll(".course-toggle").forEach((button) => {
+        button.addEventListener("click", () => {
+          const panel = document.getElementById(button.getAttribute("aria-controls"));
+          const expanded = button.getAttribute("aria-expanded") === "true";
+          button.setAttribute("aria-expanded", String(!expanded));
+          if (panel) panel.hidden = expanded;
+        });
+      });
+    }
+
+    document.querySelectorAll(".filter-group").forEach((group) => {
+      const groupName = group.dataset.filterGroup;
+      group.querySelectorAll(".filter-chip").forEach((button) => {
+        button.addEventListener("click", () => {
+          activeFilters[groupName] = button.dataset.value;
+          group.querySelectorAll(".filter-chip").forEach((chip) => chip.classList.toggle("active", chip === button));
+          renderNotes();
+        });
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    renderNotes();
+    window.Site && window.Site.init({ titles: { zh: "课程笔记", en: "Course Notes" } });
+  </script>
+</body>
+</html>
