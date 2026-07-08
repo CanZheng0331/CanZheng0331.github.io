@@ -16,7 +16,7 @@
 CLIP 是一个<font color='red'>零样本多模态预训练模型</font>，它的核心思想是让模型在大规模的“图像-文本”对进行<font color='red'>对比学习</font>，从而学会姜图像特征和文本特征映射到<font color='red'>统一的语义空间</font>中，进而建立图像与文本之间的联系。
 
 <p align="center">
-  <img src="/posts/blog_fig/multimodal/CLIP.png" alt="CLIP 模型" width="500">
+  <img src="/posts/technical_blogs/blog_fig/multimodal/CLIP.png" alt="CLIP 模型" width="500">
 </p>
 <p align="center">
   <em>图 1.1：CLIP 模型</em>
