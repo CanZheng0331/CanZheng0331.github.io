@@ -225,8 +225,7 @@
       noteTags.innerHTML = note.tags.map(tag => `<span class="note-tag">${escapeHtml(tag)}</span>`).join("");
 
       if (note.file.toLowerCase().endsWith(".pdf")) {
-        document.body.classList.add("pdf-mode");
-        noteContent.innerHTML = `<iframe class="pdf-container" src="${encodeURI(note.file)}"></iframe>`;
+        window.location.replace(note.file);
         return;
       }
 

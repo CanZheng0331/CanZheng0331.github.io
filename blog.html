@@ -449,8 +449,8 @@
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("");
 
       if (post.file.toLowerCase().endsWith(".pdf")) {
-         document.body.classList.add('pdf-mode');
-         postContent.innerHTML = `<iframe class="pdf-container" src="${encodeURI(post.file)}"></iframe>`;
+         window.location.replace(post.file);
+         return;
       } else {
          fetch(post.file)
           .then(r => r.text())
@@ -568,18 +568,22 @@
 
       filteredPosts.forEach(post => {
         const li = document.createElement("li");
+        const isPdf = post.file.toLowerCase().endsWith(".pdf");
+        const postHref = isPdf ? post.file : `blog.html?id=${post.id}`;
         li.innerHTML = `
-          <a href="#" style="font-size: 1.1rem; font-weight: 600; display: block; margin-bottom: 6px;">${escapeHtml(post.title)}</a>
+          <a href="${postHref}" ${isPdf ? 'target="_blank" rel="noopener"' : ""} style="font-size: 1.1rem; font-weight: 600; display: block; margin-bottom: 6px;">${escapeHtml(post.title)}</a>
           <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
             <span class="post-date"><i class="far fa-calendar-alt"></i> ${escapeHtml(post.displayDate)}</span>
             ${post.tags.map(t => `<span class="tag" data-tag="${escapeHtml(t)}">${escapeHtml(t)}</span>`).join("")}
           </div>
         `;
 
-        li.querySelector("a").onclick = (e) => {
-          e.preventDefault();
-          window.location.href = `blog.html?id=${post.id}`;
-        };
+        if (!isPdf) {
+          li.querySelector("a").onclick = (e) => {
+            e.preventDefault();
+            window.location.href = `blog.html?id=${post.id}`;
+          };
+        }
 
         li.querySelectorAll(".tag").forEach(tagEl => {
           tagEl.onclick = (e) => { 
