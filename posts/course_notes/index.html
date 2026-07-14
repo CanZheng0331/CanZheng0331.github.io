@@ -33,6 +33,8 @@
     .course-references[hidden] { display: none; }
     .course-references strong { display: block; font-size: 0.82rem; margin-bottom: 4px; color: var(--muted); text-transform: uppercase; }
     .course-references a { display: inline-flex; align-items: center; gap: 5px; margin: 2px 12px 2px 0; font-size: 0.9rem; font-weight: 600; }
+    .course-references a.icon-only { align-items: center; border: 1px solid var(--border); border-radius: 6px; height: 30px; justify-content: center; margin-right: 8px; width: 30px; }
+    .course-references a.icon-only:hover { border-color: var(--accent); text-decoration: none; }
     @media (max-width: 680px) {
       .filter-label { min-width: 0; width: 100%; }
       .course-toggle { flex: 0 0 auto; }
@@ -117,6 +119,25 @@
   <script>
     const notes = [
       {
+        id: "multiple-antenna-communications",
+        title: "Multiple Antenna Communications",
+        primary: "view.html?id=multiple-antenna-communications",
+        type: "pdf",
+        added: "2026-07-14",
+        level: "advanced",
+        levelLabel: "Advanced",
+        fields: ["wireless", "signal"],
+        fieldLabels: ["Wireless Communications", "Signal Processing"],
+        categories: ["english", "course", "online-course", "lecture"],
+        categoryLabels: ["English", "Course", "Online Course", "Lecture"],
+        references: [
+          { label: "Notes v1.0", href: "view.html?id=multiple-antenna-communications", icon: "fa-book-open", iconOnly: true },
+          { label: "YouTube playlist", href: "https://www.youtube.com/playlist?list=PLTv48TzNRhaJ66mW48MI_HBBawupV_ZR_", icon: "fa-brands fa-youtube", iconOnly: true },
+          { label: "GitHub slides", href: "https://github.com/emilbjornson/multiple_antenna_communications", icon: "fa-brands fa-github", iconOnly: true },
+          { label: "KTH course page", href: "https://www.kth.se/student/kurser/kurs/FIK3510", icon: "fa-building-columns", iconOnly: true }
+        ]
+      },
+      {
         id: "trustworthy-gai",
         title: "Trustworthy Generative AI",
         primary: "view.html?id=trustworthy-gai",
@@ -169,8 +190,8 @@
           ...(note.categoryLabels || [])
         ].map((tag) => `<span class="course-tag">${escapeHtml(tag)}</span>`).join("");
         const refs = (note.references || []).map((ref) => `
-          <a href="${ref.href}" target="${ref.href.startsWith("http") ? "_blank" : "_self"}" rel="noopener">
-            <i class="fas ${escapeHtml(ref.icon || "fa-link")}"></i>${escapeHtml(ref.label)}
+          <a class="${ref.iconOnly ? "icon-only" : ""}" href="${ref.href}" target="${ref.href.startsWith("http") ? "_blank" : "_self"}" rel="noopener" title="${escapeHtml(ref.label)}" aria-label="${escapeHtml(ref.label)}">
+            <i class="${String(ref.icon || "").includes("fa-brands") ? escapeHtml(ref.icon) : `fas ${escapeHtml(ref.icon || "fa-link")}`}"></i>${ref.iconOnly ? "" : escapeHtml(ref.label)}
           </a>
         `).join("");
         const refId = `refs-${note.id}`;
