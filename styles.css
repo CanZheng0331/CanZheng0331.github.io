@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --bg: #fafafa;
   --fg: #1a1a1a;
   --muted: #5e5e5e;
@@ -110,16 +110,16 @@ nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 .navbar a.nav-link:hover { background: var(--border); text-decoration: none; }
 .navbar a[aria-current="page"] { background: var(--border); color: var(--accent); text-decoration: none; }
 
-/* 关键修复：防跳动的固定宽高主题按钮 */
+/* 鍏抽敭淇锛氶槻璺冲姩鐨勫浐瀹氬楂樹富棰樻寜閽?*/
 .theme-toggle-btn {
   background: transparent; 
   border: none; 
   color: var(--fg); 
   font-size: 1.15rem;
   cursor: pointer; 
-  width: 36px;       /* 强制固定宽度 */
-  height: 36px;      /* 强制固定高度 */
-  padding: 0;        /* 移除自适应内边距 */
+  width: 36px;       /* 寮哄埗鍥哄畾瀹藉害 */
+  height: 36px;      /* 寮哄埗鍥哄畾楂樺害 */
+  padding: 0;        /* 绉婚櫎鑷€傚簲鍐呰竟璺?*/
   margin-left: 8px; 
   border-radius: 8px;
   transition: background 0.2s, color 0.2s; 
@@ -129,7 +129,7 @@ nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 }
 .theme-toggle-btn:hover { background: var(--border); color: var(--accent); }
 .theme-toggle-btn i {
-  width: 1.2rem;     /* 强制图标占据同样宽度的物理空间 */
+  width: 1.2rem;     /* 寮哄埗鍥炬爣鍗犳嵁鍚屾牱瀹藉害鐨勭墿鐞嗙┖闂?*/
   text-align: center;
 }
 
@@ -156,7 +156,7 @@ nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 .social-links a:hover { transform: translateY(-2px); color: var(--accent); border-color: var(--accent); box-shadow: var(--shadow-md); text-decoration: none; }
 .social-links a i { margin-right: 8px; font-size: 1.1em; }
 
-/* Bio 卡片化 */
+/* Bio 鍗＄墖鍖?*/
 .timeline-card {
   display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--border);
   border-left: 4px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-bottom: 20px;
@@ -171,7 +171,7 @@ nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 .timeline-card ul { margin: 0; padding-left: 20px; }
 .timeline-card li { margin-bottom: 4px; color: var(--fg); opacity: 0.9; }
 
-/* 全新 Service 块结构 */
+/* 鍏ㄦ柊 Service 鍧楃粨鏋?*/
 .service-category {
   margin-bottom: 24px;
   border: 1px solid var(--border);
@@ -197,14 +197,31 @@ nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
   align-items: flex-start;
 }
 .service-item::before {
-  content: "·";
+  content: "•";
+  flex: 0 0 auto;
   font-weight: bold;
   margin-right: 12px;
   font-size: 1.2rem;
   line-height: 1;
 }
+.respect-group summary {
+  cursor: pointer;
+  list-style: none;
+}
+.respect-group summary::-webkit-details-marker { display: none; }
+.respect-group .service-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.respect-group .service-header::after {
+  content: "+";
+  color: var(--accent);
+  font-weight: 800;
+}
+.respect-group[open] .service-header::after { content: "-"; }
 
-/* Card通用 */
+/* Card閫氱敤 */
 .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm); transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
 .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
 .blog-note {
