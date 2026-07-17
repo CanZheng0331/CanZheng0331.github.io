@@ -193,8 +193,6 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const GITHUB_USER = "canzheng0331";
-    const GITHUB_REPO = "canzheng0331.github.io";
     const POSTS_INDEX = "posts/posts.json";
 
     let posts = [];
@@ -241,6 +239,17 @@
       }[char]));
     }
 
+    function applyPostDisplayDates() {
+      posts.forEach((post) => {
+        if (post.date) {
+          post.displayDate = post.date;
+        } else {
+          post.date = "1970-01-01";
+          post.displayDate = "Date unavailable";
+        }
+      });
+    }
+
     async function initializeAndSortPosts() {
       try {
         await loadPostsIndex();
@@ -249,25 +258,7 @@
         return;
       }
 
-      await Promise.all(posts.map(async (post) => {
-        try {
-          const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits?path=${post.file}&page=1&per_page=1`;
-          const res = await fetch(apiUrl);
-          const commits = await res.json();
-          if (commits && commits.length > 0) {
-            post.date = commits[0].commit.committer.date; 
-            post.displayDate = post.date.split('T')[0];
-          } else if (post.date) {
-            post.displayDate = post.date;
-          } else {
-            post.date = "1970-01-01T00:00:00Z";
-            post.displayDate = "Local / Test File";
-          }
-        } catch (err) {
-          post.date = post.date || "1970-01-01T00:00:00Z";
-          post.displayDate = post.date === "1970-01-01T00:00:00Z" ? "Local / Test File" : post.date;
-        }
-      }));
+      applyPostDisplayDates();
       posts.sort((a, b) => new Date(b.date) - new Date(a.date));
       renderList();
     }
