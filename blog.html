@@ -77,6 +77,8 @@
     }
     #post-content .math-display mjx-container { display: block !important; margin: 1em 0 !important; text-align: center; }
     #post-content mjx-container[display="false"] { display: inline-block !important; margin: 0 .1em !important; }
+    html.post-view-root,
+    html.post-view-root body.post-view { overflow: hidden; }
     body.post-view { overflow: hidden; }
     body.post-view main.container { height: calc(100vh - 64px); padding-bottom: 18px; }
     body.post-view #article-section { display: flex; flex-direction: column; height: calc(100vh - 96px); margin-bottom: 0; overflow: hidden; padding: 22px 28px; transform: none; }
@@ -109,6 +111,8 @@
     body.pdf-mode .pdf-container { display: block; width: 100%; height: 100%; border: 1px solid var(--border); border-radius: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
     @media (max-width: 900px) {
       .post-layout { display: block; }
+      html.post-view-root,
+      html.post-view-root body.post-view { overflow: auto; }
       body.post-view { overflow: auto; }
       body.post-view main.container { height: auto; }
       body.post-view #article-section { height: auto; min-height: calc(100vh - 96px); overflow: visible; }
@@ -196,7 +200,7 @@
         <div id="post-content"></div>
       </div>
     </article>
-    <a id="post-back-link" href="blog.html" class="post-back-link">Back</a>
+    <a id="post-back-link" href="blog.html" class="post-back-link"><i class="fas fa-arrow-left"></i> Back</a>
   </main>
 
   <footer class="footer">
@@ -488,6 +492,7 @@
     async function renderPost(post) {
       listSection.hidden = true;
       articleSection.hidden = false;
+      document.documentElement.classList.add("post-view-root");
       document.body.classList.add("post-view");
       document.body.classList.remove('pdf-mode');
       postToc.hidden = true;
@@ -529,6 +534,7 @@
         } else {
           listSection.hidden = true;
           articleSection.hidden = false;
+          document.documentElement.classList.add("post-view-root");
           document.body.classList.add("post-view");
           postTitle.textContent = "Post Not Found";
           postContent.innerHTML = "<p>Sorry, the requested post does not exist or has been removed.</p>";
@@ -536,6 +542,7 @@
       } catch (err) {
         listSection.hidden = true;
         articleSection.hidden = false;
+        document.documentElement.classList.add("post-view-root");
         document.body.classList.add("post-view");
         postTitle.textContent = "Unable to Load Posts";
         postContent.innerHTML = `<p style="color:red;">${escapeHtml(err.message)}</p>`;
@@ -655,6 +662,7 @@
       }
 
       document.body.classList.remove("post-view", "pdf-mode");
+      document.documentElement.classList.remove("post-view-root");
       await initializeAndSortPosts();
     }
 
