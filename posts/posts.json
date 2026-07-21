@@ -1,6 +1,16 @@
 {
   "posts": [
     {
+      "id": "flow_matching",
+      "title": "流匹配简介",
+      "date": "2026-07-21",
+      "tags": [
+        "Generative AI",
+        "Flow Matching"
+      ],
+      "file": "posts/technical_blogs/flow_matching.md"
+    },
+    {
       "id": "multimodal",
       "title": "多模态模型演进",
       "date": "2026-06-15",

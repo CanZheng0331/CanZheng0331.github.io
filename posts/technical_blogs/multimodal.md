@@ -1,7 +1,9 @@
 2026/06/15- 
 
 
-## 1 CLIP (Contrastive Language-Image Pre-Training, OpenAI, 2021/02)
+## 1 CLIP 
+
+Contrastive Language-Image Pre-Training, OpenAI, 2021/02
 
 ### 1.0 参考资料
 
@@ -64,7 +66,9 @@ loss = (loss_I + loss_T) / 2
 ### 1.5 总结
 
 
-## 2 ViLT (Vision-and-Language Transformer, NAVER & Kakao, 2021/06)
+## 2 ViLT 
+
+Vision-and-Language Transformer, NAVER & Kakao, 2021/06
 
 ### 2.0 参考资料
 [论文链接](https://arxiv.org/pdf/2102.03334)
