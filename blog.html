@@ -77,11 +77,17 @@
     }
     #post-content .math-display mjx-container { display: block !important; margin: 1em 0 !important; text-align: center; }
     #post-content mjx-container[display="false"] { display: inline-block !important; margin: 0 .1em !important; }
-    .post-layout { display: grid; grid-template-columns: minmax(180px, 260px) minmax(0, 1fr); gap: 28px; align-items: start; }
-    .post-back-link { position: fixed; right: 24px; bottom: 24px; z-index: 1200; display: none; align-items: center; gap: 6px; width: fit-content; padding: 8px 12px; border-radius: 8px; background: color-mix(in srgb, var(--card) 94%, transparent); border: 1px solid var(--border); box-shadow: var(--shadow-md); font-weight: 500; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    body.post-view { overflow: hidden; }
+    body.post-view main.container { height: calc(100vh - 64px); padding-bottom: 18px; }
+    body.post-view #article-section { display: flex; flex-direction: column; height: calc(100vh - 96px); margin-bottom: 0; overflow: hidden; padding: 22px 28px; transform: none; }
+    .post-reader-head { flex: 0 0 auto; padding-right: 84px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+    .post-reader-head h1 { margin-top: 0; margin-bottom: 12px; }
+    .post-reader-head #post-tags { margin-bottom: 16px; }
+    .post-layout { display: grid; grid-template-columns: minmax(180px, 260px) minmax(0, 1fr); gap: 28px; align-items: stretch; flex: 1 1 auto; min-height: 0; }
+    .post-back-link { position: fixed; right: 24px; top: 82px; z-index: 1200; display: none; align-items: center; gap: 6px; width: fit-content; padding: 8px 12px; border-radius: 8px; background: color-mix(in srgb, var(--card) 94%, transparent); border: 1px solid var(--border); box-shadow: var(--shadow-md); font-weight: 500; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
     body.post-view .post-back-link { display: inline-flex; }
     .post-back-link:hover { text-decoration: none; border-color: var(--accent); }
-    .post-toc { position: sticky; top: 86px; max-height: calc(100vh - 110px); overflow: auto; border-right: 1px solid var(--border); padding: 4px 16px 8px 0; font-size: 0.9rem; text-align: left !important; }
+    .post-toc { min-height: 0; overflow: auto; border-right: 1px solid var(--border); padding: 4px 16px 8px 0; font-size: 0.9rem; text-align: left !important; scrollbar-gutter: stable; }
     .post-toc * { text-align: left !important; }
     .post-toc[hidden] { display: none; }
     .post-toc-title { align-self: stretch; color: var(--muted); display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; margin: 0 0 10px; text-align: left !important; text-transform: uppercase; width: 100%; }
@@ -91,8 +97,9 @@
     .post-toc .toc-level-1 { font-weight: 700; color: var(--fg); }
     .post-toc .toc-level-3 { padding-left: 24px; font-size: 0.86rem; }
     .post-toc .toc-level-4 { padding-left: 38px; font-size: 0.82rem; }
-    #post-content { min-width: 0; }
-    #post-content h1, #post-content h2, #post-content h3, #post-content h4 { scroll-margin-top: 96px; }
+    #post-content { min-width: 0; min-height: 0; overflow: auto; padding-right: 8px; scrollbar-gutter: stable; }
+    .post-toc[hidden] + #post-content { grid-column: 1 / -1; }
+    #post-content h1, #post-content h2, #post-content h3, #post-content h4 { scroll-margin-top: 18px; }
     body.pdf-mode { overflow: hidden; }
     body.pdf-mode main.container { height: 100vh; padding-bottom: 24px; display: flex; flex-direction: column; }
     body.pdf-mode #article-section { flex: 1; display: flex; flex-direction: column; margin-bottom: 0; overflow: hidden; padding: 24px 32px; transform: none; }
@@ -102,8 +109,13 @@
     body.pdf-mode .pdf-container { display: block; width: 100%; height: 100%; border: 1px solid var(--border); border-radius: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
     @media (max-width: 900px) {
       .post-layout { display: block; }
-      .post-toc { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; padding: 0 0 14px; }
-      .post-back-link { right: 16px; bottom: 16px; }
+      body.post-view { overflow: auto; }
+      body.post-view main.container { height: auto; }
+      body.post-view #article-section { height: auto; min-height: calc(100vh - 96px); overflow: visible; }
+      .post-reader-head { padding-right: 0; position: sticky; top: 64px; z-index: 20; background: var(--card); }
+      .post-toc { max-height: 180px; border-right: 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; padding: 0 0 14px; }
+      #post-content { overflow: visible; padding-right: 0; }
+      .post-back-link { right: 16px; top: 76px; }
       body.pdf-mode #post-content { height: calc(100vh - 230px); min-height: 420px; }
     }
   </style>
@@ -172,8 +184,10 @@
       </ul>
     </section>
     <article id="article-section" class="prose card" hidden>
-      <h1 id="post-title" style="margin-top: 0; margin-bottom: 12px;">Loading...</h1>
-      <div id="post-tags" style="margin-bottom: 16px;"></div>
+      <div class="post-reader-head">
+        <h1 id="post-title">Loading...</h1>
+        <div id="post-tags"></div>
+      </div>
       <div class="post-layout">
         <aside id="post-toc" class="post-toc" hidden>
           <div class="post-toc-title">Contents</div>
@@ -182,7 +196,7 @@
         <div id="post-content"></div>
       </div>
     </article>
-    <a id="post-back-link" href="blog.html" class="post-back-link"><i class="fas fa-arrow-left"></i> Back to Technical Blogs</a>
+    <a id="post-back-link" href="blog.html" class="post-back-link">Back</a>
   </main>
 
   <footer class="footer">
@@ -211,6 +225,7 @@
     let activeTags = new Set();
     let tagLogic = 'OR'; 
     let tocObserver = null;
+    let tocScrollHandler = null;
 
     function normalizePost(post) {
       const id = post.id || post.slug;
@@ -310,6 +325,10 @@
         tocObserver.disconnect();
         tocObserver = null;
       }
+      if (tocScrollHandler) {
+        postContent.removeEventListener("scroll", tocScrollHandler);
+        tocScrollHandler = null;
+      }
 
       postTocList.innerHTML = "";
       const headings = Array.from(postContent.querySelectorAll("h1, h2, h3, h4"))
@@ -336,10 +355,14 @@
         const link = document.createElement("a");
         link.href = `#${encodeURIComponent(uniqueId)}`;
         link.className = `toc-level-${level}`;
+        link.dataset.target = uniqueId;
         link.textContent = heading.textContent.trim();
         link.addEventListener("click", (event) => {
           event.preventDefault();
-          heading.scrollIntoView({ behavior: "smooth", block: "start" });
+          postContent.scrollTo({
+            top: Math.max(0, heading.offsetTop - postContent.offsetTop - 12),
+            behavior: "smooth"
+          });
           history.replaceState(null, "", `#${encodeURIComponent(uniqueId)}`);
         });
         postTocList.appendChild(link);
@@ -347,18 +370,51 @@
 
       postToc.hidden = false;
       const links = Array.from(postTocList.querySelectorAll("a"));
+      const setActiveLink = (headingId) => {
+        let activeLink = null;
+        links.forEach(link => {
+          const active = link.dataset.target === headingId;
+          link.classList.toggle("active", active);
+          if (active) activeLink = link;
+        });
+        if (activeLink) {
+          activeLink.scrollIntoView({ block: "nearest", inline: "nearest" });
+        }
+      };
+      const updateActiveFromScroll = () => {
+        const currentTop = postContent.scrollTop + 24;
+        let currentHeading = headings[0];
+        headings.forEach((heading) => {
+          const headingTop = heading.offsetTop - postContent.offsetTop;
+          if (headingTop <= currentTop) {
+            currentHeading = heading;
+          }
+        });
+        if (currentHeading) {
+          setActiveLink(currentHeading.id);
+        }
+      };
+      let tocScrollTicking = false;
+      tocScrollHandler = () => {
+        if (tocScrollTicking) return;
+        tocScrollTicking = true;
+        window.requestAnimationFrame(() => {
+          updateActiveFromScroll();
+          tocScrollTicking = false;
+        });
+      };
+      postContent.addEventListener("scroll", tocScrollHandler, { passive: true });
+
       tocObserver = new IntersectionObserver((entries) => {
         const visible = entries
           .filter(entry => entry.isIntersecting)
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
         if (!visible) return;
-        links.forEach(link => {
-          link.classList.toggle("active", link.hash === `#${encodeURIComponent(visible.target.id)}`);
-        });
-      }, { rootMargin: "-96px 0px -65% 0px", threshold: 0.01 });
+        setActiveLink(visible.target.id);
+      }, { root: postContent, rootMargin: "-12% 0px -70% 0px", threshold: 0.01 });
 
       headings.forEach(heading => tocObserver.observe(heading));
-      links[0]?.classList.add("active");
+      updateActiveFromScroll();
     }
 
     async function typesetPostContent() {
@@ -439,6 +495,7 @@
       document.title = `${post.title} - Can Zheng`;
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("");
+      postContent.scrollTop = 0;
 
       if (post.file.toLowerCase().endsWith(".pdf")) {
          window.location.replace(post.file);
@@ -451,6 +508,7 @@
              const htmlMasked = marked.parse(masked);
              const html = restoreMath(htmlMasked, chunks);
              postContent.innerHTML = html;
+             postContent.scrollTop = 0;
              enhanceCodeBlocks();
              buildPostToc();
              await new Promise(requestAnimationFrame);
