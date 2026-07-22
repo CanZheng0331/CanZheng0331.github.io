@@ -75,7 +75,7 @@
   <main class="container">
     <section class="section course-hero">
       <h1>Course Notes</h1>
-      <p class="course-intro">Notes from courses, online classes, lectures, and oral reports. Markdown notes open as standalone reading pages; PDF notes open directly.</p>
+      <p class="course-intro">Notes from courses, online classes, lectures, and oral reports. </p>
 
       <div class="course-filters" aria-label="Course note filters">
         <div class="filter-group" data-filter-group="level">
@@ -126,6 +126,23 @@
 
   <script>
     const notes = [
+      {
+        id: "estimation-and-detection-theory",
+        title: "Estimation and Detection Theory",
+        primary: "estimation_detection/notes_on_estimation_detection.pdf",
+        type: "pdf",
+        added: "2026-07-14",
+        level: "grad",
+        levelLabel: "Grad",
+        fields: ["signal"],
+        fieldLabels: ["Signal Processing"],
+        categories: ["english", "course", "online-course", "lecture"],
+        categoryLabels: ["English", "Course", "Online Course", "Lecture"],
+        references: [
+          { label: "Notes v1.0", href: "estimation_detection/notes_on_estimation_detection.pdf", icon: "fa-book-open", iconOnly: true },
+          { label: "YouTube playlist", href: "https://www.youtube.com/playlist?list=PLTv48TzNRhaJ66mW48MI_HBBawupV_ZR_", icon: "fa-brands fa-youtube", iconOnly: true }
+        ]
+      },
       {
         id: "multiple-antenna-communications",
         title: "Multiple Antenna Communications",
