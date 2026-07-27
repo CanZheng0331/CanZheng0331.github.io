@@ -1,129 +1,83 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN" data-site-ready="false">
+<!DOCTYPE html>
+
+<html data-site-ready="false" lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Photos &middot; Can Zheng</title>
-  <link rel="stylesheet" href="styles.css?v=20260605-visitor-map" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <meta name="color-scheme" content="light dark">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <script>
-    (function() {
-      let theme = localStorage.getItem('theme');
-      if (!theme) {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
-</head>
-<body>
-  <header class="header">
-    <div class="navbar container">
-      <a class="brand" href="index.html">
-        <img src="photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;">
-      </a>
-      <nav>
-        <div class="dropdown">
-          <a href="index.html" class="nav-link">Home</a>
-          <div class="dropdown-content">
-            <a href="index.html#about">About Me</a>
-            <a href="index.html#news">News</a>
-            <a href="index.html#explore">Explore</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="biography.html" class="nav-link">Biography</a>
-          <div class="dropdown-content">
-            <a href="biography.html#education">Education</a>
-            <a href="biography.html#experience">Work Experience</a>
-            <a href="biography.html#service">Service</a>
-            <a href="biography.html#respect">People I Respect</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="researches.html" class="nav-link">Researches</a>
-          <div class="dropdown-content">
-            <a href="researches.html?filter=past">Past</a>
-            <a href="researches.html?filter=ongoing">Ongoing</a>
-            <a href="researches.html?filter=future">Future</a>
-            <a href="researches/grants.html">Grants</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="publications.html" class="nav-link">Publications</a>
-          <div class="dropdown-content">
-            <a href="publications.html#journal">Journal Papers</a>
-            <a href="publications.html#conference">Conference Papers</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="blog.html" class="nav-link">Blogs</a>
-          <div class="dropdown-content">
-            <a href="blog.html">Technical Blogs</a>
-            <a href="posts/read_papers/">Paper Notes</a>
-            <a href="posts/course_notes/">Course Notes</a>
-          </div>
-        </div>
-        <a href="photos.html" class="nav-link" aria-current="page">Photos</a>
-        <a href="others.html" class="nav-link">Others</a>
-        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
-      </nav>
-    </div>
-  </header>
-  <main class="container">
-    <article class="prose">
-      <h1>Photos</h1>
-      <p>Click on images to view more details and additional photos in a popup.</p>
-    </article>
-    <section class="section">
-      <div class="figure-grid">
-        <figure data-modal-id="beijing">
-          <img src="photos/Beijing_CCTV.jpg" alt="Lab setup">
-          <figcaption>Beijing, China (25.02-25.08)</figcaption>
-        </figure>
-        <figure data-modal-id="dongguan">
-          <img src="photos/Dongguan_Songshan1.jpg" alt="Dongguan">
-          <figcaption>Dongguan, China (24.12-25.01)</figcaption>
-        </figure>
-      </div>
-    </section>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Photos · Can Zheng</title>
+<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="styles.css?v=20260727-shared-logo-nav" rel="stylesheet"/>
 
-    <div id="dongguan" class="modal">
-      <div class="modal-content">
-        <span class="modal-close">&times;</span>
-        <h2 style="margin-top: 0;">Dongguan, China</h2>
-        <p>Theoretically, Guangdong Province is the hottest place in China, but I was there during winter, so the weather was very comfortable. As a visiting student at the GBU, it only took me about 20 minutes to walk to Songshan Lake Park every day. From there, I could see Huawei Ox Horn Campus.</p>
-        <div class="modal-image-grid">
-          <img src="photos/Dongguan_GBU.jpg" alt="GBU">
-          <img src="photos/Dongguan_Songshan1.jpg" alt="Songshan Lake 1">
-          <img src="photos/Dongguan_Songshan2.jpg" alt="Songshan Lake 2">
-        </div>
-      </div>
-    </div>
-    <div id="beijing" class="modal">
-      <div class="modal-content">
-        <span class="modal-close">&times;</span>
-        <h2 style="margin-top: 0;">Beijing, China</h2>
-        <p>I spent almost two-thirds of my 24th year (my zodiac year) interning in Beijing. It is a city with many opportunities, but also a lot of pressure. The climate seems moderate, but the winters are windy, the springs are filled with willow catkins, and the summers are hot and humid. In any case, I will miss this time of hard work very much.</p>
-        <div class="modal-image-grid">
-          <img src="photos/Beijing_CCTV.jpg" alt="CCTV">
-          <img src="photos/Beijing_Ericsson.jpg" alt="Ericsson">
-          <img src="photos/Beijing_intel.jpg" alt="Intel Labs">
-        </div>
-      </div>
-    </div>
-
-  </main>
-  <footer class="footer">
-    <div>&copy; <span id="year"></span> Can Zheng &middot; Built for GitHub Pages</div>
-    <script src="site.js?v=20260614-worker-stats"></script>
-  </footer>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    const figures = document.querySelectorAll('.figure-grid figure');
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+<meta content="light dark" name="color-scheme"/>
+<meta content="#002f6c" name="theme-color"/></link></head>
+<body class="photos-page">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="header">
+<div class="navbar container">
+<a aria-label="Can Zheng homepage" class="brand" href="index.html"><img alt="Can Zheng" class="brand-logo" src="photos/logo.png"/></a>
+<div class="nav-area">
+<nav aria-label="Main navigation" class="nav-links" id="site-nav">
+<div class="dropdown"><a class="nav-link" href="index.html">Home</a><div class="dropdown-content"><a href="index.html#about">About Me</a><a href="index.html#news">News</a><a href="index.html#explore">Explore</a></div></div>
+<div class="dropdown"><a class="nav-link" href="biography.html">Biography</a><div class="dropdown-content"><a href="biography.html#education">Education</a><a href="biography.html#experience">Work Experience</a><a href="biography.html#service">Service</a><a href="biography.html#respect">People I Respect</a></div></div>
+<div class="dropdown"><a class="nav-link" href="researches.html">Research</a><div class="dropdown-content"><a href="researches.html?filter=past">Past</a><a href="researches.html?filter=ongoing">Ongoing</a><a href="researches.html?filter=future">Future</a><a href="researches/grants.html">Grants</a></div></div>
+<div class="dropdown"><a class="nav-link" href="publications.html">Publications</a><div class="dropdown-content"><a href="publications.html#journal">Journal Papers</a><a href="publications.html#conference">Conference Papers</a></div></div>
+<div class="dropdown"><a class="nav-link" href="blog.html">Blogs</a><div class="dropdown-content"><a href="blog.html">Technical Blogs</a><a href="posts/read_papers/">Paper Notes</a><a href="posts/course_notes/">Course Notes</a></div></div>
+<a aria-current="page" class="nav-link" href="photos.html">Photos</a>
+<a class="nav-link" href="others.html">Others</a>
+</nav>
+<button aria-label="Switch color theme" class="theme-toggle-btn" id="theme-btn" type="button"><i aria-hidden="true" class="fas fa-moon"></i></button>
+<button aria-controls="site-nav" aria-expanded="false" aria-label="Toggle navigation" class="menu-toggle-btn" id="menu-btn" type="button"><i aria-hidden="true" class="fas fa-bars"></i></button>
+</div>
+</div>
+</header>
+<main class="container" id="main-content">
+<article class="prose">
+<h1 class="page-title" data-kicker="Gallery">Photos</h1>
+<p>Click on images to view more details and additional photos in a popup.</p>
+</article>
+<section class="section">
+<div class="figure-grid">
+<figure data-modal-id="beijing">
+<img alt="Lab setup" src="photos/Beijing_CCTV.jpg">
+<figcaption>Beijing, China (25.02-25.08)</figcaption>
+</img></figure>
+<figure data-modal-id="dongguan">
+<img alt="Dongguan" src="photos/Dongguan_Songshan1.jpg"/>
+<figcaption>Dongguan, China (24.12-25.01)</figcaption>
+</figure>
+</div>
+</section>
+<div class="modal" id="dongguan">
+<div class="modal-content">
+<span class="modal-close">×</span>
+<h2 style="margin-top: 0;">Dongguan, China</h2>
+<p>Theoretically, Guangdong Province is the hottest place in China, but I was there during winter, so the weather was very comfortable. As a visiting student at the GBU, it only took me about 20 minutes to walk to Songshan Lake Park every day. From there, I could see Huawei Ox Horn Campus.</p>
+<div class="modal-image-grid">
+<img alt="GBU" src="photos/Dongguan_GBU.jpg"/>
+<img alt="Songshan Lake 1" src="photos/Dongguan_Songshan1.jpg"/>
+<img alt="Songshan Lake 2" src="photos/Dongguan_Songshan2.jpg"/>
+</div>
+</div>
+</div>
+<div class="modal" id="beijing">
+<div class="modal-content">
+<span class="modal-close">×</span>
+<h2 style="margin-top: 0;">Beijing, China</h2>
+<p>I spent almost two-thirds of my 24th year (my zodiac year) interning in Beijing. It is a city with many opportunities, but also a lot of pressure. The climate seems moderate, but the winters are windy, the springs are filled with willow catkins, and the summers are hot and humid. In any case, I will miss this time of hard work very much.</p>
+<div class="modal-image-grid">
+<img alt="CCTV" src="photos/Beijing_CCTV.jpg"/>
+<img alt="Ericsson" src="photos/Beijing_Ericsson.jpg"/>
+<img alt="Intel Labs" src="photos/Beijing_intel.jpg"/>
+</div>
+</div>
+</div>
+</main>
+<footer class="footer">
+<div class="container footer-inner"><span>© <span id="year"></span> Can Zheng</span><span>Built for GitHub Pages</span></div>
+<script src="site.js?v=20260727-single-dropdown"></script>
+</footer>
+<script>
+const figures = document.querySelectorAll('.figure-grid figure');
     const modals = document.querySelectorAll('.modal');
     const closeButtons = document.querySelectorAll('.modal-close');
 
@@ -156,24 +110,6 @@
         }
       });
     });
-
-    // Theme logic
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = themeBtn.querySelector('i');
-    let currentTheme = localStorage.getItem('theme');
-    if (!currentTheme) {
-      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    function applyThemeMode(themeStr) {
-      document.documentElement.setAttribute('data-theme', themeStr);
-      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    }
-    applyThemeMode(currentTheme);
-    themeBtn.addEventListener('click', () => {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', currentTheme);
-      applyThemeMode(currentTheme);
-    });
-  </script>
+</script>
 </body>
 </html>

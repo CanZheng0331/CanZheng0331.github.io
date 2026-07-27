@@ -1,156 +1,85 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN" data-site-ready="false">
+<!DOCTYPE html>
+
+<html data-site-ready="false" lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Home &middot; Can Zheng</title>
-  <link rel="stylesheet" href="styles.css?v=20260605-visitor-map" />
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Home · Can Zheng</title>
+<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="styles.css?v=20260727-shared-logo-nav" rel="stylesheet"/>
 
-  <script>
-    (function() {
-      let theme = localStorage.getItem('theme');
-      // 寮哄埗鎷︽埅骞舵竻鐞嗘帀鏃х増鏈畫鐣欑殑 'auto' 鎴?null
-      if (theme !== 'light' && theme !== 'dark') {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        localStorage.setItem('theme', theme); // 鐩存帴鎶婃纭殑鍒濇鍒ゆ柇鍐欏洖缂撳瓨
-      }
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+<meta content="light dark" name="color-scheme"/>
+<meta content="#002f6c" name="theme-color"/></link></head>
+<body class="home-page">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="header">
+<div class="navbar container">
+<a aria-label="Can Zheng homepage" class="brand" href="index.html"><img alt="Can Zheng" class="brand-logo" src="photos/logo.png"/></a>
+<div class="nav-area">
+<nav aria-label="Main navigation" class="nav-links" id="site-nav">
+<div class="dropdown"><a class="nav-link" href="index.html">Home</a><div class="dropdown-content"><a href="index.html#about">About Me</a><a href="index.html#news">News</a><a href="index.html#explore">Explore</a></div></div>
+<div class="dropdown"><a class="nav-link" href="biography.html">Biography</a><div class="dropdown-content"><a href="biography.html#education">Education</a><a href="biography.html#experience">Work Experience</a><a href="biography.html#service">Service</a><a href="biography.html#respect">People I Respect</a></div></div>
+<div class="dropdown"><a class="nav-link" href="researches.html">Research</a><div class="dropdown-content"><a href="researches.html?filter=past">Past</a><a href="researches.html?filter=ongoing">Ongoing</a><a href="researches.html?filter=future">Future</a><a href="researches/grants.html">Grants</a></div></div>
+<div class="dropdown"><a class="nav-link" href="publications.html">Publications</a><div class="dropdown-content"><a href="publications.html#journal">Journal Papers</a><a href="publications.html#conference">Conference Papers</a></div></div>
+<div class="dropdown"><a class="nav-link" href="blog.html">Blogs</a><div class="dropdown-content"><a href="blog.html">Technical Blogs</a><a href="posts/read_papers/">Paper Notes</a><a href="posts/course_notes/">Course Notes</a></div></div>
+<a class="nav-link" href="photos.html">Photos</a>
+<a class="nav-link" href="others.html">Others</a>
+</nav>
+<button aria-label="Switch color theme" class="theme-toggle-btn" id="theme-btn" type="button"><i aria-hidden="true" class="fas fa-moon"></i></button>
+<button aria-controls="site-nav" aria-expanded="false" aria-label="Toggle navigation" class="menu-toggle-btn" id="menu-btn" type="button"><i aria-hidden="true" class="fas fa-bars"></i></button>
+</div>
+</div>
+</header>
+<main class="container" id="main-content">
+<section aria-labelledby="home-title" class="hero">
+<div class="hero-main">
+<div class="eyebrow">Nonergodic</div>
+<h1 id="home-title">Hi, I’m <span class="hero-name">Can Zheng.</span></h1>
+<div aria-label="Chinese and Korean names" class="name-line"><span lang="zh-CN">郑灿</span><span aria-hidden="true" class="dot"></span><span lang="ko">정찬</span></div>
+<p class="hero-lead">MS in Electrical Engineering @ <strong>Korea University</strong> | Wireless AI</p>
+<div aria-label="Social links" class="social-links">
+<a href="https://scholar.google.com/citations?user=EMGpwm8AAAAJ" rel="noopener noreferrer" target="_blank"><i aria-hidden="true" class="fas fa-graduation-cap"></i>Google Scholar</a>
+<a href="https://www.linkedin.com/in/can-zheng-4a5839331/" rel="noopener noreferrer" target="_blank"><i aria-hidden="true" class="fab fa-linkedin"></i>LinkedIn</a>
+<a href="https://github.com/CanZheng0331" rel="noopener noreferrer" target="_blank"><i aria-hidden="true" class="fab fa-github"></i>GitHub</a>
+<a href="mailto:zc331_@korea.ac.kr"><i aria-hidden="true" class="fas fa-envelope"></i>Email</a>
+</div>
+</div>
+</section>
+<section class="section about-section" id="about">
+<div class="section-heading"><div><span class="section-kicker">Profile</span><h2>About &amp; updates</h2></div></div>
+<div class="about-grid">
+<article class="panel about-card">
+<h3>About Me</h3>
+<p>I received my M.Eng. in Electrical Engineering from <em>Korea University</em> in Feb. 2026. My research spans AI/ML for wireless communications, multimodal sensing and integrated sensing and communications (ISAC).</p>
+<a class="text-link" href="biography.html">Read my biography</a>
+</article>
+<aside class="panel news-card" id="news">
+<h3>News</h3>
+<ol class="timeline">
+<li><time datetime="2026-02">02/2026</time><p>Graduated with my MS from Korea University.</p></li>
+<li><time datetime="2025-08">08/2025</time><p>Built my homepage (Thanks to GenAI).</p></li>
+</ol>
+</aside>
+</div>
+</section>
+<section class="section explore-section" id="explore">
+<div class="section-heading"><div><span class="section-kicker">Directory</span><h2>Explore</h2></div></div>
+<div class="explore-grid">
+<a class="panel explore-link" href="researches.html"><div class="explore-top"><span class="explore-icon"><i aria-hidden="true" class="fas fa-diagram-project"></i></span></div><strong>Research</strong><span class="description">See my research directions</span></a>
+<a class="panel explore-link" href="publications.html"><div class="explore-top"><span class="explore-icon"><i aria-hidden="true" class="fas fa-file-lines"></i></span></div><strong>Publications</strong><span class="description">Publications and manuscripts under review</span></a>
+<a class="panel explore-link" href="blog.html"><div class="explore-top"><span class="explore-icon"><i aria-hidden="true" class="fas fa-book-open"></i></span></div><strong>Blogs</strong><span class="description">Recent writing and technical notes</span></a>
+<a class="panel explore-link" href="others.html"><div class="explore-top"><span class="explore-icon"><i aria-hidden="true" class="fas fa-shapes"></i></span></div><strong>Others</strong><span class="description">Resources, tools, and other materials</span></a>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="container footer-inner"><span>© <span id="year"></span> Can Zheng</span><span>Built for GitHub Pages</span></div>
+<div aria-label="Visitor statistics" class="visitor-stats visitor-stats-mapmyvisitors" data-skip-worker-stats="">
+<script id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=6FW0QP0Be0BDSlZCNbTKuLsEaDGmvRe9Pwxt88fjUVI&amp;cl=ffffff&amp;w=a" type="text/javascript"></script>
+<p class="visitor-reset-note">MapMyVisitors was redeployed on 2026/6/14 because clustrmaps.com was previously unavailable, so the public statistics were reset from that date.</p>
+</div>
+<script src="site.js?v=20260727-single-dropdown"></script>
+</footer>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <meta name="color-scheme" content="light dark">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-</head>
-<body>
-  <header class="header">
-    <div class="navbar container">
-      <a class="brand" href="index.html"><img src="photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
-      <nav>
-        <div class="dropdown">
-          <a href="index.html" class="nav-link" aria-current="page">Home</a>
-          <div class="dropdown-content">
-            <a href="index.html#about">About Me</a>
-            <a href="index.html#news">News</a>
-            <a href="index.html#explore">Explore</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="biography.html" class="nav-link">Biography</a>
-          <div class="dropdown-content">
-            <a href="biography.html#education">Education</a>
-            <a href="biography.html#experience">Work Experience</a>
-            <a href="biography.html#service">Service</a>
-            <a href="biography.html#respect">People I Respect</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="researches.html" class="nav-link">Researches</a>
-          <div class="dropdown-content">
-            <a href="researches.html?filter=past">Past</a>
-            <a href="researches.html?filter=ongoing">Ongoing</a>
-            <a href="researches.html?filter=future">Future</a>
-            <a href="researches/grants.html">Grants</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="publications.html" class="nav-link">Publications</a>
-          <div class="dropdown-content">
-            <a href="publications.html#journal">Journal Papers</a>
-            <a href="publications.html#conference">Conference Papers</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="blog.html" class="nav-link">Blogs</a>
-          <div class="dropdown-content">
-            <a href="blog.html">Technical Blogs</a>
-            <a href="posts/read_papers/">Paper Notes</a>
-            <a href="posts/course_notes/">Course Notes</a>
-          </div>
-        </div>
-        <a href="photos.html" class="nav-link">Photos</a>
-        <a href="others.html" class="nav-link">Others</a>
-        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
-      </nav>
-    </div>
-  </header>
-  <main class="container">
-
-  <section class="hero">
-    <h1>Hi, I'm Can Zheng (郑灿).</h1>
-      <p style="font-size: 1.2rem; margin-bottom: 24px; color: var(--fg);">
-        MS in Electrical Engineering @ <strong>Korea University</strong> | Wireless AI
-      </p>
-      <p class="social-links">
-        <a href="https://scholar.google.com/citations?user=EMGpwm8AAAAJ" target="_blank"><i class="fas fa-graduation-cap"></i> Google Scholar</a>
-        <a href="https://www.linkedin.com/in/can-zheng-4a5839331/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-        <a href="https://github.com/CanZheng0331" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-        <a href="mailto:zc331_@korea.ac.kr"><i class="fas fa-envelope"></i> Email</a>
-      </p>
-  </section>
-
-  <section class="grid section">
-    <div class="col-6">
-      <div class="card" id="about">
-        <h2><i class="fas fa-user-circle"></i> About Me</h2>
-        <p>I received my M.Eng. in Electrical Engineering from <em>Korea University</em> in Feb. 2026. My research spans AI/ML for wireless communications, multimodal sensing and integrated sensing and communications (ISAC).</p>
-        <p><a href="biography.html">Read my biography</a></p>
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="card" id="news">
-        <h2><i class="fas fa-bullhorn"></i> News</h2>
-        <ul>
-          <li>02/2026: Graduated with my MS from Korea University.</li>
-          <li>08/2025: Built my homepage (Thanks to GenAI).</li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-12">
-      <div class="card" id="explore">
-        <h2><i class="fas fa-lightbulb"></i> Explore</h2>
-        <ul>
-          <li> See my research directions on the <a href="researches.html">researches</a>.</li>
-          <li> See my publications and under review manuscripts on the <a href="publications.html">publications</a>.</li>
-          <li> See recent writing on the <a href="blog.html">blogs</a>.</li>
-          <li> See plotting tool on the <a href="tools/plot.html">plot</a>.</li>
-        </ul>
-        <p>
-
-      </div>
-    </div>
-  </section>
-  <hr>
-  </main>
-
-  <footer class="footer">
-    <div>&copy; <span id="year"></span> Can Zheng &middot; Built for GitHub Pages</div>
-    <div class="visitor-stats visitor-stats-mapmyvisitors" aria-label="Visitor statistics" data-skip-worker-stats>
-      <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=6FW0QP0Be0BDSlZCNbTKuLsEaDGmvRe9Pwxt88fjUVI&amp;cl=ffffff&amp;w=a"></script>
-      <p class="visitor-reset-note">MapMyVisitors was redeployed on 2026/6/14 because clustrmaps.com was previously unavailable, so the public statistics were reset from that date.</p>
-    </div>
-    <script src="site.js?v=20260614-index-mapmyvisitors-small"></script>
-  </footer>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = themeBtn.querySelector('i');
-
-    // 浠庣紦瀛樿鍙栵紙鐢变簬澶撮儴鐨勬嫤鎴紝杩欓噷涓€瀹氭槸 light 鎴?dark锛?    let currentTheme = localStorage.getItem('theme') || 'light';
-
-    function applyThemeMode(themeStr) {
-      document.documentElement.setAttribute('data-theme', themeStr);
-      // 濡傛灉褰撳墠鏄寒鑹诧紝鏄剧ず鏈堜寒锛堜唬琛ㄧ偣鍑诲皢鍒囬粦锛夛紱褰撳墠鏄殫鑹诧紝鏄剧ず澶槼锛堜唬琛ㄧ偣鍑诲皢鍒囦寒锛?      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    }
-
-    applyThemeMode(currentTheme);
-
-    themeBtn.addEventListener('click', () => {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', currentTheme);
-      applyThemeMode(currentTheme);
-    });
-  </script>
 </body>
 </html>

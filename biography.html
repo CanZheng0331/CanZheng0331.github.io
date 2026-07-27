@@ -1,238 +1,163 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN" data-site-ready="false">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Biography &middot; Can Zheng</title>
-  <link rel="stylesheet" href="styles.css?v=20260715-respect-bullets" />
-  <script>
-    (function() {
-      let theme = localStorage.getItem('theme');
-      if (!theme) {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <meta name="color-scheme" content="light dark">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-</head>
-<body>
-  <header class="header">
-    <div class="navbar container">
-      <a class="brand" href="index.html"><img src="photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
-      <nav>
-        <div class="dropdown">
-          <a href="index.html" class="nav-link">Home</a>
-          <div class="dropdown-content">
-            <a href="index.html#about">About Me</a>
-            <a href="index.html#news">News</a>
-            <a href="index.html#explore">Explore</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="biography.html" class="nav-link" aria-current="page">Biography</a>
-          <div class="dropdown-content">
-            <a href="biography.html#education">Education</a>
-            <a href="biography.html#experience">Work Experience</a>
-            <a href="biography.html#service">Service</a>
-            <a href="biography.html#respect">People I Respect</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="researches.html" class="nav-link">Researches</a>
-          <div class="dropdown-content">
-            <a href="researches.html?filter=past">Past</a>
-            <a href="researches.html?filter=ongoing">Ongoing</a>
-            <a href="researches.html?filter=future">Future</a>
-            <a href="researches/grants.html">Grants</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="publications.html" class="nav-link">Publications</a>
-          <div class="dropdown-content">
-            <a href="publications.html#journal">Journal Papers</a>
-            <a href="publications.html#conference">Conference Papers</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="blog.html" class="nav-link">Blogs</a>
-          <div class="dropdown-content">
-            <a href="blog.html">Technical Blogs</a>
-            <a href="posts/read_papers/">Paper Notes</a>
-            <a href="posts/course_notes/">Course Notes</a>
-          </div>
-        </div>
-        <a href="photos.html" class="nav-link">Photos</a>
-        <a href="others.html" class="nav-link">Others</a>
-        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
-      </nav>
-    </div>
-  </header>
-  <main class="container">
+<!DOCTYPE html>
 
-  <article class="prose">
-      <h1>Biography</h1>
-      <p>
+<html data-site-ready="false" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Biography · Can Zheng</title>
+<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="styles.css?v=20260727-shared-logo-nav" rel="stylesheet"/>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+<meta content="light dark" name="color-scheme"/>
+<meta content="#002f6c" name="theme-color"/></link></head>
+<body class="biography-page">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="header">
+<div class="navbar container">
+<a aria-label="Can Zheng homepage" class="brand" href="index.html"><img alt="Can Zheng" class="brand-logo" src="photos/logo.png"/></a>
+<div class="nav-area">
+<nav aria-label="Main navigation" class="nav-links" id="site-nav">
+<div class="dropdown"><a class="nav-link" href="index.html">Home</a><div class="dropdown-content"><a href="index.html#about">About Me</a><a href="index.html#news">News</a><a href="index.html#explore">Explore</a></div></div>
+<div class="dropdown"><a class="nav-link" href="biography.html">Biography</a><div class="dropdown-content"><a href="biography.html#education">Education</a><a href="biography.html#experience">Work Experience</a><a href="biography.html#service">Service</a><a href="biography.html#respect">People I Respect</a></div></div>
+<div class="dropdown"><a class="nav-link" href="researches.html">Research</a><div class="dropdown-content"><a href="researches.html?filter=past">Past</a><a href="researches.html?filter=ongoing">Ongoing</a><a href="researches.html?filter=future">Future</a><a href="researches/grants.html">Grants</a></div></div>
+<div class="dropdown"><a class="nav-link" href="publications.html">Publications</a><div class="dropdown-content"><a href="publications.html#journal">Journal Papers</a><a href="publications.html#conference">Conference Papers</a></div></div>
+<div class="dropdown"><a class="nav-link" href="blog.html">Blogs</a><div class="dropdown-content"><a href="blog.html">Technical Blogs</a><a href="posts/read_papers/">Paper Notes</a><a href="posts/course_notes/">Course Notes</a></div></div>
+<a class="nav-link" href="photos.html">Photos</a>
+<a class="nav-link" href="others.html">Others</a>
+</nav>
+<button aria-label="Switch color theme" class="theme-toggle-btn" id="theme-btn" type="button"><i aria-hidden="true" class="fas fa-moon"></i></button>
+<button aria-controls="site-nav" aria-expanded="false" aria-label="Toggle navigation" class="menu-toggle-btn" id="menu-btn" type="button"><i aria-hidden="true" class="fas fa-bars"></i></button>
+</div>
+</div>
+</header>
+<main class="container" id="main-content">
+<article class="prose">
+<h1 class="page-title" data-kicker="Profile">Biography</h1>
+<p>
         I received my M.S. in Electrical Engineering from Korea University in February 2026, and my B.Eng. in Information Engineering from Xi'an Jiaotong University in August 2023. My research interests focus on AI/ML for wireless communication systems, multimodal sensing and integrated sensing and communications. I warmly welcome undergraduate, master's, and Ph.D. students with overlapping research interests to connect and collaborate on exciting research projects.
       </p>
-
-      <h2 id="education">Education</h2>
-
-      <div class="timeline-card">
-        <div class="timeline-header">
-          <div class="timeline-date">Mar. 2024 ~ Feb. 2026</div>
-          <div class="timeline-location">Seoul, South Korea</div>
-        </div>
-        <h3 class="timeline-title">M.S. in Electrical Engineering</h3>
-        <p class="timeline-subtitle">Korea University</p>
-        <ul>
-          <li><strong>Advisor:</strong> Prof. Chung G. Kang (IEEE Senior Member)</li>
-          <li><strong>Research Direction:</strong> AI/ML-Enabled Wireless Communications, OTFS, Satellite Communications</li>
-          <li><strong>Main Courses:</strong> Information Theory, Satellite Communications, Detection and Estimation</li>
-          <li><strong>Thesis:</strong> <a href="http://www.dcollection.net/handler/korea/000000306150" target="_blank" rel="noopener">Multimodal Sensing-aided Millimeter-wave Beam Prediction with Large Language Models</a></li>
-        </ul>
-      </div>
-
-      <div class="timeline-card">
-        <div class="timeline-header">
-          <div class="timeline-date">Aug. 2019 ~ Jul. 2023</div>
-          <div class="timeline-location">Xi'an, China</div>
-        </div>
-        <h3 class="timeline-title">B.Eng. in Information Engineering</h3>
-        <p class="timeline-subtitle">Xi'an Jiaotong University</p>
-        <ul>
-          <li><strong>Advisor:</strong> Prof. Chen Tian</li>
-          <li><strong>Main Courses:</strong> Signal and Systems, Wireless Communication, Information Theory, Machine Learning</li>
-          <li><strong>Thesis:</strong> Analysis and Research on Regularized Transceiver in Interference Alignment Networks with Imperfect Channel State Information</li>
-        </ul>
-      </div>
-
-      <h2 id="experience">Work/Research Experience</h2>
-
-      <div class="timeline-card">
-        <div class="timeline-header">
-          <div class="timeline-date">Jun. 2025 ~ Aug. 2025</div>
-          <div class="timeline-location">Beijing, China</div>
-        </div>
-        <h3 class="timeline-title">Wireless AI Software Engineering Intern</h3>
-        <p class="timeline-subtitle">Intel Labs, Network and Edge Group (NEX)</p>
-        <ul>
-          <li><strong>Topics:</strong> <a href="https://ieeexplore.ieee.org/document/11291635" target="_blank" rel="noopener">AI/ML for positioning</a>, traffic prediction, load balancing, and power saving.</li>
-          <li><strong>Contribution:</strong> Developed AI/ML modules for wireless applications; contributed to 5G-Advanced and pre-6G technology development.</li>
-        </ul>
-      </div>
-
-      <div class="timeline-card">
-        <div class="timeline-header">
-          <div class="timeline-date">Feb. 2025 ~ Jun. 2025</div>
-          <div class="timeline-location">Beijing, China</div>
-        </div>
-        <h3 class="timeline-title">Radio System Developer Intern</h3>
-        <p class="timeline-subtitle">Ericsson (China), Radio System Technology (RST)</p>
-        <ul>
-          <li><strong>Topics:</strong> Uplink coverage enhancement.</li>
-          <li><strong>Contribution:</strong> Performed system-level simulations via MATLAB to support 3GPP RAN4 validation. Analyzed system performance, composed technical reports, and upgraded the simulation framework for next-generation product pre-research.</li>
-        </ul>
-      </div>
-
-      <div class="timeline-card">
-        <div class="timeline-header">
-          <div class="timeline-date">Dec. 2024 ~ Jan. 2025</div>
-          <div class="timeline-location">Dongguan, China</div>
-        </div>
-        <h3 class="timeline-title">Visiting Student</h3>
-        <p class="timeline-subtitle">Great Bay University @ AISC LAB</p>
-        <ul>
-          <li><strong>Advisor:</strong> <a href="https://scholar.google.com/citations?user=roD_yEMAAAAJ&amp;hl=en" target="_blank" rel="noopener">Prof. Jiguang He</a></li>
-          <li><strong>Topics:</strong> ISAC, LLM, and vision-empowered beam prediction.</li>
-          <li><strong>Contribution:</strong> Joint publication accepted, currently being extended into a journal paper.</li>
-        </ul>
-      </div>
-
-      <h2 id="service">Service & Awards</h2>
-
-      <div class="service-category">
-        <div class="service-header">Awards and Scholarships</div>
-        <ul class="service-list">
-          <li class="service-item">Natural Science and Engineering Scholarship, Korea University, 2024-2025</li>
-          <li class="service-item">Brain Korea 21 Scholarship, Korea University, 2024-2025</li>
-        </ul>
-      </div>
-
-      <div class="service-category">
-        <div class="service-header">Teaching Assistantship</div>
-        <ul class="service-list">
-          <li class="service-item">"Mobile Communication Engineering," Korea University, Spring 2024</li>
-        </ul>
-      </div>
-
-      <div class="service-category">
-        <div class="service-header">Reviewer / Peer Review Activities</div>
-        <ul class="service-list">
-          <li class="service-item">IEEE Transactions on Mobile Computing (TMC) <a href="/publications/certificates/TMC_2025_Reviewer_Certifcate.pdf" target="_blank" rel="noopener" style="margin-left: 10px; color: #d9534f; font-weight: bold; font-size: 0.85em;">[Certificate]</a></li>
-          <li class="service-item">IEEE Transactions on Vehicular Technology (TVT)</li>
-          <li class="service-item">IEEE Wireless Communications Letters (WCL)</li>
-          <li class="service-item">IEEE Vehicular Technology Conference (VTC)</li>
-          <li class="service-item">IEEE Global Communications Conference (GLOBECOM)</li>
-        </ul>
-      </div>
-
-      <h2 id="respect">People I Respect and Learn From</h2>
-      <p class="muted">
+<h2 id="education">Education</h2>
+<div class="timeline-card">
+<div class="timeline-header">
+<div class="timeline-date">Mar. 2024 ~ Feb. 2026</div>
+<div class="timeline-location">Seoul, South Korea</div>
+</div>
+<h3 class="timeline-title">M.S. in Electrical Engineering</h3>
+<p class="timeline-subtitle">Korea University</p>
+<ul>
+<li><strong>Advisor:</strong> Prof. Chung G. Kang (IEEE Senior Member)</li>
+<li><strong>Research Direction:</strong> AI/ML-Enabled Wireless Communications, OTFS, Satellite Communications</li>
+<li><strong>Main Courses:</strong> Information Theory, Satellite Communications, Detection and Estimation</li>
+<li><strong>Thesis:</strong> <a href="http://www.dcollection.net/handler/korea/000000306150" rel="noopener noreferrer" target="_blank">Multimodal Sensing-aided Millimeter-wave Beam Prediction with Large Language Models</a></li>
+</ul>
+</div>
+<div class="timeline-card">
+<div class="timeline-header">
+<div class="timeline-date">Aug. 2019 ~ Jul. 2023</div>
+<div class="timeline-location">Xi'an, China</div>
+</div>
+<h3 class="timeline-title">B.Eng. in Information Engineering</h3>
+<p class="timeline-subtitle">Xi'an Jiaotong University</p>
+<ul>
+<li><strong>Advisor:</strong> Prof. Chen Tian</li>
+<li><strong>Main Courses:</strong> Signal and Systems, Wireless Communication, Information Theory, Machine Learning</li>
+<li><strong>Thesis:</strong> Analysis and Research on Regularized Transceiver in Interference Alignment Networks with Imperfect Channel State Information</li>
+</ul>
+</div>
+<h2 id="experience">Work/Research Experience</h2>
+<div class="timeline-card">
+<div class="timeline-header">
+<div class="timeline-date">Jun. 2025 ~ Aug. 2025</div>
+<div class="timeline-location">Beijing, China</div>
+</div>
+<h3 class="timeline-title">Wireless AI Software Engineering Intern</h3>
+<p class="timeline-subtitle">Intel Labs, Network and Edge Group (NEX)</p>
+<ul>
+<li><strong>Topics:</strong> <a href="https://ieeexplore.ieee.org/document/11291635" rel="noopener noreferrer" target="_blank">AI/ML for positioning</a>, traffic prediction, load balancing, and power saving.</li>
+<li><strong>Contribution:</strong> Developed AI/ML modules for wireless applications; contributed to 5G-Advanced and pre-6G technology development.</li>
+</ul>
+</div>
+<div class="timeline-card">
+<div class="timeline-header">
+<div class="timeline-date">Feb. 2025 ~ Jun. 2025</div>
+<div class="timeline-location">Beijing, China</div>
+</div>
+<h3 class="timeline-title">Radio System Developer Intern</h3>
+<p class="timeline-subtitle">Ericsson (China), Radio System Technology (RST)</p>
+<ul>
+<li><strong>Topics:</strong> Uplink coverage enhancement.</li>
+<li><strong>Contribution:</strong> Performed system-level simulations via MATLAB to support 3GPP RAN4 validation. Analyzed system performance, composed technical reports, and upgraded the simulation framework for next-generation product pre-research.</li>
+</ul>
+</div>
+<div class="timeline-card">
+<div class="timeline-header">
+<div class="timeline-date">Dec. 2024 ~ Jan. 2025</div>
+<div class="timeline-location">Dongguan, China</div>
+</div>
+<h3 class="timeline-title">Visiting Student</h3>
+<p class="timeline-subtitle">Great Bay University @ AISC LAB</p>
+<ul>
+<li><strong>Advisor:</strong> <a href="https://scholar.google.com/citations?user=roD_yEMAAAAJ&amp;hl=en" rel="noopener noreferrer" target="_blank">Prof. Jiguang He</a></li>
+<li><strong>Topics:</strong> ISAC, LLM, and vision-empowered beam prediction.</li>
+<li><strong>Contribution:</strong> Joint publication accepted, currently being extended into a journal paper.</li>
+</ul>
+</div>
+<h2 id="service">Service &amp; Awards</h2>
+<div class="service-category">
+<div class="service-header">Awards and Scholarships</div>
+<ul class="service-list">
+<li class="service-item">Natural Science and Engineering Scholarship, Korea University, 2024-2025</li>
+<li class="service-item">Brain Korea 21 Scholarship, Korea University, 2024-2025</li>
+</ul>
+</div>
+<div class="service-category">
+<div class="service-header">Teaching Assistantship</div>
+<ul class="service-list">
+<li class="service-item">"Mobile Communication Engineering," Korea University, Spring 2024</li>
+</ul>
+</div>
+<div class="service-category">
+<div class="service-header">Reviewer / Peer Review Activities</div>
+<ul class="service-list">
+<li class="service-item">IEEE Transactions on Mobile Computing (TMC) <a href="/publications/certificates/TMC_2025_Reviewer_Certifcate.pdf" rel="noopener noreferrer" style="margin-left: 10px; color: #d9534f; font-weight: bold; font-size: 0.85em;" target="_blank">[Certificate]</a></li>
+<li class="service-item">IEEE Transactions on Vehicular Technology (TVT)</li>
+<li class="service-item">IEEE Wireless Communications Letters (WCL)</li>
+<li class="service-item">IEEE Vehicular Technology Conference (VTC)</li>
+<li class="service-item">IEEE Global Communications Conference (GLOBECOM)</li>
+</ul>
+</div>
+<h2 id="respect">People I Respect and Learn From</h2>
+<p class="muted">
         Unless otherwise noted, this section does not imply collaboration, personal connection, or endorsement. I deeply respect and appreciate everyone who has helped me along the way. The people listed here are those whose public work, teaching, or career paths I have learned from in a more visible way.
       </p>
+<details class="service-category respect-group">
+<summary class="service-header">Scholars</summary>
+<ul class="service-list">
+<li class="service-item">
+<span><strong><a href="https://scholar.google.com/citations?user=iibY1zcAAAAJ&amp;hl=zh-TW" rel="noopener noreferrer" target="_blank">Po-Ning Chen (陈伯宁)</a></strong>, Professor, Department of Electrical Engineering, National Yang Ming Chiao Tung University. I respect him for his depth in information theory and his substantial record in <em>IEEE Transactions on Information Theory</em>, which speaks strongly to his research level. Beyond research, I think his teaching is first-rate. In my personal view, his OCW courses are among the strongest Chinese-language communication courses, including undergraduate courses such as <a href="https://www.youtube.com/playlist?list=PLj6E8qlqmkFsjemJ-MTVrktfJK4nv5ka_" rel="noopener noreferrer" target="_blank">Introduction to Communication Systems</a> and <a href="https://www.youtube.com/playlist?list=PLj6E8qlqmkFulAsQ99EvqFUm3TJfN5m3d" rel="noopener noreferrer" target="_blank">Introduction to Digital Communications</a>, and graduate courses such as <a href="https://www.youtube.com/playlist?list=PLj6E8qlqmkFvw7Rt63yBqai2HmPKF0V0J" rel="noopener noreferrer" target="_blank">Stochastic Processes</a>, <a href="https://www.youtube.com/playlist?list=PLj6E8qlqmkFsWS54o6gNWeDGXeI7c3eUd" rel="noopener noreferrer" target="_blank">Information Theory</a>, <a href="https://www.youtube.com/playlist?list=PLj6E8qlqmkFv4IDqZ2l0nMns6AIiJgF8B" rel="noopener noreferrer" target="_blank">Digital Communications</a>, and <a href="https://www.youtube.com/playlist?list=PLj6E8qlqmkFu8te1AGqVlrJsLASJsTg58" rel="noopener noreferrer" target="_blank">Advanced Probability for Communications</a>.</span>
+</li>
+<li class="service-item">
+<span><strong><a href="https://linshanlee.com/" rel="noopener noreferrer" target="_blank">Lin-Shan Lee (李琳山)</a></strong>, Professor, Department of Electrical Engineering, National Taiwan University. I first learned about him through his <a href="https://ocw.aca.ntu.edu.tw/courses/103S207" rel="noopener noreferrer" target="_blank">Signals and Systems</a> course, whose lectures are exceptionally clear. Later, after reading more about his website and career, I came to respect his long-term academic path and broader contributions. He is someone I hope to learn from as a role model.</span>
+</li>
+</ul>
+</details>
+<details class="service-category respect-group">
+<summary class="service-header">Athletes</summary>
+<ul class="service-list">
+<li class="service-item">
+<span><strong>Lionel Messi</strong>. I know that famous debate. Still, based on at least twelve years of watching football, beginning with the 2014 FIFA World Cup match between Argentina and Iran, when he scored that late winner from outside the box, and based on my limited experience playing football myself, I consider Messi the best player of this era, and perhaps the greatest of all time. His technique needs no extra praise. In ordinary debates, people compare his goals with the very best forwards, his dribbles with the very best dribblers, and his assists with the very best midfielders. In other words, he has become a standard himself. His early international career was not smooth, especially with the missed World Cup and Copa America titles, but he did not give up and eventually completed football's major honors. His humility is also something I hope to learn from.</span>
+</li>
+<li class="service-item">
+<span><strong>Paul Pogba</strong>. I have heard of Zinedine Zidane, but Pogba is my Zidane. He is the most talented midfielder I have personally watched. If you watched the 2018 FIFA World Cup and UEFA Euro 2020, held in 2021, you saw him near his best: his midfield dribbling, long passing, and ability to control tempo are exactly what the current French team often lacks. As I write this on July 15, 2026, France has just been eliminated by Spain in the World Cup semifinal after being overwhelmed in midfield. It is a pity that his career did not fully meet expectations because of many subjective and objective reasons. Even so, I am grateful for the beautiful football he gave us. I hope the rest of his career goes smoothly.</span>
+</li>
+</ul>
+</details>
+</article>
+</main>
+<footer class="footer">
+<div class="container footer-inner"><span>© <span id="year"></span> Can Zheng</span><span>Built for GitHub Pages</span></div>
+<script src="site.js?v=20260727-single-dropdown"></script>
+</footer>
 
-      <details class="service-category respect-group">
-        <summary class="service-header">Scholars</summary>
-        <ul class="service-list">
-          <li class="service-item">
-            <span><strong><a href="https://scholar.google.com/citations?user=iibY1zcAAAAJ&hl=zh-TW" target="_blank" rel="noopener">Po-Ning Chen (陈伯宁)</a></strong>, Professor, Department of Electrical Engineering, National Yang Ming Chiao Tung University. I respect him for his depth in information theory and his substantial record in <em>IEEE Transactions on Information Theory</em>, which speaks strongly to his research level. Beyond research, I think his teaching is first-rate. In my personal view, his OCW courses are among the strongest Chinese-language communication courses, including undergraduate courses such as <a href="https://www.youtube.com/playlist?list=PLj6E8qlqmkFsjemJ-MTVrktfJK4nv5ka_" target="_blank" rel="noopener">Introduction to Communication Systems</a> and <a href="https://www.youtube.com/playlist?list=PLj6E8qlqmkFulAsQ99EvqFUm3TJfN5m3d" target="_blank" rel="noopener">Introduction to Digital Communications</a>, and graduate courses such as <a href="https://www.youtube.com/playlist?list=PLj6E8qlqmkFvw7Rt63yBqai2HmPKF0V0J" target="_blank" rel="noopener">Stochastic Processes</a>, <a href="https://www.youtube.com/playlist?list=PLj6E8qlqmkFsWS54o6gNWeDGXeI7c3eUd" target="_blank" rel="noopener">Information Theory</a>, <a href="https://www.youtube.com/playlist?list=PLj6E8qlqmkFv4IDqZ2l0nMns6AIiJgF8B" target="_blank" rel="noopener">Digital Communications</a>, and <a href="https://www.youtube.com/playlist?list=PLj6E8qlqmkFu8te1AGqVlrJsLASJsTg58" target="_blank" rel="noopener">Advanced Probability for Communications</a>.</span>
-          </li>
-          <li class="service-item">
-            <span><strong><a href="https://linshanlee.com/" target="_blank" rel="noopener">Lin-Shan Lee (李琳山)</a></strong>, Professor, Department of Electrical Engineering, National Taiwan University. I first learned about him through his <a href="https://ocw.aca.ntu.edu.tw/courses/103S207" target="_blank" rel="noopener">Signals and Systems</a> course, whose lectures are exceptionally clear. Later, after reading more about his website and career, I came to respect his long-term academic path and broader contributions. He is someone I hope to learn from as a role model.</span>
-          </li>
-        </ul>
-      </details>
-
-      <details class="service-category respect-group">
-        <summary class="service-header">Athletes</summary>
-        <ul class="service-list">
-          <li class="service-item">
-            <span><strong>Lionel Messi</strong>. I know that famous debate. Still, based on at least twelve years of watching football, beginning with the 2014 FIFA World Cup match between Argentina and Iran, when he scored that late winner from outside the box, and based on my limited experience playing football myself, I consider Messi the best player of this era, and perhaps the greatest of all time. His technique needs no extra praise. In ordinary debates, people compare his goals with the very best forwards, his dribbles with the very best dribblers, and his assists with the very best midfielders. In other words, he has become a standard himself. His early international career was not smooth, especially with the missed World Cup and Copa America titles, but he did not give up and eventually completed football's major honors. His humility is also something I hope to learn from.</span>
-          </li>
-          <li class="service-item">
-            <span><strong>Paul Pogba</strong>. I have heard of Zinedine Zidane, but Pogba is my Zidane. He is the most talented midfielder I have personally watched. If you watched the 2018 FIFA World Cup and UEFA Euro 2020, held in 2021, you saw him near his best: his midfield dribbling, long passing, and ability to control tempo are exactly what the current French team often lacks. As I write this on July 15, 2026, France has just been eliminated by Spain in the World Cup semifinal after being overwhelmed in midfield. It is a pity that his career did not fully meet expectations because of many subjective and objective reasons. Even so, I am grateful for the beautiful football he gave us. I hope the rest of his career goes smoothly.</span>
-          </li>
-        </ul>
-      </details>
-
-  </article>
-
-  </main>
-  <footer class="footer">
-    <div>&copy; <span id="year"></span> Can Zheng &middot; Built for GitHub Pages</div>
-    <script src="site.js?v=20260614-worker-stats"></script>
-  </footer>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = themeBtn.querySelector('i');
-    let currentTheme = localStorage.getItem('theme');
-    if (!currentTheme) {
-      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    function applyThemeMode(themeStr) {
-      document.documentElement.setAttribute('data-theme', themeStr);
-      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    }
-    applyThemeMode(currentTheme);
-    themeBtn.addEventListener('click', () => {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', currentTheme);
-      applyThemeMode(currentTheme);
-    });
-  </script>
 </body>
 </html>

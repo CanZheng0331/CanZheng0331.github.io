@@ -1,122 +1,81 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN" data-site-ready="false">
+<!DOCTYPE html>
+
+<html data-site-ready="false" lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Annotated Paper Notes &middot; Can Zheng</title>
-  <link rel="stylesheet" href="../../styles.css?v=20260616-blog-notes" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <meta name="color-scheme" content="light dark">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <style>
-    .papers-hero { max-width: 1100px; }
-    .papers-intro { color: var(--muted); margin: 0 0 18px; max-width: 860px; }
-    .paper-filters { display: grid; gap: 8px; margin: 18px 0 20px; }
-    .filter-group { align-items: center; display: flex; flex-wrap: wrap; gap: 8px; }
-    .filter-label { color: var(--muted); flex: 0 0 auto; font-size: 0.86rem; font-weight: 800; min-width: 92px; }
-    .filter-row { display: flex; flex: 1 1 auto; flex-wrap: wrap; gap: 6px; }
-    .filter-chip { background: var(--card); border: 1px solid var(--border); border-radius: 7px; color: var(--fg); cursor: pointer; font: inherit; font-size: 0.86rem; font-weight: 700; line-height: 1.2; padding: 5px 9px; transition: background 0.2s, border-color 0.2s, color 0.2s; }
-    .filter-chip:hover, .filter-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-    .paper-count { color: var(--muted); font-size: 0.92rem; margin: 4px 0 10px; }
-    .paper-list { margin: 0; padding-left: 1.4rem; }
-    .paper-item { border-bottom: 1px dashed var(--border); line-height: 1.55; padding: 8px 0; }
-    .paper-line-main { align-items: baseline; display: flex; flex-wrap: wrap; gap: 8px; }
-    .paper-line-tags { margin-top: 3px; }
-    .paper-title { font-weight: 700; }
-    .paper-tag { background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: 6px; color: var(--accent); display: inline-block; font-size: 0.78rem; font-weight: 700; margin: 0 6px 0 0; padding: 2px 6px; white-space: nowrap; }
-    .paper-added { color: var(--muted); display: inline-block; font-size: 0.78rem; margin-left: 4px; white-space: nowrap; }
-    .paper-source { align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 6px; color: var(--accent); display: inline-flex; height: 28px; justify-content: center; text-decoration: none; width: 28px; }
-    .paper-source:hover { border-color: var(--accent); text-decoration: none; }
-    @media (max-width: 680px) {
-      .filter-label { min-width: 0; width: 100%; }
-      .paper-source { flex: 0 0 auto; }
-    }
-  </style>
-</head>
-<body>
-  <header class="header">
-    <div class="navbar container">
-      <a class="brand" href="../../index.html"><img src="../../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
-      <nav>
-        <a class="nav-link" href="../../index.html">Home</a>
-        <div class="dropdown">
-          <a href="../../biography.html" class="nav-link">Biography</a>
-          <div class="dropdown-content">
-            <a href="../../biography.html#education">Education</a>
-            <a href="../../biography.html#experience">Work Experience</a>
-            <a href="../../biography.html#service">Service</a>
-            <a href="../../biography.html#respect">People I Respect</a>
-          </div>
-        </div>
-        <a class="nav-link" href="../../researches.html">Researches</a>
-        <a class="nav-link" href="../../publications.html">Publications</a>
-        <div class="dropdown">
-          <a class="nav-link" href="../../blog.html" aria-current="page">Blogs</a>
-          <div class="dropdown-content">
-            <a href="../../blog.html">Technical Blogs</a>
-            <a href="../read_papers/">Paper Notes</a>
-            <a href="../course_notes/">Course Notes</a>
-          </div>
-        </div>
-        <a class="nav-link" href="../../photos.html">Photos</a>
-        <a href="../../others.html" class="nav-link">Others</a>
-        <button class="theme-toggle-btn" id="theme-btn" aria-label="Toggle color theme"><i class="fas fa-sun"></i></button>
-      </nav>
-    </div>
-  </header>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Annotated Paper Notes · Can Zheng</title>
+<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="../../styles.css?v=20260727-shared-logo-nav" rel="stylesheet"/>
 
-  <main class="container">
-    <section class="section papers-hero">
-      <h1>Annotated Paper Notes</h1>
-      <p class="papers-intro">These are PDF-based reading notes with highlights, annotations, and margin sketches. The collection is informal and mainly maintained for my own research workflow.</p>
-
-      <div class="paper-filters" aria-label="Paper filters">
-        <div class="filter-group" data-filter-group="period">
-          <div class="filter-label">Year Range:</div>
-          <div class="filter-row">
-            <button class="filter-chip active" data-value="all">All</button>
-            <button class="filter-chip" data-value="earlier">Earlier</button>
-            <button class="filter-chip" data-value="2020-2025">2020-2025</button>
-            <button class="filter-chip" data-value="2026-2030">2026-2030</button>
-          </div>
-        </div>
-
-        <div class="filter-group" data-filter-group="field">
-          <div class="filter-label">Field:</div>
-          <div class="filter-row">
-            <button class="filter-chip active" data-value="all">All</button>
-            <button class="filter-chip" data-value="wireless">Wireless Communications</button>
-            <button class="filter-chip" data-value="signal">Signal Processing</button>
-            <button class="filter-chip" data-value="ai">AI</button>
-            <button class="filter-chip" data-value="other">Other</button>
-          </div>
-        </div>
-
-        <div class="filter-group" data-filter-group="category">
-          <div class="filter-label">Category:</div>
-          <div class="filter-row">
-            <button class="filter-chip active" data-value="all">All</button>
-            <button class="filter-chip" data-value="magazine">Magazine</button>
-            <button class="filter-chip" data-value="journal">Journal</button>
-            <button class="filter-chip" data-value="conference">Conference</button>
-            <button class="filter-chip" data-value="textbook">Textbook</button>
-            <button class="filter-chip" data-value="blog">Blog</button>
-            <button class="filter-chip" data-value="other">Other</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="paper-count" id="paper-count"></div>
-      <ul class="paper-list" id="paper-list"></ul>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div>&copy; <span id="year"></span> Can Zheng &middot; Built for GitHub Pages</div>
-    <script src="../../site.js?v=20260614-worker-stats"></script>
-  </footer>
-
-  <script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+<meta content="light dark" name="color-scheme"/>
+<meta content="#002f6c" name="theme-color"/></link></head>
+<body class="notes-index-page">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="header">
+<div class="navbar container">
+<a aria-label="Can Zheng homepage" class="brand" href="../../index.html"><img alt="Can Zheng" class="brand-logo" src="../../photos/logo.png"/></a>
+<div class="nav-area">
+<nav aria-label="Main navigation" class="nav-links" id="site-nav">
+<div class="dropdown"><a class="nav-link" href="../../index.html">Home</a><div class="dropdown-content"><a href="../../index.html#about">About Me</a><a href="../../index.html#news">News</a><a href="../../index.html#explore">Explore</a></div></div>
+<div class="dropdown"><a class="nav-link" href="../../biography.html">Biography</a><div class="dropdown-content"><a href="../../biography.html#education">Education</a><a href="../../biography.html#experience">Work Experience</a><a href="../../biography.html#service">Service</a><a href="../../biography.html#respect">People I Respect</a></div></div>
+<div class="dropdown"><a class="nav-link" href="../../researches.html">Research</a><div class="dropdown-content"><a href="../../researches.html?filter=past">Past</a><a href="../../researches.html?filter=ongoing">Ongoing</a><a href="../../researches.html?filter=future">Future</a><a href="../../researches/grants.html">Grants</a></div></div>
+<div class="dropdown"><a class="nav-link" href="../../publications.html">Publications</a><div class="dropdown-content"><a href="../../publications.html#journal">Journal Papers</a><a href="../../publications.html#conference">Conference Papers</a></div></div>
+<div class="dropdown"><a aria-current="page" class="nav-link" href="../../blog.html">Blogs</a><div class="dropdown-content"><a href="../../blog.html">Technical Blogs</a><a href="../../posts/read_papers/">Paper Notes</a><a href="../../posts/course_notes/">Course Notes</a></div></div>
+<a class="nav-link" href="../../photos.html">Photos</a>
+<a class="nav-link" href="../../others.html">Others</a>
+</nav>
+<button aria-label="Switch color theme" class="theme-toggle-btn" id="theme-btn" type="button"><i aria-hidden="true" class="fas fa-moon"></i></button>
+<button aria-controls="site-nav" aria-expanded="false" aria-label="Toggle navigation" class="menu-toggle-btn" id="menu-btn" type="button"><i aria-hidden="true" class="fas fa-bars"></i></button>
+</div>
+</div>
+</header>
+<main class="container" id="main-content">
+<section class="section papers-hero">
+<h1 class="page-title" data-kicker="Notes">Annotated Paper Notes</h1>
+<p class="papers-intro">These are PDF-based reading notes with highlights, annotations, and margin sketches. The collection is informal and mainly maintained for my own research workflow.</p>
+<div aria-label="Paper filters" class="paper-filters">
+<div class="filter-group" data-filter-group="period">
+<div class="filter-label">Year Range:</div>
+<div class="filter-row">
+<button class="filter-chip active" data-value="all">All</button>
+<button class="filter-chip" data-value="earlier">Earlier</button>
+<button class="filter-chip" data-value="2020-2025">2020-2025</button>
+<button class="filter-chip" data-value="2026-2030">2026-2030</button>
+</div>
+</div>
+<div class="filter-group" data-filter-group="field">
+<div class="filter-label">Field:</div>
+<div class="filter-row">
+<button class="filter-chip active" data-value="all">All</button>
+<button class="filter-chip" data-value="wireless">Wireless Communications</button>
+<button class="filter-chip" data-value="signal">Signal Processing</button>
+<button class="filter-chip" data-value="ai">AI</button>
+<button class="filter-chip" data-value="other">Other</button>
+</div>
+</div>
+<div class="filter-group" data-filter-group="category">
+<div class="filter-label">Category:</div>
+<div class="filter-row">
+<button class="filter-chip active" data-value="all">All</button>
+<button class="filter-chip" data-value="magazine">Magazine</button>
+<button class="filter-chip" data-value="journal">Journal</button>
+<button class="filter-chip" data-value="conference">Conference</button>
+<button class="filter-chip" data-value="textbook">Textbook</button>
+<button class="filter-chip" data-value="blog">Blog</button>
+<button class="filter-chip" data-value="other">Other</button>
+</div>
+</div>
+</div>
+<div class="paper-count" id="paper-count"></div>
+<ul class="paper-list" id="paper-list"></ul>
+</section>
+</main>
+<footer class="footer">
+<div class="container footer-inner"><span>© <span id="year"></span> Can Zheng</span><span>Built for GitHub Pages</span></div>
+<script src="../../site.js?v=20260727-single-dropdown"></script>
+</footer>
+<script>
     const papers = [
       {
         title: "5G Reference Signal-based Positioning in a Reinforcement Learning Approach",

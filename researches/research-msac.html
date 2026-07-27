@@ -1,140 +1,71 @@
-﻿<!DOCTYPE html>
-<html lang="en" data-site-ready="false">
+<!DOCTYPE html>
+
+<html data-site-ready="false" lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sensing-Aided Communications &middot; Can Zheng</title>
-  <link rel="stylesheet" href="../styles.css?v=20260605-visitor-map" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <meta name="color-scheme" content="light dark">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
-  <script>
-    (function() {
-      let theme = localStorage.getItem('theme');
-      if (!theme) {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
-</head>
-<body>
-  <header class="header">
-    <div class="navbar container">
-      <a class="brand" href="../index.html"><img src="../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
-      <nav>
-        <div class="dropdown">
-          <a href="../index.html" class="nav-link">Home</a>
-          <div class="dropdown-content">
-            <a href="../index.html#about">About Me</a>
-            <a href="../index.html#news">News</a>
-            <a href="../index.html#explore">Explore</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="../biography.html" class="nav-link">Biography</a>
-          <div class="dropdown-content">
-            <a href="../biography.html#education">Education</a>
-            <a href="../biography.html#experience">Work Experience</a>
-            <a href="../biography.html#service">Service</a>
-            <a href="../biography.html#respect">People I Respect</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="../researches.html" class="nav-link" aria-current="page">Researches</a>
-          <div class="dropdown-content">
-            <a href="../researches.html?filter=past">Past</a>
-            <a href="../researches.html?filter=ongoing">Ongoing</a>
-            <a href="../researches.html?filter=future">Futures</a>
-            <a href="../researches/grants.html">Grants</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="../publications.html" class="nav-link">Publications</a>
-          <div class="dropdown-content">
-            <a href="../publications.html#journal">Journal Papers</a>
-            <a href="../publications.html#conference">Conference Papers</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="../blog.html" class="nav-link">Blogs</a>
-          <div class="dropdown-content">
-            <a href="../blog.html">Technical Blogs</a>
-            <a href="../posts/read_papers/">Paper Notes</a>
-            <a href="../posts/course_notes/">Course Notes</a>
-          </div>
-        </div>
-        <a href="../photos.html" class="nav-link">Photos</a>
-        <a href="../others.html" class="nav-link">Others</a>
-        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
-      </nav>
-    </div>
-  </header>
-  <main class="container">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensing-Aided Communications · Can Zheng</title>
+<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="../styles.css?v=20260727-shared-logo-nav" rel="stylesheet"/>
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+<meta content="light dark" name="color-scheme"/>
+<script async="" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<meta content="#002f6c" name="theme-color"/></link></head>
+<body class="research-detail-page">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="header">
+<div class="navbar container">
+<a aria-label="Can Zheng homepage" class="brand" href="../index.html"><img alt="Can Zheng" class="brand-logo" src="../photos/logo.png"/></a>
+<div class="nav-area">
+<nav aria-label="Main navigation" class="nav-links" id="site-nav">
+<div class="dropdown"><a class="nav-link" href="../index.html">Home</a><div class="dropdown-content"><a href="../index.html#about">About Me</a><a href="../index.html#news">News</a><a href="../index.html#explore">Explore</a></div></div>
+<div class="dropdown"><a class="nav-link" href="../biography.html">Biography</a><div class="dropdown-content"><a href="../biography.html#education">Education</a><a href="../biography.html#experience">Work Experience</a><a href="../biography.html#service">Service</a><a href="../biography.html#respect">People I Respect</a></div></div>
+<div class="dropdown"><a aria-current="page" class="nav-link" href="../researches.html">Research</a><div class="dropdown-content"><a href="../researches.html?filter=past">Past</a><a href="../researches.html?filter=ongoing">Ongoing</a><a href="../researches.html?filter=future">Future</a><a href="../researches/grants.html">Grants</a></div></div>
+<div class="dropdown"><a class="nav-link" href="../publications.html">Publications</a><div class="dropdown-content"><a href="../publications.html#journal">Journal Papers</a><a href="../publications.html#conference">Conference Papers</a></div></div>
+<div class="dropdown"><a class="nav-link" href="../blog.html">Blogs</a><div class="dropdown-content"><a href="../blog.html">Technical Blogs</a><a href="../posts/read_papers/">Paper Notes</a><a href="../posts/course_notes/">Course Notes</a></div></div>
+<a class="nav-link" href="../photos.html">Photos</a>
+<a class="nav-link" href="../others.html">Others</a>
+</nav>
+<button aria-label="Switch color theme" class="theme-toggle-btn" id="theme-btn" type="button"><i aria-hidden="true" class="fas fa-moon"></i></button>
+<button aria-controls="site-nav" aria-expanded="false" aria-label="Toggle navigation" class="menu-toggle-btn" id="menu-btn" type="button"><i aria-hidden="true" class="fas fa-bars"></i></button>
+</div>
+</div>
+</header>
+<main class="container" id="main-content">
 <article class="prose">
-  <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> Back to all researches</a>
-  <h1 style="margin-top: 16px;">Multimodal Sensing and Communications</h1>
-  <p style="color: var(--accent); font-weight: 600;">Status: Ongoing (2024.12 - Present)</p>
-
-  <div style="text-align: center; margin: 32px 0;">
-    <img src="../photos/proj_figure/multimodal_sensing.png" alt="Multimodal sensing and communications" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-sm);">
-  </div>
-
-  <p>My recent work focuses on sensing-aided communications in high-mobility scenarios, such as vehicle-to-infrastructure (V2I) and unmanned aerial vehicle (UAV) communication systems. The central objective is to leverage the complementary information provided by vision, radar, LiDAR, GPS, and wireless measurements to improve physical-layer performance. Instead of relying solely on historical channel observations or frequent beam training, sensing-aided systems can exploit environmental perception to identify the physical factors driving channel evolution, thereby enabling more proactive, robust, and efficient communication decisions.</p>
-
-  <h2>How This Research Progressed</h2>
-
-  <h3>1. Starting from a single visual modality</h3>
-  <p>In <strong>BeamLLM</strong>, I first asked a restrained but important question: without using historical beam indices, AoD, or other extra wireless priors, can future beam prediction be achieved using only historical RGB images observed at the base station? The answer from this work is yes. BeamLLM extracts vehicle bounding-box sequences through object detection and then uses reprogramming and prompting mechanisms to map visual temporal features into a representation space suitable for large-model-style processing, enabling vision-only beam prediction. The key message is that on realistic V2I data, environmental sensing itself already contains useful information about future beam evolution.</p>
-
-  <h3>2. From single-modal to multimodal modeling</h3>
-  <p>In <strong>M<sup>2</sup>BeamLLM</strong>, the research moved from asking whether vision alone is feasible to asking how multimodality can improve robustness. This work introduces four sensing inputs: images, radar, LiDAR, and GPS. Their features are encoded, aligned, and fused, and then a supervised fine-tuning pipeline built on GPT-2 is used for future beam prediction. Compared with BeamLLM, the main contribution is not simply adding more modalities, but showing that under complex dynamic environments, any single modality can fail due to blockage, lighting, or local sensing breakdown, while multimodal complementarity significantly improves accuracy and stability.</p>
-
-  <h3>3. Modeling beam evolution and deployment efficiency</h3>
-  <p>In the flow-based beam prediction work, the focus moved beyond which modality or backbone to use and toward how to model beam evolution itself. This work argues that discrete sequential predictors such as RNNs and LSTMs tend to accumulate errors over long horizons, while large models, although powerful, are less friendly to edge deployment. Our research therefore models future beam evolution as a vector field in a continuous latent space, and uses segment-wise flow modeling to improve beam prediction accuracy while significantly reducing inference latency.</p>
-
-  <h3>4. Extending the cross-modal idea to localization</h3>
-  <p>This research line naturally extended from beam prediction to localization. The main observation is that vision provides clear scene and geometric cues but may suffer from missed or false detections, while wireless CSI is also vulnerable to multipath and NLOS effects in complex propagation environments. Neither modality alone is sufficiently robust, but cross-modal alignment and fusion can substantially improve localization accuracy. In that sense, the localization work continues the same core idea: different modalities provide complementary views of the same physical scene, and this complementarity can be converted into more robust communication-aware perception through learned shared representations.</p>
-
-  <h2>Representative Works</h2>
-  <ul>
-    <li><a href="https://ieeexplore.ieee.org/document/11309918" target="_blank" rel="noopener">BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models</a><br>Shows that future beam prediction can be achieved using only historical visual observations from the base station, and explores the feasibility of LLM-inspired temporal modeling for this task.</li>
-    <li><a href="https://arxiv.org/abs/2506.14532" target="_blank" rel="noopener">M<sup>2</sup>BeamLLM: Multimodal Sensing-empowered mmWave Beam Prediction with Large Language Models</a><br>Extends beam prediction from a single visual modality to multimodal fusion of image, radar, LiDAR, and GPS, improving robustness and prediction accuracy in complex environments.</li>
-    <li><a href="https://arxiv.org/abs/2511.20265" target="_blank" rel="noopener">Segment-Wise Flow Matching for Vision-Aided mmWave V2I Beam Prediction</a><br>Models future beam evolution as a continuous flow, balancing beam prediction accuracy and edge deployment efficiency.</li>
-    <li><a href="https://ieeexplore.ieee.org/document/11555607" target="_blank" rel="noopener">Multimodal Radio and Vision Fusion for Robust Localization in Urban V2I Communications</a><br>Extends the cross-modal complementarity idea to CSI-vision fusion for localization, improving accuracy and robustness in complex urban environments.</li>
-  </ul>
-
-  <h2>Useful Resources</h2>
-  <ul>
-    <li>[Code] <a href="https://github.com/CanZheng0331/Sensing_aided_Communications" target="_blank" rel="noopener">Examples of vision-aided beam prediction</a></li>
-    <li>[Code] <a href="https://github.com/CanZheng0331/BeamLLM-Vision-Empowered-mmWave-Beam-Prediction-with-Large-Language-Models" target="_blank" rel="noopener">BeamLLM reproduction code</a></li>
-  </ul>
+<a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> Back to all researches</a>
+<h1 class="page-title" data-kicker="Research">Multimodal Sensing and Communications</h1>
+<p style="color: var(--accent); font-weight: 600;">Status: Ongoing (2024.12 - Present)</p>
+<div style="text-align: center; margin: 32px 0;">
+<img alt="Multimodal sensing and communications" src="../photos/proj_figure/multimodal_sensing.png" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-sm);">
+</img></div>
+<p>My recent work focuses on sensing-aided communications in high-mobility scenarios, such as vehicle-to-infrastructure (V2I) and unmanned aerial vehicle (UAV) communication systems. The central objective is to leverage the complementary information provided by vision, radar, LiDAR, GPS, and wireless measurements to improve physical-layer performance. Instead of relying solely on historical channel observations or frequent beam training, sensing-aided systems can exploit environmental perception to identify the physical factors driving channel evolution, thereby enabling more proactive, robust, and efficient communication decisions.</p>
+<h2>How This Research Progressed</h2>
+<h3>1. Starting from a single visual modality</h3>
+<p>In <strong>BeamLLM</strong>, I first asked a restrained but important question: without using historical beam indices, AoD, or other extra wireless priors, can future beam prediction be achieved using only historical RGB images observed at the base station? The answer from this work is yes. BeamLLM extracts vehicle bounding-box sequences through object detection and then uses reprogramming and prompting mechanisms to map visual temporal features into a representation space suitable for large-model-style processing, enabling vision-only beam prediction. The key message is that on realistic V2I data, environmental sensing itself already contains useful information about future beam evolution.</p>
+<h3>2. From single-modal to multimodal modeling</h3>
+<p>In <strong>M<sup>2</sup>BeamLLM</strong>, the research moved from asking whether vision alone is feasible to asking how multimodality can improve robustness. This work introduces four sensing inputs: images, radar, LiDAR, and GPS. Their features are encoded, aligned, and fused, and then a supervised fine-tuning pipeline built on GPT-2 is used for future beam prediction. Compared with BeamLLM, the main contribution is not simply adding more modalities, but showing that under complex dynamic environments, any single modality can fail due to blockage, lighting, or local sensing breakdown, while multimodal complementarity significantly improves accuracy and stability.</p>
+<h3>3. Modeling beam evolution and deployment efficiency</h3>
+<p>In the flow-based beam prediction work, the focus moved beyond which modality or backbone to use and toward how to model beam evolution itself. This work argues that discrete sequential predictors such as RNNs and LSTMs tend to accumulate errors over long horizons, while large models, although powerful, are less friendly to edge deployment. Our research therefore models future beam evolution as a vector field in a continuous latent space, and uses segment-wise flow modeling to improve beam prediction accuracy while significantly reducing inference latency.</p>
+<h3>4. Extending the cross-modal idea to localization</h3>
+<p>This research line naturally extended from beam prediction to localization. The main observation is that vision provides clear scene and geometric cues but may suffer from missed or false detections, while wireless CSI is also vulnerable to multipath and NLOS effects in complex propagation environments. Neither modality alone is sufficiently robust, but cross-modal alignment and fusion can substantially improve localization accuracy. In that sense, the localization work continues the same core idea: different modalities provide complementary views of the same physical scene, and this complementarity can be converted into more robust communication-aware perception through learned shared representations.</p>
+<h2>Representative Works</h2>
+<ul>
+<li><a href="https://ieeexplore.ieee.org/document/11309918" rel="noopener noreferrer" target="_blank">BeamLLM: Vision-Empowered mmWave Beam Prediction with Large Language Models</a><br/>Shows that future beam prediction can be achieved using only historical visual observations from the base station, and explores the feasibility of LLM-inspired temporal modeling for this task.</li>
+<li><a href="https://arxiv.org/abs/2506.14532" rel="noopener noreferrer" target="_blank">M<sup>2</sup>BeamLLM: Multimodal Sensing-empowered mmWave Beam Prediction with Large Language Models</a><br/>Extends beam prediction from a single visual modality to multimodal fusion of image, radar, LiDAR, and GPS, improving robustness and prediction accuracy in complex environments.</li>
+<li><a href="https://arxiv.org/abs/2511.20265" rel="noopener noreferrer" target="_blank">Segment-Wise Flow Matching for Vision-Aided mmWave V2I Beam Prediction</a><br/>Models future beam evolution as a continuous flow, balancing beam prediction accuracy and edge deployment efficiency.</li>
+<li><a href="https://ieeexplore.ieee.org/document/11555607" rel="noopener noreferrer" target="_blank">Multimodal Radio and Vision Fusion for Robust Localization in Urban V2I Communications</a><br/>Extends the cross-modal complementarity idea to CSI-vision fusion for localization, improving accuracy and robustness in complex urban environments.</li>
+</ul>
+<h2>Useful Resources</h2>
+<ul>
+<li>[Code] <a href="https://github.com/CanZheng0331/Sensing_aided_Communications" rel="noopener noreferrer" target="_blank">Examples of vision-aided beam prediction</a></li>
+<li>[Code] <a href="https://github.com/CanZheng0331/BeamLLM-Vision-Empowered-mmWave-Beam-Prediction-with-Large-Language-Models" rel="noopener noreferrer" target="_blank">BeamLLM reproduction code</a></li>
+</ul>
 </article>
-  </main>
-  <footer class="footer">
-    <div>&copy; <span id="year"></span> Can Zheng &middot; Built for GitHub Pages</div>
-    <script src="../site.js?v=20260614-worker-stats"></script>
-  </footer>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = themeBtn.querySelector('i');
-    let currentTheme = localStorage.getItem('theme');
-    if (!currentTheme) {
-      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    function applyThemeMode(themeStr) {
-      document.documentElement.setAttribute('data-theme', themeStr);
-      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    }
-    applyThemeMode(currentTheme);
-    themeBtn.addEventListener('click', () => {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', currentTheme);
-      applyThemeMode(currentTheme);
-    });
-  </script>
+</main>
+<footer class="footer">
+<div class="container footer-inner"><span>© <span id="year"></span> Can Zheng</span><span>Built for GitHub Pages</span></div>
+<script src="../site.js?v=20260727-single-dropdown"></script>
+</footer>
 </body>
 </html>

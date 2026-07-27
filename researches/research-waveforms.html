@@ -1,186 +1,127 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN" data-site-ready="false">
+<!DOCTYPE html>
+
+<html data-site-ready="false" lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Next-Gen Waveforms &middot; Can Zheng</title>
-  <link rel="stylesheet" href="../styles.css?v=20260605-visitor-map" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <meta name="color-scheme" content="light dark">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
-  <script>
-    (function() {
-      let theme = localStorage.getItem('theme');
-      if (!theme) {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
-</head>
-<body>
-  <header class="header">
-    <div class="navbar container">
-      <a class="brand" href="../index.html"><img src="../photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
-      <nav>
-        <div class="dropdown">
-          <a href="../index.html" class="nav-link">Home</a>
-        </div>
-        <div class="dropdown">
-          <a href="../biography.html" class="nav-link">Biography</a>
-          <div class="dropdown-content">
-            <a href="../biography.html#education">Education</a>
-            <a href="../biography.html#experience">Work Experience</a>
-            <a href="../biography.html#service">Service</a>
-            <a href="../biography.html#respect">People I Respect</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="../researches.html" class="nav-link" aria-current="page">Researches</a>
-          <div class="dropdown-content">
-            <a href="../researches.html?filter=past">Past</a>
-            <a href="../researches.html?filter=ongoing">Ongoing</a>
-            <a href="../researches.html?filter=future">Future</a>
-            <a href="../researches/grants.html">Grants</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="../publications.html" class="nav-link">Publications</a>
-        </div>
-        <div class="dropdown">
-          <a href="../blog.html" class="nav-link">Blogs</a>
-          <div class="dropdown-content">
-            <a href="../blog.html">Technical Blogs</a>
-            <a href="../posts/read_papers/">Paper Notes</a>
-            <a href="../posts/course_notes/">Course Notes</a>
-          </div>
-        </div>
-        <a href="../photos.html" class="nav-link">Photos</a>
-        <a href="../others.html" class="nav-link">Others</a>
-        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
-      </nav>
-    </div>
-  </header>
-  <main class="container">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Next-Gen Waveforms · Can Zheng</title>
+<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="../styles.css?v=20260727-shared-logo-nav" rel="stylesheet"/>
 
-  <article class="prose">
-    <a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> Back to all researches</a>
-    <h1 style="margin-top: 16px;">Next-Generation Waveforms</h1>
-    <p style="color: var(--accent); font-weight: 600;">Status: Past (2024.03 - 2026.02)</p>
-
-    <div style="text-align: center; margin: 32px 0;">
-        <img src="../photos/proj_figure/OTFS.png" alt="Waveforms Architecture" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-sm);">
-    </div>
-
-    <p>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+<meta content="light dark" name="color-scheme"/>
+<script async="" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<meta content="#002f6c" name="theme-color"/></link></head>
+<body class="research-detail-page">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="header">
+<div class="navbar container">
+<a aria-label="Can Zheng homepage" class="brand" href="../index.html"><img alt="Can Zheng" class="brand-logo" src="../photos/logo.png"/></a>
+<div class="nav-area">
+<nav aria-label="Main navigation" class="nav-links" id="site-nav">
+<div class="dropdown"><a class="nav-link" href="../index.html">Home</a><div class="dropdown-content"><a href="../index.html#about">About Me</a><a href="../index.html#news">News</a><a href="../index.html#explore">Explore</a></div></div>
+<div class="dropdown"><a class="nav-link" href="../biography.html">Biography</a><div class="dropdown-content"><a href="../biography.html#education">Education</a><a href="../biography.html#experience">Work Experience</a><a href="../biography.html#service">Service</a><a href="../biography.html#respect">People I Respect</a></div></div>
+<div class="dropdown"><a aria-current="page" class="nav-link" href="../researches.html">Research</a><div class="dropdown-content"><a href="../researches.html?filter=past">Past</a><a href="../researches.html?filter=ongoing">Ongoing</a><a href="../researches.html?filter=future">Future</a><a href="../researches/grants.html">Grants</a></div></div>
+<div class="dropdown"><a class="nav-link" href="../publications.html">Publications</a><div class="dropdown-content"><a href="../publications.html#journal">Journal Papers</a><a href="../publications.html#conference">Conference Papers</a></div></div>
+<div class="dropdown"><a class="nav-link" href="../blog.html">Blogs</a><div class="dropdown-content"><a href="../blog.html">Technical Blogs</a><a href="../posts/read_papers/">Paper Notes</a><a href="../posts/course_notes/">Course Notes</a></div></div>
+<a class="nav-link" href="../photos.html">Photos</a>
+<a class="nav-link" href="../others.html">Others</a>
+</nav>
+<button aria-label="Switch color theme" class="theme-toggle-btn" id="theme-btn" type="button"><i aria-hidden="true" class="fas fa-moon"></i></button>
+<button aria-controls="site-nav" aria-expanded="false" aria-label="Toggle navigation" class="menu-toggle-btn" id="menu-btn" type="button"><i aria-hidden="true" class="fas fa-bars"></i></button>
+</div>
+</div>
+</header>
+<main class="container" id="main-content">
+<article class="prose">
+<a href="../researches.html" style="font-weight: 500;"><i class="fas fa-arrow-left"></i> Back to all researches</a>
+<h1 class="page-title" data-kicker="Research">Next-Generation Waveforms</h1>
+<p style="color: var(--accent); font-weight: 600;">Status: Past (2024.03 - 2026.02)</p>
+<div style="text-align: center; margin: 32px 0;">
+<img alt="Waveforms Architecture" src="../photos/proj_figure/OTFS.png" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-sm);">
+</img></div>
+<p>
       These researches focus on channel estimation and detection algorithm design for emerging modulation techniques such as orthogonal time-frequency space (OTFS) and affine frequency division multiplexing (AFDM), particularly in high-mobility scenarios. My work primarily focuses on OTFS.
     </p>
-
-    <h2>Why OTFS?</h2>
-    <p>
+<h2>Why OTFS?</h2>
+<p>
       Compared to OFDM, which operates directly in the time-frequency domain, the primary motivation for OTFS is that in high-mobility scenarios, OFDM is susceptible to inter-carrier interference caused by the Doppler effect, while propagation path parameters in the DD domain typically vary more slowly and possess clearer physical significance.
     </p>
-    <p>
+<p>
       There are other perspectives as well. For instance, Professor Ronny Hadani (the proposer of OTFS) cited the desire to preserve mathematical rotational invariance, while Professor Weijie Yuan noted in a blog post that this modulation scheme can reduce the number of parameters needed to describe the channel. In my view, these all stem from the same underlying reason.
     </p>
-    <h2>System Model</h2>
-    <p>
+<h2>System Model</h2>
+<p>
       A typical doubly-selective channel can be represented as
       $$h(\tau, \nu) = \sum_{i=1}^{P} \alpha_i \delta(\tau - \tau_i) \delta(\nu - \nu_i),$$
       where \(P\) is the number of effective propagation paths, and \(h_i\), \(\tau_i\), and \(\nu_i\) are the complex gain, time delay, and Doppler shift of the \(i\)-th path, respectively.
     </p>
-
-    <p>
+<p>
       My research focuses on channel estimation in the integer Doppler scenario. Assume that one OTFS frame contains \(N\) time slots, the length of each time slot is \(T\), and the total observation time is \(NT\). Then, the resolution in the Doppler domain is \(\Delta \nu = \frac{1}{NT}\). If the Doppler shift of the \(i\)-th path is \(\nu_i = \frac{k_i}{NT}\), where \(k_i \in \mathbb{Z}\) , then we say that the channel is in the integer Doppler scenario. 
     </p>
-
-    <p>
+<p>
       In addition, we have to mention about bi-orthogonal transeive pulse shaping. The bi-orthogonal pulse shaping can be expressed as
       $$\int_{-\infty}^{\infty} g_{tx}(t) g_{rx}^*(t - nT) e^{-j2\pi m \Delta f t} dt = \delta(n) \delta(m),$$
       where \(g_{tx}(t)\) and \(g_{rx}(t)\) are the transmit and receive pulse shaping functions, respectively, and \(\Delta f\) is the subcarrier spacing. This condition ensures that the transmitted symbols can be perfectly recovered at the receiver without inter-symbol interference (ISI) or inter-carrier interference (ICI).
     </p>
-    <h2>Channel Estimation Problem Formulation</h2>
-    <p>
+<h2>Channel Estimation Problem Formulation</h2>
+<p>
       Vectorizing the received pilot region and the candidate channel support yields a linear inverse problem, which is typically underdetermined when the number of pilot observations is smaller than the channel dimension.
       $$\mathbf{y} = \mathbf{\Psi} \mathbf{h} + \mathbf{w},$$
       where \(\mathbf{y}\) is the received pilot vector, \(\mathbf{\Psi}\) is the sensing matrix constructed from the known pilot symbols and the DD-domain input-output relationship, and \(\mathbf{w}\) is the noise vector. Only a small number of locations correspond to valid propagation paths. Therefore, the channel estimation problem can be formulated as a sparse signal recovery problem
-      $$\min_{\mathbf{h}} \|\mathbf{h}\|_0 \quad \text{s.t.} \quad \|\mathbf{y} - \mathbf{\Psi} \mathbf{h}\|_2^2 < \epsilon,$$
+      $$\min_{\mathbf{h}} \|\mathbf{h}\|_0 \quad \text{s.t.} \quad \|\mathbf{y} - \mathbf{\Psi} \mathbf{h}\|_2^2 &lt; \epsilon,$$
       where \(\epsilon\) is a small positive constant that accounts for noise and modeling errors. Directly minimizing the $\ell_0$ norm is NP-hard. Therefore, we employed various compressed sensing (CS) approaches.
     </p>
-    <h2>Proposed Algorithms</h2>
-    <p>While I am unsure if this qualifies as a contribution, my work focuses on how to estimate the channel when the channel sparsity (i.e., \(\|\mathbf{h}\|_0\)) is unknown.</p>
-    <ul>
-    <li><a href="https://ieeexplore.ieee.org/document/10938192" target="_blank" rel="noopener">A Sparsity-Agnostic SL0 Channel Estimation Approach for OTFS Systems</a></li>
-    <li><a href="https://ieeexplore.ieee.org/document/11310380" target="_blank" rel="noopener">ADMM-Based Delay-Doppler Domain Channel Estimation for OTFS Systems</a></li>
-    <li><a href="https://ieeexplore.ieee.org/document/11279852" target="_blank" rel="noopener">Delay-Doppler Domain Channel Estimation for OTFS System Using the Gradient Projection Method</a></li>
-    <li><a href="https://ieeexplore.ieee.org/document/11430464" target="_blank" rel="noopener">Split Bregman Iteration-Based Channel Estimation for OTFS Systems</a></li>
-  </ul>
-
-    <h2>Useful Resources</h2>
-    <ul>
-      <li>
-        <strong>Tutorials and Lectures</strong>
-        <ul>
-          <li><a href="https://www.bilibili.com/video/BV1RV4y1b7LB/?spm_id_from=333.337.search-card.all.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e" target="_blank" rel="noopener">[Chinese] Delay-Doppler Domain Communication Paradigm for 6G, by Professor Weijie Yuan</a></li>
-          <li><a href="https://www.bilibili.com/video/BV1wN4y1X7a7/?spm_id_from=333.337.search-card.all.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e" target="_blank" rel="noopener">[Chinese] OTFS-Tutorial, by Professor Zijun Gong</a></li>
-          <li><a href="https://www.bilibili.com/video/BV1yi421Z7tc/?spm_id_from=333.337.search-card.all.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e" target="_blank" rel="noopener">[English] OTFS-Tutorial, by Professor Emanuele Viterbo</a></li>
-          <li><a href="https://www.youtube.com/playlist?list=PLJJjykR4WHSsMbW-DAzAlyQpGGL_dwG6a" target="_blank" rel="noopener">[English] Zak-OTFS, by Professor Saif Khan Mohammed</a></li>
-          <li><a href="https://www.youtube.com/@otfs-sig8067" target="_blank" rel="noopener">OTFS-sig</a> I particularly recommend Professor Ronny Hadani's lectures.</li>
-        </ul>
-      </li>
-      <li>
-      <strong>Some Papers</strong>
-        <ul>
-          <li><a href="https://ieeexplore.ieee.org/document/7925924/">Orthogonal Time Frequency Space Modulation</a> (nearly the first official research paper on OTFS)</li>
-          <li><a href="https://ieeexplore.ieee.org/document/9508932">Orthogonal Time-Frequency Space Modulation: A Promising Next-Generation Waveform</a> (awesome figures to help understand the concept)</li>
-          <li><a href="https://ieeexplore.ieee.org/document/8727425">Channel Estimation for Orthogonal Time Frequency Space (OTFS) Massive MIMO</a></li>
-        </ul>
-      </li>
-      <li>
-      <strong>Some Open Source Codes</strong>
-        <ul>
-          <li><a href="https://github.com/textremo/Phy_Mod_OTFS">OTFS-toolbox</a></li>
-          <li><a href="https://github.com/tharaj90/OTFS-MRC-detection-MATLAB-package">OTFS-MRC-detection</a></li>
-        </ul>
-      </li>
-      <li>
-        <strong>Codes</strong>
-        <ul>
-          <li><a href="https://github.com/CanZheng0331/EP_Channel_Estimation_OTFS" target="_blank" rel="noopener">Embedded pilot-aided</a></li>
-          <li><a href="https://github.com/CanZheng0331/Compressed_Sensing_OTFS_Channel_Estimation" target="_blank" rel="noopener">CS-based</a></li>
-        </ul>
-      </li>
-    </ul>
-
-    <blockquote>
-      <strong>Note:</strong> I do not recommend any new graduate students to make it their main research direction, because OFDM has recently been designated as the 6G air interface waveform: <a href="https://www.linkedin.com/pulse/first-6g-agreement-ofdm-confirmed-what-means-doesnt-iwss25-invite-238rf" target="_blank" rel="noopener">[First 6G Agreement: OFDM confirmed: What it means?]</a>
-    </blockquote>
-  </article>
-
-  </main>
-  <footer class="footer">
-    <div>&copy; <span id="year"></span> Can Zheng &middot; Built for GitHub Pages</div>
-    <script src="../site.js?v=20260614-worker-stats"></script>
-  </footer>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = themeBtn.querySelector('i');
-    let currentTheme = localStorage.getItem('theme');
-    if (!currentTheme) {
-      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    function applyThemeMode(themeStr) {
-      document.documentElement.setAttribute('data-theme', themeStr);
-      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    }
-    applyThemeMode(currentTheme);
-    themeBtn.addEventListener('click', () => {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', currentTheme);
-      applyThemeMode(currentTheme);
-    });
-  </script>
+<h2>Proposed Algorithms</h2>
+<p>While I am unsure if this qualifies as a contribution, my work focuses on how to estimate the channel when the channel sparsity (i.e., \(\|\mathbf{h}\|_0\)) is unknown.</p>
+<ul>
+<li><a href="https://ieeexplore.ieee.org/document/10938192" rel="noopener noreferrer" target="_blank">A Sparsity-Agnostic SL0 Channel Estimation Approach for OTFS Systems</a></li>
+<li><a href="https://ieeexplore.ieee.org/document/11310380" rel="noopener noreferrer" target="_blank">ADMM-Based Delay-Doppler Domain Channel Estimation for OTFS Systems</a></li>
+<li><a href="https://ieeexplore.ieee.org/document/11279852" rel="noopener noreferrer" target="_blank">Delay-Doppler Domain Channel Estimation for OTFS System Using the Gradient Projection Method</a></li>
+<li><a href="https://ieeexplore.ieee.org/document/11430464" rel="noopener noreferrer" target="_blank">Split Bregman Iteration-Based Channel Estimation for OTFS Systems</a></li>
+</ul>
+<h2>Useful Resources</h2>
+<ul>
+<li>
+<strong>Tutorials and Lectures</strong>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1RV4y1b7LB/?spm_id_from=333.337.search-card.all.click&amp;vd_source=14f65cfb1b4dff2d972e61e173f4e96e" rel="noopener noreferrer" target="_blank">[Chinese] Delay-Doppler Domain Communication Paradigm for 6G, by Professor Weijie Yuan</a></li>
+<li><a href="https://www.bilibili.com/video/BV1wN4y1X7a7/?spm_id_from=333.337.search-card.all.click&amp;vd_source=14f65cfb1b4dff2d972e61e173f4e96e" rel="noopener noreferrer" target="_blank">[Chinese] OTFS-Tutorial, by Professor Zijun Gong</a></li>
+<li><a href="https://www.bilibili.com/video/BV1yi421Z7tc/?spm_id_from=333.337.search-card.all.click&amp;vd_source=14f65cfb1b4dff2d972e61e173f4e96e" rel="noopener noreferrer" target="_blank">[English] OTFS-Tutorial, by Professor Emanuele Viterbo</a></li>
+<li><a href="https://www.youtube.com/playlist?list=PLJJjykR4WHSsMbW-DAzAlyQpGGL_dwG6a" rel="noopener noreferrer" target="_blank">[English] Zak-OTFS, by Professor Saif Khan Mohammed</a></li>
+<li><a href="https://www.youtube.com/@otfs-sig8067" rel="noopener noreferrer" target="_blank">OTFS-sig</a> I particularly recommend Professor Ronny Hadani's lectures.</li>
+</ul>
+</li>
+<li>
+<strong>Some Papers</strong>
+<ul>
+<li><a href="https://ieeexplore.ieee.org/document/7925924/">Orthogonal Time Frequency Space Modulation</a> (nearly the first official research paper on OTFS)</li>
+<li><a href="https://ieeexplore.ieee.org/document/9508932">Orthogonal Time-Frequency Space Modulation: A Promising Next-Generation Waveform</a> (awesome figures to help understand the concept)</li>
+<li><a href="https://ieeexplore.ieee.org/document/8727425">Channel Estimation for Orthogonal Time Frequency Space (OTFS) Massive MIMO</a></li>
+</ul>
+</li>
+<li>
+<strong>Some Open Source Codes</strong>
+<ul>
+<li><a href="https://github.com/textremo/Phy_Mod_OTFS">OTFS-toolbox</a></li>
+<li><a href="https://github.com/tharaj90/OTFS-MRC-detection-MATLAB-package">OTFS-MRC-detection</a></li>
+</ul>
+</li>
+<li>
+<strong>Codes</strong>
+<ul>
+<li><a href="https://github.com/CanZheng0331/EP_Channel_Estimation_OTFS" rel="noopener noreferrer" target="_blank">Embedded pilot-aided</a></li>
+<li><a href="https://github.com/CanZheng0331/Compressed_Sensing_OTFS_Channel_Estimation" rel="noopener noreferrer" target="_blank">CS-based</a></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<strong>Note:</strong> I do not recommend any new graduate students to make it their main research direction, because OFDM has recently been designated as the 6G air interface waveform: <a href="https://www.linkedin.com/pulse/first-6g-agreement-ofdm-confirmed-what-means-doesnt-iwss25-invite-238rf" rel="noopener noreferrer" target="_blank">[First 6G Agreement: OFDM confirmed: What it means?]</a>
+</blockquote>
+</article>
+</main>
+<footer class="footer">
+<div class="container footer-inner"><span>© <span id="year"></span> Can Zheng</span><span>Built for GitHub Pages</span></div>
+<script src="../site.js?v=20260727-single-dropdown"></script>
+</footer>
 </body>
 </html>

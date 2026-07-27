@@ -1,141 +1,90 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN" data-site-ready="false">
+<!DOCTYPE html>
+
+<html data-site-ready="false" lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Researches &middot; Can Zheng</title>
-  <link rel="stylesheet" href="styles.css?v=20260605-visitor-map" />
-  <script>
-    (function() {
-      let theme = localStorage.getItem('theme');
-      if (!theme) {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <meta name="color-scheme" content="light dark">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-</head>
-<body>
-  <header class="header">
-    <div class="navbar container">
-      <a class="brand" href="index.html"><img src="photos/logo.png" alt="Can Zheng" style="height: 32px; border-radius: 4px;"></a>
-      <nav>
-        <div class="dropdown">
-          <a href="index.html" class="nav-link">Home</a>
-          <div class="dropdown-content">
-            <a href="index.html#about">About Me</a>
-            <a href="index.html#news">News</a>
-            <a href="index.html#explore">Explore</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="biography.html" class="nav-link">Biography</a>
-          <div class="dropdown-content">
-            <a href="biography.html#education">Education</a>
-            <a href="biography.html#experience">Work Experience</a>
-            <a href="biography.html#service">Service</a>
-            <a href="biography.html#respect">People I Respect</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="researches.html" class="nav-link" aria-current="page">Researches</a>
-          <div class="dropdown-content">
-            <a href="researches.html?filter=past">Past</a>
-            <a href="researches.html?filter=ongoing">Ongoing</a>
-            <a href="researches.html?filter=future">Future</a>
-            <a href="researches/grants.html">Grants</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="publications.html" class="nav-link">Publications</a>
-          <div class="dropdown-content">
-            <a href="publications.html#journal">Journal Papers</a>
-            <a href="publications.html#conference">Conference Papers</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="blog.html" class="nav-link">Blogs</a>
-          <div class="dropdown-content">
-            <a href="blog.html">Technical Blogs</a>
-            <a href="posts/read_papers/">Paper Notes</a>
-            <a href="posts/course_notes/">Course Notes</a>
-          </div>
-        </div>
-        <a href="photos.html" class="nav-link">Photos</a>
-        <a href="others.html" class="nav-link">Others</a>
-        <button id="theme-btn" class="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
-      </nav>
-    </div>
-  </header>
-  <main class="container">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Researches · Can Zheng</title>
+<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="styles.css?v=20260727-shared-logo-nav" rel="stylesheet"/>
 
-  <article class="prose">
-    <h1>My Research Domains</h1>
-    <p>Select a category to explore my various research directions. Click on a card to view detailed contents, derivations, and resources.</p>
-
-    <div class="research-filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="past">Past</button>
-      <button class="filter-btn" data-filter="ongoing">Ongoing</button>
-      <button class="filter-btn" data-filter="future">Future</button>
-      <a class="filter-btn" href="researches/grants.html">Grants</a>
-    </div>
-
-    <div class="research-grid" id="res-grid">
-
-      <a href="researches/research-msac.html" class="res-card" data-cat="ongoing">
-        <img src="photos/proj_figure/multimodal_sensing.png" alt="Multimodal Sensing and Communications">
-        <div class="res-card-content">
-          <span class="res-tag">Ongoing</span>
-          <h3 class="res-card-title">Multimodal Sensing and Communications</h3>
-          <p class="res-card-desc">Using sensing/perception data and AI/ML-assisted communication physical layer tasks.</p>
-        </div>
-      </a>
-
-      <a href="researches/research-leo.html" class="res-card" data-cat="past">
-        <img src="photos/proj_figure/LEO.png" alt="LEO">
-        <div class="res-card-content">
-          <span class="res-tag">Past</span>
-          <h3 class="res-card-title">LEO Satellite Communications</h3>
-          <p class="res-card-desc">Applying cell-free (CF) massive MIMO concepts to low Earth orbit (LEO) satellites for capacity scaling and uplink optimization.</p>
-        </div>
-      </a>
-
-      <a href="researches/research-waveforms.html" class="res-card" data-cat="past">
-        <img src="photos/proj_figure/OTFS.png" alt="Waveforms">
-        <div class="res-card-content">
-          <span class="res-tag">Past</span>
-          <h3 class="res-card-title">Next-Generation Waveforms (OTFS/AFDM)</h3>
-          <p class="res-card-desc">Channel estimation and detection algorithm design and performance analysis for OTFS and AFDM in high-mobility scenarios.</p>
-        </div>
-      </a>
-
-      <a href="researches/research-future.html" class="res-card" data-cat="future">
-        <div style="height:220px; background:var(--border); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size: 3rem;">
-          <i class="fas fa-rocket"></i>
-        </div>
-        <div class="res-card-content">
-          <span class="res-tag">Future Concept</span>
-          <h3 class="res-card-title">Semantic Communications, Trustworthy AI</h3>
-          <p class="res-card-desc">..</p>
-        </div>
-      </a>
-
-    </div>
-  </article>
-
-  </main>
-  <footer class="footer">
-    <div>&copy; <span id="year"></span> Can Zheng &middot; Built for GitHub Pages</div>
-    <script src="site.js?v=20260614-worker-stats"></script>
-  </footer>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    const filterBtns = document.querySelectorAll('.filter-btn');
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+<meta content="light dark" name="color-scheme"/>
+<meta content="#002f6c" name="theme-color"/></link></head>
+<body class="research-page">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="header">
+<div class="navbar container">
+<a aria-label="Can Zheng homepage" class="brand" href="index.html"><img alt="Can Zheng" class="brand-logo" src="photos/logo.png"/></a>
+<div class="nav-area">
+<nav aria-label="Main navigation" class="nav-links" id="site-nav">
+<div class="dropdown"><a class="nav-link" href="index.html">Home</a><div class="dropdown-content"><a href="index.html#about">About Me</a><a href="index.html#news">News</a><a href="index.html#explore">Explore</a></div></div>
+<div class="dropdown"><a class="nav-link" href="biography.html">Biography</a><div class="dropdown-content"><a href="biography.html#education">Education</a><a href="biography.html#experience">Work Experience</a><a href="biography.html#service">Service</a><a href="biography.html#respect">People I Respect</a></div></div>
+<div class="dropdown"><a aria-current="page" class="nav-link" href="researches.html">Research</a><div class="dropdown-content"><a href="researches.html?filter=past">Past</a><a href="researches.html?filter=ongoing">Ongoing</a><a href="researches.html?filter=future">Future</a><a href="researches/grants.html">Grants</a></div></div>
+<div class="dropdown"><a class="nav-link" href="publications.html">Publications</a><div class="dropdown-content"><a href="publications.html#journal">Journal Papers</a><a href="publications.html#conference">Conference Papers</a></div></div>
+<div class="dropdown"><a class="nav-link" href="blog.html">Blogs</a><div class="dropdown-content"><a href="blog.html">Technical Blogs</a><a href="posts/read_papers/">Paper Notes</a><a href="posts/course_notes/">Course Notes</a></div></div>
+<a class="nav-link" href="photos.html">Photos</a>
+<a class="nav-link" href="others.html">Others</a>
+</nav>
+<button aria-label="Switch color theme" class="theme-toggle-btn" id="theme-btn" type="button"><i aria-hidden="true" class="fas fa-moon"></i></button>
+<button aria-controls="site-nav" aria-expanded="false" aria-label="Toggle navigation" class="menu-toggle-btn" id="menu-btn" type="button"><i aria-hidden="true" class="fas fa-bars"></i></button>
+</div>
+</div>
+</header>
+<main class="container" id="main-content">
+<article class="prose">
+<h1 class="page-title" data-kicker="Research">My Research Domains</h1>
+<p>Select a category to explore my various research directions. Click on a card to view detailed contents, derivations, and resources.</p>
+<div class="research-filters">
+<button class="filter-btn active" data-filter="all">All</button>
+<button class="filter-btn" data-filter="past">Past</button>
+<button class="filter-btn" data-filter="ongoing">Ongoing</button>
+<button class="filter-btn" data-filter="future">Future</button>
+<a class="filter-btn" href="researches/grants.html">Grants</a>
+</div>
+<div class="research-grid" id="res-grid">
+<a class="res-card" data-cat="ongoing" href="researches/research-msac.html">
+<img alt="Multimodal Sensing and Communications" src="photos/proj_figure/multimodal_sensing.png">
+<div class="res-card-content">
+<span class="res-tag">Ongoing</span>
+<h3 class="res-card-title">Multimodal Sensing and Communications</h3>
+<p class="res-card-desc">Using sensing/perception data and AI/ML-assisted communication physical layer tasks.</p>
+</div>
+</img></a>
+<a class="res-card" data-cat="past" href="researches/research-leo.html">
+<img alt="LEO" src="photos/proj_figure/LEO.png"/>
+<div class="res-card-content">
+<span class="res-tag">Past</span>
+<h3 class="res-card-title">LEO Satellite Communications</h3>
+<p class="res-card-desc">Applying cell-free (CF) massive MIMO concepts to low Earth orbit (LEO) satellites for capacity scaling and uplink optimization.</p>
+</div>
+</a>
+<a class="res-card" data-cat="past" href="researches/research-waveforms.html">
+<img alt="Waveforms" src="photos/proj_figure/OTFS.png"/>
+<div class="res-card-content">
+<span class="res-tag">Past</span>
+<h3 class="res-card-title">Next-Generation Waveforms (OTFS/AFDM)</h3>
+<p class="res-card-desc">Channel estimation and detection algorithm design and performance analysis for OTFS and AFDM in high-mobility scenarios.</p>
+</div>
+</a>
+<a class="res-card" data-cat="future" href="researches/research-future.html">
+<div style="height:220px; background:var(--border); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size: 3rem;">
+<i class="fas fa-rocket"></i>
+</div>
+<div class="res-card-content">
+<span class="res-tag">Future Concept</span>
+<h3 class="res-card-title">Semantic Communications, Trustworthy AI</h3>
+<p class="res-card-desc">..</p>
+</div>
+</a>
+</div>
+</article>
+</main>
+<footer class="footer">
+<div class="container footer-inner"><span>© <span id="year"></span> Can Zheng</span><span>Built for GitHub Pages</span></div>
+<script src="site.js?v=20260727-single-dropdown"></script>
+</footer>
+<script>
+const filterBtns = document.querySelectorAll('.filter-btn');
     const resCards = document.querySelectorAll('.res-card');
 
     function applyFilter(filterValue) {
@@ -161,23 +110,6 @@
         applyFilter(btn.getAttribute('data-filter'));
       });
     });
-
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = themeBtn.querySelector('i');
-    let currentTheme = localStorage.getItem('theme');
-    if (!currentTheme) {
-      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    function applyThemeMode(themeStr) {
-      document.documentElement.setAttribute('data-theme', themeStr);
-      themeIcon.className = themeStr === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    }
-    applyThemeMode(currentTheme);
-    themeBtn.addEventListener('click', () => {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', currentTheme);
-      applyThemeMode(currentTheme);
-    });
-  </script>
+</script>
 </body>
 </html>
