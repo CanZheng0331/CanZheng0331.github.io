@@ -587,8 +587,7 @@
         </section>
         <section class="dialog-section">
           <h3>Courses</h3>
-          ${renderCourseNoteButtons(course.notes)}
-          <div class="recommendation-list">${renderRecommendations(course.recommendations)}</div>
+          <div class="recommendation-list">${renderRecommendations(course.recommendations, course.notes)}</div>
         </section>
       </div>
     `;
@@ -623,17 +622,19 @@
     }).join("");
   }
 
-  function renderCourseNoteButtons(items) {
+  function courseNoteLinks(items) {
     if (!Array.isArray(items) || !items.length) return "";
-    const links = items
+    return items
       .filter((item) => item && typeof item !== "string" && item.url && !isPlaceholder(item.url))
       .map((item) => {
-        const label = item.title || "Open notes";
-        const icon = item.format && String(item.format).toLowerCase().includes("pdf") ? "fas fa-file-pdf" : "fas fa-book-open";
-        return `<a class="course-note-button" href="${escapeAttribute(item.url)}" target="_blank" rel="noopener noreferrer" title="${escapeAttribute(label)}"><i class="${icon}" aria-hidden="true"></i><span>${escapeHtml(label)}</span></a>`;
+        const title = item.title || "Notes";
+        return {
+          label: "Notes",
+          url: item.url,
+          iconClass: item.format && String(item.format).toLowerCase().includes("pdf") ? "fas fa-file-pdf" : "fas fa-book-open",
+          title
+        };
       });
-    if (!links.length) return "";
-    return `<div class="course-note-links" aria-label="Course notes">${links.join("")}</div>`;
   }
 
   function renderTextbooks(items) {
@@ -657,16 +658,21 @@
     }).join("");
   }
 
-  function renderRecommendations(items) {
+  function renderRecommendations(items, notes) {
     const validItems = Array.isArray(items) ? items.filter((item) => !isPlaceholderItem(item)) : [];
     if (!validItems.length) return `<div class="dialog-item"><span>No recommendations have been recorded yet.</span></div>`;
+    const appendedNoteLinks = courseNoteLinks(notes);
     return validItems.map((item) => {
       if (typeof item === "string") return `<div class="dialog-item"><strong>${escapeHtml(item)}</strong></div>`;
-      const links = Array.isArray(item.links) ? item.links.filter((link) => !isPlaceholderItem(link)) : [];
+      const links = [
+        ...(Array.isArray(item.links) ? item.links.filter((link) => !isPlaceholderItem(link)) : []),
+        ...appendedNoteLinks
+      ];
       const linksHtml = links.length
         ? `<div class="recommendation-links">${links.map((link) => {
           const label = link.label || "Open resource";
-          return `<a href="${escapeAttribute(link.url || "#")}" target="_blank" rel="noopener noreferrer" title="${escapeAttribute(label)}"><i class="${resourceIconClass(link)}" aria-hidden="true"></i><span>${escapeHtml(label)}</span></a>`;
+          const title = link.title || label;
+          return `<a href="${escapeAttribute(link.url || "#")}" target="_blank" rel="noopener noreferrer" title="${escapeAttribute(title)}"><i class="${link.iconClass || resourceIconClass(link)}" aria-hidden="true"></i><span>${escapeHtml(label)}</span></a>`;
         }).join("")}</div>`
         : `<p class="recommendation-empty">No links have been added.</p>`;
       return `<article class="recommendation-card">
