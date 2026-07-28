@@ -64,20 +64,6 @@
         "state": "v1.0",
         "prerequisites": [],
         "insights": "Calculus provides the language of continuous change, approximation, optimization, and accumulation used throughout engineering, physics, and machine learning.",
-        "notes": [
-          {
-            "title": "Core Concepts",
-            "description": "Limits, derivatives, integrals, and series.",
-            "format": "HTML",
-            "url": "notes/calculus.html"
-          },
-          {
-            "title": "Derivation Checklist",
-            "description": "Key results to reconstruct without references.",
-            "format": "HTML",
-            "url": "notes/calculus-derivations.html"
-          }
-        ],
         "recommendations": [
           {
             "title": "MIT 18.01SC Single Variable Calculus",
@@ -91,6 +77,16 @@
               {
                 "label": "MIT OpenCourseWare",
                 "url": "https://ocw.mit.edu/"
+              },
+              {
+                "label": "Notes",
+                "url": "notes/calculus.html",
+                "title": "Core Concepts"
+              },
+              {
+                "label": "Notes",
+                "url": "notes/calculus-derivations.html",
+                "title": "Derivation Checklist"
               }
             ]
           },
@@ -116,26 +112,6 @@
           "calculus"
         ],
         "insights": "This course connects mathematical foundations with communication and signal-processing systems. Its real value lies in developing time-domain, frequency-domain, and system-level intuition.",
-        "notes": [
-          {
-            "title": "Lecture Notes",
-            "description": "Continuous- and discrete-time signals, LTI systems, convolution, and transforms.",
-            "format": "HTML",
-            "url": "notes/signals-and-systems.html"
-          },
-          {
-            "title": "Version History",
-            "description": "Changes made while studying the course.",
-            "format": "HTML",
-            "url": "notes/signals-and-systems-history.html"
-          },
-          {
-            "title": "Independent Derivations",
-            "description": "Transform pairs, system properties, and reconstruction exercises.",
-            "format": "HTML",
-            "url": "notes/signals-and-systems-derivations.html"
-          }
-        ],
         "recommendations": [
           {
             "title": "Signals and Systems",
@@ -149,6 +125,21 @@
               {
                 "label": "MIT OpenCourseWare",
                 "url": "https://ocw.mit.edu/"
+              },
+              {
+                "label": "Notes",
+                "url": "notes/signals-and-systems.html",
+                "title": "Lecture Notes"
+              },
+              {
+                "label": "Notes",
+                "url": "notes/signals-and-systems-history.html",
+                "title": "Version History"
+              },
+              {
+                "label": "Notes",
+                "url": "notes/signals-and-systems-derivations.html",
+                "title": "Independent Derivations"
               }
             ]
           },
@@ -174,14 +165,6 @@
           "signals-and-systems"
         ],
         "insights": "Wireless communications extends communication-system reasoning into fading, diversity, channel uncertainty, and multi-user environments.",
-        "notes": [
-          {
-            "title": "Material Queue",
-            "description": "Course selection and reference collection are still in progress.",
-            "format": "HTML",
-            "url": "notes/wireless-communications.html"
-          }
-        ],
         "recommendations": [
           {
             "title": "Fundamentals of Wireless Communication",
@@ -191,6 +174,11 @@
               {
                 "label": "Book homepage",
                 "url": "https://web.stanford.edu/~dntse/wireless_book.html"
+              },
+              {
+                "label": "Notes",
+                "url": "notes/wireless-communications.html",
+                "title": "Material Queue"
               }
             ]
           },
@@ -217,20 +205,6 @@
           "wireless-communications"
         ],
         "insights": "This topic examines where learning-based methods genuinely improve communication systems and where model-driven structure remains indispensable.",
-        "notes": [
-          {
-            "title": "Course Synthesis",
-            "description": "A consolidated map of model-driven and data-driven methods.",
-            "format": "HTML",
-            "url": "notes/ai-for-wireless.html"
-          },
-          {
-            "title": "Independent Reconstruction",
-            "description": "End-to-end derivations and critical reflections completed after the course.",
-            "format": "HTML",
-            "url": "notes/ai-for-wireless-reconstruction.html"
-          }
-        ],
         "recommendations": [
           {
             "title": "Machine Learning for Communications",
@@ -240,6 +214,16 @@
               {
                 "label": "Resource collection",
                 "url": "https://arxiv.org/search/?query=machine+learning+for+communications&searchtype=all"
+              },
+              {
+                "label": "Notes",
+                "url": "notes/ai-for-wireless.html",
+                "title": "Course Synthesis"
+              },
+              {
+                "label": "Notes",
+                "url": "notes/ai-for-wireless-reconstruction.html",
+                "title": "Independent Reconstruction"
               }
             ]
           },
@@ -587,7 +571,7 @@
         </section>
         <section class="dialog-section">
           <h3>Courses</h3>
-          <div class="recommendation-list">${renderRecommendations(course.recommendations, course.notes)}</div>
+          <div class="recommendation-list">${renderRecommendations(course.recommendations)}</div>
         </section>
       </div>
     `;
@@ -607,34 +591,6 @@
       const course = state.courseById.get(id);
       return `<button class="prerequisite-chip" type="button" data-prerequisite-id="${escapeHtml(id)}"><span class="prerequisite-dot" aria-hidden="true"></span>${escapeHtml(course?.title || id)}</button>`;
     }).join("");
-  }
-
-  function renderNotes(items) {
-    const validItems = Array.isArray(items) ? items.filter((item) => !isPlaceholderItem(item)) : [];
-    if (!validItems.length) return `<div class="dialog-item"><span>No notes have been recorded yet.</span></div>`;
-    return validItems.map((item) => {
-      if (typeof item === "string") return `<div class="dialog-item"><strong>${escapeHtml(item)}</strong></div>`;
-      const title = escapeHtml(item.title || "Untitled");
-      const description = item.description ? `<span>${escapeHtml(item.description)}</span>` : "";
-      const format = item.format ? `<small class="resource-format">${escapeHtml(item.format)}</small>` : "";
-      if (!item.url) return `<div class="dialog-item resource-card"><div><strong>${title}</strong>${description}</div>${format}</div>`;
-      return `<a class="dialog-item resource-card resource-link" href="${escapeAttribute(item.url)}" target="_blank" rel="noopener noreferrer"><div><strong>${title}</strong>${description}</div><div class="resource-action">${format}<span>Open in new tab</span></div></a>`;
-    }).join("");
-  }
-
-  function courseNoteLinks(items) {
-    if (!Array.isArray(items) || !items.length) return "";
-    return items
-      .filter((item) => item && typeof item !== "string" && item.url && !isPlaceholder(item.url))
-      .map((item) => {
-        const title = item.title || "Notes";
-        return {
-          label: "Notes",
-          url: item.url,
-          iconClass: item.format && String(item.format).toLowerCase().includes("pdf") ? "fas fa-file-pdf" : "fas fa-book-open",
-          title
-        };
-      });
   }
 
   function renderTextbooks(items) {
@@ -658,16 +614,12 @@
     }).join("");
   }
 
-  function renderRecommendations(items, notes) {
+  function renderRecommendations(items) {
     const validItems = Array.isArray(items) ? items.filter((item) => !isPlaceholderItem(item)) : [];
     if (!validItems.length) return `<div class="dialog-item"><span>No recommendations have been recorded yet.</span></div>`;
-    const appendedNoteLinks = courseNoteLinks(notes);
     return validItems.map((item) => {
       if (typeof item === "string") return `<div class="dialog-item"><strong>${escapeHtml(item)}</strong></div>`;
-      const links = [
-        ...(Array.isArray(item.links) ? item.links.filter((link) => !isPlaceholderItem(link)) : []),
-        ...appendedNoteLinks
-      ];
+      const links = Array.isArray(item.links) ? item.links.filter((link) => !isPlaceholderItem(link)) : [];
       const linksHtml = links.length
         ? `<div class="recommendation-links">${links.map((link) => {
           const label = link.label || "Open resource";

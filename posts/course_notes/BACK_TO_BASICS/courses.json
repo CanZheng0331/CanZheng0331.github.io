@@ -30,12 +30,7 @@
       ]
     }
   ],
-
-
   "courses": [
-
-
-
     {
       "id": "calculus",
       "title": "Calculus",
@@ -43,14 +38,6 @@
       "state": "empty",
       "prerequisites": [],
       "insights": "NULL",
-      "notes": [
-        {
-          "title": "NULL",
-          "description": "NULL.",
-          "format": "NULL",
-          "url": "NULL"
-        }
-      ],
       "recommendations": [
         {
           "title": "NULL",
@@ -69,8 +56,6 @@
         }
       ]
     },
-
-
     {
       "id": "linear-algebra",
       "title": "Linear Algebra",
@@ -78,14 +63,6 @@
       "state": "empty",
       "prerequisites": [],
       "insights": "NULL",
-      "notes": [
-        {
-          "title": "NULL",
-          "description": "NULL.",
-          "format": "NULL",
-          "url": "NULL"
-        }
-      ],
       "recommendations": [
         {
           "title": "NULL",
@@ -104,9 +81,6 @@
         }
       ]
     },
-
-
-
     {
       "id": "probability",
       "title": "Probability",
@@ -116,14 +90,6 @@
         "calculus"
       ],
       "insights": "NULL",
-      "notes": [
-        {
-          "title": "NULL",
-          "description": "NULL.",
-          "format": "NULL",
-          "url": "NULL"
-        }
-      ],
       "recommendations": [
         {
           "title": "NULL",
@@ -142,28 +108,16 @@
         }
       ]
     },
-
-
-
-
-
     {
       "id": "information-theory",
       "title": "Information Theory",
       "tier": "Undergraduate Major Courses",
       "state": "empty",
       "prerequisites": [
-        "calculus", "probability"
+        "calculus",
+        "probability"
       ],
       "insights": "NULL.",
-      "notes": [
-        {
-          "title": "NULL",
-          "description": "NULL.",
-          "format": "NULL",
-          "url": "NULL"
-        }
-      ],
       "recommendations": [
         {
           "title": "[Chinese] Introduction of Communication Systems",
@@ -214,14 +168,6 @@
         "calculus"
       ],
       "insights": "NULL.",
-      "notes": [
-        {
-          "title": "NULL",
-          "description": "NULL.",
-          "format": "NULL",
-          "url": "NULL"
-        }
-      ],
       "recommendations": [
         {
           "title": "NULL",
@@ -236,29 +182,21 @@
         }
       ]
     },
-
-
-
     {
       "id": "communication-systems",
       "title": "Communication Systems",
       "tier": "Undergraduate Major Courses",
       "state": "empty",
       "prerequisites": [
-        "calculus", "linear-algebra", "probability", "signals-and-systems"
+        "calculus",
+        "linear-algebra",
+        "probability",
+        "signals-and-systems"
       ],
       "insights": "NULL.",
-      "notes": [
-        {
-          "title": "NULL",
-          "description": "NULL.",
-          "format": "NULL",
-          "url": "NULL"
-        }
-      ],
       "recommendations": [
         {
-          "title": "[Chinese Lecture] Introduction of Communication Systems",
+          "title": "[Chinese] Introduction of Communication Systems",
           "provider": "Professor Po-Ning Chen, NYCU EE.",
           "description": "To give students a basic understanding of communications.",
           "links": [
@@ -278,29 +216,22 @@
         }
       ]
     },
-
-
-
     {
       "id": "digital-communications",
       "title": "Digital Communications",
       "tier": "Undergraduate Major Courses",
       "state": "empty",
       "prerequisites": [
-        "calculus", "linear-algebra", "probability", "signals-and-systems", "communication-systems"
+        "calculus",
+        "linear-algebra",
+        "probability",
+        "signals-and-systems",
+        "communication-systems"
       ],
       "insights": "NULL.",
-      "notes": [
-        {
-          "title": "NULL",
-          "description": "NULL.",
-          "format": "NULL",
-          "url": "NULL"
-        }
-      ],
       "recommendations": [
         {
-          "title": "[Chinese Lecture] Introduction of Communication Systems",
+          "title": "[Chinese] Introduction of Communication Systems",
           "provider": "Professor Po-Ning Chen, NYCU EE.",
           "description": "The major goal of Introduction to Digital Communications is to teach students about the basic principles underlying the operation and design of a digital communication system. We expect a student who finishes the course to be able to understand the basic operating principles of current digital communication systems or standards. Moreover, we sincerely hope that a student who learns the course material will be equipped with the ability to analyze and design a digital communication system.",
           "links": [
@@ -319,7 +250,7 @@
           ]
         },
         {
-          "title": "[Chinese Lecture] Introduction of Communication Systems",
+          "title": "[Chinese] Introduction of Communication Systems",
           "provider": "Professor Po-Ning Chen, NYCU EE.",
           "description": "Theories of information transmission in digital form from one or more sources to one or more destinations.",
           "links": [
@@ -339,34 +270,24 @@
         }
       ]
     },
-
-
-
-
-
-
     {
       "id": "wireless-communications",
       "title": "Wireless Communications",
       "tier": "Graduate Major Courses",
-      "state": "empty",
+      "state": "v1.0",
       "prerequisites": [
-        "signals-and-systems"
+        "calculus",
+        "linear-algebra",
+        "probability",
+        "signals-and-systems",
+        "communication-systems"
       ],
       "insights": "Wireless communications extends communication-system reasoning into fading, diversity, channel uncertainty, and multi-user environments.",
-      "notes": [
-        {
-          "title": "NULL",
-          "description": "NULL",
-          "format": "NULL",
-          "url": "NULL"
-        }
-      ],
       "recommendations": [
         {
           "title": "Fundamentals of Wireless Communication",
           "provider": "Professor David Tse, Stanford University, Kailath-Xu Professorship",
-          "description": "None.",
+          "description": "It seems to have been a lecture given by Prof. David Tse at Qualcomm in San Diego in 2006. He offered many insights but omitted a lot of details due to time constraints.",
           "links": [
             {
               "label": "Youtube",
@@ -375,6 +296,11 @@
             {
               "label": "Bilibili",
               "url": "https://www.bilibili.com/video/BV1GH4y1U7xR/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            },
+            {
+              "label": "Notes",
+              "url": "https://canzheng0331.github.io/posts/course_notes/wireless_communications/notes_on_wireless_communications_tse_v1_0.pdf",
+              "title": "Notes on Fundamentals of Wireless Communications"
             }
           ]
         },
@@ -410,24 +336,17 @@
         }
       ]
     },
-
     {
       "id": "detection-and-estimation",
       "title": "Detection and Estimation",
       "tier": "Graduate Major Courses",
       "state": "v1.0",
       "prerequisites": [
-        "calculus", "linear-algebra", "probability"
+        "calculus",
+        "linear-algebra",
+        "probability"
       ],
       "insights": "NULL.",
-      "notes": [
-        {
-          "title": "Notes on Estimation and Detection",
-          "description": "These notes primarily reference Professor Barry Van Veen's video course, Estimation and Detection Theory.",
-          "format": "PDF",
-          "url": "https://canzheng0331.github.io/posts/course_notes/estimation_detection/notes_on_estimation_and_detection_v1_0.pdf"
-        }
-      ],
       "recommendations": [
         {
           "title": "[Lecture] Estimation and Detection Theory",
@@ -441,31 +360,27 @@
             {
               "label": "BiliBili",
               "url": "https://www.bilibili.com/video/BV1Wt421W7nV/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            },
+            {
+              "label": "Notes",
+              "url": "https://canzheng0331.github.io/posts/course_notes/estimation_detection/notes_on_estimation_and_detection_v1_0.pdf",
+              "title": "Notes on Estimation and Detection"
             }
           ]
         }
       ]
     },
-
-
-
     {
       "id": "multiple-antenna-communications",
       "title": "Multiple Antenna Communications",
       "tier": "Graduate Major Courses",
       "state": "v1.0",
       "prerequisites": [
-        "calculus", "linear-algebra", "probability"
+        "calculus",
+        "linear-algebra",
+        "probability"
       ],
       "insights": "NULL.",
-      "notes": [
-        {
-          "title": "Notes on Multiple Antenna Communications",
-          "description": "These notes primarily reference Professor Emil Björnson's video course, Estimation and Detection Theory.",
-          "format": "PDF",
-          "url": "https://canzheng0331.github.io/posts/course_notes/estimation_detection/notes_on_estimation_and_detection_v1_0.pdf"
-        }
-      ],
       "recommendations": [
         {
           "title": "[Lecture] Course on Multiple Antenna Communications",
@@ -487,15 +402,15 @@
             {
               "label": "BiliBili",
               "url": "https://www.bilibili.com/video/BV1BdsAebE4B/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            },
+            {
+              "label": "Notes",
+              "url": "https://canzheng0331.github.io/posts/course_notes/multi_antenna/notes_on_multi_antennas.pdf",
+              "title": "Notes on Multiple Antenna Communications"
             }
           ]
         }
       ]
     }
-
-
-
-
-    
   ]
 }
