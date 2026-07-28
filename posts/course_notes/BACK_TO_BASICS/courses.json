@@ -1,0 +1,501 @@
+{
+  "workflow": [
+    {
+      "number": "01",
+      "icon": "⌕",
+      "title": "Select a strong course",
+      "description": "Evaluate teaching quality through course structure, audience feedback, and the instructor's clarity and depth."
+    },
+    {
+      "number": "02",
+      "icon": "▤",
+      "title": "Collect the full learning set",
+      "description": "Gather lectures, slides, textbooks, references, and simpler substitutes when key materials are unavailable."
+    },
+    {
+      "number": "03",
+      "icon": "✦",
+      "title": "Build the first draft",
+      "description": "Use AI to synthesize the materials into a structured initial set of notes.",
+      "version": "v1.0"
+    },
+    {
+      "number": "04",
+      "icon": "♧",
+      "title": "Refine and re-derive",
+      "description": "Revise during study, then rebuild the course independently from beginning to end.",
+      "versions": [
+        "v1.1",
+        "v1.2"
+      ]
+    }
+  ],
+
+
+  "courses": [
+
+
+
+    {
+      "id": "calculus",
+      "title": "Calculus",
+      "tier": "Foundational Science",
+      "state": "empty",
+      "prerequisites": [],
+      "insights": "NULL",
+      "notes": [
+        {
+          "title": "NULL",
+          "description": "NULL.",
+          "format": "NULL",
+          "url": "NULL"
+        }
+      ],
+      "recommendations": [
+        {
+          "title": "NULL",
+          "provider": "NULL",
+          "description": "NULL.",
+          "links": [
+            {
+              "label": "NULL",
+              "url": "NULL"
+            },
+            {
+              "label": "NULL",
+              "url": "NULL"
+            }
+          ]
+        }
+      ]
+    },
+
+
+    {
+      "id": "linear-algebra",
+      "title": "Linear Algebra",
+      "tier": "Foundational Science",
+      "state": "empty",
+      "prerequisites": [],
+      "insights": "NULL",
+      "notes": [
+        {
+          "title": "NULL",
+          "description": "NULL.",
+          "format": "NULL",
+          "url": "NULL"
+        }
+      ],
+      "recommendations": [
+        {
+          "title": "NULL",
+          "provider": "NULL",
+          "description": "NULL.",
+          "links": [
+            {
+              "label": "NULL",
+              "url": "NULL"
+            },
+            {
+              "label": "NULL",
+              "url": "NULL"
+            }
+          ]
+        }
+      ]
+    },
+
+
+
+    {
+      "id": "probability",
+      "title": "Probability",
+      "tier": "Foundational Science",
+      "state": "empty",
+      "prerequisites": [
+        "calculus"
+      ],
+      "insights": "NULL",
+      "notes": [
+        {
+          "title": "NULL",
+          "description": "NULL.",
+          "format": "NULL",
+          "url": "NULL"
+        }
+      ],
+      "recommendations": [
+        {
+          "title": "NULL",
+          "provider": "NULL",
+          "description": "NULL.",
+          "links": [
+            {
+              "label": "NULL",
+              "url": "NULL"
+            },
+            {
+              "label": "NULL",
+              "url": "NULL"
+            }
+          ]
+        }
+      ]
+    },
+
+
+
+
+
+    {
+      "id": "information-theory",
+      "title": "Information Theory",
+      "tier": "Undergraduate Major Courses",
+      "state": "empty",
+      "prerequisites": [
+        "calculus", "probability"
+      ],
+      "insights": "NULL.",
+      "notes": [
+        {
+          "title": "NULL",
+          "description": "NULL.",
+          "format": "NULL",
+          "url": "NULL"
+        }
+      ],
+      "recommendations": [
+        {
+          "title": "[Chinsese] Introduction of Communication Systems",
+          "provider": "Professor Po-Ning Chen, NYCU EE.",
+          "description": "The purpose of this course is to present a concise, yet mathematically rigorous, introduction to the main pillars of information theory. It thus naturally focuses on the foundational concepts and indispensable results of the subject for single-user systems, where a single data source or message needs to be reliably processed and communicated over a noiseless or noisy point-to-point channel. At the first part of this course, six meticulously core chapters with accompanying problems, emphasizing the key topics of information measures, lossless and lossy data compression, channel coding, and joint source-channel coding. Two appendices covering necessary and supplementary material in real analysis and in probability and stochastic processes are included. At the second part of the course, advanced topics concerning the information theoretic limits of discrete-time single-user stochastic systems with arbitrary statistical memory (i.e., systems that are not necessarily stationary, ergodic or information stable) will be covered.",
+          "links": [
+            {
+              "label": "Information",
+              "url": "https://ocw.nycu.edu.tw/?post_type=course_page&p=70660"
+            },
+            {
+              "label": "Youtube",
+              "url": "https://www.youtube.com/playlist?list=PLj6E8qlqmkFsWS54o6gNWeDGXeI7c3eUd"
+            },
+            {
+              "label": "BiliBili",
+              "url": "https://www.bilibili.com/video/BV1957j6UEzW/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            }
+          ]
+        },
+        {
+          "title": "Information Theory, Pattern Recognition and Neural Networks",
+          "provider": "Professor David J.C. MacKay, University of Cambridge.",
+          "description": "..",
+          "links": [
+            {
+              "label": "Information",
+              "url": "https://www.inference.org.uk/mackay/itprnn/"
+            },
+            {
+              "label": "Youtube",
+              "url": "https://www.youtube.com/playlist?list=PLruBu5BI5n4aFpG32iMbdWoRVAA-Vcso6"
+            },
+            {
+              "label": "BiliBili",
+              "url": "https://www.bilibili.com/video/BV1957j6UEzW/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signals-and-systems",
+      "title": "Signals and Systems",
+      "tier": "Undergraduate Major Courses",
+      "state": "empty",
+      "prerequisites": [
+        "calculus"
+      ],
+      "insights": "NULL.",
+      "notes": [
+        {
+          "title": "NULL",
+          "description": "NULL.",
+          "format": "NULL",
+          "url": "NULL"
+        }
+      ],
+      "recommendations": [
+        {
+          "title": "NULL",
+          "provider": "NULL",
+          "description": "NULL.",
+          "links": [
+            {
+              "label": "NULL",
+              "url": "NULL"
+            }
+          ]
+        }
+      ]
+    },
+
+
+
+    {
+      "id": "communication-systems",
+      "title": "Communication Systems",
+      "tier": "Undergraduate Major Courses",
+      "state": "empty",
+      "prerequisites": [
+        "calculus", "linear-algebra", "probability", "signals-and-systems"
+      ],
+      "insights": "NULL.",
+      "notes": [
+        {
+          "title": "NULL",
+          "description": "NULL.",
+          "format": "NULL",
+          "url": "NULL"
+        }
+      ],
+      "recommendations": [
+        {
+          "title": "[Chinsese Lecture] Introduction of Communication Systems",
+          "provider": "Professor Po-Ning Chen, NYCU EE.",
+          "description": "To give students a basic understanding of communications.",
+          "links": [
+            {
+              "label": "Information",
+              "url": "https://ocw.nycu.edu.tw/?post_type=course_page&p=70881#handout"
+            },
+            {
+              "label": "Youtube",
+              "url": "https://www.youtube.com/playlist?list=PLj6E8qlqmkFsjemJ-MTVrktfJK4nv5ka_"
+            },
+            {
+              "label": "BiliBili",
+              "url": "https://www.bilibili.com/video/BV1Qcjo6dESD/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            }
+          ]
+        }
+      ]
+    },
+
+
+
+    {
+      "id": "digital-communications",
+      "title": "Digital Communications",
+      "tier": "Undergraduate Major Courses",
+      "state": "empty",
+      "prerequisites": [
+        "calculus", "linear-algebra", "probability", "signals-and-systems", "communication-systems"
+      ],
+      "insights": "NULL.",
+      "notes": [
+        {
+          "title": "NULL",
+          "description": "NULL.",
+          "format": "NULL",
+          "url": "NULL"
+        }
+      ],
+      "recommendations": [
+        {
+          "title": "[Chinsese Lecture] Introduction of Communication Systems",
+          "provider": "Professor Po-Ning Chen, NYCU EE.",
+          "description": "The major goal of Introduction to Digital Communications is to teach students about the basic principles underlying the operation and design of a digital communication system. We expect a student who finishes the course to be able to understand the basic operating principles of current digital communication systems or standards. Moreover, we sincerely hope that a student who learns the course material will be equipped with the ability to analyze and design a digital communication system.",
+          "links": [
+            {
+              "label": "Information",
+              "url": "https://ocw.nycu.edu.tw/?post_type=course_page&p=70966"
+            },
+            {
+              "label": "Youtube",
+              "url": "https://www.youtube.com/playlist?list=PLj6E8qlqmkFulAsQ99EvqFUm3TJfN5m3d"
+            },
+            {
+              "label": "BiliBili",
+              "url": "https://www.bilibili.com/video/BV1zv7Y6uEwF/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            }
+          ]
+        },
+        {
+          "title": "[Chinsese Lecture] Introduction of Communication Systems",
+          "provider": "Professor Po-Ning Chen, NYCU EE.",
+          "description": "Theories of information transmission in digital form from one or more sources to one or more destinations.",
+          "links": [
+            {
+              "label": "Information",
+              "url": "https://ocw.nycu.edu.tw/?post_type=course_page&p=70297"
+            },
+            {
+              "label": "Youtube",
+              "url": "https://www.youtube.com/playlist?list=PLj6E8qlqmkFv4IDqZ2l0nMns6AIiJgF8B"
+            },
+            {
+              "label": "BiliBili",
+              "url": "https://www.bilibili.com/video/BV12UNN6kEZR/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            }
+          ]
+        }
+      ]
+    },
+
+
+
+
+
+
+    {
+      "id": "wireless-communications",
+      "title": "Wireless Communications",
+      "tier": "Graduate Major Courses",
+      "state": "empty",
+      "prerequisites": [
+        "signals-and-systems"
+      ],
+      "insights": "Wireless communications extends communication-system reasoning into fading, diversity, channel uncertainty, and multi-user environments.",
+      "notes": [
+        {
+          "title": "NULL",
+          "description": "NULL",
+          "format": "NULL",
+          "url": "NULL"
+        }
+      ],
+      "recommendations": [
+        {
+          "title": "Fundamentals of Wireless Communication",
+          "provider": "Professor David Tse, Stanford University, Kailath-Xu Professorship",
+          "description": "None.",
+          "links": [
+            {
+              "label": "Youtube",
+              "url": "https://www.youtube.com/playlist?list=PLbbCsk7MUIGfynU-ONMbe-yZXWTgTX1YP"
+            },
+            {
+              "label": "Bilibili",
+              "url": "https://www.bilibili.com/video/BV1GH4y1U7xR/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            }
+          ]
+        },
+        {
+          "title": "Wireless Communications",
+          "provider": "Professor Henk Wymeersch, Chalmers University of Technology, EE",
+          "description": "Video lectures of the 2021 edition of the Wireless Communications course at Chalmers University of Technology, Sweden. These lectures were pre-recorded during the COVID-19 pandemic.",
+          "links": [
+            {
+              "label": "Youtube",
+              "url": "https://www.youtube.com/playlist?list=PLHGIkY491Cy2LPstPnzMpXj9QEBG5qkJU"
+            },
+            {
+              "label": "Bilibili",
+              "url": "https://www.bilibili.com/video/BV1oH4y1m77V/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            }
+          ]
+        },
+        {
+          "title": "Wireless Communications",
+          "provider": "Professor Bruno Clerckx, Imperial College London, EEE",
+          "description": "None.",
+          "links": [
+            {
+              "label": "Youtube",
+              "url": "https://www.youtube.com/playlist?list=PL3nE1Yo1b4CrAfN3lndrMImPFuS1hR5U-"
+            },
+            {
+              "label": "Bilibili",
+              "url": "https://www.bilibili.com/video/BV1RB421672Q/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "detection-and-estimation",
+      "title": "Detection and Estimation",
+      "tier": "Graduate Major Courses",
+      "state": "v1.0",
+      "prerequisites": [
+        "calculus", "linear-algebra", "probability"
+      ],
+      "insights": "NULL.",
+      "notes": [
+        {
+          "title": "Notes on Estimation and Detection",
+          "description": "These notes primarily reference Professor Barry Van Veen's video course, Estimation and Detection Theory.",
+          "format": "PDF",
+          "url": "https://canzheng0331.github.io/posts/course_notes/estimation_detection/notes_on_estimation_and_detection_v1_0.pdf"
+        }
+      ],
+      "recommendations": [
+        {
+          "title": "[Lecture] Estimation and Detection Theory",
+          "provider": "Professor Barry Van Veen, University of Wisconsin-Madison, ECE",
+          "description": "High level treatment of various topics related to parameter estimation and signal detection. Personal opinion: a bit hard to understand.",
+          "links": [
+            {
+              "label": "Youtube",
+              "url": "https://www.youtube.com/playlist?list=PLGI7M8vwfrFM08D4s2vUGIKRHw7W1rMvG"
+            },
+            {
+              "label": "BiliBili",
+              "url": "https://www.bilibili.com/video/BV1Wt421W7nV/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            }
+          ]
+        }
+      ]
+    },
+
+
+
+    {
+      "id": "multiple-antenna-communications",
+      "title": "Multiple Antenna Communications",
+      "tier": "Graduate Major Courses",
+      "state": "v1.0",
+      "prerequisites": [
+        "calculus", "linear-algebra", "probability"
+      ],
+      "insights": "NULL.",
+      "notes": [
+        {
+          "title": "Notes on Multiple Antenna Communications",
+          "description": "These notes primarily reference Professor Emil Björnson's video course, Estimation and Detection Theory.",
+          "format": "PDF",
+          "url": "https://canzheng0331.github.io/posts/course_notes/estimation_detection/notes_on_estimation_and_detection_v1_0.pdf"
+        }
+      ],
+      "recommendations": [
+        {
+          "title": "[Lecture] Course on Multiple Antenna Communications",
+          "provider": "Professor Emil Björnson,  KTH Royal Institute of Technology, Wireless Communication",
+          "description": "This is the full lecture series for the course Multiple Antenna Communications at Linköping University and KTH, in the way it was given in 2021.",
+          "links": [
+            {
+              "label": "Information",
+              "url": "https://www.kth.se/student/kurser/kurs/FIK3510"
+            },
+            {
+              "label": "Slides",
+              "url": "https://github.com/emilbjornson/multiple_antenna_communications"
+            },
+            {
+              "label": "Youtube",
+              "url": "https://www.youtube.com/playlist?list=PLTv48TzNRhaJ66mW48MI_HBBawupV_ZR_"
+            },
+            {
+              "label": "BiliBili",
+              "url": "https://www.bilibili.com/video/BV1BdsAebE4B/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            }
+          ]
+        }
+      ]
+    }
+
+
+
+
+    
+  ]
+}

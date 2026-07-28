@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#071426">
+  <title>Back to Basics &middot; Course Notes &middot; Can Zheng</title>
+  <script>
+    (() => {
+      let saved = null;
+      try { saved = localStorage.getItem("theme"); } catch (_) {}
+      const theme = saved === "light" || saved === "dark"
+        ? saved
+        : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+  <link rel="stylesheet" href="../../../styles.css?v=20260727-shared-logo-nav">
+  <link rel="stylesheet" href="course_notes.css?v=20260728-v12-shared-shell">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="course-notes-roadmap">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="header">
+    <div class="navbar container">
+      <a class="brand" href="../../../index.html" aria-label="Can Zheng homepage"><img class="brand-logo" src="../../../photos/logo.png" alt="Can Zheng"></a>
+      <div class="nav-area">
+        <nav class="nav-links" id="site-nav" aria-label="Main navigation">
+          <div class="dropdown"><a class="nav-link" href="../../../index.html">Home</a><div class="dropdown-content"><a href="../../../index.html#about">About Me</a><a href="../../../index.html#news">News</a><a href="../../../index.html#explore">Explore</a></div></div>
+          <div class="dropdown"><a class="nav-link" href="../../../biography.html">Biography</a><div class="dropdown-content"><a href="../../../biography.html#education">Education</a><a href="../../../biography.html#experience">Work Experience</a><a href="../../../biography.html#service">Service</a><a href="../../../biography.html#respect">People I Respect</a></div></div>
+          <div class="dropdown"><a class="nav-link" href="../../../researches.html">Researches</a><div class="dropdown-content"><a href="../../../researches.html?filter=past">Past</a><a href="../../../researches.html?filter=ongoing">Ongoing</a><a href="../../../researches.html?filter=future">Future</a><a href="../../../researches/grants.html">Grants</a></div></div>
+          <div class="dropdown"><a class="nav-link" href="../../../publications.html">Publications</a><div class="dropdown-content"><a href="../../../publications.html#journal">Journal Papers</a><a href="../../../publications.html#conference">Conference Papers</a></div></div>
+          <div class="dropdown"><a class="nav-link" href="../../../blog.html" aria-current="page">Blogs</a><div class="dropdown-content"><a href="../../../blog.html">Technical Blogs</a><a href="../../read_papers/">Paper Notes</a><a href="../">Course Notes</a></div></div>
+          <a class="nav-link" href="../../../photos.html">Photos</a>
+          <a class="nav-link" href="../../../others.html">Others</a>
+        </nav>
+        <button class="theme-toggle-btn" id="theme-btn" type="button" aria-label="Switch color theme"><i class="fas fa-moon" aria-hidden="true"></i></button>
+        <button class="menu-toggle-btn" id="menu-btn" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav"><i class="fas fa-bars" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-shell">
+    <section class="hero-section">
+      <a class="back-button" href="../"><span aria-hidden="true">&larr;</span> Back to Course Notes</a>
+      <div class="eyebrow">NOTES PROJECT</div>
+      <h1>Back to Basics</h1>
+      <p class="hero-copy">A long-term plan to revisit foundational science, undergraduate and graduate courses, and advanced topics through a deliberate, AI-assisted learning process.</p>
+    </section>
+
+    <section class="motivation-card glass-card" aria-labelledby="motivation-title">
+      <div>
+        <span class="section-kicker">WHY THIS PROJECT</span>
+        <h2 id="motivation-title">Motivation</h2>
+      </div>
+      <div class="motivation-grid">
+        <article><span class="motivation-index">01</span><h3>Prepare for a possible PhD</h3><p>Rebuild the mathematical and technical foundations needed for doctoral-level study and research.</p></article>
+        <article><span class="motivation-index">02</span><h3>Build durable knowledge barriers</h3><p>Develop deep, reusable understanding in an era where AI capabilities and technical information evolve extremely quickly.</p></article>
+        <article><span class="motivation-index">03</span><h3>Learn with AI, not behind it</h3><p>Use AI to organize materials and accelerate iteration while preserving independent derivation, judgment, and intuition.</p></article>
+      </div>
+    </section>
+
+    <section class="workflow-card glass-card" aria-labelledby="workflow-title">
+      <header class="section-heading">
+        <div><span class="section-kicker">METHOD</span><h2 id="workflow-title">Learning Workflow</h2></div>
+        <p>Each course moves through a repeatable process rather than a one-time reading pass.</p>
+      </header>
+      <div id="workflow-grid" class="workflow-grid"></div>
+    </section>
+
+    <section class="graph-card glass-card" aria-labelledby="graph-title">
+      <header class="graph-heading">
+        <div><span class="section-kicker">KNOWLEDGE MAP</span><h2 id="graph-title">Course Roadmap</h2></div>
+        <div class="graph-help"><i class="fas fa-computer-mouse mouse-icon" aria-hidden="true"></i> Drag to pan &middot; Scroll to zoom</div>
+      </header>
+
+      <div class="graph-toolbar" aria-label="Knowledge graph controls">
+        <label class="search-control">
+          <input id="course-search" type="search" placeholder="Search courses" autocomplete="off">
+        </label>
+        <div class="segmented-control" role="group" aria-label="View mode">
+          <button id="tree-view-button" type="button" class="is-active" aria-pressed="true">Tree View</button>
+          <button id="list-view-button" type="button" aria-pressed="false">List View</button>
+        </div>
+        <div class="toolbar-spacer"></div>
+        <button id="fit-button" class="toolbar-button" type="button">Fit</button>
+        <button id="reset-button" class="toolbar-button" type="button">Reset</button>
+        <div class="zoom-control" role="group" aria-label="Zoom controls">
+          <button id="zoom-out-button" type="button" aria-label="Zoom out">&minus;</button>
+          <span id="zoom-label">100%</span>
+          <button id="zoom-in-button" type="button" aria-label="Zoom in">+</button>
+        </div>
+      </div>
+
+      <div class="graph-layout">
+        <aside class="tier-column" aria-label="Course levels">
+          <div class="tier-label" data-tier="Advanced Topics"><span></span>Advanced Topics</div>
+          <div class="tier-label" data-tier="Graduate Major Courses"><span></span>Graduate Major Courses</div>
+          <div class="tier-label" data-tier="Undergraduate Major Courses"><span></span>Undergraduate Major Courses</div>
+          <div class="tier-label" data-tier="Foundational Science"><span></span>Foundational Science</div>
+        </aside>
+
+        <div class="graph-main">
+          <div id="graph-viewport" class="graph-viewport" tabindex="0" aria-label="Interactive course knowledge graph">
+            <div id="graph-world" class="graph-world">
+              <svg id="graph-edges" class="graph-edges" aria-hidden="true"></svg>
+              <div id="graph-nodes" class="graph-nodes"></div>
+              <div class="root-plaque">Back to Basics</div>
+            </div>
+            <div id="loading-state" class="canvas-message">Loading course data...</div>
+          </div>
+          <div id="course-list" class="course-list" hidden></div>
+        </div>
+
+        <aside class="legend-card" aria-labelledby="legend-title">
+          <h3 id="legend-title">Legend</h3>
+          <div class="legend-row"><span class="status-symbol"><i class="fas fa-inbox" aria-hidden="true"></i></span><div><strong>No resources yet</strong><p>Materials have not been collected.</p></div></div>
+          <div class="legend-row"><span class="status-symbol"><i class="fas fa-seedling" aria-hidden="true"></i></span><div><strong><span class="status-badge status-v10">v1.0</span></strong><p>An AI-assisted first draft is available.</p></div></div>
+          <div class="legend-row"><span class="status-symbol"><i class="fas fa-pen-nib" aria-hidden="true"></i></span><div><strong><span class="status-badge status-v11">v1.1</span></strong><p>Revised while taking the course.</p></div></div>
+          <div class="legend-row"><span class="status-symbol"><i class="fas fa-check-double" aria-hidden="true"></i></span><div><strong><span class="status-badge status-v12">v1.2</span></strong><p>Re-derived independently after completion.</p></div></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="course-dialog" class="course-dialog" aria-labelledby="dialog-title">
+    <form method="dialog"><button class="dialog-close" aria-label="Close course details">&times;</button></form>
+    <div id="dialog-content"></div>
+  </dialog>
+
+  <footer class="footer"><div class="container footer-inner"><span>&copy; <span id="year"></span> Can Zheng</span><span>Built for GitHub Pages</span></div></footer>
+  <script src="../../../site.js?v=20260727-single-dropdown"></script>
+  <script src="course_notes.js?v=20260728-v12-shared-shell"></script>
+</body>
+</html>
