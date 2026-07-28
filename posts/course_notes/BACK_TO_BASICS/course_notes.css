@@ -587,9 +587,12 @@ button { -webkit-tap-highlight-color: transparent; }
 .list-course:hover { border-color: var(--border-blue); background: var(--accent-soft); }
 
 .course-dialog {
-  position: relative;
+  position: fixed;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
   width: min(760px, calc(100% - 36px));
-  max-height: min(820px, calc(100vh - 40px));
+  max-height: min(820px, calc(100dvh - 40px));
+  margin: 0;
   padding: 0;
   overflow: hidden;
   border: 1px solid var(--border-blue);
@@ -609,7 +612,7 @@ button { -webkit-tap-highlight-color: transparent; }
   pointer-events: none;
 }
 #dialog-content {
-  max-height: min(820px, calc(100vh - 40px));
+  max-height: min(820px, calc(100dvh - 40px));
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
@@ -759,6 +762,34 @@ button { -webkit-tap-highlight-color: transparent; }
 .resource-action { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex: 0 0 auto; color: var(--accent); font-size: .78rem; font-weight: 700; }
 .resource-format { display: inline-flex; padding: 3px 7px; border: 1px solid var(--border-blue); border-radius: 999px; color: var(--accent); font-size: .7rem; font-weight: 800; letter-spacing: .06em; }
 
+.course-note-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+.course-note-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-blue);
+  border-radius: 10px;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent-soft) 58%, transparent);
+  font-size: .82rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: border-color .18s ease, background .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.course-note-button:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent-soft) 92%, var(--panel-solid));
+  box-shadow: 0 7px 18px color-mix(in srgb, var(--accent) 13%, transparent);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
 .recommendation-list { display: grid; gap: 10px; }
 .recommendation-card {
   border: 1px solid var(--border);
@@ -870,6 +901,50 @@ button { -webkit-tap-highlight-color: transparent; }
 }
 
 /* Shared site shell alignment */
+body.course-notes-roadmap {
+  overflow-x: clip;
+  color: var(--fg);
+  background:
+    radial-gradient(circle at 7% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 31rem),
+    radial-gradient(circle at 96% 12%, color-mix(in srgb, var(--beige) 16%, transparent), transparent 27rem),
+    var(--bg);
+  font-size: 16px;
+  line-height: 1.72;
+}
+.course-notes-roadmap .page-shell {
+  width: min(var(--content-width), calc(100% - 40px));
+  padding: 56px 0 26px;
+}
+.course-notes-roadmap .hero-section {
+  padding: 0 0 34px;
+}
+.course-notes-roadmap .hero-section::after {
+  display: none;
+}
+.course-notes-roadmap .hero-section h1 {
+  margin: 10px 0 14px;
+  max-width: 760px;
+  font-size: clamp(2.8rem, 6vw, 4.6rem);
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+.course-notes-roadmap .hero-copy {
+  max-width: 780px;
+  font-size: 1.05rem;
+}
+.course-notes-roadmap .motivation-card,
+.course-notes-roadmap .workflow-card,
+.course-notes-roadmap .graph-card {
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.course-notes-roadmap .motivation-card h2,
+.course-notes-roadmap .section-heading h2,
+.course-notes-roadmap .graph-heading h2,
+.course-notes-roadmap .dialog-body h2 {
+  letter-spacing: 0;
+}
 .course-notes-roadmap .header {
   position: sticky;
   top: 0;

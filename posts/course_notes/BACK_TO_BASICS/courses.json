@@ -166,7 +166,7 @@
       ],
       "recommendations": [
         {
-          "title": "[Chinsese] Introduction of Communication Systems",
+          "title": "[Chinese] Introduction of Communication Systems",
           "provider": "Professor Po-Ning Chen, NYCU EE.",
           "description": "The purpose of this course is to present a concise, yet mathematically rigorous, introduction to the main pillars of information theory. It thus naturally focuses on the foundational concepts and indispensable results of the subject for single-user systems, where a single data source or message needs to be reliably processed and communicated over a noiseless or noisy point-to-point channel. At the first part of this course, six meticulously core chapters with accompanying problems, emphasizing the key topics of information measures, lossless and lossy data compression, channel coding, and joint source-channel coding. Two appendices covering necessary and supplementary material in real analysis and in probability and stochastic processes are included. At the second part of the course, advanced topics concerning the information theoretic limits of discrete-time single-user stochastic systems with arbitrary statistical memory (i.e., systems that are not necessarily stationary, ergodic or information stable) will be covered.",
           "links": [
@@ -258,7 +258,7 @@
       ],
       "recommendations": [
         {
-          "title": "[Chinsese Lecture] Introduction of Communication Systems",
+          "title": "[Chinese Lecture] Introduction of Communication Systems",
           "provider": "Professor Po-Ning Chen, NYCU EE.",
           "description": "To give students a basic understanding of communications.",
           "links": [
@@ -300,7 +300,7 @@
       ],
       "recommendations": [
         {
-          "title": "[Chinsese Lecture] Introduction of Communication Systems",
+          "title": "[Chinese Lecture] Introduction of Communication Systems",
           "provider": "Professor Po-Ning Chen, NYCU EE.",
           "description": "The major goal of Introduction to Digital Communications is to teach students about the basic principles underlying the operation and design of a digital communication system. We expect a student who finishes the course to be able to understand the basic operating principles of current digital communication systems or standards. Moreover, we sincerely hope that a student who learns the course material will be equipped with the ability to analyze and design a digital communication system.",
           "links": [
@@ -319,7 +319,7 @@
           ]
         },
         {
-          "title": "[Chinsese Lecture] Introduction of Communication Systems",
+          "title": "[Chinese Lecture] Introduction of Communication Systems",
           "provider": "Professor Po-Ning Chen, NYCU EE.",
           "description": "Theories of information transmission in digital form from one or more sources to one or more destinations.",
           "links": [

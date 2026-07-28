@@ -16,10 +16,10 @@
   };
 
   const STATE_META = {
-    empty: { symbol: "🍂", label: "No resources", className: "status-empty" },
-    "v1.0": { symbol: "🍃", label: "v1.0", className: "status-v10" },
-    "v1.1": { symbol: "🌸", label: "v1.1", className: "status-v11" },
-    "v1.2": { symbol: "🍊", label: "v1.2", className: "status-v12" }
+    empty: { symbol: "\u{1F342}", label: "No resources", className: "status-empty" },
+    "v1.0": { symbol: "\u{1F343}", label: "v1.0", className: "status-v10" },
+    "v1.1": { symbol: "\u{1F338}", label: "v1.1", className: "status-v11" },
+    "v1.2": { symbol: "\u{1F34A}", label: "v1.2", className: "status-v12" }
   };
 
   // Used only when the page is opened directly with file://, where browsers block fetch(courses.json).
@@ -28,26 +28,26 @@
     "workflow": [
       {
         "number": "01",
-        "icon": "⌕",
+        "icon": "01",
         "title": "Select a strong course",
         "description": "Evaluate teaching quality through course structure, audience feedback, and the instructor's clarity and depth."
       },
       {
         "number": "02",
-        "icon": "▤",
+        "icon": "02",
         "title": "Collect the full learning set",
         "description": "Gather lectures, slides, textbooks, references, and simpler substitutes when key materials are unavailable."
       },
       {
         "number": "03",
-        "icon": "✦",
+        "icon": "03",
         "title": "Build the first draft",
         "description": "Use AI to synthesize the materials into a structured initial set of notes.",
         "version": "v1.0"
       },
       {
         "number": "04",
-        "icon": "♧",
+        "icon": "04",
         "title": "Refine and re-derive",
         "description": "Revise during study, then rebuild the course independently from beginning to end.",
         "versions": [
@@ -572,28 +572,34 @@
     elements.dialogContent.innerHTML = `
       <div class="dialog-body">
         <h2 id="dialog-title">${escapeHtml(course.title)}</h2>
-        <p class="dialog-tier">${escapeHtml(course.tier)} · <span class="status-badge ${meta.className}">${escapeHtml(meta.label)}</span></p>
+        <p class="dialog-tier">${escapeHtml(course.tier)} &middot; <span class="status-badge ${meta.className}">${escapeHtml(meta.label)}</span></p>
         <section class="dialog-section">
           <h3>Insights</h3>
-          <p>${escapeHtml(course.insights || "No insights have been recorded yet.")}</p>
+          <p>${escapeHtml(cleanText(course.insights) || "No insights have been recorded yet.")}</p>
         </section>
         <section class="dialog-section">
           <h3>Prerequisites</h3>
           <div class="prerequisite-list">${renderPrerequisites(course.prerequisites)}</div>
         </section>
         <section class="dialog-section">
-          <h3>Notes</h3>
-          <div class="dialog-items notes-list">${renderNotes(course.notes)}</div>
+          <h3>Textbooks</h3>
+          <div class="dialog-items textbook-list">${renderTextbooks(course.recommendations)}</div>
         </section>
         <section class="dialog-section">
-          <h3>Recommended Courses</h3>
+          <h3>Courses</h3>
+          ${renderCourseNoteButtons(course.notes)}
           <div class="recommendation-list">${renderRecommendations(course.recommendations)}</div>
         </section>
       </div>
     `;
 
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
     if (typeof elements.dialog.showModal === "function") elements.dialog.showModal();
     else elements.dialog.setAttribute("open", "");
+    window.requestAnimationFrame(() => {
+      window.scrollTo(scrollX, scrollY);
+    });
   }
 
   function renderPrerequisites(ids) {
@@ -605,8 +611,9 @@
   }
 
   function renderNotes(items) {
-    if (!Array.isArray(items) || !items.length) return `<div class="dialog-item"><span>No notes have been recorded yet.</span></div>`;
-    return items.map((item) => {
+    const validItems = Array.isArray(items) ? items.filter((item) => !isPlaceholderItem(item)) : [];
+    if (!validItems.length) return `<div class="dialog-item"><span>No notes have been recorded yet.</span></div>`;
+    return validItems.map((item) => {
       if (typeof item === "string") return `<div class="dialog-item"><strong>${escapeHtml(item)}</strong></div>`;
       const title = escapeHtml(item.title || "Untitled");
       const description = item.description ? `<span>${escapeHtml(item.description)}</span>` : "";
@@ -616,11 +623,46 @@
     }).join("");
   }
 
+  function renderCourseNoteButtons(items) {
+    if (!Array.isArray(items) || !items.length) return "";
+    const links = items
+      .filter((item) => item && typeof item !== "string" && item.url && !isPlaceholder(item.url))
+      .map((item) => {
+        const label = item.title || "Open notes";
+        const icon = item.format && String(item.format).toLowerCase().includes("pdf") ? "fas fa-file-pdf" : "fas fa-book-open";
+        return `<a class="course-note-button" href="${escapeAttribute(item.url)}" target="_blank" rel="noopener noreferrer" title="${escapeAttribute(label)}"><i class="${icon}" aria-hidden="true"></i><span>${escapeHtml(label)}</span></a>`;
+      });
+    if (!links.length) return "";
+    return `<div class="course-note-links" aria-label="Course notes">${links.join("")}</div>`;
+  }
+
+  function renderTextbooks(items) {
+    const books = [];
+    if (Array.isArray(items)) {
+      items.forEach((item) => {
+        (Array.isArray(item?.links) ? item.links : []).forEach((link) => {
+          const label = String(link?.label || "");
+          const url = String(link?.url || "");
+          if (label.toLowerCase().includes("book") || url.toLowerCase().includes("book")) {
+            books.push(link);
+          }
+        });
+      });
+    }
+    if (!books.length) return `<div class="dialog-item"><span>No textbooks have been recorded yet.</span></div>`;
+    return books.map((book) => {
+      const label = book.label || "Open textbook";
+      if (!book.url) return `<div class="dialog-item"><strong>${escapeHtml(label)}</strong></div>`;
+      return `<a class="dialog-item resource-card resource-link" href="${escapeAttribute(book.url)}" target="_blank" rel="noopener noreferrer"><div><strong>${escapeHtml(label)}</strong></div><div class="resource-action"><small class="resource-format">BOOK</small><span>Open in new tab</span></div></a>`;
+    }).join("");
+  }
+
   function renderRecommendations(items) {
-    if (!Array.isArray(items) || !items.length) return `<div class="dialog-item"><span>No recommendations have been recorded yet.</span></div>`;
-    return items.map((item) => {
+    const validItems = Array.isArray(items) ? items.filter((item) => !isPlaceholderItem(item)) : [];
+    if (!validItems.length) return `<div class="dialog-item"><span>No recommendations have been recorded yet.</span></div>`;
+    return validItems.map((item) => {
       if (typeof item === "string") return `<div class="dialog-item"><strong>${escapeHtml(item)}</strong></div>`;
-      const links = Array.isArray(item.links) ? item.links : [];
+      const links = Array.isArray(item.links) ? item.links.filter((link) => !isPlaceholderItem(link)) : [];
       const linksHtml = links.length
         ? `<div class="recommendation-links">${links.map((link) => {
           const label = link.label || "Open resource";
@@ -650,6 +692,22 @@
     if (label.includes("information") || label.includes("homepage") || label.includes("course")) return "fas fa-circle-info";
     if (url.endsWith(".pdf")) return "fas fa-file-pdf";
     return "fas fa-arrow-up-right-from-square";
+  }
+
+  function isPlaceholder(value) {
+    const normalized = String(value || "").trim().replace(/[.\s]+$/g, "").toUpperCase();
+    return !normalized || normalized === "NULL" || normalized === "NONE";
+  }
+
+  function isPlaceholderItem(item) {
+    if (!item) return true;
+    if (typeof item === "string") return isPlaceholder(item);
+    const values = [item.title, item.label, item.url, item.description, item.provider];
+    return values.some((value) => value !== undefined) && values.every(isPlaceholder);
+  }
+
+  function cleanText(value) {
+    return isPlaceholder(value) ? "" : String(value);
   }
 
   function escapeAttribute(value) {
