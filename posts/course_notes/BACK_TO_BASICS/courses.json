@@ -354,7 +354,7 @@
       "insights": "NULL.",
       "recommendations": [
         {
-          "title": "[Lecture] Estimation and Detection Theory",
+          "title": "Estimation and Detection Theory",
           "provider": "Professor Barry Van Veen, University of Wisconsin-Madison, ECE",
           "description": "High level treatment of various topics related to parameter estimation and signal detection. Personal opinion: a bit hard to understand.",
           "links": [
@@ -379,7 +379,7 @@
       "id": "multiple-antenna-communications",
       "title": "Multiple Antenna Communications",
       "tier": "Graduate Major Courses",
-      "state": "v1.0",
+      "state": "v1.1",
       "prerequisites": [
         "calculus",
         "linear-algebra",
@@ -388,7 +388,7 @@
       "insights": "NULL.",
       "recommendations": [
         {
-          "title": "[Lecture] Course on Multiple Antenna Communications",
+          "title": "Course on Multiple Antenna Communications",
           "provider": "Professor Emil Björnson,  KTH Royal Institute of Technology, Wireless Communication",
           "description": "This is the full lecture series for the course Multiple Antenna Communications at Linköping University and KTH, in the way it was given in 2021.",
           "links": [
@@ -410,7 +410,7 @@
             },
             {
               "label": "Notes",
-              "url": "https://canzheng0331.github.io/posts/course_notes/multi_antenna/notes_on_multi_antennas.pdf",
+              "url": "https://canzheng0331.github.io/posts/course_notes/multi_antenna/notes_on_multi_antennas_v1_1.pdf",
               "title": "Notes on Multiple Antenna Communications"
             }
           ]
