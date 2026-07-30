@@ -342,17 +342,34 @@
       ]
     },
     {
-      "id": "detection-and-estimation",
-      "title": "Detection and Estimation",
+      "id": "statistical-signal-processing",
+      "title": "Statistical Signal Processing",
       "tier": "Graduate Major Courses",
-      "state": "v1.0",
+      "state": "empty",
       "prerequisites": [
         "calculus",
         "linear-algebra",
-        "probability"
+        "probability",
+        "signals-and-systems",
+        "digital-communications"
       ],
-      "insights": "NULL.",
+      "insights": "Sometimes called 'Detection and Estimation' theory.",
       "recommendations": [
+        {
+          "title": "Statistical Signal Processing (2012)",
+          "provider": "Professor Joonnho Cho, POSTECH, ECE",
+          "description": "Covers likelihood-based and Bayesian inference, inference without explicit likelihoods, and recent advances in statistical signal processing.",
+          "links": [
+            {
+              "label": "Youtube",
+              "url": "https://www.youtube.com/playlist?list=PL2fxOURY4wI6Ys7foXrSiOHexU1FgI6xw"
+            },
+            {
+              "label": "BiliBili",
+              "url": "https://www.bilibili.com/video/BV1T13h6AE75/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            }
+          ]
+        }
         {
           "title": "Estimation and Detection Theory",
           "provider": "Professor Barry Van Veen, University of Wisconsin-Madison, ECE",
