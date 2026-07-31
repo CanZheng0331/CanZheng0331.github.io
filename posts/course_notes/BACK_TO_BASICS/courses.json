@@ -60,22 +60,31 @@
       "id": "linear-algebra",
       "title": "Linear Algebra",
       "tier": "Foundational Science",
-      "state": "empty",
+      "state": "v1.1",
       "prerequisites": [],
       "insights": "NULL",
       "recommendations": [
         {
-          "title": "NULL",
-          "provider": "NULL",
-          "description": "NULL.",
-          "links": [
+          "title": "MIT 18.06 Linear Algebra",
+          "provider": "Professor Gilbert Strang",
+          "description": "It is perhaps one of the most famous linear algebra courses in the world. However, I believe that, given that the course is over 20 years old, there should be even better courses that build upon its foundations.",
+          "links":[
             {
-              "label": "NULL",
-              "url": "NULL"
+              "label": "Information",
+              "url": "https://web.mit.edu/18.06/www/"
             },
             {
-              "label": "NULL",
-              "url": "NULL"
+              "label": "Youtube",
+              "url": "https://www.youtube.com/playlist?list=PLE7DDD91010BC51F8"
+            },
+            {
+              "label": "BiliBili",
+              "url": "https://www.bilibili.com/video/BV1ix411f7Yp/?spm_id_from=333.337.search-card.all.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            },
+            {
+              "label": "Notes",
+              "url": "https://canzheng0331.github.io/posts/course_notes/linear_algebra/handwrite_notes_on_1806.pdf",
+              "title": "Handwritten notes"
             }
           ]
         }
