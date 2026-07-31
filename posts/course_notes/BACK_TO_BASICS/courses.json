@@ -280,6 +280,35 @@
       ]
     },
     {
+      "id": "random-process",
+      "title": "Random Process",
+      "tier": "Graduate Major Courses",
+      "state": "empty",
+      "prerequisites": [
+        "calculus",
+        "linear-algebra",
+        "probability"
+      ],
+      "insights": "...",
+      "recommendations": [
+        {
+          "title": "[Chinese] Stochastic Processes",
+          "provider": "Professor Po-Ning Chen, NYCU EE.",
+          "description": "This course intends to provide students with the necessary (fundamental and advanced) background on random processes.",
+          "links": [
+            {
+              "label": "Youtube",
+              "url": "https://www.youtube.com/playlist?list=PLj6E8qlqmkFvw7Rt63yBqai2HmPKF0V0J"
+            },
+            {
+              "label": "Bilibili",
+              "url": "https://www.bilibili.com/video/BV1rB7q6XEJK?spm_id_from=333.788.videopod.sections&vd_source=14f65cfb1b4dff2d972e61e173f4e96e&p=2"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "wireless-communications",
       "title": "Wireless Communications",
       "tier": "Graduate Major Courses",
