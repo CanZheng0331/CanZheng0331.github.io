@@ -392,7 +392,7 @@ button { -webkit-tap-highlight-color: transparent; }
 
 .graph-layout {
   display: grid;
-  grid-template-columns: 170px minmax(0, 1fr) 255px;
+  grid-template-columns: 170px minmax(0, 1fr);
   gap: 14px;
   min-height: 690px;
 }
@@ -419,6 +419,7 @@ button { -webkit-tap-highlight-color: transparent; }
   height: 0;
   border-top: 1px dashed color-mix(in srgb, var(--muted) 30%, transparent);
 }
+.tier-label[data-tier="Advanced Topics"]::after { display: none; }
 .tier-label > span {
   width: 10px;
   height: 10px;
@@ -474,9 +475,13 @@ button { -webkit-tap-highlight-color: transparent; }
 
 .course-node {
   position: absolute;
-  width: 170px;
-  min-height: 106px;
-  padding: 13px 12px;
+  display: grid;
+  grid-template-rows: 38px 1fr;
+  row-gap: 6px;
+  align-items: center;
+  width: 154px;
+  height: 116px;
+  padding: 11px 10px;
   transform: translate(-50%, -50%);
   cursor: pointer;
   border: 1px solid var(--border-blue);
@@ -499,19 +504,39 @@ button { -webkit-tap-highlight-color: transparent; }
   border-color: var(--accent);
   box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 12%, transparent), 0 18px 42px rgba(0,0,0,.25);
 }
+.node-meta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
 .node-symbol {
   display: grid;
-  width: 43px;
-  height: 43px;
-  margin: 0 auto 8px;
+  width: 34px;
+  height: 34px;
+  margin: 0;
   place-items: center;
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 12px;
   background: color-mix(in srgb, var(--panel) 82%, transparent);
-  font-size: 1.42rem;
+  font-size: 1.15rem;
 }
-.node-title { display: block; font-size: .94rem; font-weight: 700; line-height: 1.25; }
-.node-status { display: inline-flex; margin-top: 7px; }
+.node-title {
+  display: -webkit-box;
+  overflow: hidden;
+  align-self: center;
+  font-size: .82rem;
+  font-weight: 700;
+  line-height: 1.2;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+.node-status {
+  display: inline-flex;
+  min-height: 21px;
+  padding: 2px 7px;
+  font-size: .7rem;
+}
 .root-plaque {
   position: absolute;
   left: 550px;
@@ -538,22 +563,33 @@ button { -webkit-tap-highlight-color: transparent; }
 .canvas-message.error { color: #efb0a6; }
 
 .legend-card {
+  grid-column: 1 / -1;
   align-self: start;
-  padding: 18px;
+  display: grid;
+  grid-template-columns: auto repeat(4, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 10px;
+  padding: 14px;
   border: 1px solid var(--border);
   border-radius: 18px;
   background: color-mix(in srgb, var(--panel-solid) 78%, transparent);
   box-shadow: var(--shadow-sm);
 }
-.legend-card h3 { margin: 0 0 11px; font-size: 1.3rem; }
+.legend-card h3 {
+  align-self: center;
+  margin: 0 10px 0 0;
+  font-size: 1.08rem;
+  white-space: nowrap;
+}
 .legend-row {
   display: grid;
   grid-template-columns: 40px 1fr;
   gap: 10px;
-  padding: 13px 0;
-  border-bottom: 1px solid var(--border);
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
 }
-.legend-row:last-child { border-bottom: 0; }
+.legend-row:last-child { border-bottom: 1px solid var(--border); }
 .status-symbol {
   display: grid;
   width: 38px;
@@ -693,8 +729,8 @@ button { -webkit-tap-highlight-color: transparent; }
 
 @media (max-width: 1180px) {
   .graph-layout { grid-template-columns: 145px minmax(0, 1fr); }
-  .legend-card { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-  .legend-card h3 { grid-column: 1 / -1; }
+  .legend-card { grid-template-columns: auto repeat(4, minmax(0, 1fr)); }
+  .legend-card h3 { grid-column: auto; }
   .legend-row { border: 1px solid var(--border); border-radius: 13px; padding: 11px; }
   .motivation-card { grid-template-columns: 1fr; }
 }
@@ -707,6 +743,7 @@ button { -webkit-tap-highlight-color: transparent; }
   .graph-layout { grid-template-columns: 1fr; }
   .tier-column { display: none; }
   .legend-card { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .legend-card h3 { grid-column: 1 / -1; }
   .graph-toolbar { flex-wrap: wrap; }
   .toolbar-spacer { display: none; }
   .search-control { flex: 1 1 250px; }

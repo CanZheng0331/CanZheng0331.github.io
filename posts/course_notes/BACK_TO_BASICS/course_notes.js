@@ -16,7 +16,7 @@
   };
 
   const STATE_META = {
-    empty: { symbol: "\u{1F342}", label: "No resources", className: "status-empty" },
+    empty: { symbol: "\u{1F342}", label: "NULL", className: "status-empty" },
     "v1.0": { symbol: "\u{1F343}", label: "v1.0", className: "status-v10" },
     "v1.1": { symbol: "\u{1F338}", label: "v1.1", className: "status-v11" },
     "v1.2": { symbol: "\u{1F34A}", label: "v1.2", className: "status-v12" }
@@ -407,7 +407,7 @@
 
     byTier.forEach((group) => {
       group.sort((a, b) => positions.get(a.id).x - positions.get(b.id).x);
-      const minGap = 195;
+      const minGap = 172;
       for (let i = 1; i < group.length; i += 1) {
         const previous = positions.get(group[i - 1].id);
         const current = positions.get(group[i].id);
@@ -441,9 +441,11 @@
       button.style.left = `${position.x}px`;
       button.style.top = `${position.y}px`;
       button.innerHTML = `
-        <span class="node-symbol" aria-hidden="true">${meta.symbol}</span>
+        <span class="node-meta">
+          <span class="node-symbol" aria-hidden="true">${meta.symbol}</span>
+          <span class="node-status status-badge ${meta.className}">${escapeHtml(meta.label)}</span>
+        </span>
         <span class="node-title">${escapeHtml(course.title)}</span>
-        <span class="node-status status-badge ${meta.className}">${escapeHtml(meta.label)}</span>
       `;
       button.addEventListener("click", (event) => {
         event.stopPropagation();
