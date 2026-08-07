@@ -163,6 +163,11 @@
             {
               "label": "BiliBili",
               "url": "https://www.bilibili.com/video/BV1957j6UEzW/?spm_id_from=333.1387.upload.video_card.click&vd_source=14f65cfb1b4dff2d972e61e173f4e96e"
+            },
+            {
+              "label": "Notes",
+              "url": "https://canzheng0331.github.io/posts/course_notes/information_theory/notes_on_information_theory_mackay_v1_0.pdf",
+              "title": "Notes on Information Theory"
             }
           ]
         }
@@ -358,7 +363,7 @@
             {
               "label": "Notes",
               "url": "https://canzheng0331.github.io/posts/course_notes/wireless_communications/notes_on_wireless_communications_henk_v1_1.pdf",
-              "title": "Notes on Fundamentals of Wireless Communications"
+              "title": "Notes on Wireless Communications"
             }
           ]
         },
