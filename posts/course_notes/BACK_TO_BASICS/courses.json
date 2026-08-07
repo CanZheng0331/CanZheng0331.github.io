@@ -121,7 +121,7 @@
       "id": "information-theory",
       "title": "Information Theory",
       "tier": "Undergraduate Major Courses",
-      "state": "empty",
+      "state": "v1.1",
       "prerequisites": [
         "calculus",
         "probability"
@@ -317,7 +317,7 @@
       "id": "wireless-communications",
       "title": "Wireless Communications",
       "tier": "Graduate Major Courses",
-      "state": "v1.0",
+      "state": "v1.1",
       "prerequisites": [
         "calculus",
         "linear-algebra",
