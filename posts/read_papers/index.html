@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Annotated Paper Notes · Can Zheng</title>
-<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="../../styles.css?v=20260727-shared-logo-nav" rel="stylesheet"/>
+<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="../../styles.css?v=20260809-notes-entry-date" rel="stylesheet"/>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
 <meta content="light dark" name="color-scheme"/>
@@ -147,7 +147,7 @@
             <a class="paper-title" href="${paper.pdf}" target="_blank" rel="noopener">${escapeHtml(paper.title)}</a>
             <a class="paper-source" href="${paper.source}" target="_blank" rel="noopener" aria-label="Open original paper" title="Open original paper"><i class="fas fa-arrow-up-right-from-square"></i></a>
           </div>
-          <div class="paper-line-tags">${tags}<span class="paper-added">Added ${escapeHtml(paper.added || "")}</span></div>
+          <div class="paper-line-tags"><span class="paper-added">Added ${escapeHtml(paper.added || "")}</span>${tags}</div>
         </li>
         `;
       }).join("") || '<li class="muted">No papers match the selected filters.</li>';
