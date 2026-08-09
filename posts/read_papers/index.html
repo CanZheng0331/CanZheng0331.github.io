@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html data-site-ready="false" lang="en">
 <head>
@@ -21,7 +21,7 @@
 <div class="dropdown"><a class="nav-link" href="../../biography.html">Biography</a><div class="dropdown-content"><a href="../../biography.html#education">Education</a><a href="../../biography.html#experience">Work Experience</a><a href="../../biography.html#service">Service</a><a href="../../biography.html#respect">People I Respect</a></div></div>
 <div class="dropdown"><a class="nav-link" href="../../researches.html">Research</a><div class="dropdown-content"><a href="../../researches.html?filter=past">Past</a><a href="../../researches.html?filter=ongoing">Ongoing</a><a href="../../researches.html?filter=future">Future</a><a href="../../researches/grants.html">Grants</a></div></div>
 <div class="dropdown"><a class="nav-link" href="../../publications.html">Publications</a><div class="dropdown-content"><a href="../../publications.html#journal">Journal Papers</a><a href="../../publications.html#conference">Conference Papers</a></div></div>
-<div class="dropdown"><a aria-current="page" class="nav-link" href="../../blog.html">Blogs</a><div class="dropdown-content"><a href="../../blog.html">Technical Blogs</a><a href="../../posts/read_papers/">Paper Notes</a><a href="../../posts/course_notes/">Course Notes</a></div></div>
+<div class="dropdown"><a aria-current="page" class="nav-link" href="../../blog.html">Blogs</a><div class="dropdown-content"><a href="../../blog.html">Technical Blogs</a><a href="../../posts/read_papers/">Paper Notes</a><a href="../../posts/course_notes/">Course Notes</a><a href="../../posts/course_notes/BACK_TO_BASICS/">Basics</a></div></div>
 <a class="nav-link" href="../../photos.html">Photos</a>
 <a class="nav-link" href="../../others.html">Others</a>
 </nav>
@@ -147,7 +147,7 @@
             <a class="paper-title" href="${paper.pdf}" target="_blank" rel="noopener">${escapeHtml(paper.title)}</a>
             <a class="paper-source" href="${paper.source}" target="_blank" rel="noopener" aria-label="Open original paper" title="Open original paper"><i class="fas fa-arrow-up-right-from-square"></i></a>
           </div>
-          <div class="paper-line-tags"><span class="paper-added">Added ${escapeHtml(paper.added || "")}</span>${tags}</div>
+          <div class="paper-line-tags"><span class="paper-added"><i class="far fa-calendar-alt" aria-hidden="true"></i> ${escapeHtml(paper.added || "")}</span>${tags}</div>
         </li>
         `;
       }).join("") || '<li class="muted">No papers match the selected filters.</li>';

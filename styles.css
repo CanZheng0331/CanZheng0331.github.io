@@ -940,7 +940,7 @@ pre code, .prose pre code { display: block; padding: 0; border: 0; border-radius
 .course-line-main, .paper-line-main { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; }
 .course-title, .paper-title { font-weight: 700; }
 .course-line-tags, .paper-line-tags { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
-.course-added, .paper-added { color: var(--gold); font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
+.course-added, .paper-added { color: var(--gold); display: inline-flex; align-items: center; gap: 4px; font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
 .paper-source, .course-toggle { width: 30px; height: 30px; min-height: 30px; padding: 0; }
 .course-references { margin: 9px 0 2px; padding: 10px 13px; border-left: 3px solid var(--accent); border-radius: 9px; background: var(--accent-soft); }
 .course-references strong { display: block; margin-bottom: 4px; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; }
@@ -1325,7 +1325,7 @@ img[data-missing], .media-placeholder {
     .course-toggle[aria-expanded="true"] i { transform: rotate(180deg); }
     .course-line-tags { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 3px; }
     .course-tag { background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: 6px; color: var(--accent); display: inline-block; font-size: 0.78rem; font-weight: 700; margin: 0 6px 0 0; padding: 2px 6px; white-space: nowrap; }
-    .course-added { color: var(--gold); display: inline-block; font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
+    .course-added { color: var(--gold); display: inline-flex; align-items: center; gap: 4px; font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
     .course-references { margin: 8px 0 2px; padding: 8px 12px; background: color-mix(in srgb, var(--accent) 6%, transparent); border-left: 3px solid var(--accent); border-radius: 6px; }
     .course-references[hidden] { display: none; }
     .course-references strong { display: block; font-size: 0.82rem; margin-bottom: 4px; color: var(--muted); text-transform: uppercase; }
@@ -1398,7 +1398,7 @@ html.note-view-root,
     .paper-line-tags { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 3px; }
     .paper-title { font-weight: 700; }
     .paper-tag { background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: 6px; color: var(--accent); display: inline-block; font-size: 0.78rem; font-weight: 700; margin: 0 6px 0 0; padding: 2px 6px; white-space: nowrap; }
-    .paper-added { color: var(--gold); display: inline-block; font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
+    .paper-added { color: var(--gold); display: inline-flex; align-items: center; gap: 4px; font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
     .paper-source { align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 6px; color: var(--accent); display: inline-flex; height: 28px; justify-content: center; text-decoration: none; width: 28px; }
     .paper-source:hover { border-color: var(--accent); text-decoration: none; }
     @media (max-width: 680px) {
