@@ -1136,7 +1136,14 @@ img[data-missing], .media-placeholder {
     body.post-view main.container { height: calc(100vh - 74px); padding-bottom: 18px; }
     body.post-view #article-section { display: flex; flex-direction: column; height: calc(100vh - 106px); margin-bottom: 0; overflow: hidden; padding: 22px 28px; transform: none; }
     .post-reader-head { flex: 0 0 auto; padding-right: 84px; border-bottom: 1px solid var(--border); margin-bottom: 16px; position: relative; }
-    .post-reader-head h1 { margin-top: 0; margin-bottom: 12px; }
+    .post-reader-head h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      max-width: min(980px, calc(100% - 12px));
+      font-size: clamp(2rem, 3.4vw, 3.35rem);
+      line-height: 1.16;
+      overflow-wrap: anywhere;
+    }
     .post-reader-head #post-tags { margin-bottom: 16px; }
     .post-layout { display: grid; grid-template-columns: minmax(180px, 260px) minmax(0, 1fr); gap: 28px; align-items: stretch; flex: 1 1 auto; min-height: 0; }
     .post-back-link { position: absolute; right: 0; top: 0; z-index: 20; display: none; align-items: center; gap: 6px; width: fit-content; padding: 8px 12px; border-radius: 8px; background: color-mix(in srgb, var(--card) 94%, transparent); border: 1px solid var(--border); box-shadow: var(--shadow-sm); font-weight: 500; }
