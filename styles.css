@@ -1115,12 +1115,20 @@ img[data-missing], .media-placeholder {
       margin: 0 .08em !important;
       vertical-align: baseline;
     }
+    #post-content mjx-container[jax="CHTML"] > mjx-math {
+      display: inline !important;
+      white-space: nowrap;
+    }
     #post-content mjx-container[display="true"] {
       display: block !important;
       margin: 1em 0 !important;
       text-align: center;
       overflow-x: auto;
       overflow-y: hidden;
+    }
+    #post-content mjx-container[display="true"] > mjx-math {
+      display: inline-block !important;
+      white-space: normal;
     }
     html.post-view-root,
     html.post-view-root body.post-view { overflow: hidden; }
