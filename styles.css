@@ -1108,8 +1108,8 @@ img[data-missing], .media-placeholder {
       outline: none;
       cursor: pointer;
     }
-    #post-content .math-display mjx-container { display: block !important; margin: 1em 0 !important; text-align: center; }
-    #post-content mjx-container[display="false"] { display: inline-block !important; margin: 0 .1em !important; }
+    #post-content mjx-container[display="true"] { display: block !important; margin: 1em 0 !important; text-align: center; overflow-x: auto; overflow-y: hidden; }
+    #post-content mjx-container[display="false"] { display: inline !important; margin: 0 .08em !important; vertical-align: baseline; }
     html.post-view-root,
     html.post-view-root body.post-view { overflow: hidden; }
     body.post-view { overflow: hidden; }

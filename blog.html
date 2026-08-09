@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Technical Blogs · Can Zheng</title>
-<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="styles.css?v=20260727-shared-logo-nav" rel="stylesheet"/>
+<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="styles.css?v=20260809-blog-math" rel="stylesheet"/>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
@@ -143,31 +143,16 @@ const POSTS_INDEX = "posts/posts.json";
 
     function extractMath(md) {
       const chunks = [];
-      let out = ''; let i = 0;
-      const pushToken = (text) => { const key = `@@MATH_${chunks.length}@@`; chunks.push(text); return key; };
-      while (i < md.length) {
-        if (md.startsWith('$$', i)) { const j = md.indexOf('$$', i + 2); if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; } }
-        if (md.startsWith('\\[', i)) { const j = md.indexOf('\\]', i + 2); if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; } }
-        if (md.startsWith('\\(', i)) { const j = md.indexOf('\\)', i + 2); if (j !== -1) { out += pushToken(md.slice(i, j + 2)); i = j + 2; continue; } }
-        if (md[i] === '$' && md[i+1] !== '$') {
-          let j = i + 1;
-          while (j < md.length) { if (md[j] === '\\') { j += 2; continue; } if (md[j] === '$') break; j++; }
-          if (j < md.length && md[j] === '$') { out += pushToken(md.slice(i, j + 1)); i = j + 1; continue; }
-        }
-        out += md[i++];
-      }
-      return { masked: out, chunks };
+      const masked = md.replace(/(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|(?<!\\)\$(?!\s)(?:\\.|[^\n$\\])+(?<!\s)(?<!\\)\$)/g, (match) => {
+        const token = `@@MATH_${chunks.length}@@`;
+        chunks.push(match);
+        return token;
+      });
+      return { masked, chunks };
     }
 
     function restoreMath(html, chunks) {
-      let out = html;
-      chunks.forEach((raw, idx) => {
-        const key = `@@MATH_${idx}@@`;
-        const isDisplay = (/^\$\$[\s\S]*\$\$$/.test(raw) || /^\\\[[\s\S]*\\\]$/.test(raw));
-        const replacement = isDisplay ? `<div class="math-display">${raw}</div>` : raw;
-        out = out.replaceAll(key, replacement);
-      });
-      return out;
+      return html.replace(/@@MATH_(\d+)@@/g, (_, index) => chunks[Number(index)] || "");
     }
 
     function slugifyHeading(text, fallback) {
