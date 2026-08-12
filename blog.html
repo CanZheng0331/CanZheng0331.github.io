@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Technical Blogs · Can Zheng</title>
-<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="styles.css?v=20260812-blog-reading-time" rel="stylesheet"/>
+<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="styles.css?v=20260813-blog-reader-flow" rel="stylesheet"/>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
@@ -51,10 +51,10 @@
 </ul>
 </section>
 <article class="prose card" hidden="" id="article-section">
+<a class="post-back-link" href="blog.html" id="post-back-link"><i class="fas fa-arrow-left"></i> Back</a>
 <div class="post-reader-head">
 <h1 id="post-title">Loading...</h1>
 <div id="post-tags"></div>
-<a class="post-back-link" href="blog.html" id="post-back-link"><i class="fas fa-arrow-left"></i> Back</a>
 </div>
 <div class="post-layout">
 <aside class="post-toc" hidden="" id="post-toc">
@@ -212,7 +212,7 @@ const POSTS_INDEX = "posts/posts.json";
         tocObserver = null;
       }
       if (tocScrollHandler) {
-        postContent.removeEventListener("scroll", tocScrollHandler);
+        articleSection.removeEventListener("scroll", tocScrollHandler);
         tocScrollHandler = null;
       }
 
@@ -245,8 +245,8 @@ const POSTS_INDEX = "posts/posts.json";
         link.textContent = heading.textContent.trim();
         link.addEventListener("click", (event) => {
           event.preventDefault();
-          postContent.scrollTo({
-            top: Math.max(0, heading.offsetTop - postContent.offsetTop - 12),
+          articleSection.scrollTo({
+            top: Math.max(0, heading.offsetTop - articleSection.offsetTop - 12),
             behavior: "smooth"
           });
           history.replaceState(null, "", `#${encodeURIComponent(uniqueId)}`);
@@ -268,10 +268,10 @@ const POSTS_INDEX = "posts/posts.json";
         }
       };
       const updateActiveFromScroll = () => {
-        const currentTop = postContent.scrollTop + 24;
+        const currentTop = articleSection.scrollTop + 24;
         let currentHeading = headings[0];
         headings.forEach((heading) => {
-          const headingTop = heading.offsetTop - postContent.offsetTop;
+          const headingTop = heading.offsetTop - articleSection.offsetTop;
           if (headingTop <= currentTop) {
             currentHeading = heading;
           }
@@ -289,7 +289,7 @@ const POSTS_INDEX = "posts/posts.json";
           tocScrollTicking = false;
         });
       };
-      postContent.addEventListener("scroll", tocScrollHandler, { passive: true });
+      articleSection.addEventListener("scroll", tocScrollHandler, { passive: true });
 
       tocObserver = new IntersectionObserver((entries) => {
         const visible = entries
@@ -297,7 +297,7 @@ const POSTS_INDEX = "posts/posts.json";
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
         if (!visible) return;
         setActiveLink(visible.target.id);
-      }, { root: postContent, rootMargin: "-12% 0px -70% 0px", threshold: 0.01 });
+      }, { root: articleSection, rootMargin: "-12% 0px -70% 0px", threshold: 0.01 });
 
       headings.forEach(heading => tocObserver.observe(heading));
       updateActiveFromScroll();
@@ -379,10 +379,10 @@ const POSTS_INDEX = "posts/posts.json";
       document.body.classList.remove('pdf-mode');
       postToc.hidden = true;
       postTocList.innerHTML = "";
-      document.title = `${post.title} - Can Zheng`;
+      document.title = `${post.title} · Can Zheng`;
       postTitle.textContent = post.title;
       postTags.innerHTML = post.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("");
-      postContent.scrollTop = 0;
+      articleSection.scrollTop = 0;
 
       if (post.file.toLowerCase().endsWith(".pdf")) {
          window.location.replace(post.file);
@@ -396,7 +396,7 @@ const POSTS_INDEX = "posts/posts.json";
              const htmlMasked = marked.parse(masked);
              const html = restoreMath(htmlMasked, chunks);
              postContent.innerHTML = html;
-             postContent.scrollTop = 0;
+             articleSection.scrollTop = 0;
              enhanceCodeBlocks();
              buildPostToc();
              await new Promise(requestAnimationFrame);

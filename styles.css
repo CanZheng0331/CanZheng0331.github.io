@@ -1207,22 +1207,22 @@ img[data-missing], .media-placeholder {
     html.post-view-root body.post-view { overflow: hidden; }
     body.post-view { overflow: hidden; }
     body.post-view main.container { height: calc(100vh - 74px); padding-bottom: 18px; }
-    body.post-view #article-section { display: flex; flex-direction: column; height: calc(100vh - 106px); margin-bottom: 0; overflow: hidden; padding: 22px 28px; transform: none; }
-    .post-reader-head { flex: 0 0 auto; padding-right: 84px; border-bottom: 1px solid var(--border); margin-bottom: 16px; position: relative; }
+    body.post-view #article-section { height: calc(100vh - 106px); margin-bottom: 0; overflow: auto; padding: 22px 28px; position: relative; transform: none; scrollbar-gutter: stable; }
+    .post-reader-head { padding-right: 96px; border-bottom: 1px solid var(--border); margin-bottom: 16px; position: relative; }
     .post-reader-head h1 {
       margin-top: 0;
       margin-bottom: 12px;
-      max-width: min(980px, calc(100% - 12px));
-      font-size: clamp(2rem, 3.4vw, 3.35rem);
+      max-width: min(920px, calc(100% - 12px));
+      font-size: clamp(1.65rem, 2.7vw, 2.45rem);
       line-height: 1.16;
       overflow-wrap: anywhere;
     }
     .post-reader-head #post-tags { margin-bottom: 16px; }
-    .post-layout { display: grid; grid-template-columns: minmax(180px, 260px) minmax(0, 1fr); gap: 28px; align-items: stretch; flex: 1 1 auto; min-height: 0; }
-    .post-back-link { position: absolute; right: 0; top: 0; z-index: 20; display: none; align-items: center; gap: 6px; width: fit-content; padding: 8px 12px; border-radius: 8px; background: color-mix(in srgb, var(--card) 94%, transparent); border: 1px solid var(--border); box-shadow: var(--shadow-sm); font-weight: 500; }
+    .post-layout { display: grid; grid-template-columns: minmax(180px, 260px) minmax(0, 1fr); gap: 28px; align-items: start; min-height: 0; }
+    .post-back-link { position: sticky; float: right; right: 0; top: 0; z-index: 30; display: none; align-items: center; gap: 6px; width: fit-content; padding: 8px 12px; border-radius: 8px; background: color-mix(in srgb, var(--card) 94%, transparent); border: 1px solid var(--border); box-shadow: var(--shadow-sm); font-weight: 500; backdrop-filter: blur(12px); }
     body.post-view .post-back-link { display: inline-flex; }
     .post-back-link:hover { text-decoration: none; border-color: var(--accent); }
-    .post-toc { min-height: 0; overflow: auto; border-right: 1px solid var(--border); padding: 4px 16px 8px 0; font-size: 0.9rem; text-align: left !important; scrollbar-gutter: stable; }
+    .post-toc { max-height: calc(100vh - 190px); overflow: auto; position: sticky; top: 0; border-right: 1px solid var(--border); padding: 4px 16px 8px 0; font-size: 0.9rem; text-align: left !important; scrollbar-gutter: stable; }
     .post-toc * { text-align: left !important; }
     .post-toc[hidden] { display: none; }
     .post-toc-title { align-self: stretch; color: var(--muted); display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; margin: 0 0 10px; text-align: left !important; text-transform: uppercase; width: 100%; }
@@ -1232,7 +1232,7 @@ img[data-missing], .media-placeholder {
     .post-toc .toc-level-1 { font-weight: 700; color: var(--fg); }
     .post-toc .toc-level-3 { padding-left: 24px; font-size: 0.86rem; }
     .post-toc .toc-level-4 { padding-left: 38px; font-size: 0.82rem; }
-    #post-content { min-width: 0; min-height: 0; overflow: auto; padding-right: 8px; scrollbar-gutter: stable; }
+    #post-content { min-width: 0; min-height: 0; overflow: visible; padding-right: 8px; }
     .post-toc[hidden] + #post-content { grid-column: 1 / -1; }
     #post-content h1, #post-content h2, #post-content h3, #post-content h4 { scroll-margin-top: 18px; }
     body.pdf-mode { overflow: hidden; }
@@ -1249,10 +1249,10 @@ img[data-missing], .media-placeholder {
       body.post-view { overflow: auto; }
       body.post-view main.container { height: auto; }
       body.post-view #article-section { height: auto; min-height: calc(100vh - 106px); overflow: visible; }
-      .post-reader-head { padding-right: 0; position: sticky; top: 74px; z-index: 20; background: var(--card); }
-      .post-toc { max-height: 180px; border-right: 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; padding: 0 0 14px; }
+      .post-reader-head { padding-right: 0; position: relative; top: auto; z-index: 1; background: transparent; }
+      .post-toc { position: relative; top: auto; max-height: 180px; border-right: 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; padding: 0 0 14px; }
       #post-content { overflow: visible; padding-right: 0; }
-      .post-back-link { right: 0; top: 0; }
+      .post-back-link { position: sticky; right: 0; top: 8px; }
       body.pdf-mode #post-content { height: calc(100vh - 230px); min-height: 420px; }
     }
 

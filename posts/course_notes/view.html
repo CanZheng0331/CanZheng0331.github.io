@@ -247,7 +247,7 @@
         return;
       }
 
-      document.title = `${note.title} - Can Zheng`;
+      document.title = `${note.title} · Can Zheng`;
       noteTitle.textContent = note.title;
       noteTags.innerHTML = note.tags.map(tag => `<span class="note-tag">${escapeHtml(tag)}</span>`).join("");
       noteContent.scrollTop = 0;
