@@ -176,7 +176,7 @@ const POSTS_INDEX = "posts/posts.json";
 
     function extractMath(md) {
       const chunks = [];
-      const masked = md.replace(/(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|(?<!\\)\$(?!\s)(?:\\.|[^\n$\\])+(?<!\s)(?<!\\)\$)/g, (match) => {
+      const masked = md.replace(/(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|(?<!\\)\$(?!\$)(?:\\.|[^\n$\\])+?(?<!\\)\$)/g, (match) => {
         const token = `@@MATH_${chunks.length}@@`;
         chunks.push(match);
         return token;

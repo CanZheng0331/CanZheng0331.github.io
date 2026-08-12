@@ -385,7 +385,7 @@ LLM 输出 $ K \times 3 $ 维张量 $\mathbf{X}_{\text{out}}$：
 \mathbf{P} = \text{diag}\{\sqrt{p_1}, \dots, \sqrt{p_K}\}$
 
 
-3. 预编码优化损失函数：$\text{Loss}_{\text{pre}} = -\sum_{k=1}^K R_k + \gamma_1 \cdot \text{penal}$，其中惩罚项：$\text{penal} = \sum_{k=1}^K \max\{R_{\min} - R_k, 0\}\quad \text{(L1 惩罚)}$
+3. 预编码优化损失函数：$\text{Loss}_{\text{pre}} = -\sum_{k=1}^K R_k + \gamma_1 \cdot \text{penal}$，其中惩罚项：$\text{penal} = \sum_{k=1}^K \max\{R_{\min} - R_k, 0\}\quad \text{(L1 penalty)}$
 
 4. 总损失函数: $\text{Loss} = \gamma_2 \cdot \text{Loss}_{\text{cl}} + \text{Loss}_{\text{pre}}$，平衡分类准确性与速率性能。
 

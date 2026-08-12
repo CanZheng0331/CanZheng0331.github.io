@@ -650,7 +650,7 @@ $$\mathbf{V}_{l,k} \triangleq \mathbf{V}(\tilde{\mathbf{y}}_{l,k}) = \sum_{j=1}^
 
 - 预编码向量：
 $$\mathbf{w}_{l,k}^{iMRT} \triangleq \frac{\hat{\mathbf{h}}_{l,k}}{\sqrt{\mathbb{E}\lbrace \|\hat{\mathbf{h}}_{l,k}\|_2^2\rbrace }} = \frac{\hat{\mathbf{h}}_{l,k}}{\sqrt{N (\kappa_{l,k} + x_{l,k,k}) v_{l,k}}}$$
-其中x_{l,k,k} = v_{l,k} \mathbf{a}{l,k}^H \mathbf{V}{l,k}^{-1} \mathbf{a}_{l,k}（MMSE属性）。
+其中 $x_{l,k,k} = v_{l,k} \mathbf{a}_{l,k}^H \mathbf{V}_{l,k}^{-1} \mathbf{a}_{l,k}$（MMSE属性）。
 
 - 可达速率
 
