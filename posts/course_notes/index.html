@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Course Notes · Can Zheng</title>
-<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="../../styles.css?v=20260809-notes-entry-date" rel="stylesheet"/>
+<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="../../styles.css?v=20260813-course-note-groups" rel="stylesheet"/>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
 <meta content="light dark" name="color-scheme"/>
@@ -90,9 +90,14 @@
         fieldLabels: ["Signal Processing"],
         categories: ["english", "course", "online-course"],
         categoryLabels: ["English", "Course", "Online Course"],
-        references: [
-          { label: "Notes v1.0", href: "estimation_detection/notes_on_estimation_and_detection_v1_0.pdf", icon: "fa-book-open", iconOnly: true },
-          { label: "YouTube playlist", href: "https://www.youtube.com/playlist?list=PLGI7M8vwfrFM08D4s2vUGIKRHw7W1rMvG", icon: "fa-brands fa-youtube", iconOnly: true }
+        referenceGroups: [
+          {
+            title: "[Professor Barry Van Veen] Estimation and Detection Theory",
+            links: [
+              { label: "Notes v1.0", href: "estimation_detection/notes_on_estimation_and_detection_v1_0.pdf", icon: "fa-book-open", iconOnly: true },
+              { label: "YouTube playlist", href: "https://www.youtube.com/playlist?list=PLGI7M8vwfrFM08D4s2vUGIKRHw7W1rMvG", icon: "fa-brands fa-youtube", iconOnly: true }
+            ]
+          }
         ]
       },
       {
@@ -107,11 +112,17 @@
         fieldLabels: ["Wireless Communications"],
         categories: ["english", "course", "online-course"],
         categoryLabels: ["English", "Course", "Online Course"],
-        references: [
-          { label: "Notes v1.1", href: "multi_antenna/notes_on_multi_antennas_v1_1.pdf", icon: "fa-book-open", iconOnly: true },
-          { label: "YouTube playlist", href: "https://www.youtube.com/playlist?list=PLTv48TzNRhaJ66mW48MI_HBBawupV_ZR_", icon: "fa-brands fa-youtube", iconOnly: true },
-          { label: "GitHub slides", href: "https://github.com/emilbjornson/multiple_antenna_communications", icon: "fa-brands fa-github", iconOnly: true },
-          { label: "KTH course page", href: "https://www.kth.se/student/kurser/kurs/FIK3510", icon: "fa-building-columns", iconOnly: true }
+        referenceGroups: [
+          {
+            title: "[Professor Emil Bjornson] Multiple Antenna Communications",
+            links: [
+              { label: "Notes v1.1", href: "multi_antenna/notes_on_multi_antennas_v1_1.pdf", icon: "fa-book-open", iconOnly: true },
+              { label: "Notes v1.0", href: "multi_antenna/notes_on_multi_antennas_v1_0.pdf", icon: "fa-file-pdf", iconOnly: true },
+              { label: "YouTube playlist", href: "https://www.youtube.com/playlist?list=PLTv48TzNRhaJ66mW48MI_HBBawupV_ZR_", icon: "fa-brands fa-youtube", iconOnly: true },
+              { label: "GitHub slides", href: "https://github.com/emilbjornson/multiple_antenna_communications", icon: "fa-brands fa-github", iconOnly: true },
+              { label: "KTH course page", href: "https://www.kth.se/student/kurser/kurs/FIK3510", icon: "fa-building-columns", iconOnly: true }
+            ]
+          }
         ]
       },
       {
@@ -126,9 +137,90 @@
         fieldLabels: ["AI"],
         categories: ["chinese", "online-course"],
         categoryLabels: ["Chinese", "Online Course"],
-        references: [
-          { label: "Open note", href: "view.html?id=trustworthy-gai", icon: "fa-book-open",iconOnly: true },
-          { label: "Coursera course", href: "https://www.coursera.org/learn/trustworthy-generative-ai", icon: "fa-arrow-up-right-from-square" ,iconOnly: true}
+        referenceGroups: [
+          {
+            title: "[Coursera] Trustworthy Generative AI",
+            links: [
+              { label: "Open note", href: "view.html?id=trustworthy-gai", icon: "fa-book-open", iconOnly: true },
+              { label: "Coursera course", href: "https://www.coursera.org/learn/trustworthy-generative-ai", icon: "fa-arrow-up-right-from-square", iconOnly: true }
+            ]
+          }
+        ]
+      },
+      {
+        id: "wireless-communications",
+        title: "Wireless Communications",
+        primary: "wireless_communications/notes_on_wireless_communications_henk_v1_1.pdf",
+        type: "pdf",
+        added: "2026-07-29",
+        level: "grad",
+        levelLabel: "Grad",
+        fields: ["wireless"],
+        fieldLabels: ["Wireless Communications"],
+        categories: ["english", "course", "online-course"],
+        categoryLabels: ["English", "Course", "Online Course"],
+        referenceGroups: [
+          {
+            title: "[Professor Henk Wymeersch] Wireless Communications",
+            links: [
+              { label: "Notes v1.1", href: "wireless_communications/notes_on_wireless_communications_henk_v1_1.pdf", icon: "fa-book-open", iconOnly: true },
+              { label: "Notes v1.0", href: "wireless_communications/notes_on_wireless_communications_henk_v1_0.pdf", icon: "fa-file-pdf", iconOnly: true },
+              { label: "YouTube playlist", href: "https://www.youtube.com/playlist?list=PLHGIkY491Cy2LPstPnzMpXj9QEBG5qkJU", icon: "fa-brands fa-youtube", iconOnly: true }
+            ]
+          },
+          {
+            title: "[Professor David Tse] Fundamentals of Wireless Communication",
+            links: [
+              { label: "Notes v1.0", href: "wireless_communications/notes_on_wireless_communications_tse_v1_0.pdf", icon: "fa-book-open", iconOnly: true },
+              { label: "YouTube playlist", href: "https://www.youtube.com/playlist?list=PLbbCsk7MUIGfynU-ONMbe-yZXWTgTX1YP", icon: "fa-brands fa-youtube", iconOnly: true }
+            ]
+          }
+        ]
+      },
+      {
+        id: "information-theory",
+        title: "Information Theory",
+        primary: "information_theory/notes_on_information_theory_david_mackay_v1_0.pdf",
+        type: "pdf",
+        added: "2026-08-07",
+        level: "undergrad",
+        levelLabel: "Undergrad",
+        fields: ["wireless", "signal"],
+        fieldLabels: ["Wireless Communications", "Signal Processing"],
+        categories: ["english", "course", "online-course"],
+        categoryLabels: ["English", "Course", "Online Course"],
+        referenceGroups: [
+          {
+            title: "[Professor David J.C. MacKay] Information Theory, Pattern Recognition, and Neural Networks",
+            links: [
+              { label: "Notes v1.0", href: "information_theory/notes_on_information_theory_david_mackay_v1_0.pdf", icon: "fa-book-open", iconOnly: true },
+              { label: "Course website", href: "https://www.inference.org.uk/mackay/itprnn/", icon: "fa-arrow-up-right-from-square", iconOnly: true },
+              { label: "YouTube playlist", href: "https://www.youtube.com/playlist?list=PLruBu5BI5n4aFpG32iMbdWoRVAA-Vcso6", icon: "fa-brands fa-youtube", iconOnly: true }
+            ]
+          }
+        ]
+      },
+      {
+        id: "linear-algebra",
+        title: "Linear Algebra",
+        primary: "linear_algebra/handwrite_notes_on_1806.pdf",
+        type: "pdf",
+        added: "2026-07-31",
+        level: "undergrad",
+        levelLabel: "Undergrad",
+        fields: ["signal", "other"],
+        fieldLabels: ["Signal Processing", "Other"],
+        categories: ["english", "course", "online-course"],
+        categoryLabels: ["English", "Course", "Online Course"],
+        referenceGroups: [
+          {
+            title: "[Professor Gilbert Strang] MIT 18.06 Linear Algebra",
+            links: [
+              { label: "Handwritten notes", href: "linear_algebra/handwrite_notes_on_1806.pdf", icon: "fa-book-open", iconOnly: true },
+              { label: "Course website", href: "https://web.mit.edu/18.06/www/", icon: "fa-arrow-up-right-from-square", iconOnly: true },
+              { label: "YouTube playlist", href: "https://www.youtube.com/playlist?list=PLE7DDD91010BC51F8", icon: "fa-brands fa-youtube", iconOnly: true }
+            ]
+          }
         ]
       }
     ];
@@ -166,10 +258,24 @@
           ...(note.fieldLabels || []),
           ...(note.categoryLabels || [])
         ].map((tag) => `<span class="course-tag">${escapeHtml(tag)}</span>`).join("");
-        const refs = (note.references || []).map((ref) => `
+        const renderRefButton = (ref) => `
           <a class="${ref.iconOnly ? "icon-only" : ""}" href="${ref.href}" target="${ref.href.startsWith("http") ? "_blank" : "_self"}" rel="noopener" title="${escapeHtml(ref.label)}" aria-label="${escapeHtml(ref.label)}">
             <i class="${String(ref.icon || "").includes("fa-brands") ? escapeHtml(ref.icon) : `fas ${escapeHtml(ref.icon || "fa-link")}`}"></i>${ref.iconOnly ? "" : escapeHtml(ref.label)}
           </a>
+        `;
+        const formatGroupTitle = (title) => {
+          const match = String(title || "").match(/^\[([^\]]+)\]\s*(.*)$/);
+          if (!match) return escapeHtml(title || "");
+          return `<span class="course-reference-professor">[${escapeHtml(match[1])}]</span> ${escapeHtml(match[2])}`;
+        };
+        const groups = note.referenceGroups || (note.references ? [{ title: "References", links: note.references }] : []);
+        const refs = groups.map((group) => `
+          <section class="course-reference-group">
+            <strong>${formatGroupTitle(group.title)}</strong>
+            <div class="course-reference-links">
+              ${(group.links || []).map(renderRefButton).join("")}
+            </div>
+          </section>
         `).join("");
         const refId = `refs-${note.id}`;
 
@@ -183,7 +289,6 @@
           </div>
           <div class="course-line-tags"><span class="course-added"><i class="far fa-calendar-alt" aria-hidden="true"></i> ${escapeHtml(note.added || "")}</span>${tags}</div>
           <div class="course-references" id="${refId}" hidden>
-            <strong>References</strong>
             ${refs}
           </div>
         </li>
