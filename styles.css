@@ -927,7 +927,7 @@ pre code, .prose pre code { display: block; padding: 0; border: 0; border-radius
 .post-list { margin: 0; padding: 0; list-style: none; }
 .post-list li { margin: 0 !important; padding: 14px 2px !important; border-bottom: 1px solid var(--border) !important; }
 .post-list li:last-child { border-bottom: 0 !important; }
-.post-date { color: var(--gold) !important; font-size: 0.84rem !important; }
+.post-date, .post-read-time { color: var(--gold) !important; font-size: 0.84rem !important; }
 .course-hero, .papers-hero { max-width: 1120px; }
 .course-intro, .papers-intro, .resource-intro { max-width: 880px; color: var(--muted); }
 .course-filters, .paper-filters { display: grid; gap: 10px; margin: 20px 0 24px; padding: 17px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow-sm); }
