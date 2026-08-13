@@ -591,11 +591,8 @@ h3 { letter-spacing: -0.012em; }
 
 .blog-note {
   margin: 10px 0 18px;
-  padding: 14px 16px;
-  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--border));
-  border-radius: var(--radius-sm);
-  color: var(--fg);
-  background: color-mix(in srgb, var(--accent-soft) 72%, transparent);
+  max-width: 880px;
+  color: var(--muted);
 }
 
 /* Rich text */
