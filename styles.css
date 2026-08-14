@@ -715,6 +715,7 @@ pre code, .prose pre code { display: block; padding: 0; border: 0; border-radius
   grid-template-columns: 72px minmax(0, 1fr);
   gap: 16px;
   align-items: start;
+  padding-right: 230px;
 }
 .bio-entry-logo {
   display: grid;
@@ -744,9 +745,11 @@ pre code, .prose pre code { display: block; padding: 0; border: 0; border-radius
 }
 .bio-entry .timeline-location {
   margin: 0;
-  color: var(--muted);
-  font-size: 0.92rem;
-  font-weight: 500;
+  color: var(--gold);
+  font-family: Consolas, "Cascadia Code", monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 .bio-entry .timeline-subtitle {
   margin: 0;
@@ -765,17 +768,21 @@ pre code, .prose pre code { display: block; padding: 0; border: 0; border-radius
 }
 .bio-entry-meta {
   display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 6px 14px;
+  flex-direction: column;
+  position: absolute;
+  top: 23px;
+  right: 25px;
+  align-items: flex-end;
+  gap: 3px;
+  max-width: 220px;
   margin: 2px 0 0 !important;
+  justify-content: flex-end;
+  text-align: right;
 }
 .bio-entry-meta .timeline-location,
 .bio-entry-meta .timeline-date {
   display: inline;
-}
-.bio-entry-meta .timeline-date::before {
-  content: "";
+  color: var(--gold);
 }
 .bio-entry ul {
   margin-top: 8px;
@@ -1088,9 +1095,15 @@ img[data-missing], .media-placeholder {
   .col-4, .col-6, .col-8 { grid-column: span 12; }
   .page-title { font-size: clamp(2.45rem, 12vw, 3.8rem); }
   .timeline-header { align-items: flex-start; flex-direction: column; gap: 2px; }
-  .bio-entry { grid-template-columns: 58px minmax(0, 1fr); gap: 12px; }
+  .bio-entry { grid-template-columns: 58px minmax(0, 1fr); gap: 12px; padding-right: 19px; }
   .bio-entry-logo { width: 52px; height: 52px; }
   .bio-entry-logo img { width: 49px; height: 49px; }
+  .bio-entry-meta {
+    position: static;
+    max-width: none;
+    justify-content: flex-start;
+    text-align: left;
+  }
   .pub-card, .timeline-card, .resource-section { padding: 19px; }
   .pub-venue { white-space: normal; }
   .pub-bottom { align-items: flex-start; flex-direction: column; }
