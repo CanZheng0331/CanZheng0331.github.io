@@ -525,6 +525,17 @@ h3 { letter-spacing: -0.012em; }
 .about-card, .news-card { padding: 29px; }
 .about-card h3, .news-card h3 { margin: 0 0 17px; font-size: 1.17rem; }
 .about-card p { margin: 0 0 18px; color: var(--muted); font-size: 1.03rem; }
+.news-card {
+  max-height: 260px;
+  display: flex;
+  flex-direction: column;
+}
+.news-card .timeline {
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 10px;
+  scrollbar-gutter: stable;
+}
 .text-link {
   display: inline-flex;
   align-items: center;
