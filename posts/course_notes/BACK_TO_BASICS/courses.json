@@ -288,7 +288,7 @@
       "id": "random-process",
       "title": "Random Process",
       "tier": "Graduate Major Courses",
-      "state": "empty",
+      "state": "v1.0",
       "prerequisites": [
         "calculus",
         "linear-algebra",
@@ -302,12 +302,21 @@
           "description": "This course intends to provide students with the necessary (fundamental and advanced) background on random processes.",
           "links": [
             {
+              "label": "Information",
+              "url": "https://ocw.nycu.edu.tw/?post_type=course_page&p=62855"
+            },
+            {
               "label": "Youtube",
               "url": "https://www.youtube.com/playlist?list=PLj6E8qlqmkFvw7Rt63yBqai2HmPKF0V0J"
             },
             {
               "label": "Bilibili",
               "url": "https://www.bilibili.com/video/BV1rB7q6XEJK?spm_id_from=333.788.videopod.sections&vd_source=14f65cfb1b4dff2d972e61e173f4e96e&p=2"
+            },
+            {
+              "label": "Notes",
+              "url": "https://canzheng0331.github.io/posts/course_notes/random_processes/notes_on_stochastic_processes_pnchen_v1_0.pdf",
+              "title": "Notes on Stochastic/Random Processes"
             }
           ]
         }
