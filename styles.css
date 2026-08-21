@@ -536,6 +536,12 @@ h3 { letter-spacing: -0.012em; }
   padding-right: 10px;
   scrollbar-gutter: stable;
 }
+.news-card .timeline::before {
+  display: none;
+}
+.news-card .timeline li::before {
+  left: 0;
+}
 .text-link {
   display: inline-flex;
   align-items: center;
