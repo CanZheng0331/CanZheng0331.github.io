@@ -109,6 +109,7 @@
 ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
 
 html {
+  font-size: 110%;
   min-width: 320px;
   overflow-x: clip;
   overflow-y: scroll;
@@ -127,7 +128,7 @@ body {
     radial-gradient(circle at 96% 12%, color-mix(in srgb, var(--beige) 16%, transparent), transparent 27rem),
     var(--bg);
   font-family: Calibri, "Segoe UI", Arial, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.72;
   text-rendering: optimizeLegibility;
   transition: background-color 0.25s ease, color 0.25s ease;
