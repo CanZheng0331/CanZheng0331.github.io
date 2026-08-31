@@ -50,7 +50,7 @@
 <div class="about-grid">
 <article class="panel about-card">
 <h3>About Me</h3>
-<p>I received my M.Sc. in Electrical Engineering from <em>Korea University</em> in February 2026 and my B.Eng. from the <em>Faculty of Electronic and Information Engineering, Xi’an Jiaotong University</em> in July 2023.
+<p>I am currently working at <em>SK hynix Dalian Memory Technology &amp; Manufacturing (DMTM)</em> as a Process Integration and Yield Engineer. I received my M.Sc. in Electrical Engineering from <em>Korea University</em> in February 2026 and my B.Eng. from the <em>Faculty of Electronic and Information Engineering, Xi’an Jiaotong University</em> in July 2023.
 My research spans AI/ML for wireless communications, multimodal sensing.</p>
 <a class="text-link" href="biography.html">Read my biography</a>
 </article>
@@ -82,6 +82,31 @@ My research spans AI/ML for wireless communications, multimodal sensing.</p>
 <p class="visitor-reset-note">MapMyVisitors was redeployed on 2026/6/14 because clustrmaps.com was previously unavailable, so the public statistics were reset from that date.</p>
 </div>
 <script src="site.js?v=20260727-single-dropdown"></script>
+<script>
+  (() => {
+    const aboutCard = document.querySelector(".about-card");
+    const newsCard = document.querySelector(".news-card");
+    if (!aboutCard || !newsCard) return;
+
+    const syncNewsHeight = () => {
+      if (window.matchMedia("(max-width: 900px)").matches) {
+        newsCard.style.removeProperty("--news-card-height");
+        return;
+      }
+      newsCard.style.setProperty("--news-card-height", `${aboutCard.offsetHeight}px`);
+    };
+
+    requestAnimationFrame(syncNewsHeight);
+    window.addEventListener("resize", syncNewsHeight);
+    window.addEventListener("load", syncNewsHeight);
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(syncNewsHeight).observe(aboutCard);
+    }
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(syncNewsHeight);
+    }
+  })();
+</script>
 </footer>
 
 </body>

@@ -522,20 +522,21 @@ h3 { letter-spacing: -0.012em; }
 .card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); transform: translateY(-3px); }
 
 .about-section { padding-top: 12px; }
-.about-grid { display: grid; grid-template-columns: 1.12fr 0.88fr; gap: 20px; }
+.about-grid { display: grid; grid-template-columns: 1.12fr 0.88fr; align-items: start; gap: 20px; }
 .about-card, .news-card { padding: 29px; }
 .about-card h3, .news-card h3 { margin: 0 0 17px; font-size: 1.17rem; }
 .about-card p { margin: 0 0 18px; color: var(--muted); font-size: 1.03rem; }
 .news-card {
-  max-height: 260px;
+  height: var(--news-card-height, auto);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 .news-card .timeline {
+  flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
   padding-right: 10px;
-  scrollbar-gutter: stable;
 }
 .news-card .timeline::before {
   display: none;
@@ -1113,6 +1114,7 @@ img[data-missing], .media-placeholder {
   .col-4, .col-6, .col-8 { grid-column: span 12; }
   .page-title { font-size: clamp(2.45rem, 12vw, 3.8rem); }
   .timeline-header { align-items: flex-start; flex-direction: column; gap: 2px; }
+  .news-card { height: auto; }
   .bio-entry { grid-template-columns: 58px minmax(0, 1fr); gap: 12px; padding-right: 19px; }
   .bio-entry-logo { width: 52px; height: 52px; }
   .bio-entry-logo img { width: 49px; height: 49px; }
