@@ -855,7 +855,57 @@ pre code, .prose pre code { display: block; padding: 0; border: 0; border-radius
 .res-card-title { margin: 0 0 10px; font-size: 1.24rem; font-weight: 700; }
 .res-card-desc { margin: 0; color: var(--muted); font-size: 0.94rem; line-height: 1.58; }
 
-/* Publications and grants */
+/* Publications */
+.publications-page .pub-grid { gap: 24px; }
+.publications-page .pub-card {
+  padding: 2px 0 2px 16px;
+  border: 0;
+  border-left: 3px solid var(--border-strong);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+.publications-page .pub-card:hover,
+.publications-page .pub-card:focus-within {
+  border-color: var(--accent);
+  box-shadow: none;
+  transform: none;
+}
+.publications-page .pub-card::before { display: none; }
+.publications-page .pub-heading { margin-bottom: 5px; line-height: 1.65; }
+.publications-page .pub-title {
+  display: inline;
+  color: var(--fg);
+  font-size: 1rem !important;
+  font-weight: 600;
+}
+.publications-page .pub-venue {
+  display: inline;
+  color: var(--fg);
+  font-size: 0.92rem;
+  white-space: normal;
+}
+.publications-page .pub-links { display: inline; margin-left: 7px; }
+.publications-page .pub-links a {
+  display: inline;
+  padding: 0;
+  margin-right: 5px;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  color: var(--accent);
+  background: transparent;
+  box-shadow: none;
+  font-size: 0.83rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.publications-page .pub-links a:hover,
+.publications-page .pub-links a:focus-visible { text-decoration: underline; transform: none; }
+.publications-page .pub-authors { font-size: 0.91rem; line-height: 1.6; }
+.publications-page .pub-tags { gap: 6px; margin-top: 6px; }
+.publications-page .pub-tag { padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; }
 .pub-grid { display: flex; flex-direction: column; gap: 18px; margin: 17px 0 35px; }
 .pub-card {
   position: relative;
@@ -991,6 +1041,13 @@ pre code, .prose pre code { display: block; padding: 0; border: 0; border-radius
 .pdf-container { background: var(--card); }
 
 /* Resources */
+.others-page .resource-section {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
 .resource-section {
   margin-top: 25px !important;
   padding: 24px;
@@ -1211,6 +1268,53 @@ img[data-missing], .media-placeholder {
       outline: none;
       cursor: pointer;
     }
+
+/* Shared compact entries across the Blogs indexes. */
+.blog-page .post-list,
+.notes-index-page .paper-list,
+.notes-index-page .course-list {
+  padding: 0;
+  margin: 20px 0 35px;
+  list-style: none;
+}
+.blog-page .post-list li,
+.notes-index-page .paper-item,
+.notes-index-page .course-item {
+  margin: 0 0 24px !important;
+  padding: 2px 0 2px 16px !important;
+  border: 0 !important;
+  border-left: 3px solid var(--border-strong) !important;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  line-height: 1.65;
+}
+.blog-page .post-list li:hover,
+.notes-index-page .paper-item:hover,
+.notes-index-page .course-item:hover {
+  border-left-color: var(--accent) !important;
+}
+.blog-page .post-entry-title,
+.notes-index-page .paper-title,
+.notes-index-page .course-title {
+  color: var(--fg);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.65;
+}
+.blog-page .post-entry-title { display: block; margin-bottom: 5px; }
+.blog-page .post-entry-title:hover,
+.notes-index-page .paper-title:hover,
+.notes-index-page .course-title:hover { text-decoration: underline; }
+.blog-page .post-date { margin: 0; }
+.blog-page .post-list .tag,
+.notes-index-page .paper-tag,
+.notes-index-page .course-tag {
+  padding: 2px 7px;
+  margin: 0;
+  border-radius: 4px;
+  font-size: 0.72rem;
+}
     #post-content mjx-container[jax="SVG"],
     #post-content mjx-container[jax="CHTML"],
     #post-content mjx-container.MathJax {

@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Technical Blogs · Can Zheng</title>
-<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="styles.css?v=20260823-site-scale" rel="stylesheet"/>
+<script>(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();</script><link href="styles.css?v=20261017-notes-list" rel="stylesheet"/>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
@@ -27,7 +27,7 @@
 <nav aria-label="Main navigation" class="nav-links" id="site-nav">
 <div class="dropdown"><a class="nav-link" href="index.html">Home</a><div class="dropdown-content"><a href="index.html#about">About Me</a><a href="index.html#news">News</a><a href="index.html#explore">Explore</a></div></div>
 <div class="dropdown"><a class="nav-link" href="biography.html">Biography</a><div class="dropdown-content"><a href="biography.html#education">Education</a><a href="biography.html#experience">Work Experience</a><a href="biography.html#service">Service</a><a href="biography.html#respect">People I Respect</a></div></div>
-<div class="dropdown"><a class="nav-link" href="researches.html">Research</a><div class="dropdown-content"><a href="researches.html?filter=past">Past</a><a href="researches.html?filter=ongoing">Ongoing</a><a href="researches.html?filter=future">Future</a><a href="researches/grants.html">Grants</a></div></div>
+<div class="dropdown"><a class="nav-link" href="researches.html">Research</a><div class="dropdown-content"><a href="researches.html?filter=past">Past</a><a href="researches.html?filter=ongoing">Ongoing</a><a href="researches.html?filter=future">Future</a></div></div>
 <div class="dropdown"><a class="nav-link" href="publications.html">Publications</a><div class="dropdown-content"><a href="publications.html#journal">Journal Papers</a><a href="publications.html#conference">Conference Papers</a></div></div>
 <div class="dropdown"><a aria-current="page" class="nav-link" href="blog.html">Blogs</a><div class="dropdown-content"><a href="blog.html">Technical Blogs</a><a href="posts/read_papers/">Paper Notes</a><a href="posts/course_notes/">Course Notes</a><a href="posts/course_notes/BACK_TO_BASICS/">Basics</a></div></div>
 <a class="nav-link" href="photos.html">Photos</a>
@@ -511,7 +511,7 @@ const POSTS_INDEX = "posts/posts.json";
         const isPdf = post.file.toLowerCase().endsWith(".pdf");
         const postHref = isPdf ? post.file : `blog.html?id=${post.id}`;
         li.innerHTML = `
-          <a href="${postHref}" ${isPdf ? 'target="_blank" rel="noopener"' : ""} style="font-size: 1.1rem; font-weight: 600; display: block; margin-bottom: 6px;">${escapeHtml(post.title)}</a>
+          <a class="post-entry-title" href="${postHref}" ${isPdf ? 'target="_blank" rel="noopener"' : ""}>${escapeHtml(post.title)}</a>
           <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
             <span class="post-date"><i class="far fa-calendar-alt"></i> ${escapeHtml(post.displayDate)}</span>
             ${post.readingTime ? `<span class="post-read-time"><i class="far fa-clock"></i> ${escapeHtml(post.readingTime)}</span>` : ""}
