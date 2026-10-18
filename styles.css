@@ -353,7 +353,7 @@ h3 { letter-spacing: -0.012em; }
   position: relative;
   margin: 18px 0 32px !important;
   padding-top: 25px;
-  font-size: clamp(2.55rem, 6vw, 4.6rem);
+  font-size: 2.25rem;
   font-weight: 700 !important;
 }
 .page-title::before {
@@ -430,7 +430,7 @@ h3 { letter-spacing: -0.012em; }
 .hero h1 {
   margin: 0;
   max-width: 850px;
-  font-size: clamp(3.25rem, 7.2vw, 6rem);
+  font-size: 3rem;
   font-weight: 700;
   line-height: 0.98;
   letter-spacing: -0.064em;
@@ -1037,7 +1037,7 @@ pre code, .prose pre code { display: block; padding: 0; border: 0; border-radius
 .post-toc a, .note-toc a { border-left-color: transparent; color: var(--muted); }
 .post-toc a:hover, .post-toc a.active, .note-toc a:hover, .note-toc a.active { color: var(--accent); border-left-color: var(--accent); }
 .post-reader-head, .note-reader-head { border-color: var(--border) !important; }
-.post-reader-head h1, .note-reader-head h1 { font-size: clamp(2rem, 4.5vw, 3.3rem); }
+.post-reader-head h1, .note-reader-head h1 { font-size: 1.8rem; }
 .pdf-container { background: var(--card); }
 
 /* Resources */
@@ -1162,14 +1162,14 @@ img[data-missing], .media-placeholder {
   main.container { padding-top: 28px; }
   .navbar { min-height: 68px; }
   .hero { padding: 64px 0 38px; }
-  .hero h1 { font-size: clamp(3rem, 15vw, 4.65rem); }
+  .hero h1 { font-size: 2.3rem; }
   .hero-lead { font-size: 1.03rem; }
   .name-line { font-size: 0.96rem; }
   .section { padding: 25px 0; }
   .explore-grid { grid-template-columns: 1fr; }
   .explore-link { min-height: 165px; }
   .col-4, .col-6, .col-8 { grid-column: span 12; }
-  .page-title { font-size: clamp(2.45rem, 12vw, 3.8rem); }
+  .page-title { font-size: 1.8rem; }
   .timeline-header { align-items: flex-start; flex-direction: column; gap: 2px; }
   .news-card { height: auto; }
   .bio-entry { grid-template-columns: 58px minmax(0, 1fr); gap: 12px; padding-right: 19px; }
@@ -1347,7 +1347,7 @@ img[data-missing], .media-placeholder {
       margin-top: 0;
       margin-bottom: 12px;
       max-width: min(920px, calc(100% - 12px));
-      font-size: clamp(1.65rem, 2.7vw, 2.45rem);
+      font-size: 1.8rem;
       line-height: 1.16;
       overflow-wrap: anywhere;
     }
