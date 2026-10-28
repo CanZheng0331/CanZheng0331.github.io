@@ -810,8 +810,9 @@ pre code, .prose pre code { display: block; padding: 0; border: 0; border-radius
 .service-category { margin-bottom: 20px; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow-sm); }
 .service-header { padding: 13px 20px; color: var(--fg); background: color-mix(in srgb, var(--accent-soft) 72%, transparent); font-size: 1.03rem; font-weight: 700; }
 .service-list { margin: 0; padding: 0; list-style: none; }
-.service-item { display: flex; align-items: flex-start; padding: 14px 20px; border-top: 1px solid var(--border); }
-.service-item::before { content: "•"; margin-right: 12px; color: var(--gold); font-size: 1.25rem; font-weight: 700; line-height: 1; }
+.service-item { position: relative; display: block; margin: 0 !important; padding: 14px 20px 14px 44px; border-top: 1px solid var(--border); line-height: 1.6; }
+.service-item::before { content: "•"; position: absolute; left: 20px; top: 14px; color: var(--gold); font-size: 1.25rem; font-weight: 700; line-height: 1.28; }
+.service-item .resource-icon-link { vertical-align: middle; color: var(--accent); }
 .respect-group summary { cursor: pointer; list-style: none; }
 .respect-group summary::-webkit-details-marker { display: none; }
 .respect-group .service-header { display: flex; align-items: center; justify-content: space-between; }
@@ -1041,6 +1042,27 @@ pre code, .prose pre code { display: block; padding: 0; border: 0; border-radius
 .pdf-container { background: var(--card); }
 
 /* Resources */
+.resource-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 24px;
+  min-height: 24px;
+  margin-inline: 3px;
+  vertical-align: baseline;
+  font-size: inherit;
+  text-decoration: none;
+}
+.resource-icon-link:hover { text-decoration: underline; }
+.publications-page .pub-links .resource-icon-link {
+  display: inline-flex;
+  min-width: 24px;
+  min-height: 24px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
 .others-page .resource-section {
   padding: 0;
   border: 0;
